@@ -1,0 +1,34 @@
+name: "Build ISO Image"
+on:
+  push: {}
+  workflow_dispatch: # adding the workflow_dispatch so it can be triggered manually
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.4.0
+      with:
+          submodules: true
+    - uses: cachix/install-nix-action@v15
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+    - run: nix flake update
+    - uses: cachix/install-nix-action@v15
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+    - run: nix flake check
+    - uses: cachix/install-nix-action@v15
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+    - run: nix build installer/iso/flake#iso.x86_64-linux.i3
+
+
