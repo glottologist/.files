@@ -28,13 +28,13 @@
     in
     {
       homeConfigurations = (
-        import ./outputs/home-conf.nix {
+        import ./outputs/home-configuration.nix {
           inherit system nixpkgs nurpkgs home-manager tex2nix;
         }
       );
 
       nixosConfigurations = (
-        import ./outputs/nixos-conf.nix {
+        import ./outputs/nixos-configuration.nix {
           inherit (nixpkgs) lib;
           inherit inputs system;
         }

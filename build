@@ -1,0 +1,48 @@
+#! /usr/bin/env bash
+set +x
+
+SERVER=$1
+
+if [ -z "$SERVER" ]
+then
+      echo "No server name entered"
+      echo "======================================================================"
+      echo "./build <servername> <build-type>"
+      echo "=> where:"
+      echo "=> servername = server / machine alias"
+      echo "=> build-type = home or system"
+      exit 1;
+fi
+
+
+if [ -z "$2" ]
+then
+  BUILD="all"
+else
+  BUILD=$2
+fi
+
+
+build_home(){
+  nix build .#homeConfigurations.${SERVER}.activationPackage
+}
+
+build_system(){
+ nix build .#nixosConfigurations.${SERVER}.config.system.build.toplevel
+}
+
+build_all(){
+  build_system
+  build_home
+}
+
+case $BUILD in
+  "home")
+    build_home;;
+  "system")
+    build_system;;
+  "all")
+    build_all;;
+esac
+
+exit 0
