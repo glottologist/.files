@@ -19,14 +19,17 @@ jobs:
           submodules: true
     - name: set file permissions
       run: chmod +x apply && chmod +x build
-    - name: build
+    - name: install nix
       uses: cachix/install-nix-action@v15
       with:
         nix_path: nixpkgs=channel:nixos-unstable
         extra_nix_config: |
           experimental-features = nix-command flakes
-          name: glottologist
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+    - name: install cachix
+      uses: cachix/cachix-action@v10
+      with:
+        name: glottologist
+        authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
     - run: ./build ${{ matrix.system }}
 
 
