@@ -14,7 +14,7 @@ in
   ];
 
   imports = [
-    (import ./../../shared/home/virtualisation.nix)
+     ./../../shared/home/virtualisation.nix
   ];
 
   xdg.enable = true;
