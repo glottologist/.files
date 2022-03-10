@@ -28,20 +28,20 @@
     in
     {
       homeConfigurations = (
-        import ./outputs/home-configuration.nix {
+        import ./artefacts/home-configuration.nix {
           inherit system nixpkgs nurpkgs home-manager tex2nix;
         }
       );
 
       nixosConfigurations = (
-        import ./outputs/nixos-configuration.nix {
+        import ./artefacts/nixos-configuration.nix {
           inherit (nixpkgs) lib;
           inherit inputs system;
         }
       );
 
       devShell.${system} = (
-        import ./outputs/installation.nix {
+        import ./artefacts/installation.nix {
           inherit system nixpkgs;
         }
       );
