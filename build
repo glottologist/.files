@@ -24,11 +24,11 @@ fi
 
 
 build_home(){
-  nix build .#homeConfigurations.${SERVER}.activationPackage
+  nix build ".#homeConfigurations.${SERVER}.activationPackage"
 }
 
 build_system(){
- nix build .#nixosConfigurations.${SERVER}.config.system.build.toplevel
+ nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel"
 }
 
 build_all(){
