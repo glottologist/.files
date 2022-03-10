@@ -2,18 +2,21 @@
 set +x
 
 SERVER=$1
+USER=$2
 
 if [ -z "$SERVER" ]
 then
       echo "No server name entered"
-      echo "======================================================================"
-      echo "./build <servername> <build-type>"
-      echo "=> where:"
-      echo "=> servername = server / machine alias"
-      echo "=> build-type = home or system"
+      usage
       exit 1;
 fi
 
+if [ -z "$USER" ]
+then
+      echo "No user name entered"
+      usage
+      exit 1;
+fi
 
 if [ -z "$2" ]
 then
@@ -22,6 +25,15 @@ else
   BUILD=$2
 fi
 
+usage(){
+
+      echo "======================================================================"
+      echo "./build <servername> <user> <build-type>"
+      echo "=> where:"
+      echo "=> servername = server / machine alias"
+      echo "=> user = user name"
+      echo "=> build-type = home or system"
+}
 
 build_home(){
   nix build ".#homeConfigurations.${SERVER}.activationPackage"
