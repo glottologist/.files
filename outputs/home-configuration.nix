@@ -30,23 +30,28 @@ let
       configuration = conf;
     });
 
-  redtailConf = import ../systems/redtail/home/configuration.nix {
+   shared = import ../shared/home/home.nix {
     inherit nur pkgs;
     inherit (pkgs) config lib stdenv;
+   };
+
+  redtailConf = import ../systems/redtail/home/home.nix {
+    inherit nur pkgs;
+    inherit (pkgs) shared config lib stdenv;
   };
 
-  bebopConf = import ../systems/bebop/home/configuration.nix {
+  bebopConf = import ../systems/bebop/home/home.nix {
     inherit nur pkgs;
-    inherit (pkgs) config lib stdenv;
+    inherit (pkgs) shared config lib stdenv;
   };
 
-  swordfishConf = import ../systems/swordfish/home/configuration.nix {
+  swordfishConf = import ../systems/swordfish/home/home.nix {
     inherit nur pkgs;
-    inherit (pkgs) config lib stdenv;
+    inherit (pkgs) shared config lib stdenv;
   };
 in
 {
-  home-redtail   = mkHome redtailConf;
-  home-bebop     = mkHome bebopConf;
-  home-swordfish = mkHome swordfishConf;
+  redtail   = mkHome redtailConf;
+  bebop     = mkHome bebopConf;
+  swordfish = mkHome swordfishConf;
 }
