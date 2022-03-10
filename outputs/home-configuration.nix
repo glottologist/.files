@@ -35,23 +35,11 @@ let
     inherit (pkgs) config lib stdenv;
    };
 
-  redtailConf = import ../systems/redtail/home/home.nix {
-    inherit nur pkgs;
-    inherit (pkgs) shared config lib stdenv;
-  };
-
-  bebopConf = import ../systems/bebop/home/home.nix {
-    inherit nur pkgs;
-    inherit (pkgs) shared config lib stdenv;
-  };
-
-  swordfishConf = import ../systems/swordfish/home/home.nix {
+  jasonConf = import ../homes/jason/home.nix {
     inherit nur pkgs;
     inherit (pkgs) shared config lib stdenv;
   };
 in
 {
-  redtail   = mkHome redtailConf;
-  bebop     = mkHome bebopConf;
-  swordfish = mkHome swordfishConf;
+  jason   = mkHome jasonConf;
 }
