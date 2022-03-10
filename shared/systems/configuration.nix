@@ -14,11 +14,11 @@ in
 {
   imports =
     [
+      ./services.nix
       ./nix.nix
       ./cachix.nix
       ./location.nix
       ./packages.nix
-      ./services.nix
     ];
 
   fonts.fonts = with pkgs; [
