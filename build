@@ -28,7 +28,7 @@ then
       exit 1;
 fi
 
-if [ -z "$2" ]
+if [ -z "$3" ]
 then
   BUILD="all"
 else
