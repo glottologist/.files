@@ -37,11 +37,11 @@ fi
 
 
 build_home(){
-  nix build ".#homeConfigurations.${USER}.activationPackage" --show-trace
+  nix build ".#homeConfigurations.${USER}.activationPackage"
 }
 
 build_system(){
- nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel" --show-trace
+ nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel"
 }
 
 build_all(){
