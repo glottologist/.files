@@ -11,10 +11,25 @@ let
       prompt = false;
     };
     pull.rebase = false;
-
   };
 in
 {
+
+
+  home.packages = with pkgs.gitAndTools; [
+    act #run GH actions locally
+    diff-so-fancy # git diff with colors
+    gh #gh command line
+    gist #upload code to gist
+    git-crypt # git files encryption
+    git-hound #code search
+    git-open #open repo in browser
+    git-review # submit to gerrit
+    github-commenter
+    hub # github command-line client
+    tig # diff and commit view
+  ];
+
 
   programs.git = {
     enable = true;
