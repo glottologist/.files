@@ -30,14 +30,10 @@ let
       configuration = conf;
     });
 
-   shared = import ../shared/home/home.nix {
-    inherit nur pkgs;
-    inherit (pkgs) config lib stdenv;
-   };
 
   jasonConf = import ../homes/jason/home.nix {
     inherit nur pkgs;
-    inherit (pkgs) shared config lib stdenv;
+    inherit (pkgs) config lib stdenv;
   };
 in
 {
