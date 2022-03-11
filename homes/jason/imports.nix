@@ -1,3 +1,3 @@
 [
-  ../../shared/home/virtualisation.nix
+  #../../shared/home/virtualisation.nix
 ]
