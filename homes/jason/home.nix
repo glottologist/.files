@@ -10,11 +10,11 @@ in
 {
   programs.home-manager.enable = true;
 
-  nixpkgs.overlays = [
-  ];
+  #nixpkgs.overlays = [
+  #];
 
   imports = [
-     ./../../shared/home/virtualisation.nix
+     #./../../shared/home/virtualisation.nix
   ];
 
   xdg.enable = true;
