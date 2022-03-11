@@ -3,6 +3,7 @@ set +x
 
 SERVER=$1
 USER=$2
+ADDITIONAL_ARGS=$4
 
 usage(){
 
@@ -37,11 +38,11 @@ fi
 
 
 build_home(){
-  nix build ".#homeConfigurations.${USER}.activationPackage"
+  nix build ".#homeConfigurations.${USER}.activationPackage" $ADDITIONAL_ARGS
 }
 
 build_system(){
- nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel"
+ nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel" $ADDITIONAL_ARGS
 }
 
 build_all(){
