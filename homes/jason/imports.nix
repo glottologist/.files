@@ -1,2 +1,3 @@
 [
+  ../../shared/home/virtualisation.nix
 ]
