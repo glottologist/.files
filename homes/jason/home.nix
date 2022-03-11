@@ -13,9 +13,7 @@ in
   #nixpkgs.overlays = [
   #];
 
-  imports = [
-    ./imports.nix
-  ];
+  imports = (import ./imports.nix);
 
   xdg.enable = true;
 

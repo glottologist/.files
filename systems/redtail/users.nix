@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
    users.users.jason = {
-    groups.plugdev = {};
+     #groups.plugdev = {};
      isNormalUser = true;
      extraGroups = [ "wheel" "networkmanager" "docker" "plugdev" "libvirt" "pulse" "audio" ];
      openssh.authorizedKeys.keys = [
