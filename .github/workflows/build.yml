@@ -23,7 +23,7 @@ jobs:
       with:
           submodules: true
     - name: set file permissions
-      run: chmod +x apply && chmod +x build
+      run: chmod +x do
     - name: install nix
       uses: cachix/install-nix-action@v15
       with:
