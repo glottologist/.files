@@ -8,6 +8,7 @@
       ./location.nix
       ./environment.nix
       ./programs.nix
+      ./users.nix
     ];
 
 }
