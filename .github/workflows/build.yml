@@ -13,6 +13,9 @@ jobs:
           - redtail
         user:
           - jason
+        type:
+          - system
+          - home
     runs-on: ubuntu-latest
     steps:
     - name: checkout
@@ -32,6 +35,6 @@ jobs:
       with:
         name: glottologist
         authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-    - run: ./build ${{ matrix.system }} ${{ matrix.user }} system
+    - run: ./build ${{ matrix.system }} ${{ matrix.user }} ${{ matrix.type }}
 
 
