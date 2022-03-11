@@ -1,3 +1,3 @@
 [
-  ./docker
+  ./virtualisation/default.nix
 ]
