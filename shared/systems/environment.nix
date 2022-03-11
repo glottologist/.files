@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
+  environment = {
+   systemPackages = with pkgs; [
      cachix                  # Command line client for Nix binary cache hosting
      curl                    # A command line tool for transferring files
      dig                     # Domain name server
@@ -13,4 +14,5 @@
      tree                    # Depth indented directory listing
      wget
    ];
+ };
 }

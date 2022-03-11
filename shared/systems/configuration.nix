@@ -18,13 +18,13 @@ in
       ./nix.nix
       ./cachix.nix
       ./location.nix
-      ./packages.nix
+      ./environment.nix
+      ./programs.nix
     ];
 
   fonts.fonts = with pkgs; [
     basefont
   ];
 
-  system.stateVersion = "22.05";
 
 }
