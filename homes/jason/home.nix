@@ -13,9 +13,7 @@ in
   #nixpkgs.overlays = [
   #];
 
-  imports = [
-     #./../../shared/home/virtualisation.nix
-  ];
+  imports = (import ./imports.nix);
 
   xdg.enable = true;
 
