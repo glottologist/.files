@@ -23,7 +23,7 @@ in
     ];
 
   fonts.fonts = with pkgs; [
-    basefont
+    basefonts
   ];
 
 
