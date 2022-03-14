@@ -3,7 +3,6 @@
 
   imports = [
     ./git/default.nix
-    ./vsliveshare/default.nix
   ];
 
   home.packages = with pkgs; [
