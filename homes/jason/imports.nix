@@ -1,5 +1,5 @@
 [
   ../../shared/home/virtualisation.nix
-  ./development/git.nix
+  ./development/default.nix
   ./terminal/default.nix
 ]
