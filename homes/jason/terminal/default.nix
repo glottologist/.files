@@ -29,7 +29,6 @@
       enable = true;
       #enableFishIntegration = true;
     };
-    gpg.enable = true;  # Open source encryption
     htop = {
       enable = true; # Command line system monitor
       settings = {
