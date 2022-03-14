@@ -13,7 +13,7 @@
   };
 
   services = {
-    keybase.enable = true;
-
+    keybase.enable = true;  # Keybase is a key directory that maps social media identities to encryption keys in a publicly auditable manner.
+    gpg.enable = true;  # Open source encryption
   };
 }
