@@ -2,6 +2,10 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  environment.systemPackages = with pkgs; [
+    nox  # Tools to make nix nicer to use
+  ];
+
   # Nix daemon config
   nix = {
     # Automate garbage collection

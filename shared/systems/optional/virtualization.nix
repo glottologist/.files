@@ -9,4 +9,10 @@
       enableExtensionPack = true;
     };
   };
+
+
+  environment.systemPackages = with pkgs; [
+     kvm
+   ];
+
 }

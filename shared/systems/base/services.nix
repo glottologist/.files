@@ -30,5 +30,9 @@
       };
     };
   };
+
+
+  systemd.services.upower.enable = true;
+
 }
 

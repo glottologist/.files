@@ -11,6 +11,10 @@
       ./users.nix
       ./virtualisation.nix
       ../../shared/systems/optional/virtualization.nix
+      ../../shared/systems/optional/browsers.nix
+      ../../shared/systems/optional/themes.nix
+      ../../shared/systems/optional/networktools.nix
+      ../../shared/systems/optional/blockchain.nix
     ];
 
   system.stateVersion = "21.11"; # Did you read the comment?
