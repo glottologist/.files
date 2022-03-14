@@ -9,7 +9,7 @@
       ./base/environment.nix
       ./base/programs.nix
       ./base/users.nix
-      ./optional/users.nix
+      ./optional/virtualization.nix
     ];
 
 }
