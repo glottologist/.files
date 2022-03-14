@@ -1,47 +1,5 @@
 { buildVimPlugin, buildVimPluginFrom2Nix, fetchFromGitHub }:
-
 {
-  # version without Makefile to run tests (need to see how to skip them and use the proper repo)
-  nvim-lsp = buildVimPlugin {
-    name = "nvim-lsp";
-    src  = fetchFromGitHub {
-      owner  = "gvolpe";
-      repo   = "nvim-lsp";
-      rev    = "cdab80585058967e2e9e2b54300dd672c667da7c";
-      sha256 = "0mz13fg0bnfnrmvg8kr8crzl2537gk460x8i9fafkkp1c6xmg765";
-    };
-  };
-
-  #nvim-lsp = buildVimPlugin {
-    #name = "nvim-lsp";
-    #src  = fetchFromGitHub {
-      #owner  = "neovim";
-      #repo   = "nvim-lsp";
-      #rev    = "3f7223659f39273c5fe4f2f2d7ee8baa827a9cfb";
-      #sha256 = "104439qy1nqgzxrj8pfvd05shnpywm0qj1w68rm701hwpig6j7q6";
-    #};
-  #};
-
-  #nvim-metals = buildVimPlugin {
-    #name = "nvim-metals";
-    #src  = fetchFromGitHub {
-      #owner  = "scalameta";
-      #repo   = "nvim-metals";
-      #rev    = "11388266c2d23726bccc589c3d36a051e0434471";
-      #sha256 = "16khwbwv9i6233p36dmppn4fppnx6mmzdmsji6knsy5db4h08prd";
-    #};
-  #};
-
-  #nvim-metals = buildVimPlugin {
-    #name = "nvim-metals";
-    #src  = fetchFromGitHub {
-      #owner  = "scalameta";
-      #repo   = "nvim-metals";
-      #rev    = "fb8af20912165f0a0ef60c0a0edcca2140c95301";
-      #sha256 = "0vp7d2b7qykiii63k3zkj364x1hn2y6d2jp9klj0xxs3jniy7wrb";
-    #};
-  #};
-
  nvim-metals = buildVimPluginFrom2Nix {
     name = "nvim-metals";
     src  = fetchFromGitHub {

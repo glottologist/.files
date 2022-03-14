@@ -75,6 +75,20 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" coc-fzf
+" allow to scroll in the preview
+set mouse=a
+" mappings
+nnoremap <leader>fl              <cmd>CocFzfList<CR>
+nnoremap <leader>fa              <cmd>CocFzfList diagnostics<CR>
+nnoremap <leader>fc              <cmd>CocFzfList commands<CR>
+nnoremap <leader>fe              <cmd>CocFzfList extensions<CR>
+nnoremap <leader>fo              <cmd>CocFzfList outline<CR>
+nnoremap <leader>fp              <cmd>CocFzfListResume<CR>
+nnoremap <leader>fs              <cmd>CocFzfList symbols<CR>
+nnoremap <leader>ft              <cmd>CocFzfList location<CR>
+
+
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
@@ -100,10 +114,8 @@ au BufRead,BufNewFile *.sbt set filetype=scala
 let g:material_theme_style = 'lighter'
 let g:lightline = { 'colorscheme': 'PaperColor' }
 
-"let g:gutter_sign_allow_clobber = 1
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"  " use <Tab> to trigger autocompletion
-"let g:UltiSnipsJumpForwardTrigger="<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-"let g:UltiSnipsExpandTrigger="<C-J>"
+
+

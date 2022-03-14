@@ -1,4 +1,4 @@
 
 " Tag
 " Toggle TagBar
-nnoremap <leader>tt :TagbarToggle<cr>
+nnoremap <leader>tt <cmd>TagbarToggle<cr>
