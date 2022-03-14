@@ -2,13 +2,14 @@
 {
   imports =
     [
-      ./services.nix
-      ./nix.nix
-      ./cachix.nix
-      ./location.nix
-      ./environment.nix
-      ./programs.nix
-      ./users.nix
+      ./base/services.nix
+      ./base/nix.nix
+      ./base/cachix.nix
+      ./base/location.nix
+      ./base/environment.nix
+      ./base/programs.nix
+      ./base/programs.nix
+      ./optional/virtualization.nix
     ];
 
 }

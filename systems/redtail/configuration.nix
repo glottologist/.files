@@ -10,6 +10,7 @@
       ./services.nix
       ./users.nix
       ./virtualisation.nix
+      ../../shared/systems/optional/virtualization.nix
     ];
 
   system.stateVersion = "21.11"; # Did you read the comment?
