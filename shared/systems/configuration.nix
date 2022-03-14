@@ -8,8 +8,8 @@
       ./base/location.nix
       ./base/environment.nix
       ./base/programs.nix
-      ./base/programs.nix
-      ./optional/virtualization.nix
+      ./base/users.nix
+      ./optional/users.nix
     ];
 
 }
