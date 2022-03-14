@@ -1,16 +1,4 @@
 { config, pkgs, ... }:
-{
-  networking = {
-    hostName = "redtail";
-    useDHCP = false;
-    interfaces = {
-      enp0s3.useDHCP = true;
-      wlp0s20f3.useDHCP = true;
-    };
-  };
-
-}
-{ config, pkgs, ... }:
 
 {
   networking = {
@@ -34,7 +22,7 @@
       allowedUDPPorts = [ 17500 51820 ];
     };
 
-    extraHosts = builtIns.fromFile ../../secrets/hosts;
+    extraHosts = builtins.readFile ../../secrets/hosts;
 
   };
 }
