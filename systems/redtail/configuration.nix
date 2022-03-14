@@ -15,6 +15,7 @@
       ../../shared/systems/optional/themes.nix
       ../../shared/systems/optional/networktools.nix
       ../../shared/systems/optional/blockchain.nix
+      ../../shared/systems/optional/windowmanager/xmonad.nix
     ];
 
   system.stateVersion = "21.11"; # Did you read the comment?
