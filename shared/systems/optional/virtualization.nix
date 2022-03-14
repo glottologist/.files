@@ -12,7 +12,7 @@
 
 
   environment.systemPackages = with pkgs; [
-     kvm
+     qemu_kvm
    ];
 
 }
