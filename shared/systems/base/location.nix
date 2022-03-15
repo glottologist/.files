@@ -6,5 +6,9 @@
      font = "Lat2-Terminus16";
      keyMap = "uk";
    };
+
+  environment.systemPackages = with pkgs; [
+   icu     # Unicode and globalization support library
+   ];
 }
 

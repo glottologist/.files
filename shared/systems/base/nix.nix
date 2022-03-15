@@ -1,9 +1,16 @@
 { config, lib, pkgs, inputs, ... }:
 {
-  nixpkgs.config.allowUnfree = true;
-
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+         "electron-13.6.9"
+         "libgit2-0.27.10"
+         "python2.7-Pillow-6.2.2"
+    ];
+  };
   environment.systemPackages = with pkgs; [
-    nox  # Tools to make nix nicer to use
+    nox        # Tools to make nix nicer to use
+    nix-tree   # Interactively browse a Nix store paths dependencies
   ];
 
   # Nix daemon config
