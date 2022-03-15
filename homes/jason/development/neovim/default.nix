@@ -72,10 +72,10 @@ let
     nerdtree-git-plugin     # shows files git status on the NerdTree
     nvim-web-devicons       # A lua fork of vim-devicons.
     nvim-whichkey-setup-lua # This nvim-plugin is just a wrapper for vim-which-key to simplify setup in lua.
-    oceanic-material
-    papercolor-theme
+    oceanic-material        # A dark colorscheme for vim/neovim
+    papercolor-theme        # Light & Dark color schemes for terminal and GUI Vim awesome editor
     plenary-nvim            # Lua functions package
-    purescript-vim
+    purescript-vim          # Purescript language support for vim and neovim providing syntax highlighting and indentation based on based on idris-vim and haskell-vim.
     quickfix-reflector-vim  # make modifications right in the quickfix window
     rainbow_parentheses-vim # for nested parentheses
     salt-vim
