@@ -3,7 +3,6 @@
 let
   defaultPkgs = with pkgs; [
     any-nix-shell        # fish support for nix shell
-    cachix               # nix caching
   ];
 
 in
