@@ -11,7 +11,7 @@
       ../../shared/systems/optional/disk.nix
       ../../shared/systems/optional/networktools.nix
       ../../shared/systems/optional/windowmanager/xfce.nix
-      ../../shared/systems/optional/specific/plex-server.nix
+      ../../shared/systems/optional/specific/k3s.nix
     ];
 
   system.stateVersion = "22.05"; # Did you read the comment?

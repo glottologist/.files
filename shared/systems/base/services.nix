@@ -4,6 +4,13 @@
 
     sshd.enable = true;
 
+    xrdp = {
+      enable = true;
+      defaultWindowManager = "${pkgs.icewm}/bin/icewm";
+    };
+
+    vnstat.enable  = true;
+
     openssh = {
       enable = true;
       allowSFTP = true;

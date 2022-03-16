@@ -5,9 +5,7 @@
       ./boot.nix
       ./filesystem.nix
       ./hardware.nix
-      ./location.nix
       ./networking.nix
-      ./services.nix
       ./users.nix
       ./virtualisation.nix
       ../../shared/systems/optional/blockchain.nix
@@ -22,7 +20,7 @@
       ../../shared/systems/optional/windowmanager/plasma.nix
     ];
 
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.05"; # Did you read the comment?
 
 }
 
