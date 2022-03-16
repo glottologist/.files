@@ -11,6 +11,9 @@ jobs:
       matrix:
         system:
           - redtail
+          - bebop
+          - swordfish
+          - valkyrie
         user:
           - jason
         type:
