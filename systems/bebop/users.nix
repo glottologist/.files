@@ -10,6 +10,6 @@
    };
 
 
-   extraGroups.vboxusers.members = [ "jason" ];
+   #extraGroups.vboxusers.members = [ "jason" ];
 }
 

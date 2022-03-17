@@ -7,5 +7,7 @@
     slack-term      # Slack client for your term
     thunderbird     # A full-featured e-mail client
     zoom-us         # zoom.us video conferencing application
+    mattermost      # Open-source Slack-alternative
+    matterbridge    # Simple bridge between Mattermost, IRC, XMPP, Gitter, Slack, Discord, Telegram, Rocket.Chat, Hipchat(via xmpp), Matrix and Steam
    ];
 }

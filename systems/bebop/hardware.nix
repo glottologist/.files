@@ -1,9 +1,9 @@
 { config, lib, pkgs, modulesPath, ... }:
-
 {
 
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      #(modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
