@@ -5,6 +5,7 @@
   ../../shared/home/packages/fonts.nix
   ../../shared/home/packages/network.nix
   ../../shared/home/packages/security.nix
+  ./desktop.nix
   ./development/default.nix
   ./terminal/default.nix
 ]

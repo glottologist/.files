@@ -87,11 +87,15 @@ echo "USER => $USER"
 echo "BUILD => $BUILD"
 echo "$MARKER"
 
-copy_home_files() {
- # Copy Pictures
- mkdir -p "$HOME/Pictures"
- cp -rf "homes/${USER}/Pictures" "$HOME/Pictures"
+make_dir_and_copy() {
+  echo "Copying $1"
+  mkdir -p $HOME/$1
+  cp -rf "homes/${USER}/$1" "$HOME/$1"
+}
 
+copy_home_files() {
+   make_dir_and_copy "Pictures"
+   make_dir_and_copy "icons"
 }
 case $BUILD in
   "home")
