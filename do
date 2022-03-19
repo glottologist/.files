@@ -90,7 +90,7 @@ echo "$MARKER"
 copy_home_files() {
  # Copy Pictures
  mkdir -p "$HOME/Pictures"
- cp "./homes/${USER}/Pictures/*" "$HOME/Pictures/"
+ cp -rf "homes/${USER}/Pictures" "$HOME/Pictures"
 
 }
 case $BUILD in
