@@ -4,9 +4,7 @@
   networking = {
     hostName = "bebop";
     useDHCP = false;
-    interfaces = {
-      wlp0s20f3.useDHCP = true;
-    };
+    interfaces.wlp0s20f3.useDHCP = true;
     networkmanager.enable = true;
     nat = {
       enable = true;

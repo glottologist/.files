@@ -66,7 +66,7 @@ system(){
   if [ "$WORKFLOW" = "apply" ]; then
     echo "$MARKER"
     echo "Applying nixos configuration"
-    sudo nixos-rebuild switch --flake
+    sudo nixos-rebuild switch --flake .
     echo "$MARKER"
   fi
 }

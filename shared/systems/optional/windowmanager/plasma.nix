@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 {
 
-  environment.systemPackages = with pkgs.plasma5Packages; [
-   ];
+  #environment.systemPackages = with pkgs.plasma5Packages; [
+   #];
 
   programs.dconf.enable = true;
   services = {
