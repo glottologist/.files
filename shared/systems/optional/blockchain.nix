@@ -9,6 +9,7 @@
      ledger-udev-rules      # Udev rules for interacting with LEdger Hardware wallets
      ledger-web             # A Web front end to the ledger CLI tool
      wasabiwallet           # Privacy focused local Bitcoin wallet
+     cointop                # Terminal based crypto prices
    ];
 
   services = {
