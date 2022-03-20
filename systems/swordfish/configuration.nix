@@ -8,6 +8,7 @@
       ./hardware.nix
       ./networking.nix
       ./users.nix
+      ../../shared/systems/base.nix
       ../../shared/systems/optional/disk.nix
       ../../shared/systems/optional/networktools.nix
       ../../shared/systems/optional/windowmanager/xfce.nix

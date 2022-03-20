@@ -1,8 +1,11 @@
 { config, pkgs, ... }:
+let
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./boot.nix
+      ../../shared/systems/base.nix
       ../../shared/systems/optional/blockchain.nix
       ../../shared/systems/optional/browsers.nix
       ../../shared/systems/optional/communication.nix
@@ -20,7 +23,6 @@
       ./networking.nix
       ./users.nix
     ];
-
 
 
 

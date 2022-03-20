@@ -5,7 +5,6 @@
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
-      ../shared/systems/configuration.nix
       ../systems/redtail/configuration.nix
     ];
   };
@@ -15,7 +14,6 @@
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
-      ../shared/systems/configuration.nix
       ../systems/bebop/configuration.nix
     ];
   };
@@ -25,7 +23,6 @@
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
-      ../shared/systems/configuration.nix
       ../systems/swordfish/configuration.nix
     ];
   };
@@ -34,7 +31,6 @@
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
-      ../shared/systems/configuration.nix
       ../systems/valkyrie/configuration.nix
     ];
   };

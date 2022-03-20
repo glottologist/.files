@@ -1,7 +1,5 @@
 { config, pkgs, ... }:
-{
-
-  environment.systemPackages = with pkgs; [
+let blockchainPkgs =  with pkgs; [
      electrum               # A lightweight bitcoin wallet
      exodus                 # Top rated crypto wallet with Trezor integration and built-in exchange
      hidapi                 # Library for communicating with UBS and Bluetooth HID devices
@@ -11,6 +9,8 @@
      wasabiwallet           # Privacy focused local Bitcoin wallet
      cointop                # Terminal based crypto prices
    ];
+in
+{
 
   services = {
     udev = {
@@ -24,5 +24,6 @@
       enable = true;
     };
   };
+
 
 }

@@ -8,6 +8,7 @@
       ./networking.nix
       ./users.nix
       ./virtualisation.nix
+      ../../shared/systems/base.nix
       ../../shared/systems/optional/blockchain.nix
       ../../shared/systems/optional/browsers.nix
       ../../shared/systems/optional/disk.nix
