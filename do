@@ -48,7 +48,7 @@ fi
 
 home(){
   export NIXPKGS_ALLOW_INSECURE=1
-  nix build ".#homeConfigurations.${USER}.activationPackage" $ADDITIONAL_ARGS --impure
+  nix build ".#homeConfigurations.${USER}.activationPackage" $ADDITIONAL_ARGS
 
   if [ "$WORKFLOW" = "apply" ]; then
     echo "$MARKER"
@@ -63,7 +63,7 @@ home(){
 
 system(){
  export NIXPKGS_ALLOW_INSECURE=1
- nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel" $ADDITIONAL_ARGS --impure
+ nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel" $ADDITIONAL_ARGS
 
   if [ "$WORKFLOW" = "apply" ]; then
     echo "$MARKER"
