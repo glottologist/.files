@@ -9,15 +9,15 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
+     cpu.intel.updateMicrocode =  lib.mkDefault config.hardware.enableRedistributableFirmware;
       video.hidpi.enable = lib.mkDefault true;
       opengl = {
         enable = true;
         extraPackages = with pkgs; [
          intel-media-driver
+         libvdpau-va-gl
          vaapiIntel
          vaapiVdpau
-         libvdpau-va-gl
-
         ];
       };
       pulseaudio = {

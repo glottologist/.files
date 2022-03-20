@@ -5,6 +5,8 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./boot.nix
+      ./services.nix
+      ./environment.nix
       ../../shared/systems/base.nix
       ../../shared/systems/optional/blockchain.nix
       ../../shared/systems/optional/browsers.nix
@@ -24,10 +26,6 @@ in
       ./users.nix
     ];
 
-    environment.systemPackages = with pkgs; [
-      nmap-graphical
-      cointop
-    ];
 
   system.stateVersion = "22.05"; # Did you read the comment?
 

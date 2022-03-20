@@ -1,6 +1,8 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-  imports = [ ];
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
 
   boot = {
     loader = {
@@ -26,7 +28,7 @@
         "usbhid"
         "xhci_pci"
       ];
-      kernelModules = [ "dm-snapshot" ];
+      kernelModules = [ "i915" "dm-snapshot" ];
       luks.devices = {
         crypted = {
           device = "/dev/disk/by-uuid/7da9d6ba-435b-4ed2-b386-1682937e83dc";
@@ -35,7 +37,17 @@
       };
     };
 
+    kernel.sysctl = {
+       "vm.swappiness" = lib.mkDefault 1;
+    };
+
+    kernelParams = lib.mkDefault [ "acpi_rev_override" ];
+
     kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    blacklistedKernelModules = lib.mkDefault [ "nouveau" "bbswitch" ];
+    extraModulePackages = lib.mkDefault [ pkgs.linuxPackages.nvidia_x11 ];
+    extraModprobeConfig = ''
+      options iwlwifi power_save=1 disable_11ax=1
+    '';
   };
 }
