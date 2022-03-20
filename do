@@ -47,7 +47,6 @@ fi
 
 
 home(){
-  export NIXPKGS_ALLOW_INSECURE=1
   nix build ".#homeConfigurations.${USER}.activationPackage" $ADDITIONAL_ARGS
 
   if [ "$WORKFLOW" = "apply" ]; then
@@ -62,7 +61,6 @@ home(){
 }
 
 system(){
- export NIXPKGS_ALLOW_INSECURE=1
  nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel" $ADDITIONAL_ARGS
 
   if [ "$WORKFLOW" = "apply" ]; then
