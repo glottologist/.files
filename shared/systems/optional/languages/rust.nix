@@ -21,10 +21,10 @@
     cargo-tarpaulin
   ];
 
-  environment.variables = {
+  environment.sessionVariables = {
     RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     RUSTUP_TOOCHAIN = "stable";
-    PATH = ["$HOME/.cargo/bin"];
+    #PATH = ["$HOME/.cargo/bin"];
   };
 
 }
