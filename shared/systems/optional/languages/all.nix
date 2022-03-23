@@ -15,6 +15,7 @@
       ./latex.nix
       ./nim.nix
       ./nix.nix
+      ./node.nix
       ./ocaml.nix
       ./purescript.nix
       ./python.nix
