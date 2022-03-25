@@ -4,6 +4,7 @@
     with ocamlPackages; [
       ocaml
       ocamlformat
+      opam
       odoc
       ocaml
       dune_3
