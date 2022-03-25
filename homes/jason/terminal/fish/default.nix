@@ -157,6 +157,7 @@ in
       pullall    = "find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;";
       recr       = "cd ~/development/glottologist/recruitment";
       ref        = "cd ~/development/reference";
+      rf         = "rofi -show drun -show-icons";
       rmcaps     = "xmodmap -e 'remove lock = Caps_Lock' && xmodmap -e 'keysym Caps_Lock = Control space'";
       rmp        = "rmapi put";
       scr        = "cd ~/development/scratch";

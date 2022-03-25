@@ -2,10 +2,11 @@
 {
 
   imports = [
-    ./tmux/tmux.nix
+    ./tmux/default.nix
     ./alacritty/default.nix
     ./fish/default.nix
     ./starship/default.nix
+    ./rofi/default.nix
   ];
 
   home.packages = with pkgs; [
@@ -22,8 +23,9 @@
     };
     direnv = {   # Utility to load and unload environment variables depending on the current directory.
       enable = true;
-      #enableFishIntegration = true;
-      nix-direnv.enable = true;
+      nix-direnv = {
+        enable = true;
+      };
     };
     fzf = {  # A command line fuzzy finder
       enable = true;
@@ -52,13 +54,8 @@
 		  reloadTime = 5;
     };
    pet.enable = true;  # A command line snippet manager
-   rofi = {
-    enable = true;
-    terminal = "${pkgs.alacritty}/bin/alacritty";
-    };
    zoxide = { # A better CD command
       enable = true;
-      #enableFishIntegration = true;
       options = [];
    };
   };
