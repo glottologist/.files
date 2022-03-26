@@ -10,6 +10,7 @@
       dune_3
       ligo
       merlin
+      data-encoding
       nodePackages.ocaml-language-server
   ];
 }

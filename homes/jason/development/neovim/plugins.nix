@@ -84,14 +84,14 @@
     };
   };
 
- telescopenvim = buildVimPlugin {
-    name = "telescope-nvim";
-    src = builtins.fetchTarball {
-      name   = "telescope.nvim-v0.0.1";
-      url    = "https://github.com/nvim-telescope/telescope.nvim/archive/aa41912.tar.gz";
-      sha256 = "1vd67cln4ckwn9sapklqgm8wr5p9x4amqk1197ki7wwpja1cq6l7";
-    };
-   };
+ #telescopenvim = buildVimPlugin {
+    #name = "telescope-nvim";
+    #src = builtins.fetchTarball {
+      #name   = "telescope.nvim-v0.0.1";
+      #url    = "https://github.com/nvim-telescope/telescope.nvim/archive/aa41912.tar.gz";
+      #sha256 = "1vd67cln4ckwn9sapklqgm8wr5p9x4amqk1197ki7wwpja1cq6l7";
+    #};
+   #};
 
  vim-devicons = buildVimPlugin {
     name = "vim-devicons";
