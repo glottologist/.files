@@ -12,5 +12,10 @@
       merlin
       data-encoding
       nodePackages.ocaml-language-server
+
+      # Only required for Tezos development
+      libev
+      libffi
+      pkg-config
   ];
 }

@@ -9,6 +9,7 @@
       ./elm.nix
       ./fsharp.nix
       ./fstar.nix
+      ./general.nix
       ./go.nix
       ./haskell.nix
       #./julia.nix

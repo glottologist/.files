@@ -131,6 +131,7 @@ in
       kx         = "kubectx ";
       lang       = "cd ~/Documents/languages";
       lar        = "ls -laR";
+      lg         = "ls | grep";
       ll         = "ls -a";
       lock       = "sudo cryptsetup luksClose";
       ls         = "lsd";
