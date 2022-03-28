@@ -155,9 +155,6 @@ let g:syntastic_check_on_wq = 0
 :set rtp+=~/.opam/4.01.0dev+trunk/share/ocamlmerlin/vim
 :set rtp+=~/.opam/4.01.0dev+trunk/share/ocamlmerlin/vimbufsync
 let g:syntastic_ocaml_checkers=['merlin']
-autocmd FileType ocaml source /home/heidi-ann/.opam/4.01.0dev+trunk/share/typerex/ocp-indent/ocp-indent.vim
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 " Haskell
 au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
