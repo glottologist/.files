@@ -19,6 +19,7 @@ let
         ms-dotnettools.csharp
         ms-kubernetes-tools.vscode-kubernetes-tools
         ms-vsliveshare.vsliveshare
+        ocamllabs.ocaml-platform
         pkief.material-icon-theme
         redhat.vscode-yaml
         scala-lang.scala

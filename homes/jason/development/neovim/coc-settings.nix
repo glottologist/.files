@@ -82,11 +82,10 @@
       "filetypes" = [ "purescript" ];
       "rootPatterns" = [ "bower.json" "psc-package.json" "spago.dhall" ];
     };
-
-    "ocaml" = {
-      "command" = "ocaml-language-server";
-      "args" = [ "--stdio" ];
-      "filetypes" = [ "ocaml" "reason" ];
+    "ocaml-lsp" = {
+      "command" = "opam";
+      "args" =  ["config"  "exec" "--"  "ocamllsp"];
+      "filetypes" =  ["ocaml" "reason"];
     };
 
     "nim" = {

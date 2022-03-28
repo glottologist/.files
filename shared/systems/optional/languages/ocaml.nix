@@ -11,8 +11,8 @@
       ligo
       merlin
       data-encoding
-      nodePackages.ocaml-language-server
-
+      ocp-indent
+      ocaml-lsp
       # Only required for Tezos development
       libev
       libffi
