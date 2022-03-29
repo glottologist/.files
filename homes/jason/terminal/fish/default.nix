@@ -81,6 +81,7 @@ in
       drmi       = "docker rmi --force (docker images | awk '{print $3}')";
       drop       = "cd ~/Dropbox";
       du         = "ncdu --color dark -rr -x";
+      eo         = "eval $(opam env)";
       flash      = "cd ~/Documents/flashcards";
       fs         = "flameshot gui";
       ga         = "git add";
