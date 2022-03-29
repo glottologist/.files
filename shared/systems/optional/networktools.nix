@@ -3,6 +3,7 @@ let
   networkPkgs = with pkgs; [
     curl                    # A command line tool for transferring files with URL syntax
     dig                     # Domain name server
+    nethogs                 # A small 'net top' tool, grouping bandwidth by process
     networkmanager          # Network configuration and management tool
     networkmanager-openvpn  # NetworkManager's OpenVPN plugin
     nmap-graphical          # Graphical version of Nmap
