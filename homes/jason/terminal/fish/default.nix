@@ -137,6 +137,7 @@ in
       lock       = "sudo cryptsetup luksClose";
       ls         = "lsd";
       mar        = "cd ~/development/marigold";
+      mc         = "./tezos-client --mode mockup --base-dir /tmp/mockup";
       mfix       = "mill mono.__.fix --rules OrganizeImports && mill mono._.reformat";
       mkk        = "minikube kubectl";
       mksc       = "minikube config set cpus 4";
