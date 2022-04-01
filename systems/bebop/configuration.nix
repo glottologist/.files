@@ -5,14 +5,13 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./boot.nix
-      ./services.nix
-      ./environment.nix
       ../../shared/systems/base.nix
       ../../shared/systems/optional/blockchain.nix
       ../../shared/systems/optional/browsers.nix
       ../../shared/systems/optional/communication.nix
       ../../shared/systems/optional/disk.nix
       ../../shared/systems/optional/games.nix
+      ../../shared/systems/optional/languages/all.nix
       ../../shared/systems/optional/media.nix
       ../../shared/systems/optional/networktools.nix
       ../../shared/systems/optional/specific/polybar.nix
@@ -20,10 +19,11 @@ in
       ../../shared/systems/optional/themes.nix
       ../../shared/systems/optional/virtualization.nix
       ../../shared/systems/optional/windowmanager/plasma.nix
-      ../../shared/systems/optional/languages/all.nix
+      ./environment.nix
       ./filesystem.nix
       ./hardware.nix
       ./networking.nix
+      ./services.nix
       ./users.nix
     ];
 
