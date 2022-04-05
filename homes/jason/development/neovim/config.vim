@@ -102,7 +102,8 @@ set matchtime=2             " Time during which the matching parenthesis is show
 set listchars=tab:▸\ ,eol:¬ " Invisible characters representation when :set list.
 
 set clipboard=unnamedplus   " Copy/Paste to/from clipboard
-set cursorline              " Highlight line cursor is currently on
+set cursorline              " Highlight the line cursor is currently on
+set cursorcolumn            " Highlight the column the cursor is currently on"
 set completeopt+=noinsert   " Select the first item of popup menu automatically without inserting it
 
 " Some servers have issues with backup files, see #649.

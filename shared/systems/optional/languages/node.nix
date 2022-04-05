@@ -1,9 +1,9 @@
 { pkgs, ...}:
 {
   environment.systemPackages = with pkgs ;[
-    nix-linter
-    nixfmt
-    rnix-lsp
-    nix-index
+    nodejs
+    nodePackages.npm
+    nodePackages.esy
+    nodePackages.node2nix
   ];
 }
