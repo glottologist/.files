@@ -12,11 +12,8 @@ in
     extraConfig = tmuxConf;
     escapeTime = 0;
     keyMode = "vi";
-    #secureSocket = false;
     plugins = with plugins; [
        cpu
-       #nord # theme
-       #iceberg
        battery
        net-speed
        online-status
@@ -33,12 +30,6 @@ in
             set -g @pomodoro_show_clock 'on_stop'
         '';
        }
-       #{
-         #plugin = tsol;
-         #extraConfig = ''
-          #set -g @colors-solarized 'light'
-           #'';
-       #}
        {
          plugin = fingers;
          extraConfig = ''

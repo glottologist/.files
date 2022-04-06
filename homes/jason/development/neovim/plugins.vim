@@ -110,13 +110,10 @@ nnoremap <leader>ff <cmd>FZF<cr>
 " vim-scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
-"" Theme material-vim
-""let g:material_theme_style = 'default' | 'palenight' | 'ocean' | 'lighter' | 'darker' | 'default-community' | 'palenight-community' | 'ocean-community' | 'lighter-community' | 'darker-community'
-let g:material_theme_style = 'lighter'
 let g:lightline = { 'colorscheme': 'PaperColor' }
 
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
-
-
+" Use silver-sercher for word find
+let g:ackprg = 'ag --nogroup --nocolor --column'

@@ -12,7 +12,8 @@
     remarshal         # Convert between TOML, YAML and JSON
     pkg-config        # A tool that allows packages to find out information about other packages (wrapper script)
     ctags             # A tool for fast source code browsing (exuberant ctags)
-    #universal-ctags   # A maintained ctags implementation
+    #universal-ctags  # A maintained ctags implementation
+    silver-searcher   # Ack like searcher focused on code
   ];
 
 
