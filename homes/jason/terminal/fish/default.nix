@@ -4,6 +4,7 @@ let
   fzfConfig = ''
     set -x FZF_DEFAULT_OPTS "--preview='bat {} --color=always'" \n
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
+    set PATH $HOME/tezos $PATH
   '';
 
   themeConfig = ''
@@ -166,6 +167,7 @@ in
       scr        = "cd ~/development/scratch";
       setmtu     = "sudo ip link set dev eth0 mtu 1350";
       space      = "sudo ncdu -x /";
+      st         = "speedtest";
       sts        = "cd $HOME/.config/tmux && git add -A && git commit -am 'Sync sessions' && git push && cd -";
       syncall    = "syncart && syncflash && syncknow && syncnotes && syncpres && synctemp ";
       syncart    = "cd ~/Documents/articles && git add -A && git commit -am 'Sync articles' && git push && cd - ";
@@ -177,6 +179,10 @@ in
       t          = "tmux ";
       ta         = "tmux attach ";
       tas        = "tmux attach -t ";
+      tc         = "tezos-client";
+      tcaa       = "tezos-client activate-account";
+      tcla       = "tezos-client list known addresses";
+      tcgb       = "tezos-client get balance for";
       testnix    = "export NIXPKGS=/home/jason/development/glottologist/nixpkgs && nix-env -f $NIXPKGS -iA";
       tf         = "terraform ";
       tk         = "cd ~/Documents/tasks && dstask";
