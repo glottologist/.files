@@ -4,6 +4,6 @@
     gnumake
     cmake
     pkg-config
-
+    libsodium
   ];
 }
