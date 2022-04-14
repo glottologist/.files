@@ -69,6 +69,7 @@ in
       dev        = "cd ~/development";
       di         = "docker images";
       disk       = "sudo diskonaut /";
+      dka        = "docker kill (docker ps | awk '{print $1}' | grep -v CONTAINER)";
       doc        = "cd ~/Documents";
       dotb       = "dotnet build";
       dotbat     = "dotnet build && dotnet test";
