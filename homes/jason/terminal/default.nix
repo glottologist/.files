@@ -2,11 +2,12 @@
 {
 
   imports = [
-    ./tmux/default.nix
     ./alacritty/default.nix
     ./fish/default.nix
-    ./starship/default.nix
+    ./kitty/default.nix
     ./rofi/default.nix
+    ./starship/default.nix
+    ./tmux/default.nix
   ];
 
   home.packages = with pkgs; [

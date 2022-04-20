@@ -3,7 +3,7 @@
   programs = {
    rofi = {
     enable = true;
-    terminal = "${pkgs.alacritty}/bin/alacritty";
+    terminal = "${pkgs.kitty}/bin/kitty";
     theme = ./themes/rectangle-everforest.rasi;
     };
   };
