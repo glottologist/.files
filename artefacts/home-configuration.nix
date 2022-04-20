@@ -26,7 +26,7 @@ let
     home-manager.lib.homeManagerConfiguration rec {
       inherit pkgs system username homeDirectory;
 
-      stateVersion = "21.11";
+      stateVersion = "22.05";
       configuration = conf;
     });
 
