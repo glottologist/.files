@@ -7,6 +7,5 @@
     fira-code-symbols
     fira-mono
     font-awesome
-    nerdfonts
   ];
 }
