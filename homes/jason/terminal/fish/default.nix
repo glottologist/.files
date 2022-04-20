@@ -33,7 +33,7 @@ in
     plugins = [ fenv ];
     interactiveShellInit = ''
       eval (direnv hook fish)
-      any-nix-shell fish --info-left | source
+      any-nix-shell fish --info-right | source
     '';
     shellAliases = {
       ".-"       = "cd - ";
