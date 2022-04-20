@@ -45,6 +45,9 @@ else
   BUILD=$4
 fi
 
+echo_nix_version(){
+  echo $(nix --version)
+}
 
 home(){
   nix build ".#homeConfigurations.${USER}.activationPackage" $ADDITIONAL_ARGS
@@ -95,6 +98,9 @@ copy_home_files() {
    make_dir_and_copy "Pictures"
    make_dir_and_copy "icons"
 }
+
+echo_nix_version
+
 case $BUILD in
   "home")
     home;;
