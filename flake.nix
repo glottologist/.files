@@ -36,7 +36,7 @@
       nixosConfigurations = (
         import ./artefacts/nixos-configuration.nix {
           inherit (nixpkgs) lib;
-          inherit inputs system;
+          inherit inputs system nixpkgs;
         }
       );
 
