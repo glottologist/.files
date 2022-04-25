@@ -155,6 +155,7 @@ in
       notes      = "cd ~/Documents/notes";
       npks       = "cd ~/development/glottologist/nixpkgs";
       nse        = "nix search ";
+      nsp        = "nix search nixpkgs ";
       ont        = "cd ~/development/ontologi";
       oss        = "cd ~/development/opensource";
       ping       = "prettyping";
