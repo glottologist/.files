@@ -13,6 +13,10 @@
       video.hidpi.enable = lib.mkDefault true;
       opengl = {
         enable = true;
+        driSupport32Bit = true;
+        extraPackages32 = with pkgs.pkgsi686Linux; [
+          libva
+        ];
         extraPackages = with pkgs; [
          intel-media-driver
          libvdpau-va-gl

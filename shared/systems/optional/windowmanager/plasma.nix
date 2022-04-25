@@ -19,6 +19,9 @@
         enable = true;
         touchpad.disableWhileTyping = true;
       };
+      videoDrivers = [
+         "nvidia"
+      ];
       serverLayoutSection = ''
         Option "StandbyTime" "0"
         Option "SuspendTime" "0"
