@@ -44,8 +44,6 @@
     kernelParams = lib.mkDefault [ "acpi_rev_override" ];
 
     kernelModules = [ "kvm-intel" ];
-    blacklistedKernelModules = lib.mkDefault [ "nouveau" "bbswitch" ];
-    extraModulePackages = lib.mkDefault [ pkgs.linuxPackages.nvidia_x11 ];
     extraModprobeConfig = ''
       options iwlwifi power_save=1 disable_11ax=1
     '';

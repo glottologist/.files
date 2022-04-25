@@ -17,7 +17,7 @@
          intel-media-driver
          libvdpau-va-gl
          vaapiIntel
-         vaapiVdpau
+         #vaapiVdpau
         ];
       };
       pulseaudio = {
