@@ -14,6 +14,7 @@
     ctags             # A tool for fast source code browsing (exuberant ctags)
     #universal-ctags  # A maintained ctags implementation
     silver-searcher   # Ack like searcher focused on code
+    difftastic        # A syntax-aware diff
   ];
 
 

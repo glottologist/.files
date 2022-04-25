@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
+    freeoffice                # An office suite with a word processor, spreadsheet and presentation program
+    libreoffice               # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     briss                     # Java application for cropping PDF files
     diff-pdf                  # Simple tool for visually comparing two PDF files
     img2pdf                   # Convert images to PDF via direct JPEG inclusion
