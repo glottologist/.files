@@ -1,6 +1,4 @@
 { config, pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
-      steam                 # Games platform
-   ];
+  programs.steam.enable = true;
 }

@@ -9,14 +9,10 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
-     cpu.intel.updateMicrocode =  lib.mkDefault config.hardware.enableRedistributableFirmware;
+      cpu.intel.updateMicrocode =  lib.mkDefault config.hardware.enableRedistributableFirmware;
       video.hidpi.enable = lib.mkDefault true;
       opengl = {
         enable = true;
-        driSupport32Bit = true;
-        extraPackages32 = with pkgs.pkgsi686Linux; [
-          libva
-        ];
         extraPackages = with pkgs; [
          intel-media-driver
          libvdpau-va-gl
