@@ -87,7 +87,10 @@
       "args" =  ["config"  "exec" "--"  "ocamllsp"];
       "filetypes" =  ["ocaml" "reason"];
     };
-
+    "ligo" = {
+      "command" = "~/.local/bin/ligo-squirrel";
+      "filetypes" = ["ligo" "mligo" "religo"];
+    };
     "nim" = {
       "command" = "nimlsp";
       "filetypes" = [ "nim" ];

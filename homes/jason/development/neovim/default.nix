@@ -100,6 +100,7 @@ let
     vim-gtfo
     vim-hdevtools           # Type assistence for Haskell
     vim-hoogle              # This plugin query hoogle for you and display the results in a special window.
+    vimligo                # Vim plugin for ligolang
     vim-nix
     vim-pandoc
     vim-pandoc-syntax       # Pandoc syntax highlighting for Markdown

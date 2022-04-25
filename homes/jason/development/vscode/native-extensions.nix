@@ -1,0 +1,21 @@
+{
+  native = [
+    ms-python.python
+    freebroccolo.reasonml
+    github.vscode-pull-request-github
+    haskell.haskell
+    ibm.output-colorizer
+    justusadam.language-haskell
+    ms-azuretools.vscode-docker
+    ms-dotnettools.csharp
+    ms-kubernetes-tools.vscode-kubernetes-tools
+    ms-vsliveshare.vsliveshare
+    ocamllabs.ocaml-platform
+    pkief.material-icon-theme
+    redhat.vscode-yaml
+    scala-lang.scala
+    scalameta.metals
+    vscodevim.vim
+    zhuangtongfa.material-theme
+  ];
+}

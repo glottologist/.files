@@ -5,10 +5,10 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    nurpkgs = {
-      url = github:nix-community/NUR;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #nurpkgs = {
+      #url = github:nix-community/NUR;
+      #inputs.nixpkgs.follows = "nixpkgs";
+    #};
 
     home-manager = {
       url = github:nix-community/home-manager;
@@ -22,14 +22,14 @@
   };
 
 
-  outputs = inputs @ { self, nixpkgs, nurpkgs, home-manager, tex2nix }:
+  outputs = inputs @ { self, nixpkgs,  home-manager, tex2nix }:
     let
       system = "x86_64-linux";
     in
     {
       homeConfigurations = (
         import ./artefacts/home-configuration.nix {
-          inherit system nixpkgs nurpkgs home-manager tex2nix;
+          inherit system nixpkgs home-manager tex2nix;
         }
       );
 

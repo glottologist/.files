@@ -2,7 +2,6 @@
 {
   imports =
     [
-      ./base/cachix.nix
       ./base/devices.nix
       ./base/environment.nix
       ./base/location.nix
