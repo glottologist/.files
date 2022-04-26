@@ -114,7 +114,7 @@ in
       "*.mill-version" # used by metals
     ];
     signing = {
-      key = "87F1484EE9CA6489";
+      key = "DF40F6B4427732F3";
       signByDefault = true;
     };
     userEmail = "jason@glottologist.co.uk";
