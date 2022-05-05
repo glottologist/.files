@@ -94,6 +94,7 @@ in
       gc         = "git commit -am ";
       gcf        = "git clean -f";
       gcl        = "git clone ";
+      gclgh      = "git clone git@github.com:";
       gcn        = "git clean -n";
       gco        = "git checkout ";
       gd         = "git diff ";
