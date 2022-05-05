@@ -157,6 +157,7 @@ in
       nse        = "nix search ";
       nsp        = "nix search nixpkgs ";
       ont        = "cd ~/development/ontologi";
+      eop        = "eval (opam env)";
       oss        = "cd ~/development/opensource";
       ping       = "prettyping";
       pres       = "cd ~/Documents/presentations";
