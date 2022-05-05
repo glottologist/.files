@@ -1,4 +1,4 @@
-{ system, nixpkgs,  home-manager, tex2nix, ... }:
+{ system, nixpkgs,  home-manager, tex2nix,  ... }:
 
 let
   username = "jason";
@@ -11,16 +11,8 @@ let
     config.allowUnfree = true;
     config.xdg.configHome = configHome;
 
-    #overlays = [
-      #nurpkgs.overlay
-      #(f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
-    #];
   };
 
-  #nur = import nurpkgs {
-    #inherit pkgs;
-    #nurpkgs = pkgs;
-  #};
 
   mkHome = conf: (
     home-manager.lib.homeManagerConfiguration rec {

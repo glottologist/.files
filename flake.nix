@@ -5,11 +5,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    #nurpkgs = {
-      #url = github:nix-community/NUR;
-      #inputs.nixpkgs.follows = "nixpkgs";
-    #};
-
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,6 +14,7 @@
       url = github:Mic92/tex2nix/4b17bc0;
       inputs.utils.follows = "nixpkgs";
     };
+
   };
 
 
@@ -36,7 +32,7 @@
       nixosConfigurations = (
         import ./artefacts/nixos-configuration.nix {
           inherit (nixpkgs) lib;
-          inherit inputs system nixpkgs;
+          inherit inputs system nixpkgs ;
         }
       );
 

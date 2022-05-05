@@ -5,6 +5,7 @@
     matterbridge        # Simple bridge between Mattermost, IRC, XMPP, Gitter, Slack, Discord, Telegram, Rocket.Chat, Hipchat(via xmpp), Matrix and Steam
     mattermost-desktop  # Open-source Slack-alternative
     mattermost          # Open-source Slack-alternative - desktop version
+    signal-desktop      # signam messenger
     skypeforlinux       # Linux client for Skype
     slack               # Desktop client for Slack
     slack-term          # Slack client for your term

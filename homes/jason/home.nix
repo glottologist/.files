@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, ... }:
+{ config, lib, pkgs, stdenv,  ... }:
 
 let
   defaultPkgs = with pkgs; [

@@ -1,4 +1,4 @@
-{ lib, inputs, system, ... }:
+{ lib, inputs, system,  ... }:
 {
 
   redtail = lib.nixosSystem {
