@@ -136,8 +136,13 @@ in
       lang       = "cd ~/Documents/languages";
       lar        = "ls -laR";
       lg         = "ls | grep";
+      lcc        = "ligo compile contract";
+      lce        = "ligo compile expression";
+      lcp        = "ligo compile parameter";
+      lcs        = "ligo compile storage";
       ll         = "ls -a";
       lock       = "sudo cryptsetup luksClose";
+      lrt        = "ligo run test";
       ls         = "lsd";
       mar        = "cd ~/development/marigold";
       mc         = "./tezos-client --mode mockup --base-dir /tmp/mockup";
