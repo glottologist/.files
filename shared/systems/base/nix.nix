@@ -14,6 +14,7 @@ in
          "electron-13.6.9"
          "libgit2-0.27.10"
          "python2.7-Pillow-6.2.2"
+         "adobe-reader-9.5.5"
     ];
   };
   environment.systemPackages = with pkgs; [
