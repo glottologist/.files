@@ -19,6 +19,7 @@
     cargo-inspect
     cargo-release
     cargo-tarpaulin
+    crate2nix
   ];
 
   environment.sessionVariables = {
