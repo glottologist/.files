@@ -102,8 +102,8 @@ programs.ssh = {
         user = "root";
       };
       #  Hetzner Cloud ======================================
-        "cirdan" = {
-          hostname = "65.108.211.15";
+        "ulmo" = {
+          hostname = "65.108.244.41";
           user = "root";
         };
     };

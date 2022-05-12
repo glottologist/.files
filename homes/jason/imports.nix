@@ -8,4 +8,5 @@
   ../../shared/home/packages/security.nix
   ./development/default.nix
   ./terminal/default.nix
+  ./network/ssh/default.nix
 ]
