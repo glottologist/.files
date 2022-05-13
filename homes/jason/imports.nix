@@ -4,9 +4,10 @@
   ../../shared/home/packages/documentation.nix
   ../../shared/home/packages/fonts.nix
   ../../shared/home/packages/network.nix
-  ./productivity/default.nix
   ../../shared/home/packages/security.nix
   ./development/default.nix
-  ./terminal/default.nix
+  ./learning/default.nix
   ./network/ssh/default.nix
+  ./productivity/default.nix
+  ./terminal/default.nix
 ]
