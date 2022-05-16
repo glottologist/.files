@@ -16,6 +16,7 @@ in
       ../../shared/systems/optional/networktools.nix
       ../../shared/systems/optional/scripts/all.nix
       ../../shared/systems/optional/specific/polybar.nix
+      ../../shared/systems/optional/specific/waydroid.nix
       ../../shared/systems/optional/storage.nix
       ../../shared/systems/optional/themes.nix
       ../../shared/systems/optional/virtualization.nix
