@@ -112,6 +112,10 @@ programs.ssh = {
           hostname = "78.47.117.138";
           user = "root";
         };
+        "olorin" = {
+          hostname = "167.235.226.45";
+          user = "root";
+        };
     };
   };
 
