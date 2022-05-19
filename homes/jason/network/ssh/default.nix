@@ -12,47 +12,47 @@ programs.ssh = {
         user = "root";
       };
       "odyssey" = { # pfSense Firewall
-        hostname = "10.75.79.1";
+        hostname = "10.75.17.1";
         user = "root";
       };
       "starbug" = {   # Wireless Access Point
-        hostname = "10.75.79.2";
+        hostname = "10.75.17.2";
         user = "root";
       };
       "eagle" = {   # Wireless Access Point
-        hostname = "10.75.79.3";
+        hostname = "10.75.17.3";
         user = "root";
       };
       "gunstar" = {   # Managed Switch
-        hostname = "10.75.79.4";
+        hostname = "10.75.17.4";
         user = "root";
       };
       "cygnus" = {   # Pi-Hole
-        hostname = "10.75.79.4";
+        hostname = "10.75.17.5";
         user = "root";
       };
       "swordfish" = {   # Plex Server
-        hostname = "10.75.79.10";
+        hostname = "10.75.17.10";
         user = "jason";
       };
       "leonov" = {   # Mysterium Node
-        hostname = "10.75.79.11";
-        user = "jason";
+        hostname = "10.75.17.11";
+        user = "leonov";
       };
       "valkyrie" = {   # Development
-        hostname = "10.75.79.12";
+        hostname = "10.75.17.12";
         user = "jason";
       };
       "elysium" = {   # Awair Element
-        hostname = "10.75.79.13";
+        hostname = "10.75.17.13";
         user = "root";
       };
       "narada" = {   # Bobcat Helium Miner
-        hostname = "10.75.79.14";
+        hostname = "10.75.17.14";
         user = "root";
       };
       "destiny" = {   # Roku Stremaing Stick
-        hostname = "10.75.79.51";
+        hostname = "10.75.17.51";
         user = "root";
       };
       "liberator" = {   # Roku Stremaing Stick
@@ -114,6 +114,14 @@ programs.ssh = {
         };
         "olorin" = {
           hostname = "167.235.226.45";
+          user = "root";
+        };
+        "morgoth" = {
+          hostname = "135.181.81.37";
+          user = "root";
+        };
+        "curunir" = {
+          hostname = "65.109.1.74";
           user = "root";
         };
     };

@@ -15,6 +15,7 @@
     #universal-ctags  # A maintained ctags implementation
     silver-searcher   # Ack like searcher focused on code
     difftastic        # A syntax-aware diff
+    rpi-imager        # Raspberry Pi Imaging Utility
   ];
 
 
