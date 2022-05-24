@@ -105,7 +105,7 @@ programs.ssh = {
 
   #  Hetzner Cloud ======================================
         "ulmo" = {
-          hostname = "65.108.244.41";
+          hostname = "195.201.226.198";
           user = "root";
         };
         "nessa" = {
@@ -122,6 +122,10 @@ programs.ssh = {
         };
         "curunir" = {
           hostname = "65.109.1.74";
+          user = "root";
+        };
+        "tulkas" = {
+          hostname = "65.108.210.215";
           user = "root";
         };
     };
