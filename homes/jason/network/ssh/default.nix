@@ -102,8 +102,13 @@ programs.ssh = {
         user = "root";
       };
 
+  #  Hetzner Cloud - Glottologist ======================================
+        "defiant" = {
+          hostname = "65.108.144.254";
+          user = "jason";
+        };
 
-  #  Hetzner Cloud ======================================
+  #  Hetzner Cloud - Ontologi ======================================
         "ulmo" = {
           hostname = "195.201.226.198";
           user = "root";
