@@ -99,6 +99,7 @@ in
       gcn        = "git clean -n";
       gco        = "git checkout ";
       gd         = "git diff ";
+      gl         = "git l19";
       glot       = "cd ~/development/glottologist";
       gp         = "git pull";
       gps        = "git push";
