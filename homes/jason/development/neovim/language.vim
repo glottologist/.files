@@ -179,3 +179,7 @@ nnoremap <leader>hh :Hoogle <CR>
 " coc-pairs
 autocmd FileType markdown let b:coc_pairs_disabled = ['`']
 
+" vim-surround
+:nnoremap <Leader>s" ciw""<Esc>P
+:nnoremap <Leader>s' ciw''<Esc>P
+:nnoremap <Leader>sd daW"=substitute(@@,"'\\\|\"","","g")<CR>P

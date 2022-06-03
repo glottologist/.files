@@ -10,6 +10,7 @@ local keymap = {
     i        = { name = '+Gist' },
     l        = { name = '+Language' },
     m        = { name = '+Markdown' },
+    s        = { name = '+Surround' },
     t        = { name = '+Tag' },
     u        = { name = '+Undo' },
     z        = { name = '+Zen' },
