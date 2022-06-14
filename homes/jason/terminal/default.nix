@@ -11,10 +11,12 @@
   ];
 
   home.packages = with pkgs; [
-    tmate
-    flameshot
-    ripgrep
-    via # GUI to program keyboard firmware
+    tmate         # Instant terminal sharing
+    flameshot     # Powerfull yet simple to use screenshot software
+    ripgrep       #  Utility to that combines the usability of the silver searcher with the raw speed of grep
+    ripgrep-all   # Ripgrep but search in pdfs, ebooks office docs etc.
+    via           # GUI to program keyboard firmware
+    hushboard     # Mute your microphone while typing
   ];
 
 
