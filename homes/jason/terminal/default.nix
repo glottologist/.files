@@ -14,6 +14,8 @@
     tmate
     flameshot
     ripgrep
+    qmk # Keyboard firmware command line
+    via # GUI to program keyboard firmware
   ];
 
 
