@@ -5,6 +5,7 @@
     plex = {
        enable = true;
        openFirewall = true;
+       dataDir = "/railgun/plexserver"
      };
    };
 }
