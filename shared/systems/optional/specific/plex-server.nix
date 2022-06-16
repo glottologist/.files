@@ -1,11 +1,11 @@
 { config, pkgs, ... }:
-
+ transcoding
 {
   services = {
     plex = {
        enable = true;
        openFirewall = true;
-       dataDir = "/railgun/plexserver"
+       dataDir = "/railgun/plex"
      };
    };
 }
