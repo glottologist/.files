@@ -28,7 +28,8 @@
         "usbhid"
         "xhci_pci"
       ];
-      kernelModules = [ "i915" "dm-snapshot" ];
+
+
       luks.devices = {
         crypted = {
           device = "/dev/disk/by-uuid/7da9d6ba-435b-4ed2-b386-1682937e83dc";
@@ -41,9 +42,18 @@
        "vm.swappiness" = lib.mkDefault 1;
     };
 
-    kernelParams = lib.mkDefault [ "acpi_rev_override" ];
+    kernelModules = [ "kvm-intel" "i915" "dm-snapshot" ];
+    #kernelParams = lib.mkDefault [ "acpi_rev_override" ];
+    kernelParams = [
+      "pcie.aspm=force"
+      "i915.enable_fbc=1"
+      "i915.enable_rc6=7"
+      "i915.lvds_downclock=1"
+      "i915.enable_guc_loading=1"
+      "i915.enable_guc_submission=1"
+      "i915.enable_psr=0"
+    ];
 
-    kernelModules = [ "kvm-intel" ];
     extraModprobeConfig = ''
       options iwlwifi power_save=1 disable_11ax=1
     '';

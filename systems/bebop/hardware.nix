@@ -6,8 +6,11 @@
       #(modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
+    powerManagement = {
+      enable = true;
+      cpuFreqGovernor = null;
+      #cpuFreqGovernor = lib.mkDefault "powersave";
+   };
   hardware = {
       cpu.intel.updateMicrocode =  lib.mkDefault config.hardware.enableRedistributableFirmware;
       video.hidpi.enable = lib.mkDefault true;
