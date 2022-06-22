@@ -8,8 +8,8 @@
 
     powerManagement = {
       enable = true;
-      cpuFreqGovernor = null;
-      #cpuFreqGovernor = lib.mkDefault "powersave";
+      #cpuFreqGovernor = null;
+      cpuFreqGovernor = lib.mkDefault "powersave";
    };
   hardware = {
       cpu.intel.updateMicrocode =  lib.mkDefault config.hardware.enableRedistributableFirmware;
