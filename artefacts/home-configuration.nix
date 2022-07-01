@@ -27,7 +27,12 @@ let
     inherit pkgs;
     inherit (pkgs) config lib stdenv;
   };
+  jasonlightConf = import ../homes/jason-light/home.nix {
+    inherit pkgs;
+    inherit (pkgs) config lib stdenv;
+  };
 in
 {
   jason   = mkHome jasonConf;
+  jasonlight = mkHome jasonlightConf;
 }

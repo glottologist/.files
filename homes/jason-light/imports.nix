@@ -5,7 +5,7 @@
   ../../shared/home/packages/fonts.nix
   ../../shared/home/packages/network.nix
   ../../shared/home/packages/security.nix
-  ../../shared/home/development/default.nix
+  ../../shared/home/development/default-light.nix
   ../../shared/home/learning/default.nix
   ../../shared/home/network/ssh/default.nix
   ../../shared/home/productivity/default.nix
