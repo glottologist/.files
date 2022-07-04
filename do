@@ -93,7 +93,7 @@ echo "$MARKER"
 make_dir_and_copy() {
   echo "Copying $1"
   mkdir -p $HOME/$1
-  cp -rf "homes/${USER}/$1" "$HOME/$1"
+  cp -rf "shared/home/$1" "$HOME/$1"
 }
 
 copy_home_files() {

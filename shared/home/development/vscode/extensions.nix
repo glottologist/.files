@@ -23,7 +23,7 @@
     { name = "remote-containers";              publisher = "ms-vscode-remote";   version = "0.209.6";         sha256 = "1dvma7mm0g6mr6yjfy0zbn0k143ag8p40r0kcb9n441w2r817rj8"; }
     { name = "remote-kubernetes";              publisher = "okteto";             version = "0.3.4";           sha256 = "T/xrLAyAUb5S8JXzcWt7ix83YgbzeqoWU3H4Gb7qgJo=";         }
     { name = "remote-ssh";                     publisher = "ms-vscode-remote";   version = "0.71.2021121615"; sha256 = "1lh08157z7lialb0dxls9fhahmf5l9wz6x2anwrnycvs512lpr1p"; }
-    { name = "rust-analyzer";                  publisher = "matklad";            version = "0.3.889";         sha256 = "0x04bhn5k66gxkhmbm3hwg9167q290qxmss7j59vyy0bv0jk4m54"; }
+    { name = "rust-analyzer";                  publisher = "rust-lang";          version = "0.4.1114";        sha256 = "PG0ntsgXpTEGZ0J4nX2njkEUOLk1Dia/HapiMqzpvqc=";         }
     { name = "rust-pack";                      publisher = "swellaby";           version = "0.2.29";          sha256 = "1y82kjxh8x12jrjq5r4mcp5mfxaahksj3cvnxwfprg11gw0k1vaz"; }
     { name = "toggle-zen-mode";                publisher = "fudd";               version = "1.1.2";           sha256 = "0whmbpnin1r1qnq45fpz7ayp51d4lilvbnv7llqd6jplx5b4n3ds"; }
     { name = "vscode-json-editor";             publisher = "nickdemayo";         version = "0.3.0";           sha256 = "160blmm22j2dsr2ms4b33jvdqnh94hcakvcwhhsyjqxld2x951ri"; }
