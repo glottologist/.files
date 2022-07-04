@@ -16,6 +16,7 @@
     silver-searcher   # Ack like searcher focused on code
     difftastic        # A syntax-aware diff
     rpi-imager        # Raspberry Pi Imaging Utility
+    openvscode-server # Open source VSCode Remote Server
   ];
 
 
