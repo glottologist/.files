@@ -10,4 +10,5 @@
   ../../shared/home/network/ssh/default.nix
   ../../shared/home/productivity/default.nix
   ../../shared/home/terminal/default.nix
+  ../../shared/home/languages/all.nix
 ]

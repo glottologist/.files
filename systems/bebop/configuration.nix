@@ -11,7 +11,6 @@ in
       ../../shared/systems/optional/communication.nix
       ../../shared/systems/optional/disk.nix
       ../../shared/systems/optional/games.nix
-      ../../shared/systems/optional/languages/all.nix
       ../../shared/systems/optional/media.nix
       ../../shared/systems/optional/networktools.nix
       ../../shared/systems/optional/scripts/all.nix
