@@ -1,21 +1,20 @@
 { pkgs, ...}:
 {
-  environment.systemPackages = with pkgs;
-    with ocamlPackages; [
+  home.packages = with pkgs; [
       ocaml
       ocamlformat
       opam
-      odoc
+      ocamlPackages.odoc
       ocaml
       dune_3
       ligo
-      merlin
-      data-encoding
-      ocp-indent
-      ocaml-lsp
+      ocamlPackages.merlin
+      ocamlPackages.data-encoding
+      ocamlPackages.ocp-indent
+      ocamlPackages.ocaml-lsp
       # Only required for Tezos development
       libev
       libffi
       pkg-config
-  ];
+    ];
 }

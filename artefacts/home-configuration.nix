@@ -26,10 +26,18 @@ let
   jasonConf = import ../homes/jason/home.nix {
     inherit pkgs;
     inherit (pkgs) config lib stdenv;
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+    };
   };
   jasonlightConf = import ../homes/jason-light/home.nix {
     inherit pkgs;
     inherit (pkgs) config lib stdenv;
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+    };
   };
 in
 {

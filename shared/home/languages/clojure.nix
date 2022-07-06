@@ -1,6 +1,6 @@
 { pkgs, ...}:
 {
-  environment.systemPackages = with pkgs ;[
+  home.packages = with pkgs; [
    (clojure.override { jdk = jdk11; })
     clojure-lsp
     babashka

@@ -1,6 +1,6 @@
 { pkgs, ...}:
 {
-  environment.systemPackages = with pkgs ;[
+  home.packages = with pkgs; [
      python39
      python39Packages.pandas
      python39Packages.pip

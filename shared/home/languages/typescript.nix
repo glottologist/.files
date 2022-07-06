@@ -1,11 +1,11 @@
 { pkgs, ...}:
 {
-  environment.systemPackages = with pkgs ;[
+  home.packages = with pkgs; [
   nodePackages.typescript
 
 ];
 
-  environment.variables = {
+  home.sessionVariables = {
     PATH = ["$HOME/.npm-packages/bin"];
   };
 

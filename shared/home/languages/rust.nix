@@ -5,7 +5,7 @@
     rustNightly = pkgs.callPackage ./rust/rust-nightly.nix {};
   };
 
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     #(nixpkgs.latest.rustChannels.nightly.rust.override { extensions = [ "rust-src" "rls-preview" "rustfmt-preview" "clippy-preview" ];})
     rustc
     rustup
@@ -22,7 +22,7 @@
     crate2nix
   ];
 
-  environment.sessionVariables = {
+  home.sessionVariables = {
     RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     RUSTUP_TOOCHAIN = "stable";
     #PATH = ["$HOME/.cargo/bin"];

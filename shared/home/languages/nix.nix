@@ -1,6 +1,6 @@
 { pkgs, ...}:
 {
-  environment.systemPackages = with pkgs ;[
+  home.packages = with pkgs; [
     nix-linter
     nixfmt
     rnix-lsp
