@@ -5,7 +5,7 @@
     mono
     fsharp
     dotnetPackages.NUnitConsole
-    dotnetPackages.NUnitRunners
+   #dotnetPackages.NUnitRunners
     dotnetPackages.Paket
     dotnetbuildhelpers
 
