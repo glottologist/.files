@@ -85,6 +85,7 @@ in
       du         = "ncdu --color dark -rr -x";
       dut        = "dune exec ./main.exe -- test";
       eo         = "eval (opam env)";
+      exe        = "cd ~/development/exercism";
       flash      = "cd ~/Documents/flashcards";
       fs         = "flameshot gui";
       ga         = "git add";
@@ -202,6 +203,7 @@ in
       tns        = "tmux new-session -s ";
       tree       = "exa -T";
       tsk        = "cd ~/Documents/tasks && dstask sync && dstask";
+      tuk        = "cd ~/development/tuktoken";
       unlock     = "sudo cryptsetup luksOpen";
       v          = "nvim ";
       vd         = "vimdiff";
