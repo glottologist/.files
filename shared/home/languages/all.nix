@@ -3,9 +3,9 @@
 {
   imports =
     [
-      ./ada.nix
+      #./ada.nix
       ./clojure.nix
-      ./elixir.nix
+      #./elixir.nix
       ./elm.nix
       ./fsharp.nix
       ./fstar.nix
@@ -18,13 +18,13 @@
       ./nix.nix
       ./node.nix
       ./ocaml.nix
-      ./purescript.nix
+      #./purescript.nix
       ./python.nix
       #./rust.nix
-      ./scala.nix
-      ./solidity.nix
-      ./terraform.nix
-      ./typescript.nix
+      #./scala.nix
+      #./solidity.nix
+      #./terraform.nix
+      #./typescript.nix
     ];
 }
 
