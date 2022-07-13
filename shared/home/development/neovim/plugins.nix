@@ -136,6 +136,16 @@
       sha256 = "155pfn61h2rillq9l1g7m7k3z5msmp2gf5hc40d74z2qxgalj3k6";
     };
   };
+
+ earthly-vim = buildVimPlugin {
+    name = "earthly-vim";
+    src = builtins.fetchTarball {
+      name   = "earthly.vim";
+      url    = "https://github.com/earthly/earthly/archive/refs/heads/main.tar.gz";
+      sha256 = "15k41d6nwi1pn76b121fvnq6ri4kljvanwcx4zjg4s6cagi9b26j";
+    };
+  };
+
  #Themes
  nord-vim = buildVimPlugin {
     name = "nord-vim";

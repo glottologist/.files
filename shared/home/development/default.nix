@@ -19,6 +19,7 @@
     openvscode-server # Open source VSCode Remote Server
     postman           # API Development Environment
     newman            # A command line runner for Postman
+    earthly           # Build automation for the container era
   ];
 
 

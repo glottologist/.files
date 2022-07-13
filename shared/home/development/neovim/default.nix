@@ -51,6 +51,7 @@ let
     ctrlsf-vim              # edit file in place after searching with ripgrep
     elm-vim                 # Elm LS
     emmet-vim               # Emmet abbreviations syntax support
+    earthly-vim             # Vim support for Eartly ci
     vim-fugitive            # Fugitive is the premier Vim plugin for Git.
     fzf-hoogle              # search hoogle with fzf
     fzf-vim                 # fuzzy finder
