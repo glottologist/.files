@@ -31,16 +31,7 @@ let
       useUserPackages = true;
     };
   };
-  jasonlightConf = import ../homes/jason-light/home.nix {
-    inherit pkgs;
-    inherit (pkgs) config lib stdenv;
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-    };
-  };
 in
 {
   jason   = mkHome jasonConf;
-  jasonlight = mkHome jasonlightConf;
 }
