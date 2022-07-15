@@ -88,7 +88,7 @@ in
       exe        = "cd ~/development/exercism";
       flash      = "cd ~/Documents/flashcards";
       fs         = "flameshot gui";
-      ftc        = "docker exec flex tezos-client "
+      ftc        = "docker exec flex tezos-client";
       ga         = "git add";
       gaa        = "git add -A";
       gac        = "git add -A && git commit -am";
