@@ -137,14 +137,14 @@
     };
   };
 
- earthly-vim = buildVimPlugin {
-    name = "earthly-vim";
-    src = builtins.fetchTarball {
-      name   = "earthly.vim";
-      url    = "https://github.com/earthly/earthly/archive/refs/heads/main.tar.gz";
-      sha256 = "15k41d6nwi1pn76b121fvnq6ri4kljvanwcx4zjg4s6cagi9b26j";
-    };
-  };
+ #earthly-vim = buildVimPlugin {
+    #name = "earthly-vim";
+    #src = builtins.fetchTarball {
+      #name   = "earthly.vim";
+      #url    = "https://github.com/earthly/earthly/archive/refs/heads/main.tar.gz";
+      #sha256 = "15k41d6nwi1pn76b121fvnq6ri4kljvanwcx4zjg4s6cagi9b26j";
+    #};
+  #};
 
  #Themes
  nord-vim = buildVimPlugin {
