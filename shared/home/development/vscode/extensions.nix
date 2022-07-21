@@ -14,7 +14,7 @@
     { name = "jinjahtml";                      publisher = "samuelcolvin";       version = "0.16.0";          sha256 = "17f4dzwsqpwdkzc9f35sx31mvb4zns2ya0ym7mjgl8iy1kyci66q"; }
     { name = "language-fstar";                 publisher = "josser";             version = "0.0.1";           sha256 = "0zrv7x60p7b7rs9kxyfarfdhpj9c1xbnpc5m8gj82qfac6mk55d0"; }
     { name = "language-julia";                 publisher = "julialang";          version = "1.1.37";          sha256 = "0kzrc75bkxwppbl2157gmz4b08vffqf4m7jcbfzc0hvfjacp5y23"; }
-    { name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.4.14";          sha256 = "dMmOsr9eje/Sy0MHNGhiZxWe4KWdtVr/hd//pVuGueQ=";         }
+    #{ name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.4.14";          sha256 = "dMmOsr9eje/Sy0MHNGhiZxWe4KWdtVr/hd//pVuGueQ=";         }
     { name = "ligo-tools";                     publisher = "Ligo";               version = "0.0.1";           sha256 = "z89N9FLYSIRQqK41i2O17LO9NH41o6Y5QjOkQXOq5G4=";         }
     { name = "markdown-all-in-one";            publisher = "yzhang";             version = "3.4.0";           sha256 = "0ihfrsg2sc8d441a2lkc453zbw1jcpadmmkbkaf42x9b9cipd5qb"; }
     { name = "nix";                            publisher = "bbenoist";           version = "1.0.1";           sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b"; }
