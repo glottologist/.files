@@ -108,6 +108,11 @@ programs.ssh = {
           user = "jason";
         };
 
+        "reliant" = {
+          hostname = "23.88.53.232";
+          user = "jason";
+        };
+
   #  Hetzner Cloud - Ontologi ======================================
         "ulmo" = {
           hostname = "195.201.226.198";
