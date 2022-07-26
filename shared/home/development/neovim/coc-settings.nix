@@ -88,7 +88,7 @@
       "filetypes" =  ["ocaml" "reason"];
     };
     "Ligo" = {
-      "command" = "~/.local/bin/ligo-squirrel";
+      "command" = "~/.local/bin/Linux/bin/ligo-squirrel";
       "filetypes" = ["ligo" "mligo" "religo"];
     };
     "nim" = {
