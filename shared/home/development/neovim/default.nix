@@ -47,6 +47,7 @@ let
     coc-vimtex              # Coc support for vimtex
     coc-yaml                # Yaml language server support
     coc-yank                # yank plugin for CoC
+    copilot-vim             # GitHub Copilot uses OpenAI Codex to suggest code and entire functions in real-time right from your editor.
     csv                     # csv file handling in vim
     ctrlsf-vim              # edit file in place after searching with ripgrep
     elm-vim                 # Elm LS
