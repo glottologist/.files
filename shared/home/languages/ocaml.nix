@@ -7,7 +7,6 @@
       ocamlPackages.odoc
       ocaml
       dune_3
-      ligo
       ocamlPackages.merlin
       ocamlPackages.data-encoding
       ocamlPackages.ocp-indent
