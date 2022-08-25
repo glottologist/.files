@@ -115,7 +115,7 @@ programs.ssh = {
 
   #  Hetzner Cloud - Ontologi ======================================
         "ulmo" = {
-          hostname = "195.201.226.198";
+          hostname = "78.47.101.110";
           user = "root";
         };
         "nessa" = {
