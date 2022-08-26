@@ -15,6 +15,7 @@
       ./idris.nix
       ./julia.nix
       ./latex.nix
+      ./ligo.nix
       ./nim.nix
       ./nix.nix
       ./node.nix
