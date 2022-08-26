@@ -7,18 +7,9 @@
 
   home.packages = with pkgs; [
     #(nixpkgs.latest.rustChannels.nightly.rust.override { extensions = [ "rust-src" "rls-preview" "rustfmt-preview" "clippy-preview" ];})
-    rustc
+    #rustc
     rustup
     rust-analyzer
-    crate2nix
-    cargo
-    cargo-asm
-    cargo-deps
-    cargo-expand
-    cargo-geiger
-    cargo-inspect
-    cargo-release
-    cargo-tarpaulin
     crate2nix
   ];
 

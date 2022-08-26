@@ -2,8 +2,9 @@
 {
   home.packages = with pkgs; [
     jdk11
-    scala
+    dotty
     sbt
-    #metals
+    metals
+    scalafmt
   ];
 }
