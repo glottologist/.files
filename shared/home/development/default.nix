@@ -20,6 +20,7 @@
     postman           # API Development Environment
     newman            # A command line runner for Postman
     earthly           # Build automation for the container era
+    helix             # A post-modern modal text editor
   ];
 
 
