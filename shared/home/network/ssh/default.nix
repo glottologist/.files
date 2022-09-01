@@ -138,6 +138,14 @@ programs.ssh = {
           hostname = "65.108.210.215";
           user = "root";
         };
+
+
+  # Linode
+        "hermes" = {
+          hostname = "178.79.166.78";
+          user = "root";
+        };
+
     };
   };
 
