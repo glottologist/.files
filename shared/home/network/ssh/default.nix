@@ -146,7 +146,10 @@ programs.ssh = {
           user = "root";
         };
 
-    };
+        "odysseus" = {
+          hostname = "139.162.211.55";
+          user = "root";
+        };
   };
 
 }
