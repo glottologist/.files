@@ -140,16 +140,11 @@ programs.ssh = {
         };
 
 
-  # Linode
+  # OVH
         "hermes" = {
-          hostname = "178.79.166.78";
-          user = "root";
-        };
-
-        "odysseus" = {
-          hostname = "139.162.211.55";
+          hostname = "ns3215579.ip-198-244-229.eu";
           user = "root";
         };
   };
-
+};
 }
