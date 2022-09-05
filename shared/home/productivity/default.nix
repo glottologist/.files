@@ -16,6 +16,7 @@
     protonmail-bridge           # Use your ProtonMail account with your local e-mail client
     hydroxide                   # A third-party, open-source ProtonMail bridge
     electron-mail               # ElectronMail is an Electron-based unofficial desktop client for ProtonMail
+    ultralist                   # Simple GTD-style todo list for the command line
   ];
 
   programs = {

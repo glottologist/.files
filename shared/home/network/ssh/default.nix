@@ -143,7 +143,7 @@ programs.ssh = {
   # OVH
         "hermes" = {
           hostname = "ns3215579.ip-198-244-229.eu";
-          user = "root";
+          user = "debian";
         };
   };
 };
