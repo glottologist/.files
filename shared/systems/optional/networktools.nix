@@ -16,5 +16,6 @@
     vnstat                  # Console-based network statistics utility for Linux
     wget                    # Tool for retrieving files using HTTP, HTTPS, and FTP
     wireguard-tools         # Tools for the Wireguard secure network tunnel
+    wifite2                 # Rewrite of the popular wireless network auditor, wifite
   ];
 }

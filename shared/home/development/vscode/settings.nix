@@ -8,7 +8,7 @@
         insertSpaces = true;
         fontFamily = "'FiraCode Nerd Font Mono', 'monospace', monospace";
         fontLigatures = true;
-
+        lineNumbers = "relative";
       };
       rust-analyzer.procMacro.enable =  false;
       rust-client.disableRustup = true;

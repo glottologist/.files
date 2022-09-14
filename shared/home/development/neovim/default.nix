@@ -36,7 +36,7 @@ let
     coc-prettier            # Prettier is an opinionated code formatter
     coc-pyright             # Static type checker for Python in coc
     coc-r-lsp               # R LSP Client for coc.nvim, powered by the R Language Server.
-    coc-rust-analyzer       # Rust language completion
+    #coc-rust-analyzer       # Rust language completion
     coc-sh                  # Bash language completion
     coc-snippets            # Code snippets extension
     coc-spell-checker       # A basic spell checker that works well with camelCase code.
@@ -110,7 +110,6 @@ let
     vim-ripgrep             # blazing fast search using ripgrep
     vim-scala               # scala plugin
     vim-shellcheck          # Shellcheck plugin
-    vim-snippets
     vim-snippets
     vim-solidity            # Solidity syntax
     vim-surround            # quickly edit surroundings (brackets, html tags, etc)

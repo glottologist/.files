@@ -57,15 +57,6 @@
     };
   };
 
-  #material-vim = buildVimPlugin {
-    #name = "material-vim";
-    #src = builtins.fetchTarball {
-      #name   = "material-vim-2020-10-21";
-      #url    = "https://github.com/kaicataldo/material.vim/archive/7a725ae.tar.gz";
-      #sha256 = "0nd3qvwpcbvawc6zaczzzyq0mxgfn7bfv36yw05f03rqipgfw6fn";
-    #};
-  #};
-
   vim-gtfo = buildVimPlugin {
     name = "vim-gtfo";
     src = builtins.fetchTarball {
@@ -83,15 +74,6 @@
       sha256 = "1by56rflr0bmnjvcvaa9r228zyrmxwfkzkclxvdfscm7l7n7jnmh";
     };
   };
-
- #telescopenvim = buildVimPlugin {
-    #name = "telescope-nvim";
-    #src = builtins.fetchTarball {
-      #name   = "telescope.nvim-v0.0.1";
-      #url    = "https://github.com/nvim-telescope/telescope.nvim/archive/aa41912.tar.gz";
-      #sha256 = "1vd67cln4ckwn9sapklqgm8wr5p9x4amqk1197ki7wwpja1cq6l7";
-    #};
-   #};
 
  vim-devicons = buildVimPlugin {
     name = "vim-devicons";
@@ -137,14 +119,6 @@
     };
   };
 
- #earthly-vim = buildVimPlugin {
-    #name = "earthly-vim";
-    #src = builtins.fetchTarball {
-      #name   = "earthly.vim";
-      #url    = "https://github.com/earthly/earthly/archive/refs/heads/main.tar.gz";
-      #sha256 = "15k41d6nwi1pn76b121fvnq6ri4kljvanwcx4zjg4s6cagi9b26j";
-    #};
-  #};
 
  #Themes
  nord-vim = buildVimPlugin {

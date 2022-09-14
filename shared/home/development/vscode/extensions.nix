@@ -14,20 +14,23 @@
     { name = "jinjahtml";                      publisher = "samuelcolvin";       version = "0.16.0";          sha256 = "17f4dzwsqpwdkzc9f35sx31mvb4zns2ya0ym7mjgl8iy1kyci66q"; }
     { name = "language-fstar";                 publisher = "josser";             version = "0.0.1";           sha256 = "0zrv7x60p7b7rs9kxyfarfdhpj9c1xbnpc5m8gj82qfac6mk55d0"; }
     { name = "language-julia";                 publisher = "julialang";          version = "1.1.37";          sha256 = "0kzrc75bkxwppbl2157gmz4b08vffqf4m7jcbfzc0hvfjacp5y23"; }
-    #{ name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.4.14";          sha256 = "dMmOsr9eje/Sy0MHNGhiZxWe4KWdtVr/hd//pVuGueQ=";         }
+    #{ name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.4.14";          sha256 = "dMmOsr9eje/Sy0MHNGhiZxWe4KWdtVr/hd//pVuGueQ=";        }
     { name = "ligo-tools";                     publisher = "Ligo";               version = "0.0.1";           sha256 = "z89N9FLYSIRQqK41i2O17LO9NH41o6Y5QjOkQXOq5G4=";         }
     { name = "markdown-all-in-one";            publisher = "yzhang";             version = "3.4.0";           sha256 = "0ihfrsg2sc8d441a2lkc453zbw1jcpadmmkbkaf42x9b9cipd5qb"; }
     { name = "nix";                            publisher = "bbenoist";           version = "1.0.1";           sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b"; }
-    { name = "nix-env-selector";               publisher = "arrterian";          version = "1.0.7";           sha256 = "0mralimyzhyp4x9q98x3ck64ifbjqdp8cxcami7clvdvkmf8hxhf";  }
+    { name = "nix-env-selector";               publisher = "arrterian";          version = "1.0.7";           sha256 = "0mralimyzhyp4x9q98x3ck64ifbjqdp8cxcami7clvdvkmf8hxhf"; }
     { name = "nix-ide";                        publisher = "jnoortheen";         version = "0.1.18";          sha256 = "1v3j67j8bydyqba20b2wzsfximjnbhknk260zkc0fid1xzzb2sbn"; }
     { name = "pine-script-syntax-highlighter"; publisher = "ex-codes";           version = "1.0.1";           sha256 = "1sf20i79ismaw9l652jjxq28pfqplrw3lpxkxsaapjxnm9xhw8dj"; }
+    { name = "typescript-hero";                publisher = "rbbit";              version = "3.0.0";           sha256 = "I5Hbwe3E4HDGl2oMgkHYBvhtFA49UERP9WRStQ4hwMk=";         }
     { name = "remote-containers";              publisher = "ms-vscode-remote";   version = "0.209.6";         sha256 = "1dvma7mm0g6mr6yjfy0zbn0k143ag8p40r0kcb9n441w2r817rj8"; }
     { name = "remote-kubernetes";              publisher = "okteto";             version = "0.3.4";           sha256 = "T/xrLAyAUb5S8JXzcWt7ix83YgbzeqoWU3H4Gb7qgJo=";         }
     { name = "remote-ssh";                     publisher = "ms-vscode-remote";   version = "0.71.2021121615"; sha256 = "1lh08157z7lialb0dxls9fhahmf5l9wz6x2anwrnycvs512lpr1p"; }
-    { name = "rust-analyzer";                  publisher = "rust-lang";          version = "0.4.1114";        sha256 = "PG0ntsgXpTEGZ0J4nX2njkEUOLk1Dia/HapiMqzpvqc=";         }
+    { name = "rust-analyzer";                  publisher = "rust-lang";          version = "0.4.1114";        sha256 = "fnB6HlgGDGpT6SxtIEFThul43574D2OufLOi2tIcYPY=";         }
     { name = "rust-pack";                      publisher = "swellaby";           version = "0.2.29";          sha256 = "1y82kjxh8x12jrjq5r4mcp5mfxaahksj3cvnxwfprg11gw0k1vaz"; }
     { name = "toggle-zen-mode";                publisher = "fudd";               version = "1.1.2";           sha256 = "0whmbpnin1r1qnq45fpz7ayp51d4lilvbnv7llqd6jplx5b4n3ds"; }
     { name = "vscode-json-editor";             publisher = "nickdemayo";         version = "0.3.0";           sha256 = "160blmm22j2dsr2ms4b33jvdqnh94hcakvcwhhsyjqxld2x951ri"; }
+    { name = "vscode-html-css";                publisher = "ecmel";              version = "1.13.1";          sha256 = "gBfcizgn+thCqpTa8bubh6S77ynBC/Vpc+7n4XOfqzE="; }
+    { name = "vscode-css-peek";                publisher = "pranaygp";           version = "4.2.0";           sha256 = "+NLMj/TsZklBGZqlbDDankhNo6M9KSWgEahJpPu48zY="; }
     { name = "vsfstar";                        publisher = "artagnon";           version = "0.0.7";           sha256 = "1sh3aizmsn3jfsn34w4w55x106yfs3qwcjrd0f3kgyksf05avwsw"; }
   ];
 }

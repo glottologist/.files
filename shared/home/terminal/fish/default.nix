@@ -121,9 +121,6 @@ in
       hm         = "home-manager";
       hmrg       = "home-manager expire-generations 'now'";
       hy         = "history";
-      int        = "cd ~/development/intendaglobal";
-      intplat    = "cd /development/intendaglobal/platform";
-      jak        = "cd ~/development/jakaranda";
       k          = "kubectl ";
       kaf        = "kubectl apply -f";
       kcp        = "kubectl cp ";
@@ -182,12 +179,10 @@ in
       space      = "sudo ncdu -x /";
       st         = "speedtest";
       sts        = "cd $HOME/.config/tmux && git add -A && git commit -am 'Sync sessions' && git push && cd -";
-      syncall    = "syncart && syncflash && syncknow && syncnotes && syncpres && synctemp ";
-      syncart    = "cd ~/Documents/articles && git add -A && git commit -am 'Sync articles' && git push && cd - ";
+      syncall    = "syncflash && syncknow && syncnotes && synctemp ";
       syncflash  = "cd ~/Documents/flashcards && git add -A && git commit -am 'Sync flashcards' && git push && cd - ";
       syncknow   = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
       syncnotes  = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
-      syncpres   = "cd ~/Documents/presentations && git add -A && git commit -am 'Sync presentations' && git push && cd - ";
       synctemp   = "cd ~/Documents/templates && git add -A && git commit -am 'Sync templates' && git push && cd - ";
       t          = "tmux ";
       ta         = "tmux attach ";
