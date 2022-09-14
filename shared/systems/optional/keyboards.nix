@@ -8,7 +8,6 @@
   services = {
     udev = {
       packages = with pkgs; [
-        uhk-udev-rules
         teck-udev-rules
         wooting-udev-rules
         logitech-udev-rules
