@@ -45,7 +45,7 @@
     };
     jq.enable = true; # JSON processor
     lsd.enable = true;  # Next gen 'ls' command
-    mcfly.enable = true; #  McFly replaces your default ctrl-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands.
+    #mcfly.enable = true; #  McFly replaces your default ctrl-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands.
     newsboat = {  # Terminal RSS/Atom
       enable = true;
       urls = (map (x: {url = x; tags = ["maintaining"];}) [

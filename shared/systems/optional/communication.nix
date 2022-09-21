@@ -8,8 +8,8 @@
     mattermost          # Open-source Slack-alternative - desktop version
     signal-desktop      # signam messenger
     skypeforlinux       # Linux client for Skype
-    slack               # Desktop client for Slack
-    slack-term          # Slack client for your term
+    #slack               # Desktop client for Slack
+    #slack-term          # Slack client for your term
     tdesktop            # Telegram Desktop messaging app
     thunderbird         # A full-featured e-mail client
     zoom-us             # zoom.us video conferencing application
