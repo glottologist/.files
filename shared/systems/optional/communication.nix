@@ -12,6 +12,7 @@
     #slack-term          # Slack client for your term
     tdesktop            # Telegram Desktop messaging app
     thunderbird         # A full-featured e-mail client
+    tuir                # Command line reddit
     zoom-us             # zoom.us video conferencing application
    ];
 }
