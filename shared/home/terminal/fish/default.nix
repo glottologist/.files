@@ -103,6 +103,7 @@ in
       gd         = "git diff ";
       gl         = "git l19";
       glot       = "cd ~/development/glottologist";
+      gls        = "git ls-files";
       gp         = "git pull";
       gps        = "git push";
       gpt        = "git push --tags";

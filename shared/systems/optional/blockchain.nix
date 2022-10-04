@@ -2,8 +2,8 @@
 {
 
   environment.systemPackages =  with pkgs; [
-    cointop                 # Terminal based crypto prices
-    cryptowatch-desktop     # Application for visualising real-time cryptocurrency market data
+     cointop                 # Terminal based crypto prices
+     #cryptowatch-desktop    # Application for visualising real-time cryptocurrency market data
      electrum               # A lightweight bitcoin wallet
      exodus                 # Top rated crypto wallet with Trezor integration and built-in exchange
      hidapi                 # Library for communicating with UBS and Bluetooth HID devices
