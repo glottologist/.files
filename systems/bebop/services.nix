@@ -14,6 +14,6 @@ in
     dbus.enable = true;
     acpid.enable = true;
     upower.enable = true;
-    tlp.enable = true;
+    #tlp.enable = true;
   };
 }
