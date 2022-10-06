@@ -32,9 +32,9 @@ in
     };
 
     # Flakes settings
-    package = pkgs.nixFlakes;
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    package = pkgs.nixUnstable;
 
+    registry.nixpkgs.flake = inputs.nixpkgs;
     # Avoid unwanted garbage collection when using nix-direnv
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -59,6 +59,15 @@ in
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
+
+      experimental-features = ["nix-command" "flakes"];
+
+      keep-outputs          = true;
+      keep-derivations      = true;
+
+
+
+
     };
   };
 }

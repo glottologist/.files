@@ -71,7 +71,7 @@ system(){
   if [ "$WORKFLOW" = "apply" ]; then
     echo "$MARKER"
     echo "Applying nixos configuration"
-    sudo nixos-rebuild switch --flake .
+    sudo nixos-rebuild switch --impure  --flake .
     echo "$MARKER"
   fi
 }
@@ -101,7 +101,13 @@ copy_home_files() {
    make_dir_and_copy "icons"
 }
 
+register_nixos_unstable_channel() {
+  nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+}
+
 echo_nix_version
+
+register_nixos_unstable_channel
 
 case $BUILD in
   "home")

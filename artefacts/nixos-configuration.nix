@@ -1,7 +1,10 @@
-{ lib, inputs, system,  ... }:
+{ lib, inputs, system, nixpkgs, ... }:
+let
+  nixosSystem = inputs.nixpkgs.lib.nixosSystem;
+in
 {
 
-  redtail = lib.nixosSystem {
+  redtail = nixosSystem {
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
@@ -10,16 +13,16 @@
   };
 
 
-  bebop = lib.nixosSystem {
+  bebop = nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit inputs;  };
     modules = [
       ../systems/bebop/configuration.nix
     ];
   };
 
 
-  swordfish = lib.nixosSystem {
+  swordfish = nixosSystem {
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
@@ -27,7 +30,7 @@
     ];
   };
 
-  valkyrie = lib.nixosSystem {
+  valkyrie = nixosSystem {
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [

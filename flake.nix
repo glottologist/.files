@@ -15,30 +15,37 @@
       inputs.utils.follows = "nixpkgs";
     };
 
+    nix = {
+      url = "github:nixos/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
 
-  outputs = inputs @ { self, nixpkgs,  home-manager, tex2nix }:
+  outputs = inputs @ { self, nixpkgs,  home-manager, tex2nix, nix }:
     let
       system = "x86_64-linux";
     in
     {
+      inherit inputs;
+
       homeConfigurations = (
         import ./artefacts/home-configuration.nix {
-          inherit system nixpkgs home-manager tex2nix;
+          inherit system nixpkgs home-manager tex2nix nix;
         }
       );
 
       nixosConfigurations = (
         import ./artefacts/nixos-configuration.nix {
           inherit (nixpkgs) lib;
-          inherit inputs system nixpkgs ;
+          inherit inputs system nixpkgs nix;
         }
       );
 
       devShell.${system} = (
         import ./artefacts/installation.nix {
-          inherit system nixpkgs;
+          inherit system nixpkgs nix;
         }
       );
     };
