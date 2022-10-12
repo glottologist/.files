@@ -1,37 +1,27 @@
 { system, nixpkgs,  home-manager, tex2nix,  ... }:
 
 let
-  username = "jason";
-  homeDirectory = "/home/${username}";
-  configHome = "${homeDirectory}/.config";
-
   pkgs = import nixpkgs {
     inherit system;
 
     config.allowUnfree = true;
-    config.xdg.configHome = configHome;
 
   };
 
+ 
+  imports = [
+      ../homes/jason/home.nix
+  ]; 
 
-  mkHome = conf: (
+
+  mkHome = {user ? "jason"}: (
     home-manager.lib.homeManagerConfiguration rec {
-      inherit pkgs system username homeDirectory;
+      inherit pkgs;
 
-      stateVersion = "22.05";
-      configuration = conf;
+      modules = [{inherit imports;}];
     });
-
-
-  jasonConf = import ../homes/jason/home.nix {
-    inherit pkgs;
-    inherit (pkgs) config lib stdenv;
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-    };
-  };
 in
 {
-  jason   = mkHome jasonConf;
+  jason   = mkHome { user = "jason"; };
+
 }

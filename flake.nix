@@ -11,7 +11,7 @@
 
     tex2nix = {
       url = github:Mic92/tex2nix/4b17bc0;
-      inputs.utils.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix = {

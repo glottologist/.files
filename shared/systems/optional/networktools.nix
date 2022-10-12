@@ -4,10 +4,10 @@
     curl                    # A command line tool for transferring files with URL syntax
     dig                     # Domain name server
     fast-cli                # Test your download and upload speed using fast.com
+    gping                   # Graphical ping
     nethogs                 # A small 'net top' tool, grouping bandwidth by process
     networkmanager          # Network configuration and management tool
     networkmanager-openvpn  # NetworkManager's OpenVPN plugin
-    nmap-graphical          # Graphical version of Nmap
     ookla-speedtest         # Command line internet speedtest tool by Ookla
     openssl                 # Cryptographic library for SSL and TLS protocols
     openvpn                 # A robust and highly flexible tunneling application

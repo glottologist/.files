@@ -16,7 +16,6 @@
     dive                # A tool for exploring each layer in a docker image
     docker-ls           # Tools for browsing and manipulating docker registries
     docker-compose      # Multi-container orchestration for Docker
-    docker-compose_2    # Docker CLI plugin to define and run multi-container applications with Docker
     podman              # A program for managing pods, containers and container images
     podman-compose      # An implementation of docker-compose with podman backend
    ];

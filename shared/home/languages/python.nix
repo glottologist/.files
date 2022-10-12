@@ -8,7 +8,7 @@
      python39Packages.pdf2image
      python39Packages.tomlkit
      python39Packages.pynvim
-     python39Packages.pyparsing
+     #python39Packages.pyparsing
      python39Packages.pylru
      python-language-server
   ];

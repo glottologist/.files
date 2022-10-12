@@ -32,7 +32,8 @@ in
     };
 
     # Flakes settings
-    package = pkgs.nixUnstable;
+    #package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.stable;
 
     registry.nixpkgs.flake = inputs.nixpkgs;
     # Avoid unwanted garbage collection when using nix-direnv
@@ -62,9 +63,9 @@ in
 
       experimental-features = ["nix-command" "flakes"];
 
-      keep-outputs          = true;
-      keep-derivations      = true;
-
+      keep-outputs                 = true;
+      keep-derivations             = true;
+      allow-import-from-derivation = true;
 
 
 

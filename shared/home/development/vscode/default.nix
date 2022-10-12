@@ -3,7 +3,7 @@ let
   inherit (pkgs) vscode-utils vscode-extensions;
   native-ext = with vscode-extensions;
       [
-        ms-python.python
+        #ms-python.python
         freebroccolo.reasonml
         github.vscode-pull-request-github
         haskell.haskell
@@ -45,9 +45,9 @@ in
   };
 
   imports = [
-    "${fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master"}/modules/vscode-server/home.nix"
+    #"${fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master"}/modules/vscode-server/home.nix"
   ];
 
-  services.vscode-server.enable = true;
+  #services.vscode-server.enable = true;
 
 }

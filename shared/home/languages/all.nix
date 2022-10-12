@@ -20,7 +20,7 @@
       ./node.nix
       ./ocaml.nix
       ./purescript.nix
-      ./python.nix
+      #./python.nix
       ./rust.nix
       ./scala.nix
       ./terraform.nix

@@ -20,7 +20,7 @@ let
     coc-clangd              # C/C++/Objective-C  completion
     coc-cmake               # Cmake completion
     coc-css                 # Css completion
-    coc-elixir              # PLUGIN: Elixir language server extension based on elixir-ls for coc.nvim.
+    #coc-elixir              # PLUGIN: Elixir language server extension based on elixir-ls for coc.nvim.
     coc-emmet               # Emmet LS
     coc-fzf                 # Use FZF instead of coc.nvim built-in fuzzy finder.
     coc-git                 # Git integration for coc.nvim
@@ -34,7 +34,7 @@ let
     coc-nvim                # LSP client + autocompletion plugin
     coc-pairs               # Autopair functionality for vim
     coc-prettier            # Prettier is an opinionated code formatter
-    coc-pyright             # Static type checker for Python in coc
+    #coc-pyright             # Static type checker for Python in coc
     coc-r-lsp               # R LSP Client for coc.nvim, powered by the R Language Server.
     #coc-rust-analyzer       # Rust language completion
     coc-sh                  # Bash language completion
@@ -149,7 +149,7 @@ in
   programs.neovim = {
     enable       = true;
     extraConfig  = vimConfig;
-    package      = neovim-6;
+    #package      = neovim-6;
     plugins      = vimPlugins;
     viAlias      = true;
     vimAlias     = true;

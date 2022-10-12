@@ -10,7 +10,7 @@
      pass                         # Stores, retrieves, generates, and synchronizes passwords securely
      pinentry-curses              # GnuPG’s interface to passphrase input
      vault                        # Hashicorp vault
-     veracrypt                    # Free Open-Source filesystem on-the-fly encryption
+     #veracrypt                    # Free Open-Source filesystem on-the-fly encryption
      yubico-pam                   # Yubico PAM module
      yubico-piv-tool              # Used for interacting with the Privilege and Identification Card (PIV) application on a YubiKey
      yubikey-agent                # A seamless ssh-agent for YubiKeys
