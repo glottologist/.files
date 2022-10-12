@@ -13,12 +13,6 @@
     pandoc-plantuml-filter    # Pandoc filter which converts PlantUML code blocks to PlantUML images
     plantuml                  # Draw UML diagrams using a simple and human readable text description
     plantuml-server           # A web application to generate UML diagrams on-the-fly.
-    remarkable-mouse          # A program to use a reMarkable as a graphics tablet
-    remarkable2-toolchain     # A toolchain for cross-compiling to reMarkable 2 tablets
-    restream                  # reMarkable screen sharing over SSH
-    rmapi                     # A Go app that allows access to the ReMarkable Cloud API programmatically
-    rmfuse                    # RMfuse provides access to your reMarkable Cloud files in the form of a FUSE filesystem.
-    rmview                    # Fast live viewer for reMarkable 1 and 2
     texmaker                  # TeX and LaTeX editor
     texstudio                 # TeX and LaTeX editor
   ];

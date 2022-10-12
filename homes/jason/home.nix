@@ -30,7 +30,7 @@ in
   imports =  [
   ../../shared/home/packages/blockchain.nix
   ../../shared/home/packages/database.nix
-  #../../shared/home/packages/documentation.nix
+  ../../shared/home/packages/documentation.nix
   ../../shared/home/packages/fonts.nix
   ../../shared/home/packages/network.nix
   ../../shared/home/packages/security.nix
