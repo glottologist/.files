@@ -27,12 +27,27 @@ in
   #nixpkgs.overlays = [
   #];
 
-  imports = (import ./imports.nix);
+  imports =  [
+  ../../shared/home/packages/blockchain.nix
+  ../../shared/home/packages/database.nix
+  ../../shared/home/packages/documentation.nix
+  ../../shared/home/packages/fonts.nix
+  ../../shared/home/packages/network.nix
+  ../../shared/home/packages/security.nix
+  ../../shared/home/development/default.nix
+  ../../shared/home/learning/default.nix
+  ../../shared/home/network/ssh/default.nix
+  ../../shared/home/productivity/default.nix
+  ../../shared/home/terminal/default.nix
+  ../../shared/home/languages/all.nix
+  ];
+
 
   xdg = {
     inherit configHome;
     enable = true;
   };
+
   home = {
     inherit username homeDirectory;
 
