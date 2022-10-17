@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
+    anydesk                 # Desktop sharing application, providing remote support and online meetings
     curl                    # A command line tool for transferring files with URL syntax
     dig                     # Domain name server
     fast-cli                # Test your download and upload speed using fast.com
