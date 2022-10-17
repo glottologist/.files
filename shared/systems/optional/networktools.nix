@@ -5,6 +5,7 @@
     dig                     # Domain name server
     fast-cli                # Test your download and upload speed using fast.com
     gping                   # Graphical ping
+    miraclecast             # Connect external monitors via Wi-Fi
     nethogs                 # A small 'net top' tool, grouping bandwidth by process
     networkmanager          # Network configuration and management tool
     networkmanager-openvpn  # NetworkManager's OpenVPN plugin

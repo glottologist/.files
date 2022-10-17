@@ -5,14 +5,13 @@
       settings = {
         character.success_symbol = "[λ](bold green)";
         cmd_duration.show_milliseconds = false;
-        format = "$directory$character";
+        format = "$all$directory$character";
         right_format = "$all";
         aws.symbol = "";
         battery = {
-          full_symbol = "";
-          charging_symbol = "";
-          discharging_symbol = "";
-          display.threshold = 25; # display battery information if charge is <= 25%
+          full_symbol = " ";
+          charging_symbol = " ";
+          discharging_symbol = " ";
         };
       conda.symbol = " ";
       directory = {
