@@ -9,6 +9,7 @@
        ntfs3g      # FUSE-based NTFS driver with full write support
        tree        # Command to produce a depth indented directory listing
        woeusb      # Create bootable USB diskc from Windows ISO images
+       woeusb-ng   # Create bootable USB diskc from Windows ISO images
 
    ];
 }
