@@ -1,6 +1,7 @@
 {
   description = "Dotfiles configurations for multiple machines NixOS and Home-Manager configurations";
 
+  nixConfig.extra-experimental-features = "nix-command flakes";
 
   inputs = {
     nixpkgs.url = "github:glottologist/nixpkgs/master";
@@ -19,10 +20,51 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    deploy= {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    nixos-generators.url = "github:nix-community/nixos-generators";
+
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
+
+    fenix = {
+     url = "github:nix-community/fenix";
+     inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur.url = "github:nix-community/NUR";
+
+    agenix.url = "github:ryantm/agenix";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    kmonad = {
+      url = "github:kmonad/kmonad?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
 
-  outputs = inputs @ { self, nixpkgs,  home-manager, tex2nix, nix }:
+  outputs =
+    { self,
+      nixpkgs,
+      home-manager,
+      tex2nix,
+      deploy,
+      nixos-hardware,
+      nixos-generators,
+      flake-utils-plus,
+      fenix,
+      nur,
+      agenix,
+      hyprland,
+      kmonad,
+      nix } @ inputs:
     let
       system = "x86_64-linux";
     in

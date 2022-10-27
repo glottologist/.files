@@ -18,6 +18,7 @@ in
     specialArgs = { inherit inputs;  };
     modules = [
       ../systems/bebop/configuration.nix
+      inputs.agenix.nixosModules.age
     ];
   };
 
