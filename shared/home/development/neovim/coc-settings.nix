@@ -85,7 +85,7 @@
     "ocaml-lsp" = {
       "command" = "opam";
       "args" =  ["config"  "exec" "--"  "ocamllsp"];
-      "filetypes" =  ["ocaml" "reason"];
+      "filetypes" =  ["ocaml" "reason" "ml" "mli"];
     };
     "Ligo" = {
       "command" = "~/.local/bin/Linux/bin/ligo-squirrel";
