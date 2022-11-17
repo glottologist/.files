@@ -26,6 +26,8 @@ in {
       # port = 7000;        # default http port is 7000
       notes = [
         "/home/jason/Documents/languages"  # add as many layers as you like
+        "/home/jason/Documents/knowledge"  # add as many layers as you like
+        "/home/jason/Documents/notes"  # add as many layers as you like
       ];
       package = emanote.packages.${builtins.currentSystem}.default;
     };

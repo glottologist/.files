@@ -10,6 +10,7 @@
     mdbook                    # Create books from MarkDown
     notepadqq                 # Notepad++-like editor for the Linux desktop
     obsidian                  # A powerful knowledge base that works on top of a local folder of plain text Markdown files
+    pandoc                    # Conversion between markup formats
     pandoc-plantuml-filter    # Pandoc filter which converts PlantUML code blocks to PlantUML images
     plantuml                  # Draw UML diagrams using a simple and human readable text description
     plantuml-server           # A web application to generate UML diagrams on-the-fly.
