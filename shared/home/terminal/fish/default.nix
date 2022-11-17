@@ -183,6 +183,7 @@ in
       syncall    = "syncflash && syncknow && syncnotes && synctemp ";
       syncflash  = "cd ~/Documents/flashcards && git add -A && git commit -am 'Sync flashcards' && git push && cd - ";
       syncknow   = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
+      synclang   = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
       syncnotes  = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
       synctemp   = "cd ~/Documents/templates && git add -A && git commit -am 'Sync templates' && git push && cd - ";
       t          = "tmux ";
