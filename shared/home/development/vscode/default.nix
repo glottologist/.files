@@ -20,6 +20,7 @@ let
         scalameta.metals
         vscodevim.vim
         zhuangtongfa.material-theme
+        github.copilot
       ];
 
   built-ext = pkgs.vscode-utils.extensionsFromVscodeMarketplace (import ./extensions.nix).extensions;
