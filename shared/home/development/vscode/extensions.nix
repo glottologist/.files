@@ -32,5 +32,6 @@
     { name = "vscode-html-css";                publisher = "ecmel";              version = "1.13.1";          sha256 = "gBfcizgn+thCqpTa8bubh6S77ynBC/Vpc+7n4XOfqzE="; }
     { name = "vscode-css-peek";                publisher = "pranaygp";           version = "4.2.0";           sha256 = "+NLMj/TsZklBGZqlbDDankhNo6M9KSWgEahJpPu48zY="; }
     { name = "vsfstar";                        publisher = "artagnon";           version = "0.0.7";           sha256 = "1sh3aizmsn3jfsn34w4w55x106yfs3qwcjrd0f3kgyksf05avwsw"; }
+    { name = "zk-vscode";                      publisher = "mickael-menu";       version = "0.1.0";           sha256 = "HY/wm1AaD1tBQ/nrq8qE1pqWC+BKYjw+51P97yklmrw="; }
   ];
 }

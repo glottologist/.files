@@ -180,12 +180,13 @@ in
       space      = "sudo ncdu -x /";
       st         = "speedtest";
       sts        = "cd $HOME/.config/tmux && git add -A && git commit -am 'Sync sessions' && git push && cd -";
-      syncall    = "syncflash && syncknow && syncnotes && synctemp ";
+      syncall    = "syncflash && syncknow && synclang && syncnotes && synctemp && syncglot";
       syncflash  = "cd ~/Documents/flashcards && git add -A && git commit -am 'Sync flashcards' && git push && cd - ";
       syncknow   = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
       synclang   = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
       syncnotes  = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
       synctemp   = "cd ~/Documents/templates && git add -A && git commit -am 'Sync templates' && git push && cd - ";
+      syncglot   = "cd ~/development/glottologist/glotzettel && ./copy.sh && git add -A && git commit -am 'Sync content' && git push && cd - ";
       t          = "tmux ";
       ta         = "tmux attach ";
       tas        = "tmux attach -t ";

@@ -117,6 +117,7 @@ let
     vim-which-key
     vimfstar
     vimtex                  # LaTex syntax plugin
+    zk-nvim                 # zk plugin
   ] ++ overriddenPlugins;
 
   baseConfig    = builtins.readFile ./config.vim;

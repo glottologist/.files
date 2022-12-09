@@ -18,6 +18,7 @@
     protonmail-bridge           # Use your ProtonMail account with your local e-mail client
     rainbowstream               # Streaming command-line twitter client
     ultralist                   # Simple GTD-style todo list for the command line
+    zk                          # A zettelkasten plain text note-taking assistant
   ];
 
   programs = {
