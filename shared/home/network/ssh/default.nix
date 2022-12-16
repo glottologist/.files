@@ -103,8 +103,8 @@ programs.ssh = {
       };
 
   #  Hetzner Cloud - Glottologist ======================================
-        "defiant" = {
-          hostname = "65.108.144.254";
+        "intrepid" = {
+          hostname = "65.108.61.76";
           user = "jason";
         };
 
@@ -114,12 +114,8 @@ programs.ssh = {
         };
 
   #  Hetzner Cloud - Ontologi ======================================
-        "ulmo" = {
-          hostname = "78.47.101.110";
-          user = "root";
-        };
-        "nessa" = {
-          hostname = "78.47.117.138";
+        "mercury" = {
+          hostname = "5.161.145.173";
           user = "root";
         };
         "olorin" = {
@@ -134,15 +130,11 @@ programs.ssh = {
           hostname = "65.109.1.74";
           user = "root";
         };
-        "tulkas" = {
-          hostname = "65.108.210.215";
-          user = "root";
-        };
 
 
   # OVH
         "hermes" = {
-          hostname = "ns3215579.ip-198-244-229.eu";
+          hostname = "198.244.229.218";
           user = "debian";
         };
   };
