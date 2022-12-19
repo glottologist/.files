@@ -103,9 +103,9 @@ programs.ssh = {
       };
 
   #  Hetzner Cloud - Glottologist ======================================
-        "intrepid" = {
+        "valiant" = {
           hostname = "65.108.61.76";
-          user = "jason";
+          user = "valiant";
         };
 
         "reliant" = {
