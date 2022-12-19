@@ -34,6 +34,7 @@ in
   ../../shared/home/learning/default.nix
   ../../shared/home/network/ssh/default.nix
   ../../shared/home/packages/blockchain.nix
+  ../../shared/home/packages/cloud.nix
   ../../shared/home/packages/database.nix
   ../../shared/home/packages/documentation.nix
   ../../shared/home/packages/fonts.nix
