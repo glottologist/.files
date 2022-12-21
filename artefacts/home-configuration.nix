@@ -21,5 +21,6 @@ let
 in
 {
   jason   = mkHome { user = "jason"; };
+  valiant   = mkHome { user = "valiant"; };
 
 }
