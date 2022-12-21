@@ -8,20 +8,18 @@ let
 
   };
 
+ imports = [
+   ../homes/jason/home.nix
+ ];
 
   mkHome = {user ? "jason"}: (
     home-manager.lib.homeManagerConfiguration rec {
       inherit pkgs;
-
-      imports = [
-         ../homes/${user}/home.nix
-      ];
 
       modules = [{inherit imports;}];
     });
 in
 {
   jason   = mkHome { user = "jason"; };
-  valiant   = mkHome { user = "valiant"; };
 
 }
