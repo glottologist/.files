@@ -113,6 +113,11 @@ programs.ssh = {
           user = "jason";
         };
 
+        "sojourner" = {
+          hostname = "135.181.206.109";
+          user = "minecraft";
+        };
+
   #  Hetzner Cloud - Ontologi ======================================
         "mercury" = {
           hostname = "5.161.145.173";
