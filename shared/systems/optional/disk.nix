@@ -3,10 +3,11 @@
   environment.systemPackages = with pkgs; [
        diskonaut   # Terminal disk space navigator
        etcher      # Flash OS images to SD cards and USB drives, safely and easily
-       parted      # Create, destroy, resize, check, and copy partitions
+       exfat-utils # Exfat utils
        gparted     # Graphical disk partitioning tool
        lethe       # Tool to wipe drives in a secure way
        ntfs3g      # FUSE-based NTFS driver with full write support
+       parted      # Create, destroy, resize, check, and copy partitions
        tree        # Command to produce a depth indented directory listing
        woeusb      # Create bootable USB diskc from Windows ISO images
        woeusb-ng   # Create bootable USB diskc from Windows ISO images

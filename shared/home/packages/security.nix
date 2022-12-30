@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
-     keybase-gui                  # The Keybase official GUI
      _1password                   # 1Password command-line tool
      _1password-gui               # Multi-platform password manager
      lastpass-cli                 # Stores, retrieves, generates, and synchronizes passwords securely
