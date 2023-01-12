@@ -12,7 +12,7 @@ let
     set -g theme_display_git_master_branch yes
     set -g theme_nerd_fonts yes
     set -g theme_newline_cursor yes
-    set -g theme_color_scheme solarized
+    set -g theme_color_scheme Mono Lace
   '';
 
   custom = pkgs.callPackage ./plugins.nix {};
