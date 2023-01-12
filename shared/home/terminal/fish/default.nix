@@ -115,8 +115,6 @@ in
       gss        = "git stash save";
       gts        = "cd $HOME/.config/tmux git pull && cd -";
       gus        = "git submodule update --init --recursive";
-      gzp        = "cd $HOME/Documents/glotzettel && git add -A && git commit -am 'Sync Zettel' && git push && cd -";
-      gzpl       = "cd $HOME/Documents/glotzettel && git pull && cd -";
       h          = "history";
       hg         = "history | grep";
       hm         = "home-manager";
@@ -187,6 +185,7 @@ in
       syncnotes  = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
       synctemp   = "cd ~/Documents/templates && git add -A && git commit -am 'Sync templates' && git push && cd - ";
       syncglot   = "cd ~/development/glottologist/glotzettel && ./copy.sh && git add -A && git commit -am 'Sync content' && git push && cd - ";
+      synckeeb   = "cd ~/development/glottologist/keeb_layouts && ./copy.sh && git add -A && git commit -am 'Sync keeb config' && git push && cd - ";
       t          = "tmux ";
       ta         = "tmux attach ";
       tas        = "tmux attach -t ";

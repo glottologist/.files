@@ -28,6 +28,7 @@ in
   #];
 
   imports =  [
+  ../../shared/home/cryptography/default.nix
   ../../shared/home/development/default.nix
   ../../shared/home/editing/default.nix
   ../../shared/home/languages/all.nix
