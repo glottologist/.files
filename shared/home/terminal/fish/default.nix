@@ -2,9 +2,7 @@
 
 let
   fzfConfig = ''
-    set -x FZF_DEFAULT_OPTS "--preview='bat {} --color=always'" \n
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
-    set PATH $HOME/tezos $PATH
   '';
 
   themeConfig = ''
@@ -12,7 +10,44 @@ let
     set -g theme_display_git_master_branch yes
     set -g theme_nerd_fonts yes
     set -g theme_newline_cursor yes
-    set -g theme_color_scheme Mono Lace
+    set -g theme_color_scheme monolace
+    set -U fish_color_normal normal
+    set -U fish_color_command 000000
+    set -U fish_color_quote 626262
+    set -U fish_color_redirection 8a8a8a
+    set -U fish_color_end 767676
+    set -U fish_color_error b2b2b2
+    set -U fish_color_param 303030
+    set -U fish_color_comment 4e4e4e
+    set -U fish_color_match --background=brblue
+    set -U fish_color_selection white --bold --background=brblack
+    set -U fish_color_search_match bryellow --background=brblack
+    set -U fish_color_history_current --bold
+    set -U fish_color_operator 00a6b2
+    set -U fish_color_escape 00a6b2
+    set -U fish_color_cwd green
+    set -U fish_color_cwd_root red
+    set -U fish_color_valid_path --underline
+    set -U fish_color_autosuggestion 777777
+    set -U fish_color_user brgreen
+    set -U fish_color_host normal
+    set -U fish_color_cancel --reverse
+    set -U fish_pager_color_prefix normal --bold --underline
+    set -U fish_pager_color_progress brwhite --background=cyan
+    set -U fish_pager_color_completion normal
+    set -U fish_pager_color_description B3A06D
+    set -U fish_pager_color_selected_background --background=brblack
+    set -U fish_pager_color_secondary_completion
+    set -U fish_pager_color_secondary_background
+    set -U fish_pager_color_secondary_prefix
+    set -U fish_color_host_remote
+    set -U fish_pager_color_secondary_description
+    set -U fish_pager_color_selected_completion
+    set -U fish_pager_color_selected_prefix
+    set -U fish_color_option
+    set -U fish_pager_color_background
+    set -U fish_color_keyword
+    set -U fish_pager_color_selected_description
   '';
 
   custom = pkgs.callPackage ./plugins.nix {};
@@ -25,7 +60,7 @@ let
   fishConfig = ''
     bind \t accept-autosuggestion
     set fish_greeting
-  '' + fzfConfig + themeConfig;
+  '' + themeConfig + fzfConfig;
 in
 {
   programs.fish = {
@@ -211,7 +246,7 @@ in
       wipewith   = "lethe wipe -s";
       wipezero   = "lethe wipe -s zero";
     };
-     shellInit = fzfConfig ;
+     shellInit = themeConfig +  fzfConfig  ;
 
   };
 
