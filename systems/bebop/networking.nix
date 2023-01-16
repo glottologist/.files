@@ -5,12 +5,12 @@
     hostName = "bebop";
     useDHCP = false;
     interfaces.wlp0s20f3.useDHCP = true;
-    wireless.enable = true;
+    #wireless.enable = true;
     networkmanager = {
       enable = true;
-      unmanaged = [
-           "*" "except:type:wwan" "except:type:gsm"
-      ];
+      #unmanaged = [
+           #"*" "except:type:wwan" "except:type:gsm"
+      #];
       dispatcherScripts = [
        {
         source = (pkgs.writeShellApplication {
@@ -26,7 +26,7 @@
     nat = {
       enable = true;
       externalInterface = "eth0";
-      internalInterfaces = [ "wg0" ];
+      #internalInterfaces = [ "wg0" ];
     };
     firewall = {
       enable = false;
