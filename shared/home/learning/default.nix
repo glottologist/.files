@@ -6,14 +6,18 @@ in {
   imports = [ emanote.homeManagerModule ];
 
   home.packages = with pkgs; [
-    anki              # Spaced repitition flashcards
-    exercism          # A Go based command line tool for exercism.io
-    gtypist           # Universal typing tutorial
-    typespeed         # A curses based typing game
-    ttyper            # Terminal-based typing test
     #toipe             # Trusty terminal typing tester
-    tuxtype           # An educational typing tutor game starring Tmux
+    anki              # Spaced repitition flashcards
+    bookworm          # A simple, focused eBook reader
+    epr               # CLI Epub reader
+    exercism          # A Go based command line tool for exercism.io
     gotypist          # A touch-typing tutor
+    gtypist           # Universal typing tutorial
+    koreader          # An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats, running on Cervantes, Kindle, Kobo, PocketBook and Android devices
+    sigil             # Free, open source, multi-platform ebook (ePub) editor
+    ttyper            # Terminal-based typing test
+    tuxtype           # An educational typing tutor game starring Tmux
+    typespeed         # A curses based typing game
   ];
 
   programs = {

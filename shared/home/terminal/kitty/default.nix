@@ -1,5 +1,9 @@
 {  pkgs, ... }:
 {
+  home.packages = with pkgs; [
+     termpdfpy      # A pdf, epub, cbz reader in the kitty terminal
+  ];
+
   programs.kitty = {
     enable                  = true;
     theme                   = "PaperColor Light";
