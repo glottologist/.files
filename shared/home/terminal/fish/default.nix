@@ -76,6 +76,7 @@ in
       alarm      = "termdown --blink --text 'FINISHED'";
       art        = "cd ~/Documents/articles";
       cat        = "bat";
+      boox       = "cd ~/Ontologi Dropbox/Jason Ridgway-Taylor/DOCUMENTS/Personal/Boox/";
       cb         = "cargo build";
       cbn        = "cargo bench";
       cc         = "cargo clean";
