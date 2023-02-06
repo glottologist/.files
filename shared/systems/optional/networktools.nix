@@ -14,6 +14,7 @@
     openssl                 # Cryptographic library for SSL and TLS protocols
     openvpn                 # A robust and highly flexible tunneling application
     remmina                 # Remote desktop client written in GTK
+    ssh-copy-id             # Copy keys to remote machine
     termshark               # A terminal UI for wireshark-cli, inspired by Wireshark
     vnstat                  # Console-based network statistics utility for Linux
     wget                    # Tool for retrieving files using HTTP, HTTPS, and FTP

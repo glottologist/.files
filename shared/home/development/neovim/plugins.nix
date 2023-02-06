@@ -24,7 +24,7 @@
      name = "fzf-hoogle-vim";
      src = builtins.fetchTarball {
        name   = "fzf-hoogle-vim-v2.3.0";
-      url    = "https://github.com/monkoose/fzf-hoogle.vim/archive/v2.3.0.tar.gz";
+       url    = "https://github.com/monkoose/fzf-hoogle.vim/archive/v2.3.0.tar.gz";
        sha256 = "00ay9250wdl8ym70dpv4zbs49g40dla6i48bk1zl95lp62kld4hr";
      };
    };
@@ -47,11 +47,11 @@
     };
   };
 
-  vim-ripgrep = buildVimPlugin {
+  vimRipgrep = buildVimPlugin {
     name = "vim-ripgrep";
     src = builtins.fetchTarball {
       name   = "RipGrep-v1.0.2";
-      url    = "https://github.com/jremmen/vim-ripgrep/archive/v1.0.2.tar.gz";
+      url    = "https://github.com/mattia72/vim-ripgrep/archive/master.tar.gz";
       sha256 = "1by56rflr0bmnjvcvaa9r228zyrmxwfkzkclxvdfscm7l7n7jnmh";
     };
   };
@@ -91,6 +91,7 @@
       sha256 = "149vyraff0l5g050fpw7cplzvhz9qxixbrrzigbbnyl24d9xgwqm";
     };
   };
+
  vimligo = buildVimPlugin {
     name = "vim-ligo";
     src = builtins.fetchTarball {

@@ -5,7 +5,7 @@ let
     inherit (pkgs.vimUtils) buildVimPlugin;
   };
 
-  plugins = pkgs.vimPlugins  // custom-plugins;
+  plugins =   custom-plugins // pkgs.vimPlugins;
 
   overriddenPlugins = with pkgs; [];
 
@@ -130,7 +130,7 @@ let
     vim-pandoc
     vim-pandoc-syntax       # Pandoc syntax highlighting for Markdown
     vim-repeat              # repeat plugin commands with (.)
-    vim-ripgrep             # blazing fast search using ripgrep
+    vimRipgrep             # blazing fast search using ripgrep
     vim-scala               # scala plugin
     vim-shellcheck          # Shellcheck plugin
     vim-snippets
