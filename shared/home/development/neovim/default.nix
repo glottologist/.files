@@ -95,6 +95,7 @@ let
     nerdcommenter           # code commenter
     nerdtree                # tree explorer
     nerdtree-git-plugin     # shows files git status on the NerdTree
+    nvim-dap
     nvim-web-devicons       # A lua fork of vim-devicons.
     nvim-whichkey-setup-lua # This nvim-plugin is just a wrapper for vim-which-key to simplify setup in lua.
     oceanic-material        # A dark colorscheme for vim/neovim
@@ -108,8 +109,10 @@ let
     syntastic           # Syntax checker for languages
     tagbar                  # Tagbar is a Vim plugin that provides an easy way to browse the tags of the current file and get an overview of its structure.
     taglist-vim
-    #telescope-symbols-nvim
-    #telescope-nvim
+    telescope-nvim
+    telescope-lsp-handlers-nvim
+    telescope-symbols-nvim
+    telescope-coc-nvim
     tender-vim
     vim-airline
     vim-airline-themes
