@@ -3,7 +3,7 @@
 let g:rg_command = 'rg --vimgrep -S'
 
 " search work under cursor with CtrlSF (it uses ripgrep as the engine)
-nmap <silent> <M-f> <Plug>CtrlSFCwordPath <CR>
+nnoremap <leader>fr              <cmd>CtrlSFWordPath<CR>
 
 " open quickfix windows when running AsyncRun
 let g:asyncrun_open = 8

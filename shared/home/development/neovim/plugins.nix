@@ -20,25 +20,6 @@
   };
 
 
- coc-elixir  = buildVimPlugin {
-    name = "coc-elixir";
-    src = builtins.fetchTarball {
-      name   = "coc-elixir-v0.6.0";
-      url    = "https://github.com/elixir-lsp/coc-elixir/archive/refs/tags/v0.6.0.tar.gz";
-      sha256 = "1g9a08j30lhzdn89fx4dx5l8qayha86k1as8dz8g0dp59j2pypv9";
-    };
-  };
-
-
- coc-sh  = buildVimPlugin {
-    name = "coc-sh";
-    src = builtins.fetchTarball {
-      name   = "coc-sh-v0.6.0";
-      url    = "https://github.com/josa42/coc-sh/archive/refs/tags/v0.6.0.tar.gz";
-      sha256 = "1sv6p7wgwvkmx01pqdkqmshqnq7yvca2axz57zw1ilzss737p1j3";
-    };
-  };
-
    fzf-hoogle = buildVimPlugin {
      name = "fzf-hoogle-vim";
      src = builtins.fetchTarball {
@@ -116,6 +97,15 @@
       name   = "vim-ligo";
       url    = "https://github.com/der-alter/vim-ligo/archive/99fbcf1.tar.gz";
       sha256 = "155pfn61h2rillq9l1g7m7k3z5msmp2gf5hc40d74z2qxgalj3k6";
+    };
+  };
+
+ coc-marketplace = buildVimPlugin {
+    name = "coc-marketplace";
+    src = builtins.fetchTarball {
+      name   = "coc-marketplace";
+      url    = "https://github.com/fannheyward/coc-marketplace/archive/master.tar.gz";
+      sha256 = "0s6b1a2s0ac7j3h3fjfjals1p6wh9gwzcrdk2hqyb5i21ji41yzi";
     };
   };
 

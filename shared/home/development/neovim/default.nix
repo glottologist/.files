@@ -18,33 +18,56 @@ let
     barbar-nvim             # Tabline plugin with re-orderable, auto-sizing, clickable tabs, icons, nice highlighting, sort-by commands and a magic jump-to-buffer mode.
     calendar                # Vim  calendar
     coc-clangd              # C/C++/Objective-C  completion
+    coc-clap
     coc-cmake               # Cmake completion
     coc-css                 # Css completion
-    #coc-elixir              # PLUGIN: Elixir language server extension based on elixir-ls for coc.nvim.
+    coc-denite
+    coc-docker
     coc-emmet               # Emmet LS
+    coc-eslint
+    coc-explorer
+    coc-flutter
     coc-fzf                 # Use FZF instead of coc.nvim built-in fuzzy finder.
     coc-git                 # Git integration for coc.nvim
     coc-go                  # Go lang server
+    coc-haxe
+    coc-highlight
     coc-html                # Html language extension
     coc-java                # Fork of vscode-java to work with coc.nvim
+    coc-jest
     coc-json                # Json language server extension for coc.nvim
+    coc-lists
     coc-lua                 # Lua language server extension
     coc-markdownlint        # Linting coc extension for vim
+    coc-marketplace
     coc-metals              # PLUGIN: Scala LSP client for CoC
+    coc-neco
+    coc-nginx
     coc-nvim                # LSP client + autocompletion plugin
     coc-pairs               # Autopair functionality for vim
     coc-prettier            # Prettier is an opinionated code formatter
-    #coc-pyright             # Static type checker for Python in coc
+    coc-pyright
+    coc-python
     coc-r-lsp               # R LSP Client for coc.nvim, powered by the R Language Server.
-    #coc-rust-analyzer       # Rust language completion
+    coc-rls
     coc-sh                  # Bash language completion
+    coc-smartf
     coc-snippets            # Code snippets extension
     coc-spell-checker       # A basic spell checker that works well with camelCase code.
+    coc-sqlfluff
+    coc-stylelint
+    coc-svelte
     coc-tabnine             # All language auto completion
+    coc-texlab
+    coc-toml
+    coc-tslint
     coc-tslint-plugin       # Typescript language server linter plugin
     coc-tsserver            # TYpescript language server
+    coc-ultisnips
+    coc-vetur
     coc-vimlsp              # Vim language server extension
     coc-vimtex              # Coc support for vimtex
+    coc-wxml
     coc-yaml                # Yaml language server support
     coc-yank                # yank plugin for CoC
     copilot-vim             # GitHub Copilot uses OpenAI Codex to suggest code and entire functions in real-time right from your editor.

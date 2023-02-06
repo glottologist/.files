@@ -1,5 +1,5 @@
 {
-
+  "diagnostic.refreshOnInsertMode" =  true;
   "rust-client.disableRustup" = true;
   "rust-analyzer.procMacro.enable" = false;
 

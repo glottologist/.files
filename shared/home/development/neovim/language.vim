@@ -123,6 +123,8 @@ nnoremap <silent><nowait> <space>li  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent><nowait> <space>le  :<C-u>CocList extensions<cr>
 " Show commands.
+nnoremap <silent><nowait> <space>l+  :<C-u>Fold<cr>
+
 nnoremap <silent><nowait> <space>lc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>lo  :<C-u>CocList outline<cr>
@@ -135,11 +137,15 @@ nnoremap <silent><nowait> <space>lk  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>lp  :<C-u>CocListResume<CR>
 
-
+let g:copilot_no_tab_map = v:true
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
+      \ CheckBackSpace() ? "\<Tab>" :
+      \ coc#refresh()
 
 "  shows list of yanked text (coc-yank plugin)
 nnoremap <silent> <space>ly  :<C-u>CocList -A --normal yank<cr>
-
 
 " Syntastic
 set statusline+=%#warningmsg#
