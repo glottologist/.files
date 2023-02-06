@@ -70,10 +70,10 @@ let g:NERDTreeAutoDeleteBuffer = 1
 
 "" Telescope
 "" Find files using Telescope command-line sugar.
-"nnoremap <leader>ff <cmd>Telescope find_files<cr>
-"nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-"nnoremap <leader>fb <cmd>Telescope buffers<cr>
-"nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " coc-fzf
 " allow to scroll in the preview
@@ -96,7 +96,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Fuzzy finder shortcut
-nnoremap <leader>ff <cmd>FZF<cr>
+"nnoremap <leader>ff <cmd>FZF<cr>
 "nnoremap <C-p> :FZF<CR>
 
  command! -bang -nargs=* Rg
