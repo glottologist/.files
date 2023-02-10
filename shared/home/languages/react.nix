@@ -1,11 +1,8 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-  nodePackages.typescript
-  nodePackages.typescript-language-server
-  nodePackages.ts-node
-  rslint
-
+  nodePackages.react-tools
+  nodePackages.create_react_app
 
 ];
 

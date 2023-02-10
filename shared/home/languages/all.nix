@@ -21,6 +21,7 @@
       ./ocaml.nix
       ./purescript.nix
       ./python.nix
+      ./react.nix
       ./rust.nix
       ./scala.nix
       ./terraform.nix
