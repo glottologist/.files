@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
   nodePackages.react-tools
-  nodePackages.create_react_app
+  nodePackages.create-react-app
 
 ];
 

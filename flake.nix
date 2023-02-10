@@ -86,7 +86,7 @@
 
       devShell.${system} = (
         import ./artefacts/installation.nix {
-          inherit system nixpkgs nix;
+          inherit system nixpkgs;
         }
       );
     };
