@@ -108,14 +108,9 @@ programs.ssh = {
           user = "jason";
         };
 
-        "reliant" = {
-          hostname = "23.88.53.232";
+        "daedalus" = {
+          hostname = "5.75.231.206";
           user = "jason";
-        };
-
-        "sojourner" = {
-          hostname = "135.181.206.109";
-          user = "minecraft";
         };
 
   #  Hetzner Cloud - Ontologi ======================================
