@@ -10,6 +10,7 @@
       ocamlPackages.data-encoding
       ocamlPackages.ocp-indent
       ocamlPackages.ocaml-lsp
+     nodePackages.ocaml-language-server      # OCaml language server
       # Only required for Tezos development
       libev
       libffi

@@ -11,6 +11,7 @@
      #python39Packages.pyparsing
      python39Packages.pylru
      python-language-server
+     nodePackages.coc-python                 # python extension for coc
   ];
 
 }

@@ -6,5 +6,6 @@
     sbt
     metals
     scalafmt
+    nodePackages.coc-metals                 # metals extension for coc
   ];
 }

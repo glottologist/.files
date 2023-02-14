@@ -10,6 +10,7 @@ let
   overriddenPlugins = with pkgs; [];
 
   vimPlugins = with plugins; [
+                            # earthly-vim             # Vim support for Eartly ci
     Coqtail                 # Interactive Coq proofs in Vim
     agda-vim                # Vim mode for editing AGDA
     ansible-vim             # Vim syntax plugin for Ansible
@@ -75,8 +76,6 @@ let
     ctrlsf-vim              # edit file in place after searching with ripgrep
     elm-vim                 # Elm LS
     emmet-vim               # Emmet abbreviations syntax support
-    #earthly-vim             # Vim support for Eartly ci
-    vim-fugitive            # Fugitive is the premier Vim plugin for Git.
     fzf-hoogle              # search hoogle with fzf
     fzf-vim                 # fuzzy finder
     goyo                    # Distraction free writing - Zen Mode
@@ -106,13 +105,13 @@ let
     rainbow_parentheses-vim # for nested parentheses
     salt-vim
     sqlite-lua
-    syntastic           # Syntax checker for languages
+    syntastic               # Syntax checker for languages
     tagbar                  # Tagbar is a Vim plugin that provides an easy way to browse the tags of the current file and get an overview of its structure.
     taglist-vim
-    telescope-nvim
-    telescope-lsp-handlers-nvim
-    telescope-symbols-nvim
     telescope-coc-nvim
+    telescope-lsp-handlers-nvim
+    telescope-nvim
+    telescope-symbols-nvim
     tender-vim
     vim-airline
     vim-airline-themes
@@ -123,17 +122,16 @@ let
     vim-fish
     vim-fsharp
     vim-fugitive
+    vim-fugitive            # Fugitive is the premier Vim plugin for Git.
     vim-gist                # This is a vimscript for creating gists
     vim-gitgutter
     vim-gtfo
     vim-hdevtools           # Type assistence for Haskell
     vim-hoogle              # This plugin query hoogle for you and display the results in a special window.
-    vimligo                # Vim plugin for ligolang
     vim-nix
     vim-pandoc
     vim-pandoc-syntax       # Pandoc syntax highlighting for Markdown
     vim-repeat              # repeat plugin commands with (.)
-    vimRipgrep             # blazing fast search using ripgrep
     vim-scala               # scala plugin
     vim-shellcheck          # Shellcheck plugin
     vim-snippets
@@ -141,7 +139,9 @@ let
     vim-surround            # quickly edit surroundings (brackets, html tags, etc)
     vim-tmux                # syntax highlighting for tmux conf file and more
     vim-which-key
+    vimRipgrep              # blazing fast search using ripgrep
     vimfstar
+    vimligo                 # Vim plugin for ligolang
     vimtex                  # LaTex syntax plugin
     zk-nvim                 # zk plugin
   ] ++ overriddenPlugins;

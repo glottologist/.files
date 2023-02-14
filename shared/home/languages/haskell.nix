@@ -1,18 +1,18 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-    ghc
-    cachix
-    pandoc
-    hlint
-    ormolu
-    #brittany                # code formatter
-    cabal2nix               # convert cabal projects to nix
+                            # brittany                # code formatter
+                            # hoogle                  # documentation
     cabal-install           # package manager
+    cabal2nix               # convert cabal projects to nix
+    cachix
+    ghc
     ghc                     # compiler
     haskell-language-server # haskell IDE (ships with ghcide)
-    #hoogle                  # documentation
+    hlint
     nix-tree                # visualize nix dependencies
+    ormolu
+    pandoc
   ];
 
 
