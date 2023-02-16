@@ -257,10 +257,10 @@ in
       wipezero   = "lethe wipe -s zero";
     };
      shellInit = themeConfig +  fzfConfig  ;
-
   };
 
   xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
+  xdg.configFile."fish/functions/fish_prompt.fish".text = builtins.readFile ./fish_prompt.fish;
 
 }
 
