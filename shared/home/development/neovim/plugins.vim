@@ -3,7 +3,7 @@
 let g:rg_command = 'rg --vimgrep -S'
 
 " search work under cursor with CtrlSF (it uses ripgrep as the engine)
-nnoremap <leader>fr              <cmd>CtrlSFWordPath<CR>
+nnoremap <leader>fr              <cmd>:Rg<CR>
 
 " open quickfix windows when running AsyncRun
 let g:asyncrun_open = 8
@@ -72,6 +72,7 @@ let g:NERDTreeAutoDeleteBuffer = 1
 "" Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fw <cmd>Telescope grep_string<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
