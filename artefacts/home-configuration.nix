@@ -13,7 +13,6 @@ let
   };
 
  imports = [
-   neovim-flake.nixosModules.${system}.hm
    ../homes/jason/home.nix
  ];
 
