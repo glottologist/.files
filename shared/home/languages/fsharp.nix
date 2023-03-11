@@ -1,7 +1,7 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-    dotnet-sdk_5
+    dotnet-sdk_7
     mono
     fsharp
     dotnetPackages.NUnitConsole
