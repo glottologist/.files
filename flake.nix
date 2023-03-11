@@ -73,7 +73,7 @@
 
       homeConfigurations = (
         import ./artefacts/home-configuration.nix {
-          inherit system nixpkgs home-manager tex2nix nix;
+          inherit inputs system nixpkgs home-manager tex2nix nix;
         }
       );
 

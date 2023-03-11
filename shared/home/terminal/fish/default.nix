@@ -206,6 +206,7 @@ in
       news       = "newsboat";
       notes      = "cd ~/Documents/notes";
       npks       = "cd ~/development/glottologist/nixpkgs";
+      nr         = "nix run";
       nse        = "nix search ";
       nsp        = "nix search nixpkgs ";
       ont        = "cd ~/development/ontologi";
@@ -248,7 +249,7 @@ in
       tsk        = "cd ~/Documents/tasks && dstask sync && dstask";
       tuk        = "cd ~/development/tuktoken";
       unlock     = "sudo cryptsetup luksOpen";
-      v          = "nvim ";
+      v          = "nix run github:glottologist/neovim-flake";
       vd         = "vimdiff";
       wipe       = "lethe wipe -s dod";
       wipedeep   = "lethe wipe -s vsitr";

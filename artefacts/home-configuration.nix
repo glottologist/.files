@@ -1,4 +1,6 @@
-{ system, nixpkgs,  home-manager, tex2nix,  ... }:
+{ inputs, system, nixpkgs,  home-manager, tex2nix,  ... }:
+
+with inputs;
 
 let
   pkgs = import nixpkgs {
@@ -6,9 +8,12 @@ let
 
     config.allowUnfree = true;
 
+    overlays = [
+    ];
   };
 
  imports = [
+   neovim-flake.nixosModules.${system}.hm
    ../homes/jason/home.nix
  ];
 

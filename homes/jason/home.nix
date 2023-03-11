@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv,  ... }:
+{ inputs, config, lib, pkgs, stdenv,  ... }:
 
 let
   username = "jason";
@@ -24,8 +24,6 @@ in
          #"python2.7-Pillow-6.2.2"
     ];
   };
-  #nixpkgs.overlays = [
-  #];
 
   imports =  [
   ../../shared/home/cryptography/default.nix
