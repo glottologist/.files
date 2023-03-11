@@ -9,6 +9,7 @@ in
   inherit imports;
   nixpkgs.config = {
     allowUnfree = true;
+    allowBroken = true;
     permittedInsecurePackages = [
          "electron-12.2.3"
          "electron-13.6.9"

@@ -22,7 +22,7 @@ in
     gh #gh command line
     gist #upload code to gist
     git-crypt # git files encryption
-    git-hound #code search
+    #git-hound #code search
     git-open #open repo in browser
     git-review # submit to gerrit
     github-commenter
