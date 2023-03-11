@@ -10,7 +10,7 @@
      python39Packages.pynvim
      #python39Packages.pyparsing
      python39Packages.pylru
-     python-language-server
+     python-lsp-server
      nodePackages.coc-python                 # python extension for coc
   ];
 
