@@ -16,6 +16,6 @@
      yubikey-manager              # Command line tool for configuring any YubiKey over all USB transports
      yubikey-manager-qt           # Cross-platform application for configuring any YubiKey over all USB interfaces
      yubikey-personalization      # A library and command line tool to personalize YubiKeys
-     yubioath-flutter             # Yubico Authenticator
+     #yubioath-flutter             # Yubico Authenticator
   ];
 }
