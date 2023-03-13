@@ -3,7 +3,8 @@
 
   imports = [
     ./git/default.nix
-    #./vscode/default.nix
+    ./neovim/default.nix
+    ./vscode/default.nix
     #./jetbrains/default.nix
   ];
 

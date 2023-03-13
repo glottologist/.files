@@ -4,7 +4,7 @@
   nixConfig.extra-experimental-features = "nix-command flakes";
 
   inputs = {
-    nixpkgs.url = "github:glottologist/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/22.11";
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";

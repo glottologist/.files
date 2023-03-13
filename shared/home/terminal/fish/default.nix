@@ -249,8 +249,9 @@ in
       tsk        = "cd ~/Documents/tasks && dstask sync && dstask";
       tuk        = "cd ~/development/tuktoken";
       unlock     = "sudo cryptsetup luksOpen";
-      v          = "nix run github:glottologist/neovim-flake";
+      v          = "nvim";
       vd         = "vimdiff";
+      vn         = "nix run github:glottologist/neovim-flake";
       wipe       = "lethe wipe -s dod";
       wipedeep   = "lethe wipe -s vsitr";
       wipehelp   = "lethe wipe --help";
