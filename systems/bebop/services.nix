@@ -10,6 +10,7 @@ in
       configFile = lib.mkDefault thermald-conf;
     };
     fstrim.enable = lib.mkDefault true;
+    hdapsd.enable = lib.mkDefault true;
     printing.enable = true;
     dbus.enable = true;
     acpid.enable = true;

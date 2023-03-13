@@ -4,29 +4,16 @@
   networking = {
     hostName = "bebop";
     useDHCP = false;
-    interfaces.wlp0s20f3.useDHCP = true;
-    #wireless.enable = true;
+    #interfaces.wlp0s20f3.useDHCP = true;
+    interfaces.wlan0.useDHCP = true;
+    #wireless.iwd.enable = true;
     networkmanager = {
       enable = true;
-      #unmanaged = [
-           #"*" "except:type:wwan" "except:type:gsm"
-      #];
-      dispatcherScripts = [
-       {
-        source = (pkgs.writeShellApplication {
-          name = "link_change.sh";
-          runtimeInputs = [ pkgs.networkmanager ];
-          text = ''
-            logger "$0" "$@"
-          '';
-        }).out + "/bin/" + "link_change.sh";
-       }
-      ];
+      #wifi.backend = "iwd";
     };
     nat = {
       enable = true;
       externalInterface = "eth0";
-      #internalInterfaces = [ "wg0" ];
     };
     firewall = {
       enable = false;

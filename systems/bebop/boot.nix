@@ -42,17 +42,18 @@
        "vm.swappiness" = lib.mkDefault 1;
     };
 
-    kernelModules = [ "kvm-intel" "i915" "dm-snapshot" ];
-    #kernelParams = lib.mkDefault [ "acpi_rev_override" ];
-    kernelParams = [
-      "pcie.aspm=force"
-      "i915.enable_fbc=1"
-      "i915.enable_rc6=7"
-      "i915.lvds_downclock=1"
-      "i915.enable_guc_loading=1"
-      "i915.enable_guc_submission=1"
-      "i915.enable_psr=0"
-    ];
+    kernelModules = [ "kvm-intel" "i915" "dm-snapshot" "acpi_call" ];
+    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+    kernelParams = lib.mkDefault [ "acpi_rev_override" ];
+    #kernelParams = [
+      #"pcie.aspm=force"
+      #"i915.enable_fbc=1"
+      #"i915.enable_rc6=7"
+      #"i915.lvds_downclock=1"
+      #"i915.enable_guc_loading=1"
+      #"i915.enable_guc_submission=1"
+      #"i915.enable_psr=0"
+    #];
 
     extraModprobeConfig = ''
       options iwlwifi power_save=1 disable_11ax=1
