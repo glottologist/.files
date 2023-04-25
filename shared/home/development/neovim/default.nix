@@ -141,7 +141,6 @@ let
     vim-which-key
     vimRipgrep              # blazing fast search using ripgrep
     vimfstar
-    vimligo                 # Vim plugin for ligolang
     vimtex                  # LaTex syntax plugin
     zk-nvim                 # zk plugin
   ] ++ overriddenPlugins;

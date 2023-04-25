@@ -190,5 +190,3 @@ autocmd FileType markdown let b:coc_pairs_disabled = ['`']
 :nnoremap <Leader>s' ciw''<Esc>P
 :nnoremap <Leader>sd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
 
-" ligo support
-let g:LanguageClient_serverCommands = { 'ligo': ['~/.local/bin/Linux/bin/ligo-squirrel'], 'mligo': ['~/.local/bin/Linux/bin/ligo-squirrel'], 'religo': ['~/.local/bin/Linux/bin/ligo-squirrel'], }

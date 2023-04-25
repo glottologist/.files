@@ -16,5 +16,6 @@ in
     acpid.enable = true;
     upower.enable = true;
     #tlp.enable = true;
+    kubo.enable = true;
   };
 }

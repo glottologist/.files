@@ -16,6 +16,7 @@
       ./julia.nix
       ./kotlin.nix
       ./latex.nix
+      ./ligo.nix
       ./nim.nix
       ./nix.nix
       ./node.nix

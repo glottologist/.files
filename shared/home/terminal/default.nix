@@ -11,6 +11,8 @@
   ];
 
   home.packages = with pkgs; [
+    termdown      # Command line timer
+    exa           # Command line file tree
     tmate         # Instant terminal sharing
     flameshot     # Powerfull yet simple to use screenshot software
     ripgrep       #  Utility to that combines the usability of the silver searcher with the raw speed of grep

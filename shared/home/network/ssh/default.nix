@@ -137,6 +137,10 @@ programs.ssh = {
           hostname = "198.244.229.218";
           user = "debian";
         };
+        "athena" = {
+          hostname = "148.113.6.10";
+          user = "debian";
+        };
   };
 };
 }

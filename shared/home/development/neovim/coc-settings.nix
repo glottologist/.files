@@ -3,6 +3,11 @@
   "rust-client.disableRustup" = true;
   "rust-analyzer.procMacro.enable" = false;
 
+  "eslint.packageManager" = "yarn";
+  "eslint.nodePath" =  ".yarn/sdks";
+  "workspace.workspaceFolderCheckCwd" = false;
+  "tsserver.tsdk" = ".yarn/sdks/typescript/lib";
+
   "languageserver" = {
     "dhall" = {
       "command" = "dhall-lsp-server";
@@ -88,8 +93,8 @@
       "filetypes" =  ["ocaml" "reason" "ml" "mli"];
     };
     "Ligo" = {
-      "command" = "~/.local/bin/bin/Linux/bin/ligo-squirrel";
-      "filetypes" = ["ligo" "mligo" "religo"];
+      "command" = "ligo lsp";
+      "filetypes" = ["ligo" "mligo"];
     };
     "nim" = {
       "command" = "nimlsp";

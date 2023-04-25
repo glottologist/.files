@@ -92,14 +92,6 @@
     };
   };
 
- vimligo = buildVimPlugin {
-    name = "vim-ligo";
-    src = builtins.fetchTarball {
-      name   = "vim-ligo";
-      url    = "https://github.com/der-alter/vim-ligo/archive/99fbcf1.tar.gz";
-      sha256 = "155pfn61h2rillq9l1g7m7k3z5msmp2gf5hc40d74z2qxgalj3k6";
-    };
-  };
 
  coc-marketplace = buildVimPlugin {
     name = "coc-marketplace";

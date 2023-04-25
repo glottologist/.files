@@ -166,6 +166,7 @@ in
       hm         = "home-manager";
       hmrg       = "home-manager expire-generations 'now'";
       hy         = "history";
+      int        = "cd ~/development/intenda";
       k          = "kubectl ";
       kaf        = "kubectl apply -f";
       kcp        = "kubectl cp ";
@@ -199,7 +200,7 @@ in
       mksp       = "minikube stop";
       mkst       = "minikube start";
       nb         = "nix build";
-      ncg        = "nix-collect-garbage";
+      ncg        = "nix-collect-garbage -d";
       nconf      = "cd ~/development/glottologist/nix-config";
       nd         = "nix develop";
       ne         = "nix-env";
@@ -218,7 +219,6 @@ in
       ref        = "cd ~/development/reference";
       rf         = "rofi -show drun -show-icons";
       rmcaps     = "xmodmap -e 'remove lock = Caps_Lock' && xmodmap -e 'keysym Caps_Lock = Control space'";
-      rmp        = "rmapi put";
       scr        = "cd ~/development/scratch";
       setmtu     = "sudo ip link set dev eth0 mtu 1350";
       space      = "sudo ncdu -x /";
