@@ -230,6 +230,7 @@ in
       synckeeb   = "cd ~/development/glottologist/keeb_layouts && ./copy.sh && git add -A && git commit -am 'Sync keeb config' && git push && cd - ";
       syncknow   = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
       synclang   = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
+      syncnoah   = "cd ~/Documents/noah && git add -A && git commit -am 'Sync noah' && git push && cd - ";
       syncnotes  = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
       synctemp   = "cd ~/Documents/templates && git add -A && git commit -am 'Sync templates' && git push && cd - ";
       t          = "tmux ";
