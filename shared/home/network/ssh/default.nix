@@ -109,8 +109,8 @@ programs.ssh = {
         };
 
         "daedalus" = {
-          hostname = "5.75.231.206";
-          user = "jason";
+          hostname = "65.108.7.102";
+          user = "root";
         };
 
   #  Hetzner Cloud - Ontologi ======================================
