@@ -11,13 +11,14 @@
   ];
 
   home.packages = with pkgs; [
-    termdown      # Command line timer
     exa           # Command line file tree
-    tmate         # Instant terminal sharing
     flameshot     # Powerfull yet simple to use screenshot software
+    hushboard     # Mute your microphone while typing
+    ncdu          # Terminal space explorer
     ripgrep       #  Utility to that combines the usability of the silver searcher with the raw speed of grep
     ripgrep-all   # Ripgrep but search in pdfs, ebooks office docs etc.
-    hushboard     # Mute your microphone while typing
+    termdown      # Command line timer
+    tmate         # Instant terminal sharing
   ];
 
 
