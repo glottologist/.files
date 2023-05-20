@@ -6,6 +6,8 @@
     dig                     # Domain name server
     fast-cli                # Test your download and upload speed using fast.com
     gping                   # Graphical ping
+    iw                      # Tool to use nl80211
+    linssid                 # Graphical wireless scanning for Linux
     miraclecast             # Connect external monitors via Wi-Fi
     nethogs                 # A small 'net top' tool, grouping bandwidth by process
     networkmanager          # Network configuration and management tool
@@ -17,8 +19,9 @@
     ssh-copy-id             # Copy keys to remote machine
     termshark               # A terminal UI for wireshark-cli, inspired by Wireshark
     vnstat                  # Console-based network statistics utility for Linux
+    wavemon                 # Ncurses-based monitoring application for wireless network devicesv
     wget                    # Tool for retrieving files using HTTP, HTTPS, and FTP
-    wireguard-tools         # Tools for the Wireguard secure network tunnel
     wifite2                 # Rewrite of the popular wireless network auditor, wifite
+    wireguard-tools         # Tools for the Wireguard secure network tunnel
   ];
 }

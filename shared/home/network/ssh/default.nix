@@ -35,72 +35,6 @@ programs.ssh = {
         hostname = "10.75.17.10";
         user = "jason";
       };
-      "leonov" = {   # Mysterium Node
-        hostname = "10.75.17.11";
-        user = "leonov";
-      };
-      "valkyrie" = {   # Development
-        hostname = "10.75.17.12";
-        user = "jason";
-      };
-      "elysium" = {   # Awair Element
-        hostname = "10.75.17.13";
-        user = "root";
-      };
-      "narada" = {   # Bobcat Helium Miner
-        hostname = "10.75.17.14";
-        user = "root";
-      };
-      "destiny" = {   # Roku Stremaing Stick
-        hostname = "10.75.17.51";
-        user = "root";
-      };
-      "liberator" = {   # Roku Stremaing Stick
-        hostname = "10.75.79.52";
-        user = "root";
-      };
-      "bebop" = {   # Jason's NixOS Laptop
-        hostname = "10.75.79.101";
-        user = "jason";
-      };
-      "viper" = {   # Jason's Mobile
-        hostname = "10.75.79.102";
-        user = "root";
-      };
-      "milano" = {   # Jason's Gear OS Watch
-        hostname = "10.75.79.103";
-        user = "root";
-      };
-      "discovery" = {   # Jason's reMarkable
-        hostname = "10.75.79.104";
-        user = "root";
-        extraOptions.PubkeyAcceptedKeyTypes = "+ssh-rsa";
-        extraOptions.HostKeyAlgorithms="+ssh-rsa";
-      };
-      "normandy" = {   # Jason's Kindle
-        hostname = "10.75.79.105";
-        user = "root";
-      };
-      "moya" = {   # Kat's Windows Laptop
-        hostname = "10.75.79.121";
-        user = "kat";
-      };
-      "tantive" = {   # Kat's Mobile
-        hostname = "10.75.79.122";
-        user = "root";
-      };
-      "falcon" = {   # Noah's tablet
-        hostname = "10.75.79.131";
-        user = "root";
-      };
-      "prometheus" = {   # Noah's Kindle
-        hostname = "10.75.79.132";
-        user = "root";
-      };
-      "firefly" = {   # Isla's tablet
-        hostname = "10.75.79.141";
-        user = "root";
-      };
 
   #  Hetzner Cloud - Glottologist ======================================
         "valiant" = {
@@ -108,8 +42,8 @@ programs.ssh = {
           user = "jason";
         };
 
-        "daedalus" = {
-          hostname = "65.108.7.102";
+        "tantive" = {
+          hostname = "135.181.148.161";
           user = "root";
         };
 
