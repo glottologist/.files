@@ -75,6 +75,17 @@ programs.ssh = {
           hostname = "148.113.6.10";
           user = "debian";
         };
+
+
+  # Additional projects
+
+        "voltaire" = {
+          hostname = "ns3163761.ip-51-89-233.eu";
+          user = "ubuntu";
+        };
+
+
+
   };
 };
 }

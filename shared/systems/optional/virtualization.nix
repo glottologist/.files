@@ -18,6 +18,7 @@
     docker-compose      # Multi-container orchestration for Docker
     podman              # A program for managing pods, containers and container images
     podman-compose      # An implementation of docker-compose with podman backend
+    spice               # Complete open source solution for interaction with virtualized desktop devices
    ];
 
 }
