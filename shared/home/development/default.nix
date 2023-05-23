@@ -12,6 +12,7 @@
     difftastic        # A syntax-aware diff
     earthly           # Build automation for the container era
     helix             # A post-modern modal text editor
+    netlify-cli       # CLI to manage netlify deployments
     newman            # A command line runner for Postman
     pkg-config        # A tool that allows packages to find out information about other packages (wrapper script)
     postman           # API Development Environment

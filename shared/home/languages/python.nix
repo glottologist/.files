@@ -1,7 +1,8 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-     nodePackages.coc-python                 # python extension for coc
+    nodePackages.coc-python                 # python extension for coc
+    virtualenv
      python310Full
      python310Packages.pandas
      python310Packages.pdf2image
