@@ -24,10 +24,8 @@
       };
       pulseaudio = {
         enable = true;
-        #support32Bit = true;
+        support32Bit = true;
         package = pkgs.pulseaudioFull;
-        #zeroconf.discovery.enable = true;
-        #systemWide = true;
       };
       bluetooth = {
         enable = true;
