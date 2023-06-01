@@ -4,7 +4,6 @@
     [
       ./base/devices.nix
       ./base/environment.nix
-      ./base/location.nix
       ./base/nix.nix
       ./base/programs.nix
       ./base/services.nix

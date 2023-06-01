@@ -5,6 +5,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./boot.nix
+      ./location.nix
       ../../shared/systems/base.nix
       ../../shared/systems/optional/blockchain.nix
       ../../shared/systems/optional/browsers.nix
