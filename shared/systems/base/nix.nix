@@ -56,6 +56,7 @@ in
       substituters = [
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
+        "http://cache.glottologist.co.uk"
       ];
 
       trusted-public-keys = [
