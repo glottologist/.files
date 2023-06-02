@@ -61,6 +61,7 @@ in
 
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "cache.glottologist.co.uk:eQt44dcxTWb08LWllIfi5Vagt0V4rOYyWQMxbqP/eAQ="
       ];
 
       experimental-features = ["nix-command" "flakes"];

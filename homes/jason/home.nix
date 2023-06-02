@@ -32,13 +32,13 @@ in
   ../../shared/home/languages/all.nix
   ../../shared/home/learning/default.nix
   ../../shared/home/network/ssh/default.nix
-  ../../shared/home/packages/blockchain.nix
-  ../../shared/home/packages/cloud.nix
-  ../../shared/home/packages/database.nix
-  ../../shared/home/packages/documentation.nix
-  ../../shared/home/packages/fonts.nix
-  ../../shared/home/packages/network.nix
-  ../../shared/home/packages/security.nix
+  ../../shared/home/blockchain/default.nix
+  ../../shared/home/cloud/default.nix
+  ../../shared/home/database/default.nix
+  ../../shared/home/documentation/default.nix
+  ../../shared/home/fonts/default.nix
+  ../../shared/home/network/default.nix
+  ../../shared/home/security/default.nix
   ../../shared/home/productivity/default.nix
   ../../shared/home/terminal/default.nix
   ];

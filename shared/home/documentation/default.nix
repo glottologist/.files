@@ -8,7 +8,6 @@
     latex2html                # LaTeX-to-HTML translator
     libreoffice               # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
     masterpdfeditor           # Master PDF Editor
-    mdbook                    # Create books from MarkDown
     mdbook                    # Create books from Markdown
     mdbook-katex              # A backend for mdBook written in Rust for latex
     mdbook-mermaid            # A backend for mdBook written in Rust for mermaid
