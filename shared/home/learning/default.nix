@@ -1,9 +1,9 @@
 { config, lib, pkgs, stdenv, ... }:
 let
-  emanote = import (builtins.fetchTarball "https://github.com/srid/emanote/archive/master.tar.gz");
+  #emanote = import (builtins.fetchTarball "https://github.com/srid/emanote/archive/master.tar.gz");
 in {
 
-  imports = [ emanote.homeManagerModule ];
+  #imports = [ emanote.homeManagerModule ];
 
   home.packages = with pkgs; [
     #toipe             # Trusty terminal typing tester
@@ -24,16 +24,16 @@ in {
   };
 
   services = {
-    emanote = {
-      enable = true;
-      # host = "127.0.0.1"; # default listen address is 127.0.0.1
-      # port = 7000;        # default http port is 7000
-      notes = [
-        "/home/jason/Documents/languages"  # add as many layers as you like
-        "/home/jason/Documents/knowledge"  # add as many layers as you like
-        "/home/jason/Documents/notes"  # add as many layers as you like
-      ];
-      package = emanote.packages.${builtins.currentSystem}.default;
-    };
+    #emanote = {
+      #enable = true;
+      ## host = "127.0.0.1"; # default listen address is 127.0.0.1
+      ## port = 7000;        # default http port is 7000
+      #notes = [
+        #"/home/jason/Documents/languages"  # add as many layers as you like
+        #"/home/jason/Documents/knowledge"  # add as many layers as you like
+        #"/home/jason/Documents/notes"  # add as many layers as you like
+      #];
+      #package = emanote.packages.${builtins.currentSystem}.default;
+    #};
   };
 }
