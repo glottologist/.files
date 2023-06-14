@@ -6,13 +6,14 @@
 
   programs.dconf.enable = true;
   services = {
-    #gnome.gnome-keyring.enable = true;
+    gnome.gnome-keyring.enable = true;
     upower.enable = true;
     dbus = {
       enable = true;
       packages = [ pkgs.dconf ];
     };
     xserver = {
+      autorun = true;
       enable = true;
       layout = "gb";
       libinput = {
@@ -24,8 +25,8 @@
         Option "SuspendTime" "0"
         Option "OffTime"     "0"
       '';
-      displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
     };
   };
 }

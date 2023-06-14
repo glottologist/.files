@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+
+  services.expressvpn.enable = true;
+
   environment.systemPackages = with pkgs; [
     anydesk                              # Desktop sharing application, providing remote support and online meetings
     curl                                 # A command line tool for transferring files with URL syntax

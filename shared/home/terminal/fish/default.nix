@@ -269,6 +269,10 @@ in
       v          = "nvim";
       vd         = "vimdiff";
       vn         = "nix run github:glottologist/nvim-flake";
+      vpn        = "expressvpn";
+      vpnc       = "expressvpn connect";
+      vpnd       = "expressvpn disconnect";
+      vpnl       = "expressvpn ls";
       wipe       = "lethe wipe -s dod";
       wipedeep   = "lethe wipe -s vsitr";
       wipehelp   = "lethe wipe --help";

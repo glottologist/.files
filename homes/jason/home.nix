@@ -39,6 +39,7 @@ in
   ../../shared/home/fonts/default.nix
   ../../shared/home/network/default.nix
   ../../shared/home/security/default.nix
+  ../../shared/home/services/polybar/default.nix
   ../../shared/home/productivity/default.nix
   ../../shared/home/terminal/default.nix
   ];
