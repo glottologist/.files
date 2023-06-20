@@ -17,5 +17,11 @@ in
     upower.enable = true;
     #tlp.enable = true;
     kubo.enable = true;
+    #dnsmasq = {
+      #enable = true;
+      #extraConfig = ''
+        #interface=rtwg0
+      #'';
+    #};
   };
 }

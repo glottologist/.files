@@ -25,6 +25,33 @@
     };
 
     extraHosts = builtins.readFile ../../secrets/hosts;
+    #wg-quick.interfaces = {
+    #rtwg0 = {
+      #address = [ "10.75.13.3/24" ];
+      #dns = [ "10.75.13.1" ];
+      #privateKeyFile = "/home/jason/wireguard-keys/private";
 
-  };
+    #postUp = ''
+        #${pkgs.iptables}/bin/iptables -A FORWARD -i rtwg0 -j ACCEPT
+        #${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.75.0.0/24 -o eth0 -j MASQUERADE
+      #'';
+
+      ## Undo the above
+      #preDown = ''
+        #${pkgs.iptables}/bin/iptables -D FORWARD -i rtwg0 -j ACCEPT
+        #${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.75.0.0/24 -o eth0 -j MASQUERADE
+      #'';
+
+      #peers = [
+        #{
+          #publicKey = "WeeJVyAPczoANEsuOJEHOotroxRyCRXREui96GgXhio=";
+          #presharedKeyFile = "/home/jason/wireguard-keys/preshared";
+          #allowedIPs = [ "0.0.0.0/0" ];
+          #endpoint = "148.113.12.147:48232";
+          #persistentKeepalive = 25;
+        #}
+      #];
+    #};
+  #};
+};
 }

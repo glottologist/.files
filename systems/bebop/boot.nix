@@ -40,6 +40,7 @@
 
     kernel.sysctl = {
        "vm.swappiness" = lib.mkDefault 1;
+
     };
 
     kernelModules = [ "kvm-intel" "i915" "dm-snapshot" "acpi_call" ];
