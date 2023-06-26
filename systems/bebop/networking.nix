@@ -23,7 +23,7 @@
     };
     nameservers = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" ];
     extraHosts = builtins.readFile ../../secrets/hosts;
-    wq-quick.interfaces = {
+    wg-quick.interfaces = {
       rtwg0 = {
        privateKeyFile = "/etc/wireguard/private.key";
        address =[ "10.75.13.3/32" ];
