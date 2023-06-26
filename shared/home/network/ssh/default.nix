@@ -7,31 +7,11 @@ programs.ssh = {
     '';
     matchBlocks = {
        # Home Network ===============================
-      "serenity" = {  # Protectli VM
-        hostname = "192.168.1.68";
-        user = "root";
-      };
       "odyssey" = { # pfSense Firewall
         hostname = "10.75.17.1";
         user = "root";
       };
-      "starbug" = {   # Wireless Access Point
-        hostname = "10.75.17.2";
-        user = "root";
-      };
-      "eagle" = {   # Wireless Access Point
-        hostname = "10.75.17.3";
-        user = "root";
-      };
-      "gunstar" = {   # Managed Switch
-        hostname = "10.75.17.4";
-        user = "root";
-      };
-      "cygnus" = {   # Pi-Hole
-        hostname = "10.75.17.5";
-        user = "root";
-      };
-      "swordfish" = {   # Plex Server
+      "deliverance" = {   # Plex Server
         hostname = "10.75.17.10";
         user = "jason";
       };
@@ -73,7 +53,7 @@ programs.ssh = {
         };
         "athena" = {
           hostname = "148.113.6.10";
-          user = "debian";
+          user = "root";
         };
 
 
