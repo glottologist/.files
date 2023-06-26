@@ -228,7 +228,6 @@ in
       nsp        = "nix search nixpkgs ";
       ont        = "cd ~/development/ontologi";
       oss        = "cd ~/development/opensource";
-      ping       = "prettyping";
       pres       = "cd ~/Documents/presentations";
       pullall    = "find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;";
       recr       = "cd ~/development/glottologist/recruitment";
