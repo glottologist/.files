@@ -23,20 +23,6 @@
     };
     nameservers = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" ];
     extraHosts = builtins.readFile ../../secrets/hosts;
-    #wg-quick.interfaces = {
-      #rtwg0 = {
-       #privateKeyFile = "/etc/wireguard/private.key";
-       #address =[ "10.75.13.3/32" ];
-       #listenPort = 48232;
-       #peers = [
-        #{
-          #allowedIPs = ["0.0.0.0/0"];
-          #endpoint = "148.113.12.147:48232";
-          #publicKey = "WeeJVyAPczoANEsuOJEHOotroxRyCRXREui96GgXhio=";
-        #}
-      #];
-    #};
-  #};
 };
 environment.etc.rt-wg0 = {
       target = "wireguard/rt-wg0.conf";
@@ -44,4 +30,9 @@ environment.etc.rt-wg0 = {
       mode = "0600";
     };
 
+environment.etc.rt-wg0-test = {
+      target = "wireguard/rt-wg0-test.conf";
+      text = builtins.readFile ../../secrets/rtwg0-test.conf;
+      mode = "0600";
+    };
 }

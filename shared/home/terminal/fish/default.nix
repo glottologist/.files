@@ -65,6 +65,7 @@ in
 {
   programs.fish = {
     enable = true;
+    autocd = true;
     plugins = [ fenv ];
     interactiveShellInit = ''
       eval (direnv hook fish)
