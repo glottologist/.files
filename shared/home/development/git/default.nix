@@ -113,10 +113,10 @@ in
       "*.envrc"
       "*.mill-version" # used by metals
     ];
-    signing = {
-      key = "DF40F6B4427732F3";
-      signByDefault = true;
-    };
+    #signing = {
+      #key = "DF40F6B4427732F3";
+      #signByDefault = true;
+    #};
     userEmail = "jason@glottologist.co.uk";
     userName = "jason";
   };

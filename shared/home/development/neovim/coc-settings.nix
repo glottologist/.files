@@ -14,6 +14,11 @@
       "filetypes" = [ "dhall" ];
     };
 
+    "Ligo" =  {
+      "command" =  "ligo lsp";
+      "filetypes" =  ["ligo" "mligo"];
+     };
+
     "haskell" = {
       "command" = "haskell-language-server-wrapper";
       "args" = [ "--lsp" ];
@@ -92,10 +97,7 @@
       "args" =  ["config"  "exec" "--"  "ocamllsp"];
       "filetypes" =  ["ocaml" "reason" "ml" "mli"];
     };
-    "Ligo" = {
-      "command" = "ligo lsp";
-      "filetypes" = ["ligo" "mligo"];
-    };
+
     "nim" = {
       "command" = "nimlsp";
       "filetypes" = [ "nim" ];

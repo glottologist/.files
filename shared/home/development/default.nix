@@ -20,6 +20,7 @@
     rpi-imager        # Raspberry Pi Imaging Utility
     silver-searcher   # Ack like searcher focused on code
     universal-ctags   # A maintained ctags implementation
+    usbutils          # USb Utlities
   ];
 
 

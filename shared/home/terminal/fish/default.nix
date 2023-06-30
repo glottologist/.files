@@ -65,7 +65,6 @@ in
 {
   programs.fish = {
     enable = true;
-    autocd = true;
     plugins = [ fenv ];
     interactiveShellInit = ''
       eval (direnv hook fish)
@@ -225,8 +224,8 @@ in
       notes      = "cd ~/Documents/notes";
       npks       = "cd ~/development/glottologist/nixpkgs";
       nr         = "nix run";
-      nse        = "nix search ";
-      nsp        = "nix search nixpkgs ";
+      ns         = "nix-env -q -a --attr-path ";
+      nsf        = "nix search";
       ont        = "cd ~/development/ontologi";
       oss        = "cd ~/development/opensource";
       pres       = "cd ~/Documents/presentations";

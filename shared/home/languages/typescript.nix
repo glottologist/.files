@@ -11,8 +11,5 @@
 
 ];
 
-  home.sessionVariables = {
-    PATH = ["$HOME/.npm-packages/bin"];
-  };
 
 }

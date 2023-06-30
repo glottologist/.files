@@ -4,7 +4,7 @@
     manix
     nix-doc
     nix-index
-    nix-linter
+    #nix-linter
     nix-serve
     nix-template
     nix-top

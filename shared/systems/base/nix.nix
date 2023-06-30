@@ -34,7 +34,7 @@ in
 
     # Flakes settings
     #package = pkgs.nixUnstable;
-    package = pkgs.nixVersions.stable;
+    package = pkgs.nixVersions.unstable;
 
     registry.nixpkgs.flake = inputs.nixpkgs;
     # Avoid unwanted garbage collection when using nix-direnv
@@ -45,6 +45,11 @@ in
       binary-caches-parallel-connections = 3
       connect-timeout = 5
     '';
+
+    sshServe = {
+      enable = true;
+      keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN1szb/fBxMMUgpClXaFd4zR71B5/02Ij9jV4wxKW+o jason@glottologist.co.uk" ];
+    };
 
     settings = {
       # Automate `nix store --optimise`
