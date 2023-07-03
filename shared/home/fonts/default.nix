@@ -1,11 +1,14 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
     cascadia-code
+    fira
     fira-code
-    fira-code-symbols
     fira-mono
+    fira-code-symbols
     font-awesome
+    nerdfix
+    nerd-font-patcher
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
 }
