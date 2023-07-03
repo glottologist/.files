@@ -8,7 +8,7 @@
     enable                  = true;
     theme                   = "PaperColor Light";
     font      = {
-      name                  = "Fira Code";
+      name                  = "JetBrainsMono Nerd Font";
     };
     settings  = {
       disable_ligatures     = "never";
