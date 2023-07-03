@@ -48,6 +48,8 @@ let
     set -U fish_pager_color_background
     set -U fish_color_keyword
     set -U fish_pager_color_selected_description
+
+     oh-my-posh init fish --config ~/.config/oh-my-posh/config.json | source
   '';
 
   custom = pkgs.callPackage ./plugins.nix {};
