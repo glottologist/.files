@@ -4,7 +4,7 @@
    oh-my-posh = {
      enable = true;
      enableFishIntegration = true;
-     settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile "./omp.config.json"));
+     settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./omp.config.json));
     };
   };
 }

@@ -1,15 +1,14 @@
-{ lib, fetchzip, nfversion }:
+{ lib, fetchzip, nfversion, pname, phash, pzip }:
 fetchzip {
-  name = "firacode-nerdfont";
+  name = pname;
 
-  url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v${nfversion}/Firacode.zip";
-
+  url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v${nfversion}/${pzip}";
   postFetch = ''
-    mkdir -p $out/share/fonts/firacode-nerdfont
-    unzip -j $downloadedFile -d $out/share/fonts/firacode-nerdfont
+    mkdir -p $out/share/fonts/${pname}
+    unzip -j $downloadedFile -d $out/share/fonts/${pname}
   '';
 
-  sha256 = "AKjJ/KN+hBpoIXCo3KlRk1EHOZN2Bqc1g036zLdXLrs=";
+  sha256 = phash;
 
   meta = with lib; {
     description = ''

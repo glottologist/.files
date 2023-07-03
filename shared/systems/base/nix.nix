@@ -25,6 +25,8 @@ in
 
   # Nix daemon config
   nix = {
+
+
     # Automate garbage collection
     gc = {
       automatic = true;
@@ -54,6 +56,9 @@ in
     settings = {
       # Automate `nix store --optimise`
       auto-optimise-store = true;
+
+      max-jobs = 5;
+      build-cores = 5;
 
       # Required by Cachix to be used as non-root user
       trusted-users = [ "root" "jason" ];
