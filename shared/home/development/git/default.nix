@@ -17,17 +17,18 @@ in
 
 
   home.packages = with pkgs.gitAndTools; [
-    act #run GH actions locally
+    act           # run GH actions locally
     diff-so-fancy # git diff with colors
-    gh #gh command line
-    gist #upload code to gist
-    git-crypt # git files encryption
-    #git-hound #code search
-    git-open #open repo in browser
-    git-review # submit to gerrit
-    github-commenter
-    hub # github command-line client
-    tig # diff and commit view
+    gh            # gh command line
+    gist          # upload code to gist
+    git-crypt     # git files encryption
+    gitea         # Git with a cup of tea
+    git-open      # open repo in browser
+    git-review    # submit to gerrit
+    github-commenter #
+    hub           # github command-line client
+    tea           # CLI for gitea
+    tig           # diff and commit view
   ];
 
 
@@ -98,6 +99,7 @@ in
           sd = "stash drop";
           sh = "show";
           sl = "stash list";
+          smu = "submodule update --init --recursive";
           sp = "stash pop";
           ss = "stash save";
           top = "!eval cd$(pwd)/$(git rev-parse --show-cdup)&& pwd";

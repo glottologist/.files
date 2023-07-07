@@ -1,6 +1,28 @@
-{ buildVimPlugin }:
-
+{ buildVimPlugin, fetchFromGitLab}:
+let
+    ligo-version = "v0.65.0";
+    ligo-src = fetchFromGitLab {
+      owner = "ligolang";
+      repo = "ligo";
+      rev = "6a123b0238925d6839f3d97197c8c0b3d9dc3362";
+      sha256 = "32kpRfAbxJuIhx3K1t9E4AkJUIykbMuf5lYCW1vbkHg=";
+    };
+in
 {
+
+  #ligo-vim = buildVimPluginFrom2Nix {
+    #pname = "ligo-vim";
+    #version = "${ligo-version}";
+    #src = "${ligo-src}/tools/vim/ligo/start/ligo";
+    #meta.homepage = "https://gitlab.com/ligolang/ligo/-/tree/dev/tools/vim/ligo/start/ligo";
+  #};
+
+  ligo-vim = buildVimPlugin {
+    name = "ligo-vim";
+    version = "${ligo-version}";
+    src = "${ligo-src}/tools/vim/ligo/start/ligo";
+  };
+
   asyncrun-vim = buildVimPlugin {
     name = "asyncrun-vim";
     src = builtins.fetchTarball {

@@ -14,7 +14,7 @@
     { name = "jinjahtml";                      publisher = "samuelcolvin";       version = "0.16.0";          sha256 = "17f4dzwsqpwdkzc9f35sx31mvb4zns2ya0ym7mjgl8iy1kyci66q"; }
     { name = "language-fstar";                 publisher = "josser";             version = "0.0.1";           sha256 = "0zrv7x60p7b7rs9kxyfarfdhpj9c1xbnpc5m8gj82qfac6mk55d0"; }
     { name = "language-julia";                 publisher = "julialang";          version = "1.1.37";          sha256 = "0kzrc75bkxwppbl2157gmz4b08vffqf4m7jcbfzc0hvfjacp5y23"; }
-    { name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.5.0";           sha256 = "s/edIFlch6Mrvoaf1cvNXvs9jVUUXpT640z8NXGKc5g=";         }
+    { name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.5.2";           sha256 = "s/edIFlch6Mrvoaf1cvNXvs9jVUUXpT640z8NXGKc5g=";         }
     { name = "ligo-debugger-vscode";           publisher = "ligolang-publish";   version = "0.0.7";           sha256 = "OsmnyPE1kzlErdXlxcGysP8mZSEQaQKIog+hqJLTFHs=";         }
     { name = "chinstrap";                      publisher = "ant4g0nist";         version = "0.1.2";           sha256 = "vBxrqFXp3lj4xptN021Kaf5U+Y7GQbV89V6ATG4j/+I=";         }
     { name = "taqueria-vscode";                publisher = "ecadlabs";           version = "0.29.0";          sha256 = "aQoKu1bfsEGZokQjd6UR2AQUVzCZ/Xl7VZB5UfzAYq8=";         }

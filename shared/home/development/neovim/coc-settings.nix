@@ -15,7 +15,7 @@
     };
 
     "Ligo" =  {
-      "command" =  "ligo lsp";
+      "command" =  "~/nix-profile/bin/ligo lsp";
       "filetypes" =  ["ligo" "mligo"];
      };
 

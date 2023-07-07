@@ -88,6 +88,7 @@ let
     latex-box               # LAtex language support
     latex-live-preview      # This plugin provides a live preview of the output PDF of your LaTeX file.
     lightline-vim           # configurable status line (can be used by coc)
+    ligo-vim                # Manually packaged new ligo vim plugin
     markdown-preview-nvim   # Preview markdown on your modern browser with synchronised scrolling and flexible configuration
     material-vim            # modern theme with true colors support
     neomake                 # run programs asynchronously and highlight errors
