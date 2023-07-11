@@ -270,6 +270,7 @@ in
       v          = "nvim";
       vd         = "vimdiff";
       vn         = "nix run github:glottologist/nvim-flake";
+      vnl        = "nix run -I ~/development/glottologist/nvim-flake";
       vpn        = "expressvpn";
       vpnc       = "expressvpn connect";
       vpnd       = "expressvpn disconnect";
