@@ -18,8 +18,7 @@
   ];
 
   imports = [
-    ./ssh/default.nix
-
+    ../../../secrets/ssh.nix
   ];
 
 }
