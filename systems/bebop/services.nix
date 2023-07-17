@@ -17,6 +17,7 @@ in
     upower.enable = true;
     #tlp.enable = true;
     kubo.enable = true;
+    blueman.enable = true;
     #dnsmasq = {
       #enable = true;
       #extraConfig = ''

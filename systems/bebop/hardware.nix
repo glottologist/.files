@@ -30,6 +30,5 @@
       bluetooth = {
         enable = true;
       };
-      blueman.enable = true;
     };
 }

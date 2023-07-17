@@ -269,7 +269,7 @@ in
       unlock     = "sudo cryptsetup luksOpen";
       v          = "nvim";
       vd         = "vimdiff";
-      vn         = "nix run github:glottologist/nvim-flake";
+      vn         = "nix run ~/development/glottologist/nvim-flake";
       vnl        = "nix run -I ~/development/glottologist/nvim-flake";
       vpn        = "expressvpn";
       vpnc       = "expressvpn connect";

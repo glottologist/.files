@@ -31,7 +31,6 @@ in
   ../../shared/home/editing/default.nix
   ../../shared/home/languages/all.nix
   ../../shared/home/learning/default.nix
-  ../../shared/home/network/ssh/default.nix
   ../../shared/home/blockchain/default.nix
   ../../shared/home/cloud/default.nix
   ../../shared/home/database/default.nix
