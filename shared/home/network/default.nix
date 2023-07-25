@@ -15,6 +15,7 @@
     ngrep         # Network packet analyzer
     nload         # Monitors network traffic and bandwidth usage with ncurses graphs
     nmap          # A free and open source utility for network discovery and security auditing
+    x2goclient    # Graphical NoMachine NX3 remote desktop client
   ];
 
   imports = [

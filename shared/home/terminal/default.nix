@@ -3,7 +3,6 @@
 
   imports = [
     ./alacritty/default.nix
-    ./oh-my-posh/default.nix
     ./fish/default.nix
     ./kitty/default.nix
     ./rofi/default.nix

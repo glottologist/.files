@@ -26,13 +26,15 @@ in
   # Nix daemon config
   nix = {
 
-
     # Automate garbage collection
     gc = {
       automatic = true;
-      dates     = "weekly";
-      options   = "--delete-older-than 7d";
+      dates     = "daily";
+      options   = "--delete-older-than 5d";
     };
+
+    # Automatically optimise nix store
+    optimise.automatic = true;
 
     # Flakes settings
     #package = pkgs.nixUnstable;
