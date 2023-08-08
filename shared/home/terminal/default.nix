@@ -18,6 +18,7 @@
     ripgrep       #  Utility to that combines the usability of the silver searcher with the raw speed of grep
     ripgrep-all   # Ripgrep but search in pdfs, ebooks office docs etc.
     termdown      # Command line timer
+    termius       # Modern cross device SSH Terminal
     tmate         # Instant terminal sharing
   ];
 
