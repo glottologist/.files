@@ -1,7 +1,15 @@
-{ lib, fetchzip, nfversion, pname, phash, pzip }:
+{
+  lib,
+  fetchzip,
+  nfversion,
+  pname,
+  phash,
+  pzip,
+  striproot,
+}:
 fetchzip {
   name = pname;
-
+  stripRoot = striproot;
   url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v${nfversion}/${pzip}";
   postFetch = ''
     mkdir -p $out/share/fonts/${pname}
