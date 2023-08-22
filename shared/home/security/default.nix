@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
      _1password                   # 1Password command-line tool
      _1password-gui               # Multi-platform password manager
+     croc                         # Easily and securely send things from one computer to another
      lastpass-cli                 # Stores, retrieves, generates, and synchronizes passwords securely
      pam_u2f                      # A PAM module for allowing authentication with a U2F device
      paperkey                     # Store OpenPGP or GnuPG on paper
