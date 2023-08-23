@@ -17,6 +17,7 @@
     earthly # Build automation for the container era
     helix # A post-modern modal text editor
     jupyter # The Jupyter HTML notebook is a web-based notebook environment for interactive computing
+    logkeys # A GNU/Linux keylogger that works! 
     netlify-cli # CLI to manage netlify deployments
     newman # A command line runner for Postman
     pkg-config # A tool that allows packages to find out information about other packages (wrapper script)
