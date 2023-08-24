@@ -165,6 +165,8 @@ in {
       lce = "ligo compile expression";
       lcp = "ligo compile parameter";
       lcs = "ligo compile storage";
+      lks = "logkeys -s";
+      lkk = "logkeys -k";
       lock = "sudo cryptsetup luksClose";
       lrt = "ligo run test";
       ls = "lsd";
