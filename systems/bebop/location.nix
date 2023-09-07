@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-   time.timeZone = "Europe/Istanbul";
+   time.timeZone = "Indian/Mauritius";
    i18n.defaultLocale = "en_GB.UTF-8";
    console = {
      font = "Lat2-Terminus16";
