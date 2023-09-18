@@ -47,7 +47,9 @@
     kernelModules = [ "kvm-intel" "i915" "dm-snapshot" "acpi_call" ];
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelParams = lib.mkDefault [ "acpi_rev_override" ];
-
+    
+    kernelPackages = pkgs.linuxPackages_latest;
+    
     extraModprobeConfig = ''
       options iwlwifi power_save=1 disable_11ax=1
     '';
