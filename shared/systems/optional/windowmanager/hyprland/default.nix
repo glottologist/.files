@@ -11,7 +11,6 @@
     swww
     rofi-wayland
     xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
     xwayland
   ];
   environment.sessionVariables = {
@@ -27,6 +26,6 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    extraPortals = [pkgs.xdg-desktop-portal-gdk];
   };
 }
