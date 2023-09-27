@@ -17,6 +17,7 @@
     nethogs                              # A small 'net top' tool, grouping bandwidth by process
     networkmanager                       # Network configuration and management tool
     networkmanager-openvpn               # NetworkManager's OpenVPN plugin
+    networkmanagerapplet
     ookla-speedtest                      # Command line internet speedtest tool by Ookla
     openssl                              # Cryptographic library for SSL and TLS protocols
     openvpn                              # A robust and highly flexible tunneling application

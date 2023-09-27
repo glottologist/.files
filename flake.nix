@@ -6,12 +6,7 @@
   inputs = {
     nixpkgs.url = "github:glottologist/nixpkgs/23.05";
     home-manager = {
-      url = github:nix-community/home-manager/release-23.05;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    tex2nix = {
-      url = github:Mic92/tex2nix/4b17bc0;
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,43 +15,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    deploy = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    nixos-generators.url = "github:nix-community/nixos-generators";
-
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
-
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nur.url = "github:nix-community/NUR";
-
     agenix.url = "github:ryantm/agenix";
 
     hyprland.url = "github:hyprwm/Hyprland";
-
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    tex2nix,
-    deploy,
-    nixos-hardware,
-    nixos-generators,
-    flake-utils-plus,
-    fenix,
-    nur,
-    agenix,
     hyprland,
+    agenix,
     nix,
   } @ inputs: let
     system = "x86_64-linux";
@@ -65,7 +34,7 @@
 
     homeConfigurations = (
       import ./artefacts/home-configuration.nix {
-        inherit inputs system nixpkgs home-manager tex2nix nix hyprland;
+        inherit inputs system nixpkgs home-manager nix;
       }
     );
 

@@ -19,6 +19,7 @@
     enable = true;
     xwayland.hidpi = true;
     xwayland.enable = true;
+    systemdIntegration = true;
     extraConfig = ''
           monitor=,preferred,auto,auto
       ## Autostarts
