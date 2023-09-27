@@ -20,7 +20,10 @@ let
     home-manager.lib.homeManagerConfiguration rec {
       inherit pkgs;
 
-      modules = [{inherit imports;}];
+      modules = [
+      {inherit imports;}
+      inputs.hyprland.homeManagerModules.default
+      ];
     });
 in
 {

@@ -17,4 +17,5 @@
       };
       displayManager.defaultSession = "xfce";
     };
+};
 }

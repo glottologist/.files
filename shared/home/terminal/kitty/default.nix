@@ -15,6 +15,7 @@
       scrollback_lines = 10000;
       shell = "${pkgs.fish}/bin/fish";
       update_check_interval = 0;
+      confirm_os_window_close =0;
     };
     extraConfig = ''
     '';

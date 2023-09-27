@@ -20,7 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    deploy= {
+    deploy = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -32,8 +32,8 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
 
     fenix = {
-     url = "github:nix-community/fenix";
-     inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nur.url = "github:nix-community/NUR";
@@ -42,54 +42,44 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    kmonad = {
-      url = "github:kmonad/kmonad?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    tex2nix,
+    deploy,
+    nixos-hardware,
+    nixos-generators,
+    flake-utils-plus,
+    fenix,
+    nur,
+    agenix,
+    hyprland,
+    nix,
+  } @ inputs: let
+    system = "x86_64-linux";
+  in {
+    inherit inputs;
 
-  outputs =
-    { self,
-      nixpkgs,
-      home-manager,
-      tex2nix,
-      deploy,
-      nixos-hardware,
-      nixos-generators,
-      flake-utils-plus,
-      fenix,
-      nur,
-      agenix,
-      hyprland,
-      kmonad,
-      nix } @ inputs:
-    let
-      system = "x86_64-linux";
-    in
-    {
-      inherit inputs;
+    homeConfigurations = (
+      import ./artefacts/home-configuration.nix {
+        inherit inputs system nixpkgs home-manager tex2nix nix hyprland;
+      }
+    );
 
-      homeConfigurations = (
-        import ./artefacts/home-configuration.nix {
-          inherit inputs system nixpkgs home-manager tex2nix nix;
-        }
-      );
+    nixosConfigurations = (
+      import ./artefacts/nixos-configuration.nix {
+        inherit (nixpkgs) lib;
+        inherit inputs system nixpkgs nix;
+      }
+    );
 
-      nixosConfigurations = (
-        import ./artefacts/nixos-configuration.nix {
-          inherit (nixpkgs) lib;
-          inherit inputs system nixpkgs nix;
-        }
-      );
-
-      devShell.${system} = (
-        import ./artefacts/installation.nix {
-          inherit system nixpkgs;
-        }
-      );
-    };
-
-
+    devShell.${system} = (
+      import ./artefacts/installation.nix {
+        inherit system nixpkgs;
+      }
+    );
+  };
 }
