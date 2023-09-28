@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 status=$(nmcli g | grep -oE "disconnected")
 essid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)

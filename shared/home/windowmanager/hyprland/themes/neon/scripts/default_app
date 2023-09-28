@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 TERM=kitty          #Tag 1
 BROWSER=brave       #Tag 2
 DOC=libreoffice     #Tag 3

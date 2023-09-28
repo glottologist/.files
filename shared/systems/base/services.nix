@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   services = {
 
     sshd.enable = true;
@@ -9,7 +12,7 @@
       defaultWindowManager = "${pkgs.icewm}/bin/icewm";
     };
 
-    vnstat.enable  = true;
+    vnstat.enable = true;
 
     openssh = {
       enable = true;
@@ -18,7 +21,7 @@
 
     syncthing = {
       enable = true;
-	    all_proxy = null;
+      all_proxy = null;
       dataDir = "/home/jason/.syncthing";
       user = "jason";
     };
@@ -38,8 +41,5 @@
     };
   };
 
-
   systemd.services.upower.enable = true;
-
 }
-

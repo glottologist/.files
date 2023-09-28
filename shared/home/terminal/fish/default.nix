@@ -88,6 +88,7 @@ in {
       eo = "eval (opam env)";
       eop = "eval (opam env)";
       exe = "cd ~/development/exercism";
+      files = "cd ~/development/glottologist/.files";
       flash = "cd ~/Documents/flashcards";
       fs = "flameshot gui";
       ftc = "docker exec flex tezos-client";

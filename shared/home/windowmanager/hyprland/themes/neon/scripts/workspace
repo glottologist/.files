@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 monitors=/tmp/hypr/monitors_temp
 hyprctl monitors > $monitors

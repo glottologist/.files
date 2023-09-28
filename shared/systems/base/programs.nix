@@ -1,13 +1,13 @@
-{ config, pkgs, ... }:
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   programs = {
-   mtr.enable = true;
-   gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
- };
+    mtr.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  };
 }
-
-

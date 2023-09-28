@@ -3,6 +3,7 @@
 in {
   # This will save you money and possibly your life!
   services = {
+    gnome.gnome-keyring.enable = true;
     thermald = {
       enable = lib.mkDefault true;
       configFile = lib.mkDefault thermald-conf;
@@ -32,7 +33,6 @@ in {
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
       jack.enable = true;
-
     };
   };
 }

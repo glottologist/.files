@@ -5,6 +5,7 @@
   stdenv,
   ...
 }: {
+  home.packages = with pkgs; [killall];
   imports = [
     ./themes.nix
   ];
@@ -19,17 +20,15 @@
     systemdIntegration = true;
     xwayland.enable = true;
     extraConfig = ''
-      monitor=,highres,auto,1
-      monitor=DP-2, 1920x1080, 1920x0, 1
-      monitor=eDP-1, 1920x1080, 0x0, 1
+      monitor=, 1920x1080, auto, 1
       ## Autostarts
       exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+      exec-once = waybar
       exec-once = swww init
       exec = swww img ~/Pictures/foreverlife.png
       exec-once = dunst
       exec-once = blueman-applet
       exec-once = nm-applet --indicator
-
 
       env = XCURSOR_SIZE,24
 
@@ -110,7 +109,7 @@
       $mainMod = SUPER
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = $mainMod, T, exec, kitty
+      bind = $mainMod, Return, exec, kitty
       bind = $mainMod, B, exec, brave
       bind = $mainMod, R, exec, rofi -show drun -show-icons
       bind = $mainMod, C, killactive,

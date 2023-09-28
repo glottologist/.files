@@ -11,31 +11,31 @@
 
   # Eww
   ##  Images
-  xdg.configFile."hypr/themes/neon/eww/images/mic.png".source = ./themes/neon/eww/images/mic.png;
-  xdg.configFile."hypr/themes/neon/eww/images/music.png".source = ./themes/neon/eww/images/music.png;
-  xdg.configFile."hypr/themes/neon/eww/images/profile.png".source = ./themes/neon/eww/images/profile.png;
-  xdg.configFile."hypr/themes/neon/eww/images/speaker.png".source = ./themes/neon/eww/images/speaker.png;
+  xdg.configFile."eww/images/mic.png".source = ./themes/neon/eww/images/mic.png;
+  xdg.configFile."eww/images/music.png".source = ./themes/neon/eww/images/music.png;
+  xdg.configFile."eww/images/profile.png".source = ./themes/neon/eww/images/profile.png;
+  xdg.configFile."eww/images/speaker.png".source = ./themes/neon/eww/images/speaker.png;
   ##  Scripts
-  xdg.configFile."hypr/themes/neon/eww/scripts/appname".source = ./themes/neon/eww/scripts/appname;
-  xdg.configFile."hypr/themes/neon/eww/scripts/battery".source = ./themes/neon/eww/scripts/battery;
-  xdg.configFile."hypr/themes/neon/eww/scripts/gpu".source = ./themes/neon/eww/scripts/gpu;
-  xdg.configFile."hypr/themes/neon/eww/scripts/mem-ad".source = ./themes/neon/eww/scripts/mem-ad;
-  xdg.configFile."hypr/themes/neon/eww/scripts/memory".source = ./themes/neon/eww/scripts/memory;
-  xdg.configFile."hypr/themes/neon/eww/scripts/music".source = ./themes/neon/eww/scripts/music;
-  xdg.configFile."hypr/themes/neon/eww/scripts/music_info".source = ./themes/neon/eww/scripts/music_info;
-  xdg.configFile."hypr/themes/neon/eww/scripts/notifications".source = ./themes/neon/eww/scripts/notifications;
-  xdg.configFile."hypr/themes/neon/eww/scripts/pop".source = ./themes/neon/eww/scripts/pop;
-  xdg.configFile."hypr/themes/neon/eww/scripts/sbvol".source = ./themes/neon/eww/scripts/sbvol;
-  xdg.configFile."hypr/themes/neon/eww/scripts/weather".source = ./themes/neon/eww/scripts/weather;
-  xdg.configFile."hypr/themes/neon/eww/scripts/wifi".source = ./themes/neon/eww/scripts/wifi;
-  xdg.configFile."hypr/themes/neon/eww/scripts/workspace".source = ./themes/neon/eww/scripts/workspace;
+  xdg.configFile."eww/scripts/appname".source = ./themes/neon/eww/scripts/appname;
+  xdg.configFile."eww/scripts/battery".source = ./themes/neon/eww/scripts/battery;
+  xdg.configFile."eww/scripts/gpu".source = ./themes/neon/eww/scripts/gpu;
+  xdg.configFile."eww/scripts/mem-ad".source = ./themes/neon/eww/scripts/mem-ad;
+  xdg.configFile."eww/scripts/memory".source = ./themes/neon/eww/scripts/memory;
+  xdg.configFile."eww/scripts/music".source = ./themes/neon/eww/scripts/music;
+  xdg.configFile."eww/scripts/music_info".source = ./themes/neon/eww/scripts/music_info;
+  xdg.configFile."eww/scripts/notifications".source = ./themes/neon/eww/scripts/notifications;
+  xdg.configFile."eww/scripts/pop".source = ./themes/neon/eww/scripts/pop;
+  xdg.configFile."eww/scripts/sbvol".source = ./themes/neon/eww/scripts/sbvol;
+  xdg.configFile."eww/scripts/weather".source = ./themes/neon/eww/scripts/weather;
+  xdg.configFile."eww/scripts/wifi".source = ./themes/neon/eww/scripts/wifi;
+  xdg.configFile."eww/scripts/workspace".source = ./themes/neon/eww/scripts/workspace;
   ##  Config
-  xdg.configFile."hypr/themes/neon/eww/eww.scss".source = ./themes/neon/eww/eww.scss;
-  xdg.configFile."hypr/themes/neon/eww/eww.yuck".source = ./themes/neon/eww/eww.yuck;
-  xdg.configFile."hypr/themes/neon/eww/favicon.ico".source = ./themes/neon/eww/favicon.ico;
-  xdg.configFile."hypr/themes/neon/eww/launch_bar".source = ./themes/neon/eww/launch_bar;
-  xdg.configFile."hypr/themes/neon/eww/notification.yuck".source = ./themes/neon/eww/notifications.yuck;
-  xdg.configFile."hypr/themes/neon/eww/sidebar.yuck".source = ./themes/neon/eww/sidebar.yuck;
+  xdg.configFile."eww/eww.scss".source = ./themes/neon/eww/eww.scss;
+  xdg.configFile."eww/eww.yuck".source = ./themes/neon/eww/eww.yuck;
+  xdg.configFile."eww/favicon.ico".source = ./themes/neon/eww/favicon.ico;
+  xdg.configFile."eww/launch_bar".source = ./themes/neon/eww/launch_bar;
+  xdg.configFile."eww/notifications.yuck".source = ./themes/neon/eww/notifications.yuck;
+  xdg.configFile."eww/sidebar.yuck".source = ./themes/neon/eww/sidebar.yuck;
 
   # Rofi
   ##  Config
