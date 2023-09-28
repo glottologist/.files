@@ -15,6 +15,8 @@ with inputs; let
     ];
   };
 
+  hyprland = inputs.hyprland;
+
   imports = [
     ../homes/jason/home.nix
   ];
@@ -25,8 +27,7 @@ with inputs; let
 
       modules = [
         {inherit imports;}
-        inputs.hyprland.homeManagerModules.default
-        {wayland.windowManager.hyprland.enable = true;}
+        hyprland.homeManagerModules.default
       ];
     }
   );

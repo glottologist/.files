@@ -8,7 +8,6 @@
   environment.systemPackages = with pkgs; [
     eww
     dunst
-    hyprland
     libnotify
     swww
     wayland-protocols
@@ -19,14 +18,17 @@
     xdg-desktop-portal-hyprland
     xdg-utils
     xwayland
+    meson
   ];
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+    IXOS_OZONE_WL = "1";
   };
 
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    xwayland.hidpi = true;
+    xwayland.enable = true;
+    #package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
   xdg.portal = {
