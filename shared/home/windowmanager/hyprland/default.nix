@@ -5,20 +5,32 @@
   stdenv,
   ...
 }: {
+  imports = [
+    ./themes.nix
+  ];
+  home.sessionVariables = {
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_SESSION_DESKTOP = "Hyprland";
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
+    systemdIntegration = true;
     xwayland.enable = true;
     extraConfig = ''
-
-      monitor=,preferred,auto,auto
+      monitor=,highres,auto,1
+      monitor=DP-2, 1920x1080, 1920x0, 1
+      monitor=eDP-1, 1920x1080, 0x0, 1
       ## Autostarts
-      exec-once = swww init 
+      exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+      exec-once = swww init
       exec = swww img ~/Pictures/foreverlife.png
-      exec-once = ${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1
-      exec-once = eww daemon
+      exec-once = waybar
       exec-once = dunst
       exec-once = blueman-applet
-      exec-once = eww daemon
+      exec-once = nm-applet --indicator
+      #exec-once = eww daemon
 
       # Source a file (multi-file configs)
       # source = ~/.config/hypr/myColors.conf
@@ -26,7 +38,7 @@
       env = XCURSOR_SIZE,24
 
       input {
-        kb_layout = us
+        kb_layout = gb
         kb_variant =
         kb_model =
         kb_options =
@@ -51,15 +63,18 @@
       }
 
       decoration {
-        rounding = 10
-        blur = yes
-        blur_size = 3
-        blur_passes = 1
+          rounding = 10
+          blur {
+            enabled = true
+            size = 3
+            new_optimizations = true
+            passes = 1
+          }
 
-        drop_shadow = yes
-        shadow_range = 4
-        shadow_render_power = 3
-        col.shadow = rgba(1a1a1aee)
+          drop_shadow = yes
+          shadow_range = 4
+          shadow_render_power = 3
+          col.shadow = rgba(1a1a1aee)
       }
 
       animations {
@@ -95,9 +110,8 @@
       $mainMod = SUPER
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = $mainMod, K, exec, kitty
+      bind = $mainMod, T, exec, kitty
       bind = $mainMod, B, exec, brave
-      bind = $mainMod, t, exec, thunderbird
       bind = $mainMod, R, exec, rofi -show drun -show-icons
       bind = $mainMod, C, killactive,
       bind = $mainMod, Q, exit,
@@ -105,13 +119,13 @@
       bind = $mainMod, F, exec, flameshot
       bind = $mainMod, V, togglefloating,
       bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
+      bind = $mainMod, O, togglesplit, # dwindle
 
       # Move focus with mainMod + arrow keys
-      bind = $mainMod, left, movefocus, l
-      bind = $mainMod, right, movefocus, r
-      bind = $mainMod, up, movefocus, u
-      bind = $mainMod, down, movefocus, d
+      bind = $mainMod, H, movefocus, l
+      bind = $mainMod, L, movefocus, r
+      bind = $mainMod, K, movefocus, u
+      bind = $mainMod, J, movefocus, d
 
       # Switch workspaces with mainMod + [0-9]
       bind = $mainMod, 1, workspace, 1
@@ -144,6 +158,8 @@
       # Move/resize windows with mainMod + LMB/RMB and dragging
       bindm = $mainMod, mouse:272, movewindow
       bindm = $mainMod, mouse:273, resizewindow
+
+      source=~/.config/hypr/themes/neon/theme.conf
     '';
   };
 }

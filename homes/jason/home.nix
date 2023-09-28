@@ -41,12 +41,12 @@ in {
     ../../shared/home/fonts/default.nix
     ../../shared/home/network/default.nix
     ../../shared/home/security/default.nix
+    ../../shared/home/services/default.nix
     ../../shared/home/productivity/default.nix
     ../../shared/home/terminal/default.nix
     ../../shared/home/windowmanager/hyprland/default.nix
-    ../../shared/home/windowmanager/eww/default.nix
-    ../../shared/home/windowmanager/dunst/default.nix
-   # ../../shared/home/windowmanager/waybar/default.nix
+    # ../../shared/home/windowmanager/eww/default.nix
+    ../../shared/home/windowmanager/waybar/default.nix
   ];
 
   xdg = {
