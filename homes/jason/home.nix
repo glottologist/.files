@@ -44,6 +44,9 @@ in {
     ../../shared/home/productivity/default.nix
     ../../shared/home/terminal/default.nix
     ../../shared/home/windowmanager/hyprland/default.nix
+    ../../shared/home/windowmanager/eww/default.nix
+    ../../shared/home/windowmanager/dunst/default.nix
+   # ../../shared/home/windowmanager/waybar/default.nix
   ];
 
   xdg = {

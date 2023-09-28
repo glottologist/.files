@@ -6,14 +6,10 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
-    eww
-    dunst
-    libnotify
     swww
     wayland-protocols
     wayland-utils
     wlroots
-    rofi-wayland
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     xdg-utils
