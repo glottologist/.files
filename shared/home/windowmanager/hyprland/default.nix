@@ -26,14 +26,10 @@
       exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
       exec-once = swww init
       exec = swww img ~/Pictures/foreverlife.png
-      exec-once = waybar
       exec-once = dunst
       exec-once = blueman-applet
       exec-once = nm-applet --indicator
-      #exec-once = eww daemon
 
-      # Source a file (multi-file configs)
-      # source = ~/.config/hypr/myColors.conf
 
       env = XCURSOR_SIZE,24
 
@@ -103,6 +99,10 @@
 
       device:epic-mouse-v1 {
         sensitivity = -0.5
+      }
+      misc {
+          disable_hyprland_logo = true
+          disable_splash_rendering = true
       }
 
       windowrule=float,Rofi
