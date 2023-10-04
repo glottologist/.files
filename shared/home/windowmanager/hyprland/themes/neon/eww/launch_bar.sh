@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-echo on
 EWW="eww -c $HOME/.config/eww/"
 
 if [[ ! $(pidof eww) ]]; then
-    echo "running deamon"
     ${EWW} daemon
     sleep 1
 fi
@@ -13,4 +11,3 @@ for i in "${!NB_MONITORS[@]}"; do
     ${EWW} open "bar$i"
     [[ $i == 0 ]] && ${EWW} open-many sidebar notifications
 done
-echo off

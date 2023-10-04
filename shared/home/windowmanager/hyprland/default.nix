@@ -20,15 +20,12 @@
     systemdIntegration = true;
     xwayland.enable = true;
     extraConfig = ''
-      monitor=, 1920x1080, auto, 1
+      monitor=,preferred,auto,1.2
       ## Autostarts
       exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-      exec-once = waybar
-      exec-once = swww init
-      exec = swww img ~/Pictures/foreverlife.png
       exec-once = dunst
-      exec-once = blueman-applet
       exec-once = nm-applet --indicator
+      exec-once = blueman-applet
 
       env = XCURSOR_SIZE,24
 
@@ -42,7 +39,8 @@
         follow_mouse = 1
 
         touchpad {
-            natural_scroll = no
+            natural_scroll = yes
+            tap-and-drag = true
         }
 
         sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
@@ -61,13 +59,14 @@
           rounding = 10
           blur {
             enabled = true
-            size = 3
+            size = 8
             new_optimizations = true
-            passes = 1
+            passes = 2
           }
 
           drop_shadow = yes
-          shadow_range = 4
+          shadow_range = 15
+          shadow_offset = 0, 0
           shadow_render_power = 3
           col.shadow = rgba(1a1a1aee)
       }
@@ -86,6 +85,7 @@
       dwindle {
         pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
         preserve_split = yes # you probably want this
+        smart_split = true;
       }
 
       master {
@@ -93,7 +93,11 @@
       }
 
       gestures {
-        workspace_swipe = off
+        workspace_swipe = on
+      }
+
+      binds {
+        workspace_back_and_forth = true
       }
 
       device:epic-mouse-v1 {
@@ -110,15 +114,35 @@
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Return, exec, kitty
-      bind = $mainMod, B, exec, brave
+      bind = $mainMod, B, exec, qutebrowser
+      bind = $mainMod SHIFT , B, exec, brave
+      bind = $mainMod, T, exec, thunderbird
+      bind = $mainMod SHIFT, T, exec, telegram
+      bind = $mainMod, S, exec, slack
+      bind = $mainMod SHIFT, S, exec, flameshot gui
+      bind = $mainMod, K, exec, konsole
+      bind = $mainMod, F, exec,firefox
+      bind = $mainMod, D, exec,discord
+      bind = $mainMod, M, exec,spotify
+      bind = $mainMod, V, exec,veracrypt
       bind = $mainMod, R, exec, rofi -show drun -show-icons
       bind = $mainMod, C, killactive,
-      bind = $mainMod, Q, exit,
-      bind = $mainMod, E, exec, dolphin
-      bind = $mainMod, F, exec, flameshot
-      bind = $mainMod, V, togglefloating,
-      bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, O, togglesplit, # dwindle
+      bind = $mainMod SHIFT, Q, exit,
+      bind = $mainMod SHIFT, F, exec, dolphin
+      bind = $mainMod SHIFT, V, togglefloating,
+      bind = $mainMod SHIFT, P, pseudo, # dwindle
+      bind = $mainMod SHIFT, O, togglesplit, # dwindle
+      bind = $mainMod SHIFT, L, exec, swaylock
+
+      bind = , XF86AudioRaiseVolume, exec, volumectl -u up
+      bind = , XF86AudioLowerVolume, exec, volumectl -u down
+      bind = , XF86AudioMute, exec, volumectl toggle-mute
+      bind = , XF86AudioMicMute, exec, volumectl -m toggle-mute
+
+
+
+      bind = , XF86MonBrightnessUp, exec, lightctl up
+      bind = , XF86MonBrightnessDown, exec, lightctl down
 
       # Move focus with mainMod + arrow keys
       bind = $mainMod, H, movefocus, l
@@ -159,6 +183,11 @@
       bindm = $mainMod, mouse:273, resizewindow
 
       source=~/.config/hypr/themes/neon/theme.conf
+
+      exec-once = waybar
+      exec-once = swww init
+      exec-once = swww img ~/Pictures/foreverlife.png
+
     '';
   };
 }

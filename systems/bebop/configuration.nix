@@ -23,7 +23,7 @@ in {
     ../../shared/systems/optional/storage.nix
     ../../shared/systems/optional/themes.nix
     #../../shared/systems/optional/virtualization.nix
-    ../../shared/systems/optional/windowmanager/plasma.nix
+    # ../../shared/systems/optional/windowmanager/plasma.nix
     ../../shared/systems/optional/windowmanager/xfce.nix
     ../../shared/systems/optional/windowmanager/hyprland
     ./environment.nix

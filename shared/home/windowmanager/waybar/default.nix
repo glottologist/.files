@@ -7,7 +7,7 @@
   programs.waybar = {
     enable = true;
     systemd = {
-      enable = false;
+      enable = true;
       target = "graphical-session.target";
     };
     style = ''
@@ -145,14 +145,14 @@
         "position" = "top";
         modules-left = [
           "custom/launcher"
-          "temperature"
-          "mpd"
-          "custom/cava-internal"
+          "hyprland/workspaces"
+          "hyprland/submap"
         ];
         modules-center = [
           "clock"
         ];
         modules-right = [
+          "temperature"
           "pulseaudio"
           "backlight"
           "memory"
@@ -161,15 +161,42 @@
           "custom/powermenu"
           "tray"
         ];
-        "custom/launcher" = {
-          "format" = " ";
-          "on-click" = "pkill rofi || rofi2";
-          "on-click-middle" = "exec default_wall";
-          "on-click-right" = "exec wallpaper_random";
+
+        "hyprland/workspaces" = {
+          "on-click" = "activate";
+          "format" = "{icon}";
+          "format-icons" = {
+            "active" = "";
+            "default" = "";
+          };
+          "persistent_workspaces" = {
+            "*" = 10;
+          };
+        };
+
+        "hyprland/submap" = {
+          "format" = "<span color='#a6da95'>Mode:</span> {}";
           "tooltip" = false;
         };
-        "custom/cava-internal" = {
-          "exec" = "sleep 1s && cava-internal";
+
+        "clock" = {
+          "interval" = 1;
+          "format" = "{:%I:%M %p  %A %b %d}";
+          "tooltip" = true;
+          "tooltip-format" = "{=%A; %d %B %Y}\n<tt>{calendar}</tt>";
+        };
+
+        "clock#time" = {
+          "format" = "{:%I:%M %p %Ez}";
+          "locale" = "en_GB.UTF-8";
+          "timezones" = ["India/Mauritius"];
+        };
+
+        "custom/launcher" = {
+          "format" = " ";
+          "on-click" = "rofi -show drun -show-icons";
+          "on-click-middle" = "exec default_wall";
+          "on-click-right" = "exec wallpaper_random";
           "tooltip" = false;
         };
         "pulseaudio" = {
@@ -181,12 +208,6 @@
           };
           "on-click" = "pamixer -t";
           "tooltip" = false;
-        };
-        "clock" = {
-          "interval" = 1;
-          "format" = "{:%I:%M %p  %A %b %d}";
-          "tooltip" = true;
-          "tooltip-format" = "{=%A; %d %B %Y}\n<tt>{calendar}</tt>";
         };
         "memory" = {
           "interval" = 1;
@@ -234,4 +255,3 @@
     ];
   };
 }
-

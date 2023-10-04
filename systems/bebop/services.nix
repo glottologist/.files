@@ -1,9 +1,15 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   thermald-conf = ./thermald-conf.xml;
 in {
   # This will save you money and possibly your life!
   services = {
-    gnome.gnome-keyring.enable = true;
+    gnome = {
+      gnome-keyring.enable = true;
+    };
     thermald = {
       enable = lib.mkDefault true;
       configFile = lib.mkDefault thermald-conf;
@@ -11,7 +17,14 @@ in {
     fstrim.enable = lib.mkDefault true;
     hdapsd.enable = lib.mkDefault true;
     printing.enable = true;
-    dbus.enable = true;
+    dbus = {
+      enable = true;
+      packages = with pkgs; [
+        xfce.xfconf
+        gnome2.GConf
+      ];
+    };
+    udisks2.enable = true;
     acpid.enable = true;
     upower.enable = true;
     #tlp.enable = true;

@@ -1,16 +1,19 @@
-{ config, lib, pkgs, ... }:
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   #environment.systemPackages = with pkgs.plasma5Packages; [
-   #];
+  #];
 
   programs.dconf.enable = true;
   services = {
-    #gnome.gnome-keyring.enable = true;
+    gnome.gnome-keyring.enable = true;
     upower.enable = true;
     dbus = {
       enable = true;
-      packages = [ pkgs.dconf ];
+      packages = [pkgs.dconf];
     };
     xserver = {
       enable = true;
@@ -24,7 +27,7 @@
         Option "SuspendTime" "0"
         Option "OffTime"     "0"
       '';
-      displayManager.sddm.enable = true;
+      displayManager.lightdm.enable = true;
       desktopManager.plasma5.enable = true;
     };
   };

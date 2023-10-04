@@ -10,6 +10,7 @@
     wayland-protocols
     wayland-utils
     wlroots
+    xdg-desktop-portal-wlr
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     xdg-utils
@@ -17,19 +18,24 @@
     meson
   ];
   environment.sessionVariables = {
-    IXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   programs.hyprland = {
     enable = true;
     xwayland.hidpi = true;
     xwayland.enable = true;
-    #package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
+  services.xserver.displayManager.sessionPackages = [pkgs.hyprland];
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
 }
