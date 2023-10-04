@@ -7,6 +7,15 @@
 in {
   # This will save you money and possibly your life!
   services = {
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a . %h | %F' --cmd Hyprland";
+          user = "greeter";
+        };
+      };
+    };
     gnome = {
       gnome-keyring.enable = true;
     };
@@ -20,25 +29,18 @@ in {
     dbus = {
       enable = true;
       packages = with pkgs; [
-        xfce.xfconf
-        gnome2.GConf
+        gnome.gnome-keyring
+        gcr
       ];
     };
     udisks2.enable = true;
     acpid.enable = true;
     upower.enable = true;
-    #tlp.enable = true;
     kubo = {
       enable = true;
       settings.Addresses.API = ["/ip4/127.0.0.1/tcp/5001"];
     };
     blueman.enable = true;
-    #dnsmasq = {
-    #enable = true;
-    #extraConfig = ''
-    #interface=rtwg0
-    #'';
-    #};
     pipewire = {
       enable = true;
       alsa.enable = true;

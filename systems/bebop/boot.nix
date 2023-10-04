@@ -8,6 +8,7 @@
   environment.systemPackages = with pkgs; [
     plymouth # Boot splash and boot logger
     catppuccin-plymouth # Soothing pastel theme for Plymouth
+    gnome.gnome-keyring
   ];
 
   imports = [
@@ -67,6 +68,7 @@
       font = "${pkgs.jetbrains-mono}/share/fonts/truetype/JetBrainsMono-Regular.ttf";
       themePackages = [pkgs.catppuccin-plymouth];
       theme = "catppuccin-macchiato";
+      logo = ../../shared/home/Pictures/foreverlife.png;
     };
   };
 }
