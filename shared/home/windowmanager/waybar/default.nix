@@ -10,6 +10,9 @@
       enable = true;
       target = "graphical-session.target";
     };
+    package = pkgs.waybar.overrideAttrs (oa: {
+      mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
+    });
     style = ''
              * {
                font-family: "FiraCode Nerd Font";

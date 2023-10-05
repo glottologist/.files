@@ -15,17 +15,14 @@
     XDG_SESSION_DESKTOP = "Hyprland";
   };
 
+  systemd.user.targets.hyprland-session.Unit.Wants = ["xdg-desktop-autostart.target"];
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemdIntegration = true;
     xwayland.enable = true;
     extraConfig = ''
       monitor=,preferred,auto,1.2
-      ## Autostarts
-      exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-      exec-once = dunst
-      exec-once = nm-applet --indicator
-      exec-once = blueman-applet
 
       env = XCURSOR_SIZE,24
 
@@ -131,7 +128,8 @@
       bind = $mainMod SHIFT, F, exec, dolphin
       bind = $mainMod SHIFT, V, togglefloating,
       bind = $mainMod SHIFT, P, pseudo, # dwindle
-      bind = $mainMod SHIFT, O, togglesplit, # dwindle
+      bind = $mainMod SHIFT, D, togglesplit, # dwindle
+      bind = $mainMod SHIFT, F, fullscreen
       bind = $mainMod SHIFT, L, exec, swaylock
 
       bind = , XF86AudioRaiseVolume, exec, volumectl -u up
@@ -139,10 +137,8 @@
       bind = , XF86AudioMute, exec, volumectl toggle-mute
       bind = , XF86AudioMicMute, exec, volumectl -m toggle-mute
 
-
-
-      bind = , XF86MonBrightnessUp, exec, lightctl up
-      bind = , XF86MonBrightnessDown, exec, lightctl down
+      bind = , XF86MonBrightnessUp, exec, brightnessctl s 10%+
+      bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
       # Move focus with mainMod + arrow keys
       bind = $mainMod, H, movefocus, l
@@ -184,9 +180,15 @@
 
       source=~/.config/hypr/themes/neon/theme.conf
 
-      exec-once = waybar
-      exec-once = swww init
-      exec-once = swww img ~/Pictures/foreverlife.png
+      ## Autostarts
+      exec-once = systemctl --user import-environment &
+      exec-once = hash dbus-update-activation-environment 2>/dev/null &
+      exec-once = dbus-update-activation-environment --systemd &
+      exec-once = dunst
+      exec-once = nm-applet --indicator
+      exec-once = blueman-applet
+      exec-once = swww init && sleep 1 && wallpaper
+      exec-once = waybar &
 
     '';
   };

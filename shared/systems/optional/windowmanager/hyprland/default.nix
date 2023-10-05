@@ -6,7 +6,6 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
-    swww
     wayland-protocols
     wayland-utils
     wlroots
@@ -22,6 +21,8 @@
     WLR_NO_HARDWARE_CURSORS = "1";
   };
 
+  programs.sway.enable = true;
+
   programs.hyprland = {
     enable = true;
     xwayland.hidpi = true;
@@ -34,8 +35,8 @@
     enable = true;
     wlr.enable = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal-wlr
-      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+      #pkgs.xdg-desktop-portal-gtk
     ];
   };
 }

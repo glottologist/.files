@@ -66,8 +66,8 @@
     plymouth = {
       enable = true;
       font = "${pkgs.jetbrains-mono}/share/fonts/truetype/JetBrainsMono-Regular.ttf";
-      themePackages = [pkgs.catppuccin-plymouth];
-      theme = "catppuccin-macchiato";
+      #themePackages = [pkgs.catppuccin-plymouth];
+      #theme = "catppuccin-macchiato";
       logo = ../../shared/home/Pictures/foreverlife.png;
     };
   };
