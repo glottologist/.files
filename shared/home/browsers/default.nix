@@ -14,4 +14,7 @@
   ];
 
   xdg.configFile."qutebrowser/config.py".text = builtins.readFile ../../../secrets/qutebrowser_config.py;
+  xdg.configFile."qutebrowser/catppuccin/.editorconfig".text = builtins.readFile ./qutebrowser/catppuccin/editorconfig;
+  xdg.configFile."qutebrowser/catppuccin/__init__.py".text = builtins.readFile ./qutebrowser/catppuccin/__init__.py;
+  xdg.configFile."qutebrowser/catppuccin/setup.py".text = builtins.readFile ./qutebrowser/catppuccin/setup.py;
 }

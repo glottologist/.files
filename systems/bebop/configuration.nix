@@ -10,7 +10,6 @@ in {
     ./location.nix
     ../../shared/systems/base.nix
     ../../shared/systems/optional/blockchain.nix
-    ../../shared/systems/optional/browsers.nix
     ../../shared/systems/optional/communication.nix
     ../../shared/systems/optional/disk.nix
     ../../shared/systems/optional/games.nix
