@@ -11,7 +11,7 @@
   ];
 
   home.packages = with pkgs; [
-    exa           # Command line file tree
+    eza           # Command line file tree
     flameshot     # Powerfull yet simple to use screenshot software
     hushboard     # Mute your microphone while typing
     ncdu          # Terminal space explorer

@@ -98,7 +98,6 @@ make_dir_and_copy() {
 
 copy_home_files() {
    make_dir_and_copy "Pictures"
-   make_dir_and_copy "icons"
 }
 
 register_nixos_unstable_channel() {

@@ -25,7 +25,6 @@
 
   programs.hyprland = {
     enable = true;
-    xwayland.hidpi = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
@@ -35,7 +34,7 @@
     enable = true;
     wlr.enable = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
+      #pkgs.xdg-desktop-portal-hyprland
       #pkgs.xdg-desktop-portal-gtk
     ];
   };

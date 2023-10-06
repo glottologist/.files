@@ -5,7 +5,12 @@
   stdenv,
   ...
 }: {
-  home.packages = with pkgs; [killall];
+  home.packages = with pkgs; [
+    killall
+    light
+    xorg.xbacklight
+    brightnessctl
+  ];
   imports = [
     ./themes.nix
   ];
@@ -22,7 +27,9 @@
     systemdIntegration = true;
     xwayland.enable = true;
     extraConfig = ''
-      monitor=,preferred,auto,1.2
+      monitor=eDP-1,1920x1200@60,auto,1
+      monitor=DP-2,1920x1080@60,auto,1
+      monitor=DP-3,1920x1080@60,auto,1
 
       env = XCURSOR_SIZE,24
 
@@ -122,7 +129,7 @@
       bind = $mainMod, D, exec,discord
       bind = $mainMod, M, exec,spotify
       bind = $mainMod, V, exec,veracrypt
-      bind = $mainMod, R, exec, rofi -show drun -show-icons
+      bind = $mainMod, R, exec, pkill rofi || rofi -show drun -show-icons
       bind = $mainMod, C, killactive,
       bind = $mainMod SHIFT, Q, exit,
       bind = $mainMod SHIFT, F, exec, dolphin
@@ -132,10 +139,10 @@
       bind = $mainMod SHIFT, F, fullscreen
       bind = $mainMod SHIFT, L, exec, swaylock
 
-      bind = , XF86AudioRaiseVolume, exec, volumectl -u up
-      bind = , XF86AudioLowerVolume, exec, volumectl -u down
-      bind = , XF86AudioMute, exec, volumectl toggle-mute
-      bind = , XF86AudioMicMute, exec, volumectl -m toggle-mute
+      bind = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+      bind = , XF86AudioLowerVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-
+      bind = , XF86AudioMute, exec, wpctl set-mute -l 1.5 @DEFAULT_AUDIO_SINK@ toggle
+      bind = , XF86AudioMicMute, exec, wpctl set-mute -l 1.5 @DEFAULT_AUDIO_SOURCE@ toggle
 
       bind = , XF86MonBrightnessUp, exec, brightnessctl s 10%+
       bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-

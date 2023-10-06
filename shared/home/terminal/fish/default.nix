@@ -5,14 +5,30 @@
   ...
 }: let
   fzfConfig = ''
+    set -x FZF_DEFAULT_OPTS "--preview='bat {} --color=always'" \n
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
   '';
 
   themeConfig = ''
+    set -g theme_display_date no
+    set -g theme_nerd_fonts yes
+    set -g theme_newline_cursor yes
+    set -g theme_color_scheme catppuccin_latte
   '';
+  fishConfig =
+    ''
+      bind \t accept-autosuggestion
+      set fish_greeting
+    ''
+    + fzfConfig
+    + themeConfig;
 
   custom = pkgs.callPackage ./plugins.nix {};
 in {
+  imports = [
+    ./functions.nix
+    ./themes.nix
+  ];
   programs.fish = {
     enable = true;
     plugins = [
@@ -32,7 +48,6 @@ in {
     ];
     interactiveShellInit = ''
         eval (direnv hook fish)
-        curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
@@ -250,9 +265,8 @@ in {
       wipewith = "lethe wipe -s";
       wipezero = "lethe wipe -s zero";
     };
-    shellInit = themeConfig + fzfConfig;
+    shellInit = fishConfig;
   };
 
   xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
-  xdg.configFile."fish/functions/fish_prompt.fish".text = builtins.readFile ./fish_prompt.fish;
 }

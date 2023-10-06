@@ -21,7 +21,7 @@ in {
     ../../shared/systems/optional/specific/waydroid.nix
     ../../shared/systems/optional/storage.nix
     ../../shared/systems/optional/themes.nix
-    #../../shared/systems/optional/virtualization.nix
+    ../../shared/systems/optional/virtualization.nix
     # ../../shared/systems/optional/windowmanager/plasma.nix
     ../../shared/systems/optional/windowmanager/xfce.nix
     ../../shared/systems/optional/windowmanager/hyprland
@@ -32,9 +32,9 @@ in {
     ./services.nix
     ./users.nix
   ];
- system = {
- autoUpgrade.enable = true;
- autoUpgrade.allowReboot = true;
- stateVersion = "23.05";
- };
+  system = {
+    autoUpgrade.enable = true;
+    autoUpgrade.allowReboot = true;
+    stateVersion = "23.05";
+  };
 }

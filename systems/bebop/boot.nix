@@ -55,7 +55,7 @@
 
     kernelModules = ["kvm-intel" "i915" "dm-snapshot" "acpi_call"];
     extraModulePackages = with config.boot.kernelPackages; [acpi_call];
-    kernelParams = lib.mkDefault ["acpi_rev_override"];
+    kernelParams = lib.mkDefault ["acpi_rev_override" "quiet"];
 
     kernelPackages = pkgs.linuxPackages_latest;
 
@@ -65,10 +65,9 @@
 
     plymouth = {
       enable = true;
-      font = "${pkgs.jetbrains-mono}/share/fonts/truetype/JetBrainsMono-Regular.ttf";
-      #themePackages = [pkgs.catppuccin-plymouth];
-      #theme = "catppuccin-macchiato";
-      logo = ../../shared/home/Pictures/foreverlife.png;
+      font = "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
+      themePackages = [pkgs.catppuccin-plymouth];
+      theme = "catppuccin-macchiato";
     };
   };
 }

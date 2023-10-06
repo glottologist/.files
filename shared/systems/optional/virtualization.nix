@@ -17,7 +17,12 @@
       };
     };
     spiceUSBRedirection.enable = true;
-    docker.enable = true;
+    #docker.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -26,6 +31,8 @@
     docker-ls # Tools for browsing and manipulating docker registries
     docker-compose # Multi-container orchestration for Docker
     podman # A program for managing pods, containers and container images
+    podman-tui # Podman Terminal UI
+    podman-desktop # A graphical tool for developing on containers and Kubernetes
     podman-compose # An implementation of docker-compose with podman backend
     spice # Complete open source solution for interaction with virtualized desktop devices
     virt-manager

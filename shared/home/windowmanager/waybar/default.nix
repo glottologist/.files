@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: {
+  xdg.configFile."waybar/latte.css".source = ./latte.css;
+
   programs.waybar = {
     enable = true;
     systemd = {
@@ -14,6 +16,7 @@
       mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
     });
     style = ''
+             @import "latte.css";
              * {
                font-family: "FiraCode Nerd Font";
                font-size: 12pt;

@@ -4,5 +4,6 @@
     awscli2
     aws-sam-cli
     azure-cli
+    cloudflared
   ];
 }
