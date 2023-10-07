@@ -25,6 +25,9 @@
 
   custom = pkgs.callPackage ./plugins.nix {};
 in {
+  home.packages = with pkgs; [
+    figlet # Terminal ASCII pictures
+  ];
   imports = [
     ./functions.nix
     ./themes.nix

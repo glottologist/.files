@@ -12,7 +12,6 @@
     brightnessctl
   ];
   imports = [
-    ./themes.nix
   ];
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "Hyprland";
@@ -185,7 +184,6 @@
       bindm = $mainMod, mouse:272, movewindow
       bindm = $mainMod, mouse:273, resizewindow
 
-      source=~/.config/hypr/themes/neon/theme.conf
 
       ## Autostarts
       exec-once = systemctl --user import-environment &

@@ -1,36 +1,40 @@
-{ config, lib, pkgs, inputs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   folder = ./cachix;
   toImport = name: value: folder + ("/" + name);
   filterCaches = key: value: value == "regular" && lib.hasSuffix ".nix" key;
   imports = lib.mapAttrsToList toImport (lib.filterAttrs filterCaches (builtins.readDir folder));
-in
-{
+in {
   inherit imports;
   nixpkgs.config = {
     allowUnfree = true;
     #allowBroken = true;
     permittedInsecurePackages = [
-         "electron-12.2.3"
-         "electron-13.6.9"
-         "libgit2-0.27.10"
-         "python2.7-Pillow-6.2.2"
-         "adobe-reader-9.5.5"
+      "electron-12.2.3"
+      "electron-13.6.9"
+      "electron-19.1.9"
+      "libgit2-0.27.10"
+      "python2.7-Pillow-6.2.2"
+      "adobe-reader-9.5.5"
     ];
   };
   environment.systemPackages = with pkgs; [
-    nox        # Tools to make nix nicer to use
-    nix-tree   # Interactively browse a Nix store paths dependencies
+    nox # Tools to make nix nicer to use
+    nix-tree # Interactively browse a Nix store paths dependencies
   ];
 
   # Nix daemon config
   nix = {
-
     # Automate garbage collection
     gc = {
       automatic = true;
-      dates     = "daily";
-      options   = "--delete-older-than 5d";
+      dates = "daily";
+      options = "--delete-older-than 5d";
     };
 
     # Automatically optimise nix store
@@ -52,7 +56,7 @@ in
 
     sshServe = {
       enable = true;
-      keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN1szb/fBxMMUgpClXaFd4zR71B5/02Ij9jV4wxKW+o jason@glottologist.co.uk" ];
+      keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN1szb/fBxMMUgpClXaFd4zR71B5/02Ij9jV4wxKW+o jason@glottologist.co.uk"];
     };
 
     settings = {
@@ -63,7 +67,7 @@ in
       build-cores = 5;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = [ "root" "jason" ];
+      trusted-users = ["root" "jason"];
 
       substituters = [
         "https://nix-community.cachix.org"
@@ -78,12 +82,9 @@ in
 
       experimental-features = ["nix-command" "flakes"];
 
-      keep-outputs                 = true;
-      keep-derivations             = true;
+      keep-outputs = true;
+      keep-derivations = true;
       allow-import-from-derivation = true;
-
-
-
     };
   };
 }

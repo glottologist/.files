@@ -21,7 +21,7 @@
     netlify-cli # CLI to manage netlify deployments
     newman # A command line runner for Postman
     pkg-config # A tool that allows packages to find out information about other packages (wrapper script)
-    postman # API Development Environment
+    # postman # API Development Environment - TODO Couldn't download 10.18.6 from any mirror 7th OCt 23
     remarshal # Convert between TOML, YAML and JSON
     rpi-imager # Raspberry Pi Imaging Utility
     silver-searcher # Ack like searcher focused on code
