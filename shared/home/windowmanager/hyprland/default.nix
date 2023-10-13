@@ -26,9 +26,8 @@
     systemdIntegration = true;
     xwayland.enable = true;
     extraConfig = ''
-      monitor=eDP-1,1920x1200@60,auto,1
-      monitor=DP-2,1920x1080@60,auto,1
-      monitor=DP-3,1920x1080@60,auto,1
+      monitor=eDP-1,preferred,auto,1.5
+      monitor=,1920x1080@60,auto,1
 
       env = XCURSOR_SIZE,24
 
@@ -124,6 +123,7 @@
       bind = $mainMod, S, exec, slack
       bind = $mainMod SHIFT, S, exec, flameshot gui
       bind = $mainMod, K, exec, konsole
+      bind = $mainMod, O, exec, obsidian
       bind = $mainMod, F, exec,firefox
       bind = $mainMod, D, exec,discord
       bind = $mainMod, M, exec,spotify
