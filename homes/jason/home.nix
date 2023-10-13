@@ -65,7 +65,12 @@ in {
       DISPLAY = ":0";
       EDITOR = "nvim";
     };
-
+    pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 22;
+    };
     stateVersion = "23.05";
   };
 
