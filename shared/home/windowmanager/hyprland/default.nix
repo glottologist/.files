@@ -186,7 +186,7 @@
 
 
       ## Autostarts
-      exec-once=hyprctl setcursor Bibata-Modern-Ice 22
+      exec-once = hyprctl setcursor Bibata-Modern-Ice 22
       exec-once = systemctl --user import-environment &
       exec-once = hash dbus-update-activation-environment 2>/dev/null &
       exec-once = dbus-update-activation-environment --systemd &
