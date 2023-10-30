@@ -26,7 +26,7 @@
     remind # Command line calendar
     ultralist # Simple GTD-style todo list for the command line
     wyrd # A text-based front-end to Remind
-    zk # A zettelkasten plain text note-taking assistant
+    #zk # A zettelkasten plain text note-taking assistant
   ];
 
   programs = {

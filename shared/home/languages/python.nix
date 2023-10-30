@@ -3,15 +3,17 @@
   home.packages = with pkgs; [
     nodePackages.coc-python                 # python extension for coc
     virtualenv
-     python310Full
-     python310Packages.pandas
-     python310Packages.pdf2image
-     python310Packages.pelican
-     python310Packages.pip
-     python310Packages.pylru
-     python310Packages.pynvim
-     python310Packages.setuptools
-     python310Packages.tomlkit
+     python311Full
+     python311Packages.pandas
+     python311Packages.jupyter
+     python311Packages.numpy
+     python311Packages.pdf2image
+     python311Packages.pelican
+     python311Packages.pip
+     python311Packages.pylru
+     python311Packages.pynvim
+     python311Packages.setuptools
+     python311Packages.tomlkit
   ];
 
 }
