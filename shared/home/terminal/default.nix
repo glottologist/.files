@@ -4,6 +4,7 @@
   imports = [
     ./alacritty/default.nix
     ./fish/default.nix
+    ./foot/default.nix
     ./kitty/default.nix
     ./rofi/default.nix
     ./starship/default.nix

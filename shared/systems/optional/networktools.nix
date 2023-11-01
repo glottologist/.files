@@ -29,5 +29,6 @@
     wget                                 # Tool for retrieving files using HTTP, HTTPS, and FTP
     wifite2                              # Rewrite of the popular wireless network auditor, wifite
     wireguard-tools                      # Tools for the Wireguard secure network tunnel
+    wirelesstools                        # Tools for wireless like iwconfig
   ];
 }
