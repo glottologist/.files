@@ -59,6 +59,7 @@ in {
       alarm = "termdown --blink --text 'FINISHED'";
       art = "cd ~/Documents/articles";
       boox = "cd ~/Ontologi Dropbox/Jason Ridgway-Taylor/DOCUMENTS/Personal/Boox/";
+      bt = "bluetoothctl";
       cat = "bat";
       cb = "cargo build";
       cbn = "cargo bench";
