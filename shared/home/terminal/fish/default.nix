@@ -263,6 +263,7 @@ in {
       vpnc = "expressvpn connect";
       vpnd = "expressvpn disconnect";
       vpnl = "expressvpn ls";
+      wat = "watchexec";
       wipe = "lethe wipe -s dod";
       wipedeep = "lethe wipe -s vsitr";
       wipehelp = "lethe wipe --help";
