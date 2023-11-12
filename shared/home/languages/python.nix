@@ -9,7 +9,6 @@
     python311Packages.jupyterlab_server
     python311Packages.jupyterlab-widgets
     python311Packages.jupyterlab_launcher
-    python311Packages.jupyterlab_lsp
     python311Packages.numpy
     python311Packages.pandas
     python311Packages.pdf2image
