@@ -7,7 +7,7 @@
     python311Packages.jupyter
     python311Packages.jupyterlab
     python311Packages.jupyterlab_server
-    python311Packages.jupyterlab_widgets
+    python311Packages.jupyterlab-widgets
     python311Packages.jupyterlab_launcher
     python311Packages.jupyterlab_lsp
     python311Packages.numpy
