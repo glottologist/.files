@@ -6,6 +6,7 @@
      python311Full
      python311Packages.pandas
      python311Packages.jupyter
+     python311Packages.jupyterlab
      python311Packages.numpy
      python311Packages.pdf2image
      python311Packages.pelican

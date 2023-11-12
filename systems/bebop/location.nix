@@ -1,14 +1,16 @@
-{ config, pkgs, ... }:
 {
-   time.timeZone = "Asia/Colombo";
-   i18n.defaultLocale = "en_GB.UTF-8";
-   console = {
-     font = "Lat2-Terminus16";
-     keyMap = "uk";
-   };
+  config,
+  pkgs,
+  ...
+}: {
+  time.timeZone = "Asia/Kuala_Lumpur";
+  i18n.defaultLocale = "en_GB.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "uk";
+  };
 
   environment.systemPackages = with pkgs; [
-   icu     # Unicode and globalization support library
-   ];
+    icu # Unicode and globalization support library
+  ];
 }
-
