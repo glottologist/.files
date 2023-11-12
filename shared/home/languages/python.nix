@@ -5,6 +5,7 @@
     python311Full
     python311Packages.pandas
     python311Packages.jupyter
+    python311Packages.ipykernel
     python311Packages.jupyterlab
     python311Packages.jupyterlab_server
     python311Packages.jupyterlab-widgets
