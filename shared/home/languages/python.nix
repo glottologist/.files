@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     nodePackages.coc-python # python extension for coc
     virtualenv
+    pipenv
     python311Full
     python311Packages.pandas
     python311Packages.jupyter
@@ -10,17 +11,14 @@
     python311Packages.ansible-kernel
     python311Packages.nix-kernel
     python311Packages.ilua
-    python311Packages.ihaskell
     python311Packages.jupyterlab
     python311Packages.jupyterlab_server
     python311Packages.jupyterlab-widgets
-    python311Packages.jupyterlab_launcher
     python311Packages.numpy
     python311Packages.pandas
-    python311Packages.pdf2image
     python311Packages.pelican
     python311Packages.pip
-    python311Packages.pylru
+    python311Packages.sympy
     python311Packages.pynvim
     python311Packages.setuptools
     python311Packages.tomlkit

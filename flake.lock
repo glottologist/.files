@@ -70,16 +70,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1696446489,
-        "narHash": "sha256-xSjMKdNR+q/3hdSPyg/LUMsZT/WIoUi8dcm5zT4SMUQ=",
-        "owner": "nix-community",
+        "lastModified": 1699748081,
+        "narHash": "sha256-MOmMapBydd7MTjhX4eeQZzKlCABWw8W6iSHSG4OeFKE=",
+        "owner": "glottologist",
         "repo": "home-manager",
-        "rev": "68f7d8c0fb0bfc67d1916dd7f06288424360d43a",
+        "rev": "04bac349d585c9df38d78e0285b780a140dc74a4",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "master",
+        "owner": "glottologist",
+        "ref": "release-23.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -219,16 +219,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1696596392,
-        "narHash": "sha256-Q6YE/XpVZxNLIqTmxdGoK4yJBhQvAyqPSFooxbKChqU=",
+        "lastModified": 1685566663,
+        "narHash": "sha256-btHN1czJ6rzteeCuE/PNrdssqYD2nIA4w48miQAFloM=",
         "owner": "glottologist",
         "repo": "nixpkgs",
-        "rev": "bcfbc809d6ed05af795415e1cfbdaec6385cca5f",
+        "rev": "4ecab3273592f27479a583fb6d975d4aba3486fe",
         "type": "github"
       },
       "original": {
         "owner": "glottologist",
-        "ref": "master",
+        "ref": "23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
