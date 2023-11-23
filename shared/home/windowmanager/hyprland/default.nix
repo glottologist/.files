@@ -115,14 +115,14 @@
       $mainMod = SUPER
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = $mainMod, Return, exec, kitty
+      bind = $mainMod, Return, exec, foot
       bind = $mainMod, B, exec, qutebrowser
       bind = $mainMod SHIFT , B, exec, brave
       bind = $mainMod, T, exec, thunderbird
       bind = $mainMod SHIFT, T, exec, telegram
       bind = $mainMod, S, exec, slack
       bind = $mainMod SHIFT, S, exec, flameshot gui
-      bind = $mainMod, K, exec, konsole
+      bind = $mainMod, K, exec, kitty
       bind = $mainMod, O, exec, obsidian
       bind = $mainMod, F, exec,firefox
       bind = $mainMod, D, exec,discord
