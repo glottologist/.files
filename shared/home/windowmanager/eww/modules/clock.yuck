@@ -3,4 +3,4 @@
     :onclick "eww open --toggle calendar"
     (label
       :class "text module"
-      :text {formattime(EWW_TIME, "%a %b %d  %H:%M")})))
+      :text {formattime("EWW_TIME", "%a %b %d  %H:%M")})))

@@ -1,11 +1,9 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-    dotnet-sdk_7
-    mono
+    dotnetCorePackages.sdk_7_0
     fsharp
     dotnetPackages.NUnitConsole
-   #dotnetPackages.NUnitRunners
     dotnetPackages.Paket
     dotnetbuildhelpers
 

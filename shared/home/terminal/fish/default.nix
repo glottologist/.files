@@ -258,6 +258,8 @@ in {
       vd = "vimdiff";
       vn = "nix run ~/development/glottologist/nvim-flake";
       vnd = "nix run ~/development/glottologist/nvim-flake#developer";
+      vg = "nix run github:glottologist/nvim-flake";
+      vgd = "nix run github:glottologist/nvim-flake#developer";
       vnl = "nix run -I ~/development/glottologist/nvim-flake";
       vpn = "expressvpn";
       vpnc = "expressvpn connect";

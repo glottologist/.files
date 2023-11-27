@@ -13,5 +13,10 @@
     nixos-generators
     nixos-shell
     rnix-lsp
+    cachix
+    statix
+    vulnix
+    deadnix
+    nil
   ];
 }

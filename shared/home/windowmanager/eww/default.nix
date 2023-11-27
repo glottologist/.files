@@ -67,7 +67,7 @@ in {
     # links each file individually, which lets us insert the colors file separately
     recursive = true;
 
-    onChange = reload_script.outPath;
+   # onChange = reload_script.outPath;
   };
   # colors file
   xdg.configFile."eww/css/colors.scss".text = builtins.readFile ./css/colors-dark.scss;

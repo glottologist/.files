@@ -1,15 +1,18 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-      ocamlformat
-      opam
+      ocaml-top
+      ocamlPackages.ocaml
       ocamlPackages.odoc
-      ocaml
-      dune_3
       ocamlPackages.merlin
       ocamlPackages.data-encoding
-      ocamlPackages.ocp-indent
+      ocamlPackages.dune_3
       ocamlPackages.ocaml-lsp
+      ocamlPackages.merlin
+      ocamlPackages.utop
+      ocamlPackages.odoc
+      ocamlPackages.ocp-indent
+      ocamlformat
       # Only required for Tezos development
       libev
       libffi
