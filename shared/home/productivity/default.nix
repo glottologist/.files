@@ -22,11 +22,11 @@
     ntfy #A utility for sending notifications, on demand and when commands finish:with
     pixeluvo # A Beautifully Designed Image and Photo Editor for Windows and Linux
     protonmail-bridge # Use your ProtonMail account with your local e-mail client
+    qalculate-qt # The ultimate desktop calculator
     rainbowstream # Streaming command-line twitter client
     remind # Command line calendar
     ultralist # Simple GTD-style todo list for the command line
     wyrd # A text-based front-end to Remind
-    #zk # A zettelkasten plain text note-taking assistant
   ];
 
   programs = {
