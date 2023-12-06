@@ -86,6 +86,11 @@ in {
       dcd = "docker-compose down --remove-orphans";
       dcps = "docker-compose ps";
       dcu = "docker-compose up";
+      de = "devenv shell";
+      dec = "devenv ci";
+      dei = "devenv init";
+      des = "devenv search";
+      deu = "devenv update";
       dev = "cd ~/development";
       di = "docker images";
       disk = "sudo diskonaut /";
