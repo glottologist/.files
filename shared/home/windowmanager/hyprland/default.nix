@@ -27,7 +27,7 @@
     xwayland.enable = true;
     extraConfig = ''
       monitor=eDP-1,preferred,auto,1.5
-      monitor=,1920x1080@60,auto,1
+      monitor=DP-2,1920x1080@60,auto,1
 
       env = XCURSOR_SIZE,24
 
@@ -175,6 +175,10 @@
       bind = $mainMod SHIFT, 8, movetoworkspace, 8
       bind = $mainMod SHIFT, 9, movetoworkspace, 9
       bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+      bind = $mainMod SHIFT CTRL, 1, movewindow, mon:eDP-1
+      bind = $mainMod SHIFT CTRL, 2, movewindow, mon:DP-2
+
 
       # Scroll through existing workspaces with mainMod + scroll
       bind = $mainMod, mouse_down, workspace, e+1
