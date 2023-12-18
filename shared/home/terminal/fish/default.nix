@@ -130,8 +130,11 @@ in {
       gco = "git checkout ";
       gd = "git diff ";
       gl = "git l19";
+      gla = "git la19";
+      glga = "git lga";
       glot = "cd ~/development/glottologist";
       gls = "git ls-files";
+      gone = "git log --oneline";
       gp = "git pull";
       gpa = "git push && git push --tags";
       gps = "git push";

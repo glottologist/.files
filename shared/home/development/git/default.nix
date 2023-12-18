@@ -66,7 +66,8 @@ in {
       kasd = "!gitk --all --simplify-by-decoration";
       kdo = "!gitk --date-order";
       l = "log   -C --decorate";
-      l19 = "log   --graph --boundary '--format=%Cred%h%Creset %an %Cgreen%ar%Creset %Cred%d%Creset %s' --all -19";
+      l19 = "log   --graph --boundary '--format=%Cred%h%Creset %an %Cgreen%ar%Creset %Cred%d%Creset %s' -19";
+      la19 = "log   --graph --boundary '--format=%Cred%h%Creset %an %Cgreen%ar%Creset %Cred%d%Creset %s' --all -19";
       lg = "log   --graph --boundary '--format=%Cred%h%Creset %Clightblue%ar%Creset %Cgreen%ar%Creset %Cred%d%Creset %s'";
       lga = "log   --graph --boundary '--format=%Cred%h%Creset %an %Cgreen%ar%Creset %Cred%d%Creset %s' --all";
       lgbw = "log   --graph --boundary '--format=%h %ar %d %s'";
