@@ -15,6 +15,7 @@
       prompt = false;
     };
     pull.rebase = false;
+    push.autoSetupRemote=true;
   };
 in {
   home.packages = with pkgs.gitAndTools; [
