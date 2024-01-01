@@ -11,7 +11,7 @@ in {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a . %h | %F' --cmd Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a . %h | %F' --width 160 --greeting 'Glottologist' --user-menu --cmd Hyprland";
           user = "greeter";
         };
       };

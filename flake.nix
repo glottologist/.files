@@ -4,10 +4,10 @@
   nixConfig.extra-experimental-features = "nix-command flakes";
 
   inputs = {
-    nixpkgs.url = "github:glottologist/nixpkgs/23.05";
+    nixpkgs.url = "github:glottologist/nixpkgs/release-23.11";
     #nixpkgs.url = "github:glottologist/nixpkgs/master";
     home-manager = {
-      url = "github:glottologist/home-manager/release-23.05";
+      url = "github:glottologist/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

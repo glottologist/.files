@@ -9,7 +9,6 @@
     dig                                  # Domain name server
     expressvpn                           # CLI client for ExpressVPN
     fast-cli                             # Test your download and upload speed using fast.com
-    gnomeExtensions.evpn-shell-assistant # Allows ExpressVPN to be controlled through the GNOME shell.
     gping                                # Graphical ping
     iw                                   # Tool to use nl80211
     linssid                              # Graphical wireless scanning for Linux
