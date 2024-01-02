@@ -34,7 +34,7 @@ in {
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 5d";
+      options = "--delete-older-than 55d";
     };
 
     # Automatically optimise nix store

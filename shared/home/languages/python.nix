@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    nodePackages.coc-python # python extension for coc
+    #nodePackages.coc-python # python extension for coc
     #black
     #pipenv
     #python311Full
@@ -13,11 +13,10 @@
     #python311Packages.jupyterlab-widgets
     #python311Packages.jupyterlab_server
     #python311Packages.nix-kernel
-    #python311Packages.numpy
-    #python311Packages.pandas
-    #python311Packages.pandas
-    #python311Packages.pelican
-    #python311Packages.pip
+    python311Packages.numpy
+    python311Packages.pandas
+    python311Packages.pelican
+    python311Packages.pip
     #python311Packages.pynvim
     #python311Packages.setuptools
     #python311Packages.sympy

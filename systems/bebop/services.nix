@@ -6,16 +6,34 @@
   thermald-conf = ./thermald-conf.xml;
 in {
   # This will save you money and possibly your life!
+systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
+
+
+
   services = {
-    greetd = {
+    greetd = let
+      session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd Hyprland";
+        user = "jason";
+      };
+    in {
       enable = true;
       settings = {
-        default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a . %h | %F' --width 160 --greeting 'Glottologist' --user-menu --cmd Hyprland";
-          user = "greeter";
-        };
+        terminal.vt = 1;
+        default_session = session;
+        initial_session = session;
       };
     };
+
     gnome = {
       gnome-keyring.enable = true;
     };
