@@ -23,7 +23,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    systemdIntegration = true;
+    systemd.enable = true;
     xwayland.enable = true;
     extraConfig = ''
       monitor=eDP-1,preferred,auto,1.5

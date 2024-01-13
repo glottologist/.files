@@ -6,7 +6,7 @@
   thermald-conf = ./thermald-conf.xml;
 in {
   # This will save you money and possibly your life!
-systemd.services.greetd.serviceConfig = {
+  systemd.services.greetd.serviceConfig = {
     Type = "idle";
     StandardInput = "tty";
     StandardOutput = "tty";
@@ -17,12 +17,11 @@ systemd.services.greetd.serviceConfig = {
     TTYVTDisallocate = true;
   };
 
-
-
   services = {
+  teamviewer.enable = true;
     greetd = let
       session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd Hyprland";
+        command = "${pkgs.hyprland}/bin/Hyprland";
         user = "jason";
       };
     in {
