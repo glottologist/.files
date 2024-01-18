@@ -23,7 +23,7 @@
     ./node.nix
     ./ocaml.nix
     ./purescript.nix
-    ./python.nix
+    #./python.nix
     ./react.nix
     ./rust.nix
     ./scala.nix

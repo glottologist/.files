@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     awscli2
     aws-sam-cli
-    azure-cli
+    #azure-cli
     cloudflared
   ];
 }

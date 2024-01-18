@@ -132,6 +132,7 @@ in {
       gl = "git l19";
       gla = "git la19";
       glga = "git lga";
+      glo = "git log --oneline";
       glot = "cd ~/development/glottologist";
       gls = "git ls-files";
       gone = "git log --oneline";
@@ -139,6 +140,9 @@ in {
       gpa = "git push && git push --tags";
       gps = "git push";
       gpt = "git push --tags";
+      grbi = "git rebase -i";
+      grbm = "git rebase main";
+      grbms = "git rebase master";
       grh = "git reset --hard HEAD~1";
       grm = "git reset --merge";
       grs = "git reset --soft HEAD~1";
