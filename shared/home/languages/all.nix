@@ -14,7 +14,7 @@
     ./go.nix
     ./haskell.nix
     ./idris.nix
-    ./julia.nix
+    #./julia.nix
     ./kotlin.nix
     ./latex.nix
     ./ligo.nix
