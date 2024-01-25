@@ -26,6 +26,7 @@ in {
     gh # gh command line
     gist # upload code to gist
     git-crypt # git files encryption
+    git-ignore # get ignore files
     gitea # Git with a cup of tea
     git-open # open repo in browser
     git-review # submit to gerrit
