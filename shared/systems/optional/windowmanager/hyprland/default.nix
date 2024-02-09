@@ -27,6 +27,7 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
   services.xserver.displayManager.sessionPackages = [pkgs.hyprland];
@@ -35,6 +36,7 @@
     enable = true;
     wlr.enable = true;
     extraPortals = [
+      pkgs.xdg-desktop-portal
       #pkgs.xdg-desktop-portal-hyprland
       pkgs.xdg-desktop-portal-gtk
     ];
