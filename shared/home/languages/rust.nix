@@ -21,6 +21,7 @@
   home.sessionVariables = {
     RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     RUSTUP_TOOCHAIN = "stable";
-    #PATH = ["$HOME/.cargo/bin"];
+    CARGO_HOME="${config.xdg.cacheHome}/cargo";
+    #PATH = ["~/.cargo/bin"];
   };
 }
