@@ -30,27 +30,14 @@
     agenix,
     nix,
   } @ inputs: let
-    system = "x86_64-linux";
+    pkgs = import nixpkgs {};
   in {
     inherit inputs;
-
-    homeConfigurations = (
-      import ./artefacts/home-configuration.nix {
-        inherit inputs system nixpkgs home-manager nix;
-      }
-    );
-
-    nixosConfigurations = (
-      import ./artefacts/nixos-configuration.nix {
-        inherit (nixpkgs) lib;
-        inherit inputs system nixpkgs nix;
-      }
-    );
-
-    devShell.${system} = (
-      import ./artefacts/installation.nix {
-        inherit system nixpkgs;
-      }
-    );
+    homeConfigurations = {
+      "glottologist" = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [./homes/glottologist.nix];
+      };
+    };
   };
 }

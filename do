@@ -2,31 +2,21 @@
 set +x
 
 WORKFLOW=$1
-SERVER=$2
-USER=$3
-ADDITIONAL_ARGS=$5
+USER=$2
+ADDITIONAL_ARGS=$3
 
 usage(){
 
       echo "======================================================================"
-      echo "./do <workflow> <servername> <user> <build-type>"
+      echo "./do <workflow> <user>"
       echo "=> where:"
       echo "=> workflow = build or apply.  'build' solely builds derivations whereas apply will build the derivation and apply that to the current host system"
-      echo "=> servername = server / machine alias"
       echo "=> user = user name"
-      echo "=> build-type = home or system"
 }
 
 if [ -z "$WORKFLOW" ]
 then
       echo "No workflow entered"
-      usage
-      exit 1;
-fi
-
-if [ -z "$SERVER" ]
-then
-      echo "No server name entered"
       usage
       exit 1;
 fi
@@ -38,67 +28,13 @@ then
       exit 1;
 fi
 
-if [ -z "$4" ]
-then
-  BUILD="all"
-else
-  BUILD=$4
-fi
-
 echo_nix_version(){
   echo $(nix --version)
 }
 
-home(){
-  export NIXPKGS_ALLOW_INSECURE=1
-  nix build ".#homeConfigurations.${USER}.activationPackage" --impure $ADDITIONAL_ARGS
-
-  if [ "$WORKFLOW" = "apply" ]; then
-    echo "$MARKER"
-    echo "Applying home configuration"
-    result/activate
-    echo "$MARKER"
-    echo "Applying post home"
-    copy_home_files
-    echo "$MARKER"
-  fi
-}
-
-system(){
- export NIXPKGS_ALLOW_INSECURE=1
- nix build ".#nixosConfigurations.${SERVER}.config.system.build.toplevel" --impure $ADDITIONAL_ARGS
-
-  if [ "$WORKFLOW" = "apply" ]; then
-    echo "$MARKER"
-    echo "Applying nixos configuration"
-    sudo nixos-rebuild switch --impure  --flake .
-    echo "$MARKER"
-  fi
-}
-
-all(){
-  system
-  home
-}
 
 
-echo "$MARKER"
-echo "Doing the following configuration:"
-echo "WORKFLOW => $WORKFLOW"
-echo "SERVER => $SERVER"
-echo "USER => $USER"
-echo "BUILD => $BUILD"
-echo "$MARKER"
 
-make_dir_and_copy() {
-  echo "Copying $1"
-  mkdir -p $HOME/$1
-  cp -rf "shared/home/$1" "$HOME/$1"
-}
-
-copy_home_files() {
-   make_dir_and_copy "Pictures"
-}
 
 register_nixos_unstable_channel() {
   nix-channel --add https://nixos.org/channels/nixos-unstable nixos
@@ -108,13 +44,20 @@ echo_nix_version
 
 register_nixos_unstable_channel
 
-case $BUILD in
-  "home")
-    home;;
-  "system")
-    system;;
-  "all")
-    all;;
-esac
+echo "$MARKER"
+echo "Doing the following configuration:"
+echo "WORKFLOW => $WORKFLOW"
+echo "USER => $USER"
+echo "$MARKER"
+
+  export NIXPKGS_ALLOW_INSECURE=1
+  nix build ".#homeConfigurations.${USER}.activationPackage" --impure $ADDITIONAL_ARGS
+
+  if [ "$WORKFLOW" = "apply" ]; then
+    echo "$MARKER"
+    echo "Applying home configuration"
+    result/activate
+    echo "$MARKER"
+  fi
 
 exit 0
