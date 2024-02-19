@@ -107,6 +107,7 @@ in {
       drop = "cd ~/Dropbox";
       du = "ncdu --color dark -rr -x";
       dut = "dune exec ./main.exe -- test";
+      e = "exit";
       eo = "eval (opam env)";
       eop = "eval (opam env)";
       exe = "cd ~/development/exercism";
