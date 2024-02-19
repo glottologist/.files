@@ -6,12 +6,12 @@
 }: let
   gitConfig = {
     core = {
-      editor = "nvim";
+      editor = "vim";
       pager = "diff-so-fancy | less --tabs=4 -RFX";
     };
     merge.tool = "vimdiff";
     mergetool = {
-      cmd = "nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"";
+      cmd = "vim -f -c \"Gvdiffsplit!\" \"$MERGED\"";
       prompt = false;
     };
     pull.rebase = false;

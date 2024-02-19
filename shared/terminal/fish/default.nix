@@ -118,6 +118,7 @@ in {
       gb = "git branch";
       gbr = "git branch -r";
       gc = "git commit -am ";
+      gca = "git commit -a ";
       gcf = "git clean -f";
       gcl = "git clone ";
       gclb = "git clone --bare ";
