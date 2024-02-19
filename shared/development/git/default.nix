@@ -122,8 +122,8 @@ in {
       "*.mill-version" # used by metals
     ];
     signing = {
-      key = "DF40F6B4427732F3";
-      signByDefault = false;
+      key = "7AE4A895BF993A8B";
+      signByDefault = true;
     };
     userEmail = "jason@ridgway-taylor.co.uk";
     userName = "jason";
