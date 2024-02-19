@@ -31,6 +31,7 @@ in {
     git-open # open repo in browser
     git-review # submit to gerrit
     github-commenter #
+    gptcommit
     hub # github command-line client
     tea # CLI for gitea
     tig # diff and commit view

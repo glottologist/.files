@@ -125,6 +125,11 @@ in {
       gcn = "git clean -n";
       gco = "git checkout ";
       gd = "git diff ";
+      gi = "git ignore";
+      gia = "git ignore -a";
+      gii = "git ignore init";
+      gil = "git ignore -l";
+      giu = "git ignore -u";
       gl = "git l19";
       gla = "git la19";
       glga = "git lga";
@@ -223,6 +228,13 @@ in {
       nsf = "nix search";
       ont = "cd ~/development/ontologi";
       oss = "cd ~/development/opensource";
+      pi = "podman images";
+      pka = "podman kill (podman ps | awk '{print $1}' | grep -v CONTAINER)";
+      pps = "podman ps";
+      ppsa = "podman ps -a";
+      pr = "podman run ";
+      pri = "podman run -it --rm";
+      prmi = "podman rmi --force (podman images | awk '{print $3}')";
       pres = "cd ~/Documents/presentations";
       pullall = "find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;";
       recr = "cd ~/development/glottologist/recruitment";

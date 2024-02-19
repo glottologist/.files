@@ -55,7 +55,6 @@
     nodePackages.mocha # simple, flexible, fun test framework
     nodePackages.near-cli # General purpose command line tools for interacting with NEAR Protocol
     nodePackages.nijs # An internal DSL for the Nix package manager in JavaScript
-    nodePackages.npm # a package manager for JavaScript
     nodePackages.nrm # NPM registry manager can help you easy and fast switch between different npm registries, now include: cnpm, taobao, nj(nodejitsu), edunpm
     nodePackages.orval # A swagger client generator for typescript
     nodePackages.pkg # Package your Node.js project into an executable

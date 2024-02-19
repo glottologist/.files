@@ -13,7 +13,7 @@
     ./kotlin.nix
     ./latex.nix
     ./nix.nix
-    ./node.nix
+    #./node.nix
     ./ocaml.nix
     ./purescript.nix
     ./scala.nix
