@@ -15,7 +15,7 @@
       prompt = false;
     };
     pull.rebase = false;
-    push.autoSetupRemote=true;
+    push.autoSetupRemote = true;
   };
 in {
   home.packages = with pkgs.gitAndTools; [
@@ -35,6 +35,7 @@ in {
     hub # github command-line client
     tea # CLI for gitea
     tig # diff and commit view
+    vim #editor for git messages
   ];
 
   programs.git = {

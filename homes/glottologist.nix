@@ -56,7 +56,7 @@ in {
 
     sessionVariables = {
       DISPLAY = ":0";
-      EDITOR = "nvim";
+      EDITOR = "vim";
     };
     pointerCursor = {
       gtk.enable = true;
