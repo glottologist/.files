@@ -265,9 +265,9 @@ in {
       testnix = "export NIXPKGS=/home/jason/development/glottologist/nixpkgs && nix-env -f $NIXPKGS -iA";
       tf = "terraform ";
       tk = "cd ~/Documents/tasks && dstask";
-      tks = "tmux kill-session -t ";
-      tls = "tmux ls ";
-      tns = "tmux new-session -s ";
+      tks = "export TERM=foot && tmux kill-session -t ";
+      tls = "export TERM=foot && tmux ls ";
+      tns = "export TERM=foot && tmux new-session -s ";
       tree = "exa -T";
       tsk = "cd ~/Documents/tasks && dstask sync && dstask";
       tuk = "cd ~/development/tuktoken";
