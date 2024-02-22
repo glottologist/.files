@@ -89,6 +89,6 @@ in {
       }
     ];
     shortcut = "a";
-    terminal = "screen-256color";
+    terminal = "xterm-256color";
   };
 }

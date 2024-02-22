@@ -255,9 +255,9 @@ in {
       synclang = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
       syncnoah = "cd ~/Documents/noah && git add -A && git commit -am 'Sync noah' && git push && cd - ";
       syncnotes = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
-      t = "tmux ";
-      ta = "tmux attach ";
-      tas = "tmux attach -t ";
+      t = "export TERM=foot && tmux ";
+      ta = "export TERM=foot && tmux attach ";
+      tas = "export TERM=foot && tmux attach -t ";
       tc = "tezos-client";
       tcaa = "tezos-client activate-account";
       tcgb = "tezos-client get balance for";

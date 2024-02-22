@@ -7,7 +7,6 @@
 }: {
   imports = [
     ./fish/default.nix
-    ./foot/default.nix
     ./starship/default.nix
     ./tmux/default.nix
   ];
