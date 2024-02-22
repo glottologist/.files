@@ -8,6 +8,7 @@
   imports = [
     ./fish/default.nix
     ./starship/default.nix
+    ./foot-theme/default.nix
     ./tmux/default.nix
   ];
 
