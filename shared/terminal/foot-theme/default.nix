@@ -6,5 +6,5 @@
   home.packages = with pkgs; [
   ];
 
-  xdg.configFile."foot-theme.ini".source = ./theme.ini;
+  xdg.configFile."foot/foot-theme.ini".source = ./theme.ini;
 }

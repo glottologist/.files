@@ -141,6 +141,7 @@ in {
       gone = "git log --oneline";
       gp = "git pull";
       gpa = "git push && git push --tags";
+      gpgtty = "export GPG_TTY=$(tty)";
       gps = "git push";
       gpt = "git push --tags";
       grbi = "git rebase -i";
@@ -221,6 +222,7 @@ in {
       ncg = "nix-collect-garbage -d";
       nconf = "cd ~/development/glottologist/nix-config";
       nd = "nix develop";
+      ndi = "nix develop --impure";
       ne = "nix-env";
       news = "newsboat";
       notes = "cd ~/Documents/notes";
