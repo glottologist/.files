@@ -20,11 +20,10 @@
     logkeys # A GNU/Linux keylogger that works!
     netlify-cli # CLI to manage netlify deployments
     newman # A command line runner for Postman
-    pkg-config # A tool that allows packages to find out information about other packages (wrapper script)
     poedit # Cross-platform gettext catalogs (.po files) editor
-    # postman # API Development Environment - TODO Couldn't download 10.18.6 from any mirror 7th OCt 23
     remarshal # Convert between TOML, YAML and JSON
     rpi-imager # Raspberry Pi Imaging Utility
+    screenkey  #A screencast tool to display your keys inspired by Screenflick
     silver-searcher # Ack like searcher focused on code
     universal-ctags # A maintained ctags implementation
     usbutils # USb Utlities

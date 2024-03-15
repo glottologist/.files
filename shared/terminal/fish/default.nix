@@ -61,11 +61,12 @@ in {
       bt = "bluetoothctl";
       cat = "bat";
       cb = "cargo build";
-      cbn = "cargo bench";
       cc = "cargo clean";
       cck = "cargo check";
+      clip = "cargo clippy";
       cdoc = "cargo doc";
       cf = "cargo fmt --all";
+      cbh = "cargo bench";
       clb = "cabal build";
       clr = "clear";
       clrn = "cabal run";
