@@ -4,7 +4,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    brave # Privacy-oriented browser for Desktop and Laptop computers
+   # brave # Privacy-oriented browser for Desktop and Laptop computers
     qutebrowser # Keyboard-focused browser with a minimal GUI.
     tor-browser-bundle-bin # Tor Browser Bundle built by torproject.org
   ];
