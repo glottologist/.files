@@ -275,7 +275,7 @@ in {
       tsk = "cd ~/Documents/tasks && dstask sync && dstask";
       tuk = "cd ~/development/tuktoken";
       unlock = "sudo cryptsetup luksOpen";
-      v = "nix run github:glottologist/nvim-flake#developer";
+      v = "nix run ~/development/glottologist/nvim-flake#developer";
       vd = "vimdiff";
       vn = "nix run ~/development/glottologist/nvim-flake";
       vnd = "nix run ~/development/glottologist/nvim-flake#developer";
