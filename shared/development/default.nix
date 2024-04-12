@@ -27,6 +27,7 @@
     silver-searcher # Ack like searcher focused on code
     universal-ctags # A maintained ctags implementation
     usbutils # USb Utlities
+    wakatime # Wakatime dev stats command line
     watchexec # Universal watcher
   ];
 
