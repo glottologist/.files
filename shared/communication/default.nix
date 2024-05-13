@@ -16,7 +16,7 @@
     slack-term # Slack client for your term
     turses # A twitter terminal client
     tdesktop # Telegram Desktop messaging app
-    thunderbird # A full-featured e-mail client
+    #thunderbird # A full-featured e-mail client
     tuir # Command line reddit
   ];
 }

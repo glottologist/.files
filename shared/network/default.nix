@@ -7,7 +7,7 @@
 }: {
   home.packages = with pkgs; [
     amass # In-Depth DNS Enumeration and Network Mapping
-    anydesk # Desktop sharing application, providing remote support and online meetings
+    #anydesk # Desktop sharing application, providing remote support and online meetings
     bmon # Network bandwidth monitor
     btop # Better version of top
     dig # Domain name server

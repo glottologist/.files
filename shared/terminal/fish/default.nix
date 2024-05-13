@@ -226,6 +226,7 @@ in {
       ndi = "nix develop --impure";
       ne = "nix-env";
       news = "newsboat";
+      nill = "cd ~/development/nillion";
       notes = "cd ~/Documents/notes";
       npks = "cd ~/development/glottologist/nixpkgs";
       nr = "nix run";
