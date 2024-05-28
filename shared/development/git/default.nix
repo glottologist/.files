@@ -6,7 +6,7 @@
 }: let
   gitConfig = {
     core = {
-      editor = "vim";
+https://x.com/MarshSongs/status/1791947802316001384     editor = "vim";
       pager = "diff-so-fancy | less --tabs=4 -RFX";
     };
     merge.tool = "vimdiff";
@@ -14,7 +14,7 @@
       cmd = "vim -f -c \"Gvdiffsplit!\" \"$MERGED\"";
       prompt = false;
     };
-    pull.rebase = false;
+    pull.rebase = true;
     push.autoSetupRemote = true;
   };
 in {

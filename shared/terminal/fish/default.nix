@@ -119,8 +119,9 @@ in {
       gac = "git add -A && git commit -am";
       gb = "git branch";
       gbr = "git branch -r";
-      gc = "git commit -am ";
+      gc = "git commit -m ";
       gca = "git commit -a ";
+      gcam = "git commit -am ";
       gcf = "git clean -f";
       gcl = "git clone ";
       gclb = "git clone --bare ";
