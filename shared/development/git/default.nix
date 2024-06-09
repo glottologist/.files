@@ -6,7 +6,7 @@
 }: let
   gitConfig = {
     core = {
-https://x.com/MarshSongs/status/1791947802316001384     editor = "vim";
+      editor = "vim";
       pager = "diff-so-fancy | less --tabs=4 -RFX";
     };
     merge.tool = "vimdiff";
