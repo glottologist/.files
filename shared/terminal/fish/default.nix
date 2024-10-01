@@ -18,6 +18,7 @@
     ''
       bind \t accept-autosuggestion
       set fish_greeting
+      fish_vi_key_bindings
     ''
     + fzfConfig
     + themeConfig;
@@ -34,6 +35,26 @@ in {
   programs.fish = {
     enable = true;
     plugins = [
+      {
+        name = "grc";
+        src = pkgs.fishPlugins.grc.src;
+      }
+      {
+        name = "z";
+        src = pkgs.fishPlugins.z.src;
+      }
+      {
+        name = "puffer";
+        src = pkgs.fishPlugins.puffer.src;
+      }
+      {
+        name = "pisces";
+        src = pkgs.fishPlugins.pisces.src;
+      }
+      {
+        name = "done";
+        src = pkgs.fishPlugins.done.src;
+      }
       {
         name = "foreign-env";
         src = pkgs.fishPlugins.foreign-env.src;
