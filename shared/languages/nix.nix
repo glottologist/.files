@@ -1,5 +1,4 @@
-{ pkgs, ...}:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     manix
     nix-doc
@@ -9,10 +8,9 @@
     nix-template
     nix-top
     nix-tree
-    nixfmt
+    nixfmt-classic
     nixos-generators
     nixos-shell
-    rnix-lsp
     cachix
     statix
     vulnix

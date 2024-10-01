@@ -22,7 +22,7 @@
     krita # A free and open source painting application
     motrix # A full-featured download manager
     #ntfy-sh # Send push notifications to your phone or desktop via PUT/POST
-    ntfy #A utility for sending notifications, on demand and when commands finish:with
+    #ntfy #A utility for sending notifications, on demand and when commands finish:with
     persepolis # Persepolis Download Manager is a GUI for aria2
     pixeluvo # A Beautifully Designed Image and Photo Editor for Windows and Linux
     protonmail-bridge # Use your ProtonMail account with your local e-mail client

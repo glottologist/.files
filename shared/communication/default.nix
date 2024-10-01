@@ -11,8 +11,7 @@
     aerc
     himalaya
     signal-desktop # signam messenger
-    skypeforlinux # Linux client for Skype
-    slack # Desktop client for Slack
+    #slack # Desktop client for Slack
     slack-term # Slack client for your term
     turses # A twitter terminal client
     tdesktop # Telegram Desktop messaging app

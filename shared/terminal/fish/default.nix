@@ -5,7 +5,6 @@
   ...
 }: let
   fzfConfig = ''
-    set -x FZF_DEFAULT_OPTS "--preview='bat {} --color=always'" \n
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
   '';
 
@@ -59,7 +58,6 @@ in {
       alarm = "termdown --blink --text 'FINISHED'";
       boox = "cd ~/Ontologi Dropbox/Jason Ridgway-Taylor/DOCUMENTS/Personal/Boox/";
       bt = "bluetoothctl";
-      cat = "bat";
       cb = "cargo build";
       cc = "cargo clean";
       cck = "cargo check";
@@ -198,12 +196,6 @@ in {
       latsg = "lsd --tree --sizesort | grep";
       latt = "lsd --tree --timesort";
       lattg = "lsd --tree --timesort | grep";
-      lcc = "ligo compile contract";
-      lce = "ligo compile expression";
-      lcp = "ligo compile parameter";
-      lcs = "ligo compile storage";
-      lks = "logkeys -s";
-      lkk = "logkeys -k";
       lock = "sudo cryptsetup luksClose";
       lrt = "ligo run test";
       ls = "lsd";
@@ -213,8 +205,6 @@ in {
       lst = "lsdu --tree";
       lstg = "lsdu --tree | grep";
       mar = "cd ~/development/marigold";
-      mc = "./tezos-client --mode mockup --base-dir /tmp/mockup";
-      mfix = "mill mono.__.fix --rules OrganizeImports && mill mono._.reformat";
       mkk = "minikube kubectl";
       mksc = "minikube config set cpus 4";
       mksm = "minikube config set memory 6144";
@@ -263,10 +253,6 @@ in {
       t = "export TERM=foot && tmux ";
       ta = "export TERM=foot && tmux attach ";
       tas = "export TERM=foot && tmux attach -t ";
-      tc = "tezos-client";
-      tcaa = "tezos-client activate-account";
-      tcgb = "tezos-client get balance for";
-      tcla = "tezos-client list known addresses";
       testnix = "export NIXPKGS=/home/jason/development/glottologist/nixpkgs && nix-env -f $NIXPKGS -iA";
       tf = "terraform ";
       tk = "cd ~/Documents/tasks && dstask";

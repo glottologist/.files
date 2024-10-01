@@ -13,11 +13,12 @@
   ];
 
   home.packages = with pkgs; [
-    #eza           # Command line file tree
-    # ripgrep-all   # Ripgrep but search in pdfs, ebooks office docs etc. TODO:BROKEN
+    eza # Command line file tree
+    atac #A simple API client (postman like) in your terminal
     flameshot # Powerfull yet simple to use screenshot software
     hushboard # Mute your microphone while typing
     ncdu # Terminal space explorer
+    ranger # Curses like file explorer
     ripgrep #  Utility to that combines the usability of the silver searcher with the raw speed of grep
     rofi-screenshot # Use rofi to perform various types of screenshots and screen captures
     shotman # The uncompromising screenshot GUI for Wayland compositors
@@ -28,6 +29,9 @@
   ];
 
   programs = {
+    atuin = {
+      enable = true;
+    };
     aria2.enable = true; # aria2 is a lightweight multi-protocol & multi-source command-line download utility.
     bat.enable = true; # Drop in replacement for cat
     broot = {
