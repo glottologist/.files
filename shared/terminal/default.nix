@@ -13,8 +13,8 @@
   ];
 
   home.packages = with pkgs; [
-    eza # Command line file tree
     atac #A simple API client (postman like) in your terminal
+    eza # Command line file tree
     flameshot # Powerfull yet simple to use screenshot software
     hushboard # Mute your microphone while typing
     ncdu # Terminal space explorer
@@ -24,6 +24,7 @@
     shotman # The uncompromising screenshot GUI for Wayland compositors
     termdown # Command line timer
     termius # Modern cross device SSH Terminal
+    tldr # Community driven manpages
     tmate # Instant terminal sharing
     wayshot # A native, blazing-fast screenshot tool for wlroots based compositors such as sway and river
   ];
@@ -45,6 +46,10 @@
       nix-direnv = {
         enable = true;
       };
+    };
+    eza = {
+      enable = true;
+      enableFishIntegration = true;
     };
     fzf = {
       # A command line fuzzy finder
