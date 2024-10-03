@@ -16,6 +16,7 @@
     atac #A simple API client (postman like) in your terminal
     eza # Command line file tree
     flameshot # Powerfull yet simple to use screenshot software
+    grc # Colourizer
     hushboard # Mute your microphone while typing
     ncdu # Terminal space explorer
     ranger # Curses like file explorer
@@ -32,13 +33,18 @@
   programs = {
     atuin = {
       enable = true;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
     };
     aria2.enable = true; # aria2 is a lightweight multi-protocol & multi-source command-line download utility.
     bat.enable = true; # Drop in replacement for cat
     broot = {
       # Easy way to see and navigate directory trees in Linux
       enable = true;
-      #enableFishIntegration = true;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
     };
     direnv = {
       # Utility to load and unload environment variables depending on the current directory.
@@ -50,6 +56,8 @@
     eza = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
     };
     fzf = {
       # A command line fuzzy finder
@@ -87,7 +95,12 @@
     zoxide = {
       # A better CD command
       enable = true;
-      options = [];
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      options = [
+      "--cmd cd"
+      ];
     };
   };
 }

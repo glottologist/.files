@@ -7,7 +7,7 @@
   gitConfig = {
     core = {
       editor = "vim";
-      pager = "diff-so-fancy | less --tabs=4 -RFX";
+      #pager = "delta";
     };
     merge.tool = "vimdiff";
     mergetool = {
@@ -20,7 +20,7 @@
 in {
   home.packages = with pkgs.gitAndTools; [
     act # run GH actions locally
-    diff-so-fancy # git diff with colors
+    #diff-so-fancy # git diff with colors
     commitizen #Tool to create committing rules for projects, auto bump versions, and generate changelogs
     #cz-cli #The commitizen command line utility
     gh # gh command line
@@ -124,6 +124,12 @@ in {
     signing = {
       key = "7AE4A895BF993A8B";
       signByDefault = true;
+    };
+    diff-so-fancy = {
+      enable = false;
+    };
+    delta = {
+      enable = true;
     };
     userEmail = "jason@ridgway-taylor.co.uk";
     userName = "jason";
