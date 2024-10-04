@@ -8,6 +8,12 @@
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
   '';
 
+  gpgConfig = ''
+    export GPG_TTY="$(tty)"
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    gpgconf --launch gpg-agent
+  '';
+
   themeConfig = ''
     set -g theme_display_date no
     set -g theme_nerd_fonts yes
@@ -20,6 +26,7 @@
       set fish_greeting
       fish_vi_key_bindings
     ''
+    + gpgConfig
     + fzfConfig
     + themeConfig;
 
