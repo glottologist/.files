@@ -42,6 +42,7 @@ in {
     ../shared/pictures/default.nix
     ../shared/productivity/default.nix
     ../shared/security/default.nix
+    ../shared/virtualization/default.nix
   ];
 
   xdg = {

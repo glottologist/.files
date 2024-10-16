@@ -121,6 +121,7 @@ in {
       disk = "sudo diskonaut /";
       dka = "docker kill (docker ps | awk '{print $1}' | grep -v CONTAINER)";
       doc = "cd ~/Documents";
+      dock = "lazydocker";
       dotb = "dotnet build";
       dotbat = "dotnet build && dotnet test";
       dotc = "dotnet clean";
