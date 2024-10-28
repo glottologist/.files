@@ -12,6 +12,7 @@
     ./haskell.nix
     ./kotlin.nix
     ./latex.nix
+    ./markdown.nix
     ./nix.nix
     #./node.nix
     ./ocaml.nix
