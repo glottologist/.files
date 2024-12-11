@@ -28,7 +28,6 @@
     protonmail-bridge # Use your ProtonMail account with your local e-mail client
     qalculate-qt # The ultimate desktop calculator
     rainbowstream # Streaming command-line twitter client
-    remind # Command line calendar
     ultralist # Simple GTD-style todo list for the command line
     wyrd # A text-based front-end to Remind
     youtube-dl # Command line video downloader
