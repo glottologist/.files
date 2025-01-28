@@ -14,10 +14,7 @@
     { name = "jinjahtml";                      publisher = "samuelcolvin";       version = "0.16.0";          sha256 = "17f4dzwsqpwdkzc9f35sx31mvb4zns2ya0ym7mjgl8iy1kyci66q"; }
     { name = "language-fstar";                 publisher = "josser";             version = "0.0.1";           sha256 = "0zrv7x60p7b7rs9kxyfarfdhpj9c1xbnpc5m8gj82qfac6mk55d0"; }
     { name = "language-julia";                 publisher = "julialang";          version = "1.1.37";          sha256 = "0kzrc75bkxwppbl2157gmz4b08vffqf4m7jcbfzc0hvfjacp5y23"; }
-    { name = "ligo-vscode";                    publisher = "ligolang-publish";   version = "0.5.2";           sha256 = "s/edIFlch6Mrvoaf1cvNXvs9jVUUXpT640z8NXGKc5g=";         }
-    { name = "ligo-debugger-vscode";           publisher = "ligolang-publish";   version = "0.0.7";           sha256 = "OsmnyPE1kzlErdXlxcGysP8mZSEQaQKIog+hqJLTFHs=";         }
     { name = "chinstrap";                      publisher = "ant4g0nist";         version = "0.1.2";           sha256 = "vBxrqFXp3lj4xptN021Kaf5U+Y7GQbV89V6ATG4j/+I=";         }
-    { name = "taqueria-vscode";                publisher = "ecadlabs";           version = "0.29.0";          sha256 = "aQoKu1bfsEGZokQjd6UR2AQUVzCZ/Xl7VZB5UfzAYq8=";         }
     { name = "markdown-all-in-one";            publisher = "yzhang";             version = "3.4.0";           sha256 = "0ihfrsg2sc8d441a2lkc453zbw1jcpadmmkbkaf42x9b9cipd5qb"; }
     { name = "nix";                            publisher = "bbenoist";           version = "1.0.1";           sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b"; }
     { name = "nix-env-selector";               publisher = "arrterian";          version = "1.0.7";           sha256 = "0mralimyzhyp4x9q98x3ck64ifbjqdp8cxcami7clvdvkmf8hxhf"; }
