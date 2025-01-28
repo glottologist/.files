@@ -25,6 +25,7 @@
       bind \t accept-autosuggestion
       set fish_greeting
       fish_vi_key_bindings
+      shellclear --init-shell
     ''
     + gpgConfig
     + fzfConfig

@@ -22,6 +22,8 @@
     ranger # Curses like file explorer
     ripgrep #  Utility to that combines the usability of the silver searcher with the raw speed of grep
     rofi-screenshot # Use rofi to perform various types of screenshots and screen captures
+    shellclear # Find sensitive data in your shell
+    shell-gpt # Access ChatGPT from your terminal
     shotman # The uncompromising screenshot GUI for Wayland compositors
     termdown # Command line timer
     termius # Modern cross device SSH Terminal
@@ -99,7 +101,7 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
       options = [
-      "--cmd cd"
+        "--cmd cd"
       ];
     };
   };

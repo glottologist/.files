@@ -32,6 +32,7 @@ in {
     git-review # submit to gerrit
     github-commenter #
     gptcommit
+    gitwatch
     hub # github command-line client
     tea # CLI for gitea
     tig # diff and commit view

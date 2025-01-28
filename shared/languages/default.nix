@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./bash.nix
     ./clojure.nix
     ./elixir.nix
     ./elm.nix
