@@ -119,7 +119,7 @@ in {
       deu = "devenv update";
       dev = "cd ~/development";
       di = "docker images";
-      disk = "sudo diskonaut /";
+      disk = "diskonaut /";
       dka = "docker kill (docker ps | awk '{print $1}' | grep -v CONTAINER)";
       doc = "cd ~/Documents";
       dock = "lazydocker";
