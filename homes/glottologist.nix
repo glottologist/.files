@@ -28,6 +28,7 @@ in {
     ../shared/cloud/default.nix
     ../shared/communication/default.nix
     ../shared/database/default.nix
+    ../shared/blockchain/default.nix
     ../shared/desktop/default.nix
     ../shared/development/default.nix
     ../shared/disk/default.nix
