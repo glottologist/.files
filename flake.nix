@@ -38,6 +38,10 @@
         inherit pkgs;
         modules = [./homes/glottologist.nix];
       };
+      "jason" = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [./homes/jason.nix];
+      };
     };
   };
 }

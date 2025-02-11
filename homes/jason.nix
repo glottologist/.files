@@ -1,11 +1,4 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  stdenv,
-  ...
-}: let
+{pkgs, ...}: let
   username = "jason";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
@@ -29,26 +22,26 @@ in {
   };
 
   imports = [
-    ../../shared/cryptography/default.nix
-    ../../shared/browsers/default.nix
-    ../../shared/development/default.nix
-    ../../shared/editing/default.nix
-    ../../shared/languages/all.nix
-    ../../shared/learning/default.nix
-    ../../shared/blockchain/default.nix
-    ../../shared/cloud/default.nix
-    ../../shared/database/default.nix
-    ../../shared/documentation/default.nix
-    ../../shared/fonts/default.nix
-    ../../shared/network/default.nix
-    ../../shared/security/default.nix
-    ../../shared/services/default.nix
-    ../../shared/productivity/default.nix
-    ../../shared/terminal/default.nix
-    ../../shared/windowmanager/backgrounds/default.nix
-    ../../shared/windowmanager/hyprland/default.nix
-    ../../shared/windowmanager/eww/default.nix
-    ../../shared/windowmanager/waybar/default.nix
+    ../shared/fonts/default.nix
+    ../shared/terminal/default.nix
+    ../shared/browsers/default.nix
+    ../shared/cloud/default.nix
+    ../shared/communication/default.nix
+    ../shared/database/default.nix
+    ../shared/blockchain/default.nix
+    ../shared/desktop/default.nix
+    ../shared/development/default.nix
+    ../shared/disk/default.nix
+    ../shared/documentation/default.nix
+    ../shared/keyboards/default.nix
+    ../shared/network/default.nix
+    ../shared/learning/default.nix
+    ../shared/languages/default.nix
+    ../shared/media/default.nix
+    ../shared/network/default.nix
+    ../shared/pictures/default.nix
+    ../shared/productivity/default.nix
+    ../shared/security/default.nix
   ];
 
   xdg = {
