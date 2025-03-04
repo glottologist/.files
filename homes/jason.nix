@@ -26,6 +26,7 @@ in {
     ../shared/terminal/default.nix
     ../shared/browsers/default.nix
     ../shared/cloud/default.nix
+    ../shared/comics/default.nix
     ../shared/communication/default.nix
     ../shared/database/default.nix
     ../shared/blockchain/default.nix
