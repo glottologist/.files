@@ -1,4 +1,6 @@
-{pkgs, ...}: let
+{pkgs, 
+  useHyprland,
+...}: let
   username = "jason";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
@@ -58,6 +60,8 @@ in {
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "nvim";
+      BROWSER = "brave";
+      TERMINAL = "foot";
     };
     pointerCursor = {
       gtk.enable = true;

@@ -5,42 +5,53 @@
 
   inputs = {
     nixpkgs.url = "github:glottologist/nixpkgs/release-24.11";
-    #nixpkgs.url = "github:glottologist/nixpkgs/master";
     home-manager = {
-      #url = "github:glottologist/home-manager/master";
       url = "github:glottologist/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nix = {
-      url = "github:nixos/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    agenix.url = "github:ryantm/agenix";
-
-    hyprland.url = "github:hyprwm/Hyprland";
+    nvf.url = "github:notashelf/nvf";
+    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs = {
-    self,
     nixpkgs,
-    home-manager,
-    hyprland,
-    agenix,
-    nix,
+    stylix,
+    ...
   } @ inputs: let
     pkgs = import nixpkgs {};
+    useHyprland = builtins.getEnv "ENABLE_HYPRLAND" == "1";
+    nixosSystem = inputs.nixpkgs.lib.nixosSystem;
+    homeManagerConfig = inputs.home-manager.lib.homeManagerConfiguration;
   in {
-    inherit inputs;
     homeConfigurations = {
-      "glottologist" = inputs.home-manager.lib.homeManagerConfiguration {
+      "glottologist" = homeManagerConfig {
         inherit pkgs;
-        modules = [./homes/glottologist.nix];
+        extraSpecialArgs = {
+          inherit useHyprland;
+        };
+        modules = [
+          stylix.nixosModules.stylix
+        ./homes/glottologist.nix];
       };
-      "jason" = inputs.home-manager.lib.homeManagerConfiguration {
+      "jason" = homeManagerConfig {
         inherit pkgs;
+        extraSpecialArgs = {
+          inherit useHyprland;
+        };
         modules = [./homes/jason.nix];
+      };
+    };
+
+    hostConfigurations = {
+      "bebop" = nixosSystem {
+        inherit pkgs;
+        specialArgs = {
+          inherit useHyprland;
+        };
+        modules = [
+          stylix.nixosModules.stylix
+          ./hosts/bebop/configuration.nix
+        ];
       };
     };
   };
