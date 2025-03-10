@@ -123,7 +123,7 @@ in {
       "*.mill-version" # used by metals
     ];
     signing = {
-      key = "7AE4A895BF993A8B";
+      key = "C9EB43C14363EEE5";
       signByDefault = true;
     };
     diff-so-fancy = {

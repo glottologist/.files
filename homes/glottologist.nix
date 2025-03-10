@@ -22,6 +22,7 @@ in {
   };
 
   imports = [
+    ../secrets/accounts.nix
     ../shared/fonts/default.nix
     ../shared/terminal/default.nix
     ../shared/browsers/default.nix
@@ -67,7 +68,7 @@ in {
       name = "Bibata-Modern-Ice";
       size = 22;
     };
-    stateVersion = "23.05";
+    stateVersion = "24.11";
   };
 
   # Make home manager news silent
