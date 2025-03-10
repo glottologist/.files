@@ -3,6 +3,8 @@ touch ~/.gnupg/gpg-agent.conf
 echo 'allow-loopback-pinentry' > ~/.gnupg/gpg-agent.conf
 echo 'pinentry-program /usr/bin/pinentry-curses' > ~/.gnupg/gpg-agent.conf
 
+pamac install --no-confirm slack-desktop-wayland
+pamac install --no-confirm zoom
 pamac install --no-confirm autoconf
 pamac install --no-confirm brave-browser
 pamac install --no-confirm veracrypt
@@ -44,4 +46,6 @@ pamac install --no-confirm python
 pamac install --no-confirm snapd
 pamac install --no-confirm yarn
 pamac install --no-confirm zig
+pamac install --no-confirm tradingview
+pamac install --no-confirm notion-app-enhanced
 
