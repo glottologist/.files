@@ -8,7 +8,7 @@
     package = pkgs.pass;
     settings = {
       PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
-      PASSWORD_STORE_KEY = "C9EB43C14363EEE5";
+      PASSWORD_STORE_KEY = "7AE4A895BF993A8B";
       PASSWORD_STORE_CLIP_TIME = "60";
     };
   };
