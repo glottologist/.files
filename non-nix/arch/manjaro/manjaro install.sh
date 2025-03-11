@@ -34,7 +34,6 @@ pamac install --no-confirm guile
 pamac install --no-confirm hidapi
 pamac install --no-confirm jdk
 pamac install --no-confirm jq
-pamac install --no-confirm jre
 pamac install --no-confirm julia
 pamac install --no-confirm kotlin
 pamac install --no-confirm ledger-udev
