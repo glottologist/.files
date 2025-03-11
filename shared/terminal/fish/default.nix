@@ -278,6 +278,7 @@ in {
       syncglot = "cd ~/development/glottologist/glotzettel && ./copy.sh && git add -A && git commit -am 'Sync content' && git push && cd - ";
       syncknow = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
       synclang = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
+      syncmail = "mbsync -V --all";
       syncnoah = "cd ~/Documents/noah && git add -A && git commit -am 'Sync noah' && git push && cd - ";
       syncnotes = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
       t = "export TERM=foot && tmux ";
