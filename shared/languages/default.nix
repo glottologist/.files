@@ -19,5 +19,7 @@
     ./ocaml.nix
     ./purescript.nix
     ./scala.nix
+    ./solidity.nix
+    ./zk.nix
   ];
 }

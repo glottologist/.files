@@ -25,6 +25,8 @@ in {
     ../secrets/accounts.nix
     ../shared/fonts/default.nix
     ../shared/terminal/default.nix
+    ../shared/ai/default.nix
+    ../shared/blockchain/default.nix
     ../shared/browsers/default.nix
     ../shared/cloud/default.nix
     ../shared/comics/default.nix
