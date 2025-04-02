@@ -39,12 +39,6 @@
       enableZshIntegration = true;
     };
     aria2.enable = true; # aria2 is a lightweight multi-protocol & multi-source command-line download utility.
-bash = {
-    enable = true;
-    initExtra = ''
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-    '';
-  };
     bat.enable = true; # Drop in replacement for cat
     broot = {
       # Easy way to see and navigate directory trees in Linux
