@@ -45,6 +45,10 @@ in {
     enable = true;
     plugins = [
       {
+        name = "bass";
+        src = pkgs.fishPlugins.bass.src;
+      }
+      {
         name = "grc";
         src = pkgs.fishPlugins.grc.src;
       }
