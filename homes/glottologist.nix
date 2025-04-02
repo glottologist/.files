@@ -3,6 +3,8 @@
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
+  anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../secrets/antrhopic-api-key.txt);
+
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
   ];
@@ -10,6 +12,8 @@ in {
   programs.home-manager = {
     enable = true;
   };
+
+  home.enableNixpkgsReleaseCheck = false;
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -63,6 +67,7 @@ in {
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "vim";
+      ANTHROPIC_API_KEY = anthropic_api_key;
     };
     pointerCursor = {
       gtk.enable = true;

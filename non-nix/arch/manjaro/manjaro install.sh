@@ -4,6 +4,7 @@ echo 'allow-loopback-pinentry' > ~/.gnupg/gpg-agent.conf
 echo 'pinentry-program /usr/bin/pinentry-curses' > ~/.gnupg/gpg-agent.conf
 
 pamac install --no-confirm termius
+pamac install --no-confirm kate
 pamac install --no-confirm vlc
 pamac install --no-confirm telegram-desktop
 pamac install --no-confirm slack-desktop-wayland

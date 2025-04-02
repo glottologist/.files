@@ -87,10 +87,10 @@ in {
       alarm = "termdown --blink --text 'FINISHED'";
       boox = "cd ~/Ontologi Dropbox/Jason Ridgway-Taylor/DOCUMENTS/Personal/Boox/";
       bt = "bluetoothctl";
-      cb = "cargo build";
+      cb = "clear && cargo build";
       cc = "cargo clean";
       cck = "cargo check";
-      clip = "cargo clippy";
+      clip = "clear && cargo clippy";
       cdoc = "cargo doc";
       cf = "cargo fmt --all";
       cbh = "cargo bench";
@@ -255,6 +255,11 @@ in {
       nsf = "nix search";
       ont = "cd ~/development/ontologi";
       oss = "cd ~/development/opensource";
+      pb = "docker build -t";
+      pc = "docker-compose";
+      pcd = "docker-compose down --remove-orphans";
+      pcps = "docker-compose ps";
+      pcu = "docker-compose up";
       pi = "podman images";
       pka = "podman kill (podman ps | awk '{print $1}' | grep -v CONTAINER)";
       pps = "podman ps";

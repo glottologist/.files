@@ -26,17 +26,20 @@ in {
     gh # gh command line
     gist # upload code to gist
     git-crypt # git files encryption
+    git-cliff # Highly customizable Changelog Generator that follows Conventional Commit specifications
     git-ignore # get ignore files
     gitea # Git with a cup of tea
     git-open # open repo in browser
     git-review # submit to gerrit
     github-commenter #
-    gptcommit
     gitwatch
     hub # github command-line client
     tea # CLI for gitea
     tig # diff and commit view
     vim #editor for git messages
+    opencommit #AI-powered commit message generator
+    debase #TUI for drag-and-drop manipulation of git commits
+    serie # A rich git commit graph in your terminal, like magic
   ];
 
   programs.git = {
