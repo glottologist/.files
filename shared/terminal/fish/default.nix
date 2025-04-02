@@ -20,6 +20,7 @@
     set -g theme_newline_cursor yes
     set -g theme_color_scheme catppuccin_latte
   '';
+
   fishConfig =
     ''
       bind \t accept-autosuggestion
@@ -78,7 +79,10 @@ in {
       }
     ];
     interactiveShellInit = ''
-        eval (direnv hook fish)
+      eval (direnv hook fish)
+      if test -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+         bass source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+      end
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
