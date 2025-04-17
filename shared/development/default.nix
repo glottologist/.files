@@ -7,7 +7,7 @@
 }: {
   imports = [
     ./git/default.nix
-    ./vscode/default.nix
+    #./vscode/default.nix
     #./jetbrains/default.nix
   ];
 
