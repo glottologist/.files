@@ -47,13 +47,13 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
-    direnv = {
-      # Utility to load and unload environment variables depending on the current directory.
-      enable = true;
-      nix-direnv = {
-        enable = true;
-      };
-    };
+    # direnv = {
+    #   # Utility to load and unload environment variables depending on the current directory.
+    #   enable = true;
+    #   nix-direnv = {
+    #     enable = true;
+    #   };
+    # };
     eza = {
       enable = true;
       enableFishIntegration = true;

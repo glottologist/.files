@@ -6,13 +6,14 @@
   services.ollama = {
     enable = true;
     acceleration = "rocm";
-    # Optional: load models on startup
+    host = "127.0.0.1";
+    port = 11434;
   };
   #services.open-webui.enable = true;
   home.packages = with pkgs; [
     lmstudio
     #ollama
-    open-webui
+    # open-webui
     llm
     gorilla-cli
   ];

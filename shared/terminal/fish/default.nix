@@ -83,7 +83,6 @@ in {
       }
     ];
     interactiveShellInit = ''
-      eval (direnv hook fish)
       if test -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh
          bass source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
       end
