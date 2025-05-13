@@ -53,7 +53,7 @@
     ./typst
     ./unison
     ./v
-./zig
-    ./zk.nix
+    ./zig
+    ./zk
   ];
 }
