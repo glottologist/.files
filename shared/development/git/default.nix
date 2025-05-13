@@ -16,6 +16,15 @@
     };
     pull.rebase = true;
     push.autoSetupRemote = true;
+    init.defaultBranch = "main";
+    commit.gpgSign = lib.mkDefault true;
+    gpg.program = "${config.programs.gpg.package}/bin/gpg2";
+      commit.verbose = true;
+      diff.algorithm = "histogram";
+      log.date = "iso";
+      column.ui = "auto";
+      branch.sort = "committerdate";
+      rerere.enabled = true;
   };
 in {
   home.packages = with pkgs.gitAndTools; [
