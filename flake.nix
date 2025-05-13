@@ -20,6 +20,10 @@
     agenix.url = "github:ryantm/agenix";
 
     hyprland.url = "github:hyprwm/Hyprland";
+    foundry = {
+      url = "github:shazow/foundry.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -28,6 +32,7 @@
     home-manager,
     hyprland,
     agenix,
+    foundry,
     nix,
   } @ inputs: let
     pkgs = import nixpkgs {};

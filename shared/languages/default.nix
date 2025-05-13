@@ -4,22 +4,56 @@
   ...
 }: {
   imports = [
-    ./bash.nix
-    ./clojure.nix
-    ./elixir.nix
-    ./elm.nix
-    ./fsharp.nix
-    ./go.nix
-    ./haskell.nix
-    ./kotlin.nix
-    ./latex.nix
-    ./markdown.nix
-    ./nix.nix
-    #./node.nix
-    ./ocaml.nix
-    ./purescript.nix
-    ./scala.nix
-    ./solidity.nix
+    ./ansible
+    ./shell
+    ./c
+    ./clojure
+    ./cplusplus
+    ./crystal
+    ./cue
+    ./dart
+    ./deno
+    ./dotnet
+    ./elixir
+    ./elm
+    ./erlang
+    ./fortran
+    ./gawk
+    ./gleam
+    ./go
+    ./haskell
+    ./idris
+    ./java
+    ./javascript
+    ./jsonnet
+    ./julia
+    ./kotlin
+    ./latex
+    ./lean4
+    ./lua
+    ./markdown
+    ./nim
+    ./nix
+    ./ocaml
+    ./odin
+    ./pascal
+    ./perl
+    ./purescript
+    ./python
+    ./r
+    ./racket
+    ./raku
+    ./robotframework
+    ./ruby
+    ./scala
+    ./solidity
+    ./standardml
+    ./terraform
+    ./typescript
+    ./typst
+    ./unison
+    ./v
+./zig
     ./zk.nix
   ];
 }

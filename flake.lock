@@ -59,6 +59,42 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "foundry": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1747127433,
+        "narHash": "sha256-OvxV02bztUFm7KCS2zUVml83RcI6g+LAogbjOEQcnQg=",
+        "owner": "shazow",
+        "repo": "foundry.nix",
+        "rev": "a285c4e7d3ebdc7eeca6761ec3b059c6d83af4f1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shazow",
+        "repo": "foundry.nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -288,6 +324,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "foundry": "foundry",
         "home-manager": "home-manager_2",
         "hyprland": "hyprland",
         "nix": "nix",
