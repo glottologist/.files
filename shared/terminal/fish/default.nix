@@ -260,7 +260,7 @@ in {
       lsrg = "lsd -R | grep";
       lst = "lsdu --tree";
       lstg = "lsdu --tree | grep";
-      mar = "cd ~/development/marigold";
+      me = "cd ~/development/glottologist/me";
       mkk = "minikube kubectl";
       mksc = "minikube config set cpus 4";
       mksm = "minikube config set memory 6144";
