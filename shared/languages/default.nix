@@ -11,13 +11,11 @@
     ./cplusplus
     ./crystal
     ./cue
-    ./dart
     ./deno
     ./dotnet
     ./elixir
     ./elm
     ./erlang
-    ./fortran
     ./gawk
     ./gleam
     ./go
@@ -43,8 +41,6 @@
     ./r
     ./racket
     ./raku
-    ./robotframework
-    ./ruby
     ./scala
     ./solidity
     ./standardml
