@@ -66,7 +66,7 @@
       };
 
       merge-tools.diffconflicts = {
-        program = "nvim";
+        program = "vim";
         merge-tool-edits-conflict-markers = true;
 
         merge-args = [
@@ -146,7 +146,7 @@
       };
 
       ui = {
-        editor = "nvim";
+        editor = "vim";
         graph.style = "square";
         show-cryptographic-signatures = false;
 
@@ -166,7 +166,7 @@
         ];
 
         diff-editor = [
-          "nvim"
+          "vim"
           "-c"
           "DiffEditor $left $right $output"
         ];

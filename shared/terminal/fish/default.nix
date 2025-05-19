@@ -305,9 +305,10 @@ in {
       sshkc = "ssh-copy-id -i ~/.ssh/id_ed25519";
       st = "speedtest";
       sts = "cd $HOME/.config/tmux && git add -A && git commit -am 'Sync sessions' && git push && cd -";
-      syncall = "syncknow && synclang && syncnotes &&  syncglot";
+      syncall = "syncme && syncknow && synclang && syncnotes &&  syncglot";
       syncglot = "cd ~/development/glottologist/glotzettel && ./copy.sh && git add -A && git commit -am 'Sync content' && git push && cd - ";
       syncknow = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
+      syncme = "cd ~/development/glottologist/me && git add -A && git commit -am 'Update content' && git push && cd - ";
       synclang = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
       syncmail = "mbsync -V --all";
       syncnoah = "cd ~/Documents/noah && git add -A && git commit -am 'Sync noah' && git push && cd - ";
