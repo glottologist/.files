@@ -3,7 +3,6 @@
     stdenv
     gnumake
     ccls
-    pkg-config
     gdb
     valgrind
   ];
