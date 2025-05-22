@@ -129,6 +129,8 @@ in {
       di = "docker images";
       disk = "diskonaut /";
       dka = "docker kill (docker ps | awk '{print $1}' | grep -v CONTAINER)";
+      doa = "./do apply";
+      dob = "./do build";
       doc = "cd ~/Documents";
       dock = "lazydocker";
       dotb = "dotnet build";
