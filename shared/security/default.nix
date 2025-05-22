@@ -21,7 +21,7 @@
     pam_u2f # A PAM module for allowing authentication with a U2F device
     paperkey # Store OpenPGP or GnuPG on paper
     pinentry-curses # GnuPG’s interface to passphrase input
-    vault # Hashicorp vault
+    #vault # Hashicorp vault
     yubico-pam # Yubico PAM module
     yubico-piv-tool # Used for interacting with the Privilege and Identification Card (PIV) application on a YubiKey
     yubikey-agent # A seamless ssh-agent for YubiKeys
