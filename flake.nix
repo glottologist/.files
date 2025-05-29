@@ -5,9 +5,9 @@
 
   inputs = {
     #nixpkgs.url = "github:glottologist/nixpkgs/release-24.11";
-    nixpkgs.url = "github:glottologist/nixpkgs/master";
+    nixpkgs.url = "github:glottologist/nixpkgs/release-25.05";
     home-manager = {
-      url = "github:glottologist/home-manager/master";
+      url = "github:glottologist/home-manager/release-25.05";
       #url = "github:glottologist/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
