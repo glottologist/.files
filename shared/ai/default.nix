@@ -13,7 +13,7 @@
   home.packages = with pkgs; [
     lmstudio
     #ollama
-    # open-webui
+    open-webui
     llm
     gorilla-cli
   ];

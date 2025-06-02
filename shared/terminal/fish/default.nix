@@ -258,7 +258,6 @@ in {
       know = "cd ~/Documents/knowledge";
       kpf = "kubectl port-forward ";
       kx = "kubectx ";
-      la = "lsd -la";
       lag = "lsd -la | grep";
       lang = "cd ~/Documents/languages";
       lar = "lsd -laR";
@@ -275,7 +274,7 @@ in {
       lattg = "lsd --tree --timesort | grep";
       lock = "sudo cryptsetup luksClose";
       lrt = "ligo run test";
-      ls = "lsd";
+      lsa = "lsd -la";
       lsg = "lsd | grep";
       lsr = "lsd -R";
       lsrg = "lsd -R | grep";
