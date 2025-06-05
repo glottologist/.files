@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     discord # All-in-one cross-platform voice and text chat for gamers
     alpine
+    grpcurl
     #aerc
     himalaya
     signal-desktop # signam messenger
