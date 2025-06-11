@@ -159,6 +159,7 @@ in {
       dvls = "devbox list";
       dvrm = "devbox rm";
       dvru = "devbox run";
+      dvr = "devbox run";
       dvse = "devbox search";
       dvsec = "devbox secrets";
       dvser = "devbox services";
@@ -301,6 +302,17 @@ in {
       nsf = "nix search";
       ont = "cd ~/development/ontologi";
       oss = "cd ~/development/opensource";
+      ols = "ollama serve";
+  olc = "ollama create";
+  olsh = "ollama show";
+  olr = "ollama run";
+  olst = "ollama stop";
+  olp = "ollama pull";
+  olpsh  = "ollama push";
+  oll = "ollama list";
+  olps = "ollama ps"; 
+  olcp ="ollama cp"; 
+  olrm = "ollama rm";
       pb = "docker build -t";
       pc = "docker-compose";
       pcd = "docker-compose down --remove-orphans";
