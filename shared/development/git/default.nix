@@ -16,27 +16,39 @@
     };
     pull.rebase = true;
     push.autoSetupRemote = true;
+    init.defaultBranch = "main";
+    commit.gpgSign = lib.mkDefault true;
+    gpg.program = "${config.programs.gpg.package}/bin/gpg2";
+      commit.verbose = true;
+      diff.algorithm = "histogram";
+      log.date = "iso";
+      column.ui = "auto";
+      branch.sort = "committerdate";
+      rerere.enabled = true;
   };
 in {
   home.packages = with pkgs.gitAndTools; [
     act # run GH actions locally
     #diff-so-fancy # git diff with colors
-    commitizen #Tool to create committing rules for projects, auto bump versions, and generate changelogs
+    #commitizen #Tool to create committing rules for projects, auto bump versions, and generate changelogs
     #cz-cli #The commitizen command line utility
     gh # gh command line
     gist # upload code to gist
     git-crypt # git files encryption
+    git-cliff # Highly customizable Changelog Generator that follows Conventional Commit specifications
     git-ignore # get ignore files
     gitea # Git with a cup of tea
     git-open # open repo in browser
     git-review # submit to gerrit
     github-commenter #
-    gptcommit
     gitwatch
     hub # github command-line client
     tea # CLI for gitea
     tig # diff and commit view
     vim #editor for git messages
+    opencommit #AI-powered commit message generator
+    debase #TUI for drag-and-drop manipulation of git commits
+    serie # A rich git commit graph in your terminal, like magic
   ];
 
   programs.git = {

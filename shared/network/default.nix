@@ -20,7 +20,7 @@
     iw # Tool to use nl80211
     linssid # Graphical wireless scanning for Linux
     macchanger # A utility for viewing/manipulating the MAC address of network interfaces
-    miraclecast # Connect external monitors via Wi-Fi
+    ##miraclecast # Connect external monitors via Wi-Fi
     mtr # A network diagnostics tool
     nethogs # A small 'net top' tool, grouping bandwidth by process
     ngrep # Network packet analyzer

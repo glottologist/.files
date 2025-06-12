@@ -7,11 +7,13 @@
 }: {
   imports = [
     ./git/default.nix
-    ./vscode/default.nix
+    ./jj/default.nix
+    #./vscode/default.nix
     #./jetbrains/default.nix
   ];
 
   home.packages = with pkgs; [
+    devbox #Reproducible dev envs
     difftastic # A syntax-aware diff
     earthly # Build automation for the container era
     helix # A post-modern modal text editor
@@ -22,7 +24,7 @@
     poedit # Cross-platform gettext catalogs (.po files) editor
     remarshal # Convert between TOML, YAML and JSON
     rpi-imager # Raspberry Pi Imaging Utility
-    screenkey  #A screencast tool to display your keys inspired by Screenflick
+    screenkey #A screencast tool to display your keys inspired by Screenflick
     silver-searcher # Ack like searcher focused on code
     universal-ctags # A maintained ctags implementation
     usbutils # USb Utlities

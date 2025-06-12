@@ -7,6 +7,8 @@
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
+  anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../secrets/anthropic-api-key.txt);
+
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
   ];
@@ -14,6 +16,8 @@ in {
   programs.home-manager = {
     enable = true;
   };
+
+  home.enableNixpkgsReleaseCheck = false;
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -26,32 +30,35 @@ in {
   };
 
   imports = [
-    ./shared/blockchain/default.nix
-    ./shared/browsers/default.nix
-    ./shared/cloud/default.nix
-    ./shared/comics/default.nix
-    ./shared/communication/default.nix
-    ./shared/database/default.nix
-    ./shared/desktop/default.nix
-    ./shared/development/default.nix
-    ./shared/disk/default.nix
-    ./shared/documentation/default.nix
-    ./shared/fonts/default.nix
-    ./shared/keyboards/default.nix
-    ./shared/languages/default.nix
-    ./shared/learning/default.nix
-    ./shared/media/default.nix
-    ./shared/network/default.nix
-    ./shared/network/default.nix
-    ./shared/pentesting/default.nix
-    ./shared/pictures/default.nix
-    ./shared/productivity/default.nix
-    ./shared/security/default.nix
-    ./shared/storage/default.nix
-    ./shared/terminal/default.nix
-    ./shared/trading/default.nix
-    ./shared/virtualization/default.nix
-    ./shared/wm/default.nix
+    ../secrets/accounts.nix
+    ../shared/ai/default.nix
+    ../shared/blockchain/default.nix
+    ../shared/blockchain/default.nix
+    ../shared/browsers/default.nix
+    ../shared/cloud/default.nix
+    ../shared/comics/default.nix
+    ../shared/communication/default.nix
+    ../shared/database/default.nix
+    ../shared/desktop/default.nix
+    ../shared/development/default.nix
+    ../shared/disk/default.nix
+    ../shared/documentation/default.nix
+    ../shared/fonts/default.nix
+    ../shared/keyboards/default.nix
+    ../shared/languages/default.nix
+    ../shared/learning/default.nix
+    ../shared/media/default.nix
+    ../shared/network/default.nix
+    ../shared/pentesting/default.nix
+    ../shared/pictures/default.nix
+    ../shared/productivity/default.nix
+    ../shared/security/default.nix
+    ../shared/storage/default.nix
+    ../shared/terminal/default.nix
+    ../shared/trading/default.nix
+    ../shared/virtualization/default.nix
+    ../shared/virtualization/default.nix
+    ../shared/wm/default.nix
   ];
 
   xdg = {
@@ -67,6 +74,7 @@ in {
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "vim";
+      ANTHROPIC_API_KEY = anthropic_api_key;
     };
     pointerCursor = {
       gtk.enable = true;
@@ -74,7 +82,7 @@ in {
       name = "Bibata-Modern-Ice";
       size = 22;
     };
-    stateVersion = "23.05";
+    stateVersion = "25.05";
   };
 
   # Make home manager news silent

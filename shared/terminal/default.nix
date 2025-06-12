@@ -31,7 +31,6 @@
     tmate # Instant terminal sharing
     wayshot # A native, blazing-fast screenshot tool for wlroots based compositors such as sway and river
   ];
-
   programs = {
     atuin = {
       enable = true;
@@ -48,13 +47,13 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
-    direnv = {
-      # Utility to load and unload environment variables depending on the current directory.
-      enable = true;
-      nix-direnv = {
-        enable = true;
-      };
-    };
+    # direnv = {
+    #   # Utility to load and unload environment variables depending on the current directory.
+    #   enable = true;
+    #   nix-direnv = {
+    #     enable = true;
+    #   };
+    # };
     eza = {
       enable = true;
       enableFishIntegration = true;
