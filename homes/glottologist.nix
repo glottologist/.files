@@ -55,10 +55,7 @@ in {
     ../shared/security/default.nix
     ../shared/storage/default.nix
     ../shared/terminal/default.nix
-    ../shared/trading/default.nix
     ../shared/virtualization/default.nix
-    ../shared/virtualization/default.nix
-    ../shared/wm/default.nix
   ];
 
   xdg = {
