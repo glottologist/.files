@@ -338,6 +338,7 @@ in {
       st = "speedtest";
       sts = "cd $HOME/.config/tmux && git add -A && git commit -am 'Sync sessions' && git push && cd -";
       syncall = "syncme && syncknow && synclang && syncnotes";
+      syncdirs = "sync_directories";
       syncknow = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
       synclang = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
       syncmail = "mbsync -V --all";

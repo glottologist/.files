@@ -21,7 +21,7 @@
       base0E = "b45bcf";
       base0F = "00f769";
     };
-    polarity = "light";
+    #polarity = "light";
     opacity.terminal = 1.0;
     cursor = {
       package = pkgs.bibata-cursors;
@@ -30,7 +30,7 @@
     };
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+        package = pkgs.nerd-fonts.jetbrains-mono;
         name = "JetBrains Mono";
       };
       sansSerif = {

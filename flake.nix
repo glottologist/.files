@@ -5,7 +5,7 @@
 
   inputs = {
     nvf.url = "github:notashelf/nvf";
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix/release-25.05";
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.05";
     home-manager = {
       url = "github:glottologist/home-manager/release-25.05";
@@ -44,18 +44,11 @@
     homeConfigurations = {
       "glottologist" = homeManagerConfig {
         inherit pkgs;
-        extraSpecialArgs = {
-          inherit useHyprland;
-        };
         modules = [
-          stylix.nixosModules.stylix
         ./homes/glottologist.nix];
       };
       "jason" = homeManagerConfig {
         inherit pkgs;
-        extraSpecialArgs = {
-          inherit useHyprland;
-        };
         modules = [./homes/jason.nix];
       };
     };
