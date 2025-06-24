@@ -93,15 +93,15 @@
       php.symbol = " ";
       python.symbol = " ";
       ruby.symbol = " ";
-        rust = {
-          symbol = " ";
-        };
-        swift = {
-          symbol = " ";
-        };
-        zig = {
-          symbol = " ";
-        };
+      rust = {
+        symbol = " ";
+      };
+      swift = {
+        symbol = " ";
+      };
+      zig = {
+        symbol = " ";
+      };
       shell.disabled = false;
       status.disabled = false;
       time = {

@@ -11,6 +11,7 @@ in {
   services = {
     displayManager.sddm.enable = !useHyprland;
     desktopManager.plasma6.enable = !useHyprland;
+    pulseaudio.enable = false;
     printing.enable = true;
     libinput.enable = true;
     fstrim.enable = true;

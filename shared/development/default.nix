@@ -7,13 +7,11 @@
 }: {
   imports = [
     ./git/default.nix
-    ./jj/default.nix
     #./vscode/default.nix
     #./jetbrains/default.nix
   ];
 
   home.packages = with pkgs; [
-    devbox #Reproducible dev envs
     difftastic # A syntax-aware diff
     earthly # Build automation for the container era
     helix # A post-modern modal text editor
@@ -33,6 +31,7 @@
   ];
 
   programs = {
+    gh.enable = true;
   };
 
   services = {

@@ -62,7 +62,7 @@ host(){
  export NIXPKGS_ALLOW_INSECURE=1
  export NIXPKGS_ALLOW_UNFREE=1
   export ENABLE_HYPRLAND=$ENABLE_HYPRLAND_0
- nix build ".#hostConfigurations.${SPECIFIER}.config.system.build.toplevel" --impure
+ nix build ".#nixosConfigurations.${SPECIFIER}.config.system.build.toplevel" --impure
 
   if [ "$WORKFLOW" = "apply" ]; then
     echo "$MARKER"

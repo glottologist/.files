@@ -36,8 +36,12 @@
     nix,
     ...
   } @ inputs: let
-    pkgs = import nixpkgs {};
-    useHyprland = builtins.getEnv "ENABLE_HYPRLAND" == "1";
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    useHyprland = builtins.getEnv "ENABLE_HYPRLAND" == "0";
     nixosSystem = inputs.nixpkgs.lib.nixosSystem;
     homeManagerConfig = inputs.home-manager.lib.homeManagerConfiguration;
   in {
@@ -53,9 +57,10 @@
       };
     };
 
-    hostConfigurations = {
+    nixosConfigurations = {
       "bebop" = nixosSystem {
         inherit pkgs;
+        inherit system;
         specialArgs = {
           inherit useHyprland;
         };

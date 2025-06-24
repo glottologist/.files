@@ -4,7 +4,6 @@
   ...
 }: {
   home.packages = with pkgs; [
-    #diskonaut # Terminal disk space navigator
     #exfat       # Exfat utils
     exfatprogs # Exfat utils that work wih gparted
     fuse3 # Fuse filesystems

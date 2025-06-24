@@ -18,6 +18,7 @@
     ./services.nix
     ./users.nix
     ./xdg.nix
+       ../common/ai.nix
     ../common/blockchain.nix
     ../common/communication.nix
     ../common/default_programs.nix
@@ -32,6 +33,6 @@
     ../common/virtualization.nix
   ];
   system = {
-    stateVersion = "24.11";
+    stateVersion = "25.05";
   };
 }

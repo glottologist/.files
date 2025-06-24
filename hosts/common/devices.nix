@@ -8,7 +8,7 @@
     binutils
       hidapi # Library for communicating with USB and Bluetooth HID devices
       libusb1 # cross-platform user-mode USB device library
-      hardinfo #  GUI hardward information
+      hardinfo2 #  GUI hardward information
       lshw # Command line hardward information
     ];
   };

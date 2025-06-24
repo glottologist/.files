@@ -7,7 +7,7 @@
 }: {
   hardware = {
     ledger.enable = true; # Enables udev rules for Ledger hardware wallets
-    pulseaudio.enable = false;
+
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     sane = {
       enable = true;

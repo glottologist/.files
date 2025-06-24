@@ -23,7 +23,8 @@
       verbose = false;
       availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod"];
       kernelModules = [];
-      luks.devices."luks-773d6d31-d77e-4c22-b7e2-d904e3901c10".device = "/dev/disk/by-uuid/773d6d31-d77e-4c22-b7e2-d904e3901c10";
+      luks.devices."luks-82f26c36-a2bc-41a5-872c-20121af02fd2".device = "/dev/disk/by-uuid/82f26c36-a2bc-41a5-872c-20121af02fd2";
+
     };
     kernelModules = ["kvm-amd" "v4l2loopback"];
     kernelPackages = pkgs.linuxPackages_zen;

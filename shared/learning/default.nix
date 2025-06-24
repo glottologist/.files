@@ -16,7 +16,7 @@ in {
     koreader          # An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats, running on Cervantes, Kindle, Kobo, PocketBook and Android devices
     sigil             # Free, open source, multi-platform ebook (ePub) editor
     ttyper            # Terminal-based typing test
-    # tuxtype           # An educational typing tutor game starring Tmux
+    tuxtype           # An educational typing tutor game starring Tmux
     typespeed         # A curses based typing game
   ];
 

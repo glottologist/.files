@@ -4,8 +4,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
-    diskonaut # Terminal disk space navigator
-    exfatprogs # Exfat utils that work wih gparted
+   exfatprogs # Exfat utils that work wih gparted
     fuse3 # Fuse filesystems
     gparted # Graphical disk partitioning tool
     lethe # Tool to wipe drives in a secure way
