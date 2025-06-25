@@ -20,6 +20,10 @@ in {
     flatpak.enable = true;
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
+    mullvad-vpn = {
+       enable = true;
+       package = pkgs.mullvad-vpn;
+    };
     avahi = {
       enable = true;
       nssmdns4 = true;

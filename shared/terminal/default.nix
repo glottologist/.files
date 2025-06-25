@@ -8,7 +8,7 @@
   imports = [
     ./fastfetch/default.nix
     ./fish/default.nix
-    ./foot-theme/default.nix
+    ./foot/default.nix
     ./starship/default.nix
     ./tmux/default.nix
   ];
@@ -116,9 +116,6 @@
       enableFishIntegration = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
-    };
-    foot = {
-      enable = true;
     };
     fzf = {
       # A command line fuzzy finder

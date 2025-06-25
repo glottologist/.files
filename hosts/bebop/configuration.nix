@@ -18,7 +18,7 @@
     ./services.nix
     ./users.nix
     ./xdg.nix
-       ../common/ai.nix
+    ../common/ai.nix
     ../common/blockchain.nix
     ../common/communication.nix
     ../common/default_programs.nix

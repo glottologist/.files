@@ -20,6 +20,7 @@
     set -g theme_newline_cursor yes
     set -g theme_color_scheme catppuccin_latte
   '';
+
   fishConfig =
     ''
       bind \t accept-autosuggestion
@@ -43,6 +44,10 @@ in {
   programs.fish = {
     enable = true;
     plugins = [
+      {
+        name = "bass";
+        src = pkgs.fishPlugins.bass.src;
+      }
       {
         name = "grc";
         src = pkgs.fishPlugins.grc.src;
@@ -78,7 +83,9 @@ in {
       }
     ];
     interactiveShellInit = ''
-        eval (direnv hook fish)
+      if test -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+         bass source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+      end
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
@@ -87,14 +94,15 @@ in {
       alarm = "termdown --blink --text 'FINISHED'";
       boox = "cd ~/Ontologi Dropbox/Jason Ridgway-Taylor/DOCUMENTS/Personal/Boox/";
       bt = "bluetoothctl";
-      cb = "cargo build";
+      btt = "bluetooth_toggle";
+      cb = "clear && cargo build";
+      cbh = "cargo bench";
       cc = "cargo clean";
       cck = "cargo check";
-      clip = "cargo clippy";
       cdoc = "cargo doc";
       cf = "cargo fmt --all";
-      cbh = "cargo bench";
       clb = "cabal build";
+      clip = "clear && cargo clippy";
       clr = "clear";
       clrn = "cabal run";
       clrp = "cabal repl";
@@ -121,6 +129,8 @@ in {
       di = "docker images";
       disk = "diskonaut /";
       dka = "docker kill (docker ps | awk '{print $1}' | grep -v CONTAINER)";
+      doa = "./do apply";
+      dob = "./do build";
       doc = "cd ~/Documents";
       dock = "lazydocker";
       dotb = "dotnet build";
@@ -136,6 +146,26 @@ in {
       drop = "cd ~/Dropbox";
       du = "ncdu --color dark -rr -x";
       dut = "dune exec ./main.exe -- test";
+      dva = "devbox add";
+      dvat = "devbox auth";
+      dvc = "devbox cache";
+      dvco = "devbox completion";
+      dvcr = "devbox create";
+      dvgen = "devbox generate";
+      dvgl = "devbox global";
+      dvinf = "devbox info";
+      dvini = "devbox init";
+      dvins = "devbox install";
+      dvls = "devbox list";
+      dvrm = "devbox rm";
+      dvru = "devbox run";
+      dvr = "devbox run";
+      dvse = "devbox search";
+      dvsec = "devbox secrets";
+      dvser = "devbox services";
+      dvsh = "devbox shell";
+      dvshenv = "devbox shellenv";
+      dvu = "devbox update";
       e = "exit";
       eo = "eval (opam env)";
       eop = "eval (opam env)";
@@ -198,6 +228,24 @@ in {
       hm = "home-manager";
       hmrg = "home-manager expire-generations 'now'";
       hy = "history";
+      jjb = "jj bookmark";
+      jjbla = "jj bookmark list --all";
+      jjdg = "jj diff --git";
+      jje = "jj evolog";
+      jjfo = "jj git fetch --remote origin";
+      jjfu = "jj file untrack";
+      jjgc = "jj git clone";
+      jjgf = "jj git clone";
+      jjgic = "jj git init --colocate";
+      jjgp = "jj git push";
+      jjgpb = "jj git push --bookmark";
+      jjl = "jj log";
+      jjn = "jj new";
+      jjnm = "jj new -m";
+      jjr = "jj rebase";
+      jjs = "jj squash";
+      jjst = "jj status";
+      jjtb = "jj_track_bookmark";
       k = "kubectl ";
       kaf = "kubectl apply -f";
       kcp = "kubectl cp ";
@@ -211,30 +259,29 @@ in {
       know = "cd ~/Documents/knowledge";
       kpf = "kubectl port-forward ";
       kx = "kubectx ";
-      #la = "lsd -la";
-      #lag = "lsd -la | grep";
+      lag = "lsd -la | grep";
       lang = "cd ~/Documents/languages";
-      #lar = "lsd -laR";
-      #larg = "lsd -laR | grep";
-      #lass = "lsd -la --tree --sizesort";
-      #lassg = "lsd -la --tree --sizesort | grep";
-      #last = "lsd -la --tree --timesort";
-      #lastg = "lsd -la --tree --timesort | grep";
-      #lat = "lsd -la --tree";
-      #latg = "lsd -la --tree | grep";
-      #lats = "lsd --tree --sizesort";
-      #latsg = "lsd --tree --sizesort | grep";
-      #latt = "lsd --tree --timesort";
-      #lattg = "lsd --tree --timesort | grep";
+      lar = "lsd -laR";
+      larg = "lsd -laR | grep";
+      lass = "lsd -la --tree --sizesort";
+      lassg = "lsd -la --tree --sizesort | grep";
+      last = "lsd -la --tree --timesort";
+      lastg = "lsd -la --tree --timesort | grep";
+      lat = "lsd -la --tree";
+      latg = "lsd -la --tree | grep";
+      lats = "lsd --tree --sizesort";
+      latsg = "lsd --tree --sizesort | grep";
+      latt = "lsd --tree --timesort";
+      lattg = "lsd --tree --timesort | grep";
       lock = "sudo cryptsetup luksClose";
       lrt = "ligo run test";
-      #ls = "lsd";
+      lsa = "lsd -la";
       lsg = "lsd | grep";
       lsr = "lsd -R";
       lsrg = "lsd -R | grep";
       lst = "lsdu --tree";
       lstg = "lsdu --tree | grep";
-      mar = "cd ~/development/marigold";
+      me = "cd ~/development/glottologist/me";
       mkk = "minikube kubectl";
       mksc = "minikube config set cpus 4";
       mksm = "minikube config set memory 6144";
@@ -255,14 +302,30 @@ in {
       nsf = "nix search";
       ont = "cd ~/development/ontologi";
       oss = "cd ~/development/opensource";
+      ols = "ollama serve";
+      olc = "ollama create";
+      olsh = "ollama show";
+      olr = "ollama run";
+      olst = "ollama stop";
+      olp = "ollama pull";
+      olpsh = "ollama push";
+      oll = "ollama list";
+      olps = "ollama ps";
+      olcp = "ollama cp";
+      olrm = "ollama rm";
+      pb = "docker build -t";
+      pc = "docker-compose";
+      pcd = "docker-compose down --remove-orphans";
+      pcps = "docker-compose ps";
+      pcu = "docker-compose up";
       pi = "podman images";
       pka = "podman kill (podman ps | awk '{print $1}' | grep -v CONTAINER)";
       pps = "podman ps";
       ppsa = "podman ps -a";
       pr = "podman run ";
+      pres = "cd ~/Documents/presentations";
       pri = "podman run -it --rm";
       prmi = "podman rmi --force (podman images | awk '{print $3}')";
-      pres = "cd ~/Documents/presentations";
       pullall = "find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;";
       recr = "cd ~/development/glottologist/recruitment";
       ref = "cd ~/development/reference";
@@ -274,10 +337,11 @@ in {
       sshkc = "ssh-copy-id -i ~/.ssh/id_ed25519";
       st = "speedtest";
       sts = "cd $HOME/.config/tmux && git add -A && git commit -am 'Sync sessions' && git push && cd -";
-      syncall = "syncknow && synclang && syncnotes &&  syncglot";
-      syncglot = "cd ~/development/glottologist/glotzettel && ./copy.sh && git add -A && git commit -am 'Sync content' && git push && cd - ";
+      syncall = "syncme && syncknow && synclang && syncnotes";
       syncknow = "cd ~/Documents/knowledge && git add -A && git commit -am 'Sync knowledge' && git push && cd - ";
       synclang = "cd ~/Documents/languages && git add -A && git commit -am 'Sync languages' && git push && cd - ";
+      syncmail = "mbsync -V --all";
+      syncme = "cd ~/development/glottologist/me && git add -A && git commit -am 'Update content' && git push && cd - ";
       syncnoah = "cd ~/Documents/noah && git add -A && git commit -am 'Sync noah' && git push && cd - ";
       syncnotes = "cd ~/Documents/notes && git add -A && git commit -am 'Sync notes' && git push && cd - ";
       t = "export TERM=foot && tmux ";
@@ -295,17 +359,18 @@ in {
       unlock = "sudo cryptsetup luksOpen";
       v = "nix run ~/development/glottologist/nvim-flake#developer";
       vd = "vimdiff";
+      vg = "nix run github:glottologist/nvim-flake";
+      vgd = "nix run github:glottologist/nvim-flake#developer";
       vn = "nix run ~/development/glottologist/nvim-flake";
       vnd = "nix run ~/development/glottologist/nvim-flake#developer";
       vndr = "nix run ~/development/glottologist/nvim-flake#developer -w ~/.vimlog";
-      vg = "nix run github:glottologist/nvim-flake";
-      vgd = "nix run github:glottologist/nvim-flake#developer";
       vnl = "nix run -I ~/development/glottologist/nvim-flake";
       vpn = "nordvpn";
       vpnc = "nordvpn connect";
       vpnd = "nordvpn disconnect";
       vpnh = "nordvpn --help";
       wat = "watchexec";
+      wft = "wifi_toggle";
       wipe = "lethe wipe -s dod";
       wipedeep = "lethe wipe -s vsitr";
       wipehelp = "lethe wipe --help";
@@ -318,3 +383,4 @@ in {
 
   xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
 }
+

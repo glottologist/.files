@@ -12,6 +12,7 @@
   ];
 
   home.packages = with pkgs; [
+  devbox # Dev envs
     difftastic # A syntax-aware diff
     earthly # Build automation for the container era
     helix # A post-modern modal text editor
@@ -28,6 +29,7 @@
     usbutils # USb Utlities
     wakatime # Wakatime dev stats command line
     watchexec # Universal watcher
+    opencommit #AI-powered commit message generator 
   ];
 
   programs = {

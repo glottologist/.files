@@ -8,6 +8,7 @@
     alpine
     discord # All-in-one cross-platform voice and text chat for gamers
     himalaya
+    kbfs
     keybase
     keybase-gui
     neomutt
