@@ -28,7 +28,6 @@
     ../common/games.nix
     ../common/keyboards.nix
     ../common/nix.nix
-    ../common/storage.nix
     ../common/stylix.nix
     ../common/virtualization.nix
   ];
