@@ -9,7 +9,11 @@
   inherit (import ./variables.nix) username;
 in {
   services = {
-  dbus.enable=true;
+  syncthing = {
+  enable = true;
+  openDefaultPorts = true; # Open ports in the firewall for Syncthing
+};
+    dbus.enable = true;
     displayManager.sddm.enable = !useHyprland;
     desktopManager.plasma6.enable = !useHyprland;
     pulseaudio.enable = false;
@@ -22,8 +26,8 @@ in {
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
     mullvad-vpn = {
-       enable = true;
-       package = pkgs.mullvad-vpn;
+      enable = true;
+      package = pkgs.mullvad-vpn;
     };
     avahi = {
       enable = true;
