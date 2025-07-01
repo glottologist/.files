@@ -27,7 +27,7 @@
     shell-gpt # Access ChatGPT from your terminal
     shotman # The uncompromising screenshot GUI for Wayland compositors
     termdown # Command line timer
-    #termius # Modern cross device SSH Terminal
+    termius # Modern cross device SSH Terminal
     tldr # Community driven manpages
     tmate # Instant terminal sharing
     wayshot # A native, blazing-fast screenshot tool for wlroots based compositors such as sway and river
