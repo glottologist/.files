@@ -10,5 +10,7 @@
     hostName = "bebop"; # Define your hostname.
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
+    extraHosts = builtins.readFile ../../secrets/hosts;
   };
+
 }

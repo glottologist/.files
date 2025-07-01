@@ -9,6 +9,7 @@
   inherit (import ./variables.nix) username;
 in {
   services = {
+  dbus.enable=true;
     displayManager.sddm.enable = !useHyprland;
     desktopManager.plasma6.enable = !useHyprland;
     pulseaudio.enable = false;

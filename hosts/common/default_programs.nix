@@ -48,6 +48,7 @@
     pkg-config
     playerctl
     ripgrep
+    termius # Modern cross device SSH Terminal
     socat
     unzip
     usbutils
