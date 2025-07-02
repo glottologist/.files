@@ -9,6 +9,8 @@
     ./fastfetch/default.nix
     ./fish/default.nix
     ./foot/default.nix
+    ./kitty/default.nix
+    ./ghostty/default.nix
     ./starship/default.nix
     ./tmux/default.nix
   ];
@@ -129,24 +131,6 @@
       };
     };
     jq.enable = true; # JSON processor
-    kitty = {
-      enable = true;
-      package = pkgs.kitty;
-      settings = {
-        wheel_scroll_min_lines = 1;
-        window_padding_width = 4;
-        confirm_os_window_close = 0;
-        scrollback_lines = 10000;
-        enable_audio_bell = false;
-        mouse_hide_wait = 60;
-      };
-      extraConfig = ''
-        tab_bar_style fade
-        tab_fade 1
-        active_tab_font_style   bold
-        inactive_tab_font_style bold
-      '';
-    };
     lsd.enable = true; # Next gen 'ls' command
     #mcfly.enable = true; #  McFly replaces your default ctrl-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands.
     newsboat = {

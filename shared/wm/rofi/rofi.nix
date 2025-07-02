@@ -7,18 +7,7 @@
     rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
-      plugins = with pkgs; [
-        # Include additional plugins for Rofi
-        rofi-calc # Adds a calculator plugin
-        rofi-emoji # Enables emoji picker plugin from Rofi
-        rofi-power-menu # Adds a power menu plugin for system actions (shutdown, reboot, etc.)
-      ];
       extraConfig = {
-        modes = "window,drun,run,ssh,combi,emoji,calc,power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu --choices=shutdown/reboot/logout/lockscreen --confirm=logout/lockscreen";
-        combi-modes = "window,drun,emoji,calc";
-        calc-command = "qalc"; # Use qalc for calculator mode
-        calc-show-history = true; # Enable the display of previous calculations
-        emoji-command = "rofi-emoji"; # Use rofi-emoji for emoji selection
         modi = "drun,filebrowser,run";
         show-icons = true;
         icon-theme = "Papirus";

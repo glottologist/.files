@@ -81,6 +81,8 @@ in {
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "vim";
+      BROWSER = "brave";
+      TERMINAL = "foot";
       ANTHROPIC_API_KEY = anthropic_api_key;
     };
     pointerCursor = {
