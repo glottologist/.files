@@ -28,7 +28,7 @@ in {
   # Place Files Inside Home Directory
   home.file = {
     "Pictures/Wallpapers" = {
-      source = ../../../wallpapers;
+      source = ../../../wallpapers/bebop;
       recursive = true;
     };
     ".face.icon".source = ./face.jpg;
@@ -57,7 +57,7 @@ in {
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"
         "pypr &"
-        "sleep 1.5 && swww img ${stylixImage}"
+        "sleep 2 && wallsetter &"
       ];
 
       input = {
