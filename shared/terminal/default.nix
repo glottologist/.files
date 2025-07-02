@@ -6,9 +6,10 @@
   ...
 }: {
   imports = [
+    ./fastfetch/default.nix
     ./fish/default.nix
+    ./foot/default.nix
     ./starship/default.nix
-    ./foot-theme/default.nix
     ./tmux/default.nix
   ];
 
@@ -26,11 +27,11 @@
     shell-gpt # Access ChatGPT from your terminal
     shotman # The uncompromising screenshot GUI for Wayland compositors
     termdown # Command line timer
-    termius # Modern cross device SSH Terminal
     tldr # Community driven manpages
     tmate # Instant terminal sharing
     wayshot # A native, blazing-fast screenshot tool for wlroots based compositors such as sway and river
   ];
+
   programs = {
     atuin = {
       enable = true;
@@ -39,7 +40,17 @@
       enableZshIntegration = true;
     };
     aria2.enable = true; # aria2 is a lightweight multi-protocol & multi-source command-line download utility.
-    bat.enable = true; # Drop in replacement for cat
+    bat = {
+      enable = true;
+      config = {
+        pager = "less -FR";
+      };
+      extraPackages = with pkgs.bat-extras; [
+        batman
+        batpipe
+        batgrep
+      ];
+    };
     broot = {
       # Easy way to see and navigate directory trees in Linux
       enable = true;
@@ -47,13 +58,58 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
-    # direnv = {
-    #   # Utility to load and unload environment variables depending on the current directory.
-    #   enable = true;
-    #   nix-direnv = {
-    #     enable = true;
-    #   };
-    # };
+    btop = {
+      enable = true;
+      settings = {
+        vim_keys = true;
+      };
+    };
+    cava = {
+      enable = true;
+      settings = {
+        general = {
+          bar_spacing = 1;
+          bar_width = 2;
+        };
+        color = {
+          gradient = 1;
+          gradient_color_1 = "'#011f30'";
+          gradient_color_2 = "'#09465b'";
+          gradient_color_3 = "'#045a93'";
+          gradient_color_4 = "'#00aa00'";
+          gradient_color_5 = "'#ffff00'";
+          gradient_color_6 = "'#cc8033'";
+          gradient_color_7 = "'#aa0000'";
+          gradient_color_8 = "'#ff00ff'";
+          # Old config
+          #gradient = 1;
+          #gradient_color_1 = "'#8bd5ca'";
+          #gradient_color_2 = "'#91d7e3'";
+          #gradient_color_3 = "'#7dc4e4'";
+          #gradient_color_4 = "'#8aadf4'";
+          #gradient_color_5 = "'#c6a0f6'";
+          #gradient_color_6 = "'#f5bde6'";
+          #gradient_color_7 = "'#ee99a0'";
+          #gradient_color_8 = "'#ed8796'";
+          # Dracula
+          #gradient_color_1 = '#8BE9FD'
+          #gradient_color_2 = '#9AEDFE'
+          #gradient_color_3 = '#CAA9FA'
+          #gradient_color_4 = '#BD93F9'
+          #gradient_color_5 = '#FF92D0'
+          #gradient_color_6 = '#FF79C6'
+          #gradient_color_7 = '#FF6E67'
+          #gradient_color_8 = '#FF5555'
+        };
+      };
+    };
+    direnv = {
+      # Utility to load and unload environment variables depending on the current directory.
+      enable = true;
+      nix-direnv = {
+        enable = true;
+      };
+    };
     eza = {
       enable = true;
       enableFishIntegration = true;
@@ -73,6 +129,24 @@
       };
     };
     jq.enable = true; # JSON processor
+    kitty = {
+      enable = true;
+      package = pkgs.kitty;
+      settings = {
+        wheel_scroll_min_lines = 1;
+        window_padding_width = 4;
+        confirm_os_window_close = 0;
+        scrollback_lines = 10000;
+        enable_audio_bell = false;
+        mouse_hide_wait = 60;
+      };
+      extraConfig = ''
+        tab_bar_style fade
+        tab_fade 1
+        active_tab_font_style   bold
+        inactive_tab_font_style bold
+      '';
+    };
     lsd.enable = true; # Next gen 'ls' command
     #mcfly.enable = true; #  McFly replaces your default ctrl-r shell history search with an intelligent search engine that takes into account your working directory and the context of recently executed commands.
     newsboat = {

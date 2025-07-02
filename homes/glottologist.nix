@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  useHyprland,
+  ...
+}: let
   username = "glottologist";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
@@ -15,6 +19,15 @@ in {
 
   home.enableNixpkgsReleaseCheck = false;
 
+  systemd.user.targets.tray = {
+    Unit = {
+      Description = "Home Manager System Tray";
+      Requires = ["graphical-session-pre.target"];
+    };
+  };
+
+  qt.platformTheme = "kde";
+
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
@@ -27,30 +40,31 @@ in {
 
   imports = [
     ../secrets/accounts.nix
-    ../shared/fonts/default.nix
-    ../shared/terminal/default.nix
     ../shared/ai/default.nix
+    ../shared/blockchain/default.nix
     ../shared/blockchain/default.nix
     ../shared/browsers/default.nix
     ../shared/cloud/default.nix
     ../shared/comics/default.nix
     ../shared/communication/default.nix
     ../shared/database/default.nix
-    ../shared/blockchain/default.nix
     ../shared/desktop/default.nix
     ../shared/development/default.nix
     ../shared/disk/default.nix
     ../shared/documentation/default.nix
+    ../shared/fonts/default.nix
     ../shared/keyboards/default.nix
-    ../shared/network/default.nix
-    ../shared/learning/default.nix
     ../shared/languages/default.nix
+    ../shared/learning/default.nix
     ../shared/media/default.nix
     ../shared/network/default.nix
     ../shared/pentesting/default.nix
     ../shared/pictures/default.nix
     ../shared/productivity/default.nix
     ../shared/security/default.nix
+    ../shared/storage/default.nix
+    ../shared/terminal/default.nix
+    ../shared/trading/default.nix
     ../shared/virtualization/default.nix
   ];
 

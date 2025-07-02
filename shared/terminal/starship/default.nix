@@ -1,22 +1,33 @@
-{ fontSize, pkgs, ... }:
 {
-    programs.starship = {
-      enable = true;
-      settings = {
-        character.success_symbol = "[λ](bold green)";
-        cmd_duration.show_milliseconds = false;
-        format = "$all$directory$character";
-        right_format = "$all";
-        aws.symbol = "";
-        battery = {
-          full_symbol = " ";
-          charging_symbol = " ";
-          discharging_symbol = " ";
-        };
+  fontSize,
+  pkgs,
+  ...
+}: {
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      character.success_symbol = "[λ](bold green)";
+      cmd_duration.show_milliseconds = false;
+      format = "$all$directory$character";
+      right_format = "$all";
+      aws.symbol = "";
+      buf = {
+        symbol = " ";
+      };
+      battery = {
+        full_symbol = " ";
+        charging_symbol = " ";
+        discharging_symbol = " ";
+      };
+      c = {
+        symbol = " ";
+      };
       conda.symbol = " ";
       directory = {
         fish_style_pwd_dir_length = 1; # turn on fish directory truncation
         truncation_length = 2; # number of directories not to truncate
+        read_only = " 󰌾";
       };
       dart.symbol = " ";
       docker_context = {
@@ -52,60 +63,51 @@
       golang.symbol = " ";
       #haskell.symbol = "λ ";
       hg_branch.symbol = " ";
-      hostname.style = "bold green";
+      hostname = {
+        ssh_symbol = " ";
+        style = "bold green";
+      };
       java.symbol = " ";
       julia.symbol = " ";
       # Disable because it includes cached memory so memory is reported as full a lot
+      lua = {
+        symbol = " ";
+      };
       memory_usage = {
         disabled = false;
         symbol = " ";
         threshold = 90;
         style = "bold blue";
       };
-      nim.symbol = " ";
-      nix_shell = {
-        symbol = " ";
+      nim = {
+        symbol = "󰆥 ";
       };
-      nodejs.symbol = " ";
-      package.symbol = " ";
+      nodejs.symbol = " ";
+      ocaml = {
+        symbol = " ";
+      };
+      package = {
+        symbol = "󰏗 ";
+      };
       perl.symbol = " ";
       php.symbol = " ";
       python.symbol = " ";
       ruby.symbol = " ";
-      rust.symbol = " ";
+      rust = {
+        symbol = " ";
+      };
+      swift = {
+        symbol = " ";
+      };
+      zig = {
+        symbol = " ";
+      };
       shell.disabled = false;
       status.disabled = false;
-      swift.symbol = "ﯣ ";
       time = {
         disabled = false;
       };
       username.style_user = "bold blue";
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     };
-
+  };
 }

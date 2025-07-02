@@ -11,6 +11,9 @@
   firacode-nerdfont = build-nerd-font "firacode-nerdfont" "AeXvD9xhaPscfIUb7nvubzK664Bk1f1lNygAYhE95nk=" "Firacode.zip" false;
   devicons = build-devicons "devicon" "pfZrr7jB8gP/4wW+6qR5WZK2cnLPn6+lZGAH1gRG4Rw=" dcversion false;
 in {
+  imports = [
+    ./emoji.nix
+  ];
   home.packages = with pkgs; [
     fira-code
     fira-code-symbols

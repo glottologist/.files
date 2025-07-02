@@ -4,54 +4,22 @@
   ...
 }: {
   home.packages = with pkgs; [
-    discord # All-in-one cross-platform voice and text chat for gamers
+    aerc
     alpine
-    grpcurl
-    #aerc
+    discord # All-in-one cross-platform voice and text chat for gamers
     himalaya
+    kbfs
+    keybase
+    keybase-gui
+    neomutt
     signal-desktop # signam messenger
-    #slack # Desktop client for Slack
     slack-term # Slack client for your term
-    turses # A twitter terminal client
     tdesktop # Telegram Desktop messaging app
-    #thunderbird # A full-featured e-mail client
     tuir # Command line reddit
-    msmtp
-    #notmuchrev
+    turses # A twitter terminal client
   ];
-  services.imapnotify.enable = true;
-  # programs.mbsync = {
-  #   enable = true;
-  #   extraConfig = ''
-  #     SyncState *
-  #   '';
-  # };
-  # services.mbsync = {
-  #   enable = false;
-  #   #configFile = /home/zarred/.config/isync/mbsyncrc;
-  #   frequency = "*:0/30";
-  #   verbose = true;
-  # };
-  programs.msmtp.enable = true;
-  # programs.notmuch = {
-  #   enable = true;
-  #   hooks = {
-  #     preNew = "mbsync --all";
-  #   };
-  # };
-  #
-  # programs.neomutt = {
-  #   enable = true;
-  #   vimKeys = true;
-  #   sidebar = {
-  #     enable = true;
-  #   };
-  #   settings = {
-  #     sort = "threads";
-  #     sort_aux = "reverse-last-date-received";
-  #     mark_old = "no";
-  #     mail_check = "90";
-  #     timeout = "15";
-  #   };
-  # };
+  services = {
+  kbfs.enable = true;
+    keybase.enable = true; # Keybase is a key directory that maps social media identities to encryption keys in a publicly auditable manner.
+  };
 }

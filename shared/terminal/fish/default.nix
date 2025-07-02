@@ -303,16 +303,16 @@ in {
       ont = "cd ~/development/ontologi";
       oss = "cd ~/development/opensource";
       ols = "ollama serve";
-  olc = "ollama create";
-  olsh = "ollama show";
-  olr = "ollama run";
-  olst = "ollama stop";
-  olp = "ollama pull";
-  olpsh  = "ollama push";
-  oll = "ollama list";
-  olps = "ollama ps"; 
-  olcp ="ollama cp"; 
-  olrm = "ollama rm";
+      olc = "ollama create";
+      olsh = "ollama show";
+      olr = "ollama run";
+      olst = "ollama stop";
+      olp = "ollama pull";
+      olpsh = "ollama push";
+      oll = "ollama list";
+      olps = "ollama ps";
+      olcp = "ollama cp";
+      olrm = "ollama rm";
       pb = "docker build -t";
       pc = "docker-compose";
       pcd = "docker-compose down --remove-orphans";
@@ -383,3 +383,4 @@ in {
 
   xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
 }
+

@@ -42,7 +42,7 @@ in
   programs.vscode = {
     enable = true;
     package = overridePackage;
-    userSettings = settings;
+    profiles.default.userSettings = settings;
   };
 
   imports = [

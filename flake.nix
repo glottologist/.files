@@ -4,11 +4,11 @@
   nixConfig.extra-experimental-features = "nix-command flakes";
 
   inputs = {
-    #nixpkgs.url = "github:glottologist/nixpkgs/release-24.11";
+    nvf.url = "github:notashelf/nvf";
+    stylix.url = "github:danth/stylix/release-25.05";
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.05";
     home-manager = {
       url = "github:glottologist/home-manager/release-25.05";
-      #url = "github:glottologist/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,25 +27,47 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
+    stylix,
     home-manager,
     hyprland,
     agenix,
     foundry,
     nix,
+    ...
   } @ inputs: let
-    pkgs = import nixpkgs {};
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    useHyprland = builtins.getEnv "ENABLE_HYPRLAND" == "0";
+    nixosSystem = inputs.nixpkgs.lib.nixosSystem;
+    homeManagerConfig = inputs.home-manager.lib.homeManagerConfiguration;
   in {
-    inherit inputs;
     homeConfigurations = {
-      "glottologist" = inputs.home-manager.lib.homeManagerConfiguration {
+      "glottologist" = homeManagerConfig {
         inherit pkgs;
-        modules = [./homes/glottologist.nix];
+        modules = [
+        ./homes/glottologist.nix];
       };
-      "jason" = inputs.home-manager.lib.homeManagerConfiguration {
+      "jason" = homeManagerConfig {
         inherit pkgs;
         modules = [./homes/jason.nix];
+      };
+    };
+
+    nixosConfigurations = {
+      "bebop" = nixosSystem {
+        inherit pkgs;
+        inherit system;
+        specialArgs = {
+          inherit useHyprland;
+        };
+        modules = [
+          stylix.nixosModules.stylix
+          ./hosts/bebop/configuration.nix
+        ];
       };
     };
   };
