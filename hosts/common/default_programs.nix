@@ -58,6 +58,7 @@
     wget
     ytmdl
   ];
+
   programs = {
     firefox.enable = true;
     fish.enable = true;
@@ -66,7 +67,9 @@
       enableSSHSupport = true; # This handles the SSH_AUTH_SOCK setup
     };
     dconf.enable = true;
+    hyprland.enable = useHyprland;
     seahorse.enable = useHyprland;
+    hyprlock.enable = useHyprland;
     fuse.userAllowOther = true;
     virt-manager.enable = true;
     mtr.enable = true;

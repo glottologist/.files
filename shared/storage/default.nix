@@ -22,24 +22,23 @@
       Nice = 10;
     };
   };
-  systemd.user.services.maestral-gui = {
-    Unit = {
-      Description = "Maestral GUI daemon";
-      After = ["graphical-session-pre.target"];
-      PartOf = ["graphical-session.target"];
-    };
-    Install = {
-      WantedBy = ["graphical-session.target"];
-    };
-    Service = {
-      ExecStart = "${pkgs.maestral-gui}/bin/maestral_qt";
-      ExecReload = "${pkgs.util-linux}/bin/kill -HUP $MAINPID";
-      KillMode = "process";
-      Restart = "on-failure";
-    };
-  };
+  # systemd.user.services.maestral-gui = {
+  #   Unit = {
+  #     Description = "Maestral GUI daemon";
+  #     After = ["graphical-session-pre.target"];
+  #     PartOf = ["graphical-session.target"];
+  #   };
+  #   Install = {
+  #     WantedBy = ["graphical-session.target"];
+  #   };
+  #   Service = {
+  #     ExecStart = "${pkgs.maestral-gui}/bin/maestral_qt";
+  #     ExecReload = "${pkgs.util-linux}/bin/kill -HUP $MAINPID";
+  #     KillMode = "process";
+  #     Restart = "on-failure";
+  #   };
+  # };
   home.packages = with pkgs; [
-    dropbox-cli
     maestral-gui
     maestral
     xivlauncher

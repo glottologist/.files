@@ -1,8 +1,16 @@
 {
+  host,
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit
+    (import ../../../hosts/${host}/variables.nix)
+    extraMonitorSettings
+    keyboardLayout
+    stylixImage
+    ;
+in {
   home.packages = with pkgs; [
     swww
     grim
@@ -10,19 +18,12 @@
     wl-clipboard
     swappy
     ydotool
+    hyprpolkitagent
+    hyprland-qtutils # needed for banners and ANR messages
   ];
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
   ];
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland = {
-      enable = true;
-      # hidpi = true;
-    };
-    # enableNvidiaPatches = false;
-    systemd.enable = true;
-  };
   # Place Files Inside Home Directory
   home.file = {
     "Pictures/Wallpapers" = {
@@ -31,120 +32,147 @@
     };
     ".face.icon".source = ./face.jpg;
     ".config/face.jpg".source = ./face.jpg;
-    ".config/swappy/config".text = ''
-      [Default]
-      save_dir=/home/${username}/Pictures/Screenshots
-      save_filename_format=swappy-%Y%m%d-%H%M%S.png
-      show_panel=false
-      line_size=5
-      text_size=20
-      text_font=Ubuntu
-      paint_mode=brush
-      early_exit=true
-      fill_shape=false
-    '';
-    ".config/amfora/config.toml".text = ''
-      [a-general]
-      home = "gemini://gem.zaney.org"
-      color = true
-      ansi = true
-      bullets = true
-      show_link = false
-      scrollbar = "never"
-      auto_redirect = false
-      http = 'brave'
-      search = "gemini://gus.guru/search"
-      max_width = 140
-      page_max_size = 2097152  # 2 MiB
-      page_max_time = 10
-      highlight_code = true
-      highlight_style = "dracula"
-      downloads = '~/Downloads/'
-      underline = true
-      [auth]
-      [auth.certs]
-      [auth.keys]
-      [commands]
-      [keybindings]
-      bind_bottom           = ":"
-      bind_quit             = "Q"
-      bind_reload           = "R"
-      bind_back             = "h"
-      bind_forward          = "l"
-      bind_moveup           = "k"
-      bind_movedown         = "j"
-      bind_moveleft         = "H"
-      bind_moveright        = "L"
-      bind_next_tab         = "J"
-      bind_prev_tab         = "K"
-      bind_edit             = "o"
-      bind_new_tab          = "O"
-      bind_close_tab        = "q"
-      bind_save             = "S"
-      bind_home             = "Ctrl-h"
-      bind_bookmarks        = "b"
-      bind_add_bookmark     = "B"
-      bind_copy_page_url    = "c"
-      bind_copy_target_url  = "C"
-      bind_search           = "/"
-      bind_next_match       = "n"
-      bind_prev_match       = "N"
-      [url-handlers]
-      [url-prompts]
-      [cache]
-      max_size = 0  # Size in bytes
-      max_pages = 30 # The maximum number of pages the cache will store
-      timeout = 1800 # 30 mins
-      [proxies]
-      [subscriptions]
-      popup = true
-      update_interval = 1800 # 30 mins
-      workers = 3
-      entries_per_page = 20
-      header = true
-      [theme]
-      bg = "#282a36"
-      tab_num = "#bd93f9"
-      tab_divider = "#f8f8f2"
-      bottombar_label = "#bd93f9"
-      bottombar_text = "#8be9fd"
-      bottombar_bg = "#44475a"
-      scrollbar = "#44475a"
-      hdg_1 = "#bd93f9"
-      hdg_2 = "#7cafc2"
-      hdg_3 = "#a16946"
-      amfora_link = "#ff79c6"
-      foreign_link = "#ffb86c"
-      link_number = "#8be9fd"
-      regular_text = "#f8f8f2"
-      quote_text = "#f1fa8c"
-      preformatted_text = "#ffb86c"
-      list_text = "#f8f8f2"
-      btn_bg = "#44475a"
-      btn_text = "#f8f8f2"
-      dl_choice_modal_bg = "#6272a4"
-      dl_choice_modal_text = "#f8f8f2"
-      dl_modal_bg = "#6272a4"
-      dl_modal_text = "#f8f8f2"
-      info_modal_bg = "#6272a4"
-      info_modal_text = "#f8f8f2"
-      error_modal_bg = "#ff5555"
-      error_modal_text = "#f8f8f2"
-      yesno_modal_bg = "#6272a4"
-      yesno_modal_text = "#f8f8f2"
-      tofu_modal_bg = "#6272a4"
-      tofu_modal_text = "#f8f8f2"
-      subscription_modal_bg = "#6272a4"
-      subscription_modal_text = "#f8f8f2"
-      input_modal_bg = "#6272a4"
-      input_modal_text = "#f8f8f2"
-      input_modal_field_bg = "#44475a"
-      input_modal_field_text = "#f8f8f2"
-      bkmk_modal_bg = "#6272a4"
-      bkmk_modal_text = "#f8f8f2"
-      bkmk_modal_label = "#f8f8f2"
-      bkmk_modal_field_bg = "#44475a"
-      bkmk_modal_field_text = "#f8f8f2"
-    '';
+  };
+  wayland.windowManager.hyprland = {
+    enable = true;
+    package = pkgs.hyprland;
+    systemd = {
+      enable = true;
+      enableXdgAutostart = true;
+      variables = ["--all"];
+    };
+    xwayland = {
+      enable = true;
+    };
+    settings = {
+      exec-once = [
+        "wl-paste --type text --watch cliphist store # Stores only text data"
+        "wl-paste --type image --watch cliphist store # Stores only image data"
+        "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        "systemctl --user start hyprpolkitagent"
+        "killall -q swww;sleep .5 && swww init"
+        "killall -q waybar;sleep .5 && waybar"
+        "killall -q swaync;sleep .5 && swaync"
+        "nm-applet --indicator"
+        "pypr &"
+        "sleep 1.5 && swww img ${stylixImage}"
+      ];
+
+      input = {
+        kb_layout = "${keyboardLayout}";
+        kb_options = [
+          "grp:alt_caps_toggle"
+          "caps:super"
+        ];
+        numlock_by_default = true;
+        repeat_delay = 300;
+        follow_mouse = 1;
+        float_switch_override_focus = 0;
+        sensitivity = 0;
+        touchpad = {
+          natural_scroll = true;
+          disable_while_typing = true;
+          scroll_factor = 0.8;
+        };
+      };
+
+      gestures = {
+        workspace_swipe = 1;
+        workspace_swipe_fingers = 3;
+        workspace_swipe_distance = 500;
+        workspace_swipe_invert = 1;
+        workspace_swipe_min_speed_to_force = 30;
+        workspace_swipe_cancel_ratio = 0.5;
+        workspace_swipe_create_new = 1;
+        workspace_swipe_forever = 1;
+      };
+
+      general = {
+        "$modifier" = "SUPER";
+        layout = "dwindle";
+        gaps_in = 6;
+        gaps_out = 8;
+        border_size = 2;
+        resize_on_border = true;
+        "col.active_border" = "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
+        "col.inactive_border" = "rgb(${config.lib.stylix.colors.base01})";
+      };
+
+      misc = {
+        layers_hog_keyboard_focus = true;
+        initial_workspace_tracking = 0;
+        mouse_move_enables_dpms = true;
+        key_press_enables_dpms = false;
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+        enable_swallow = false;
+        vfr = true; # Variable Frame Rate
+        vrr = 2; #Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
+        # Screen flashing to black momentarily or going black when app is fullscreen
+        # Try setting vrr to 0
+
+        #  Application not responding (ANR) settings
+        enable_anr_dialog = true;
+        anr_missed_pings = 20;
+      };
+
+      dwindle = {
+        pseudotile = true;
+        preserve_split = true;
+        force_split = 2;
+      };
+
+      decoration = {
+        rounding = 10;
+        blur = {
+          enabled = true;
+          size = 5;
+          passes = 3;
+          ignore_opacity = false;
+          new_optimizations = true;
+        };
+        shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+          color = "rgba(1a1a1aee)";
+        };
+      };
+
+      ecosystem = {
+        no_donation_nag = true;
+        no_update_news = false;
+      };
+
+      cursor = {
+        sync_gsettings_theme = true;
+        no_hardware_cursors = 2; # change to 1 if want to disable
+        enable_hyprcursor = false;
+        warp_on_change_workspace = 2;
+        no_warps = true;
+      };
+
+      render = {
+        explicit_sync = 1; # Change to 1 to disable
+        explicit_sync_kms = 1;
+        direct_scanout = 0;
+      };
+
+      master = {
+        new_status = "master";
+        new_on_top = 1;
+        mfact = 0.5;
+      };
+    };
+
+    extraConfig = "
+      monitor=,preferred,auto,auto
+      monitor=Virtual-1,1920x1080@60,auto,1
+      ${extraMonitorSettings}
+      # To enable blur on waybar uncomment the line below
+      # Thanks to SchotjeChrisman
+      #layerrule = blur,waybar
+    ";
   };
 }
