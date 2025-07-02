@@ -3,7 +3,6 @@
   lib,
   pkgs,
   modulesPath,
-  useHyprland,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -60,6 +59,7 @@
   ];
 
   programs = {
+    ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
     firefox.enable = true;
     fish.enable = true;
     gnupg.agent = {
@@ -67,9 +67,9 @@
       enableSSHSupport = true; # This handles the SSH_AUTH_SOCK setup
     };
     dconf.enable = true;
-    hyprland.enable = useHyprland;
-    seahorse.enable = useHyprland;
-    hyprlock.enable = useHyprland;
+    hyprland.enable = true;
+    seahorse.enable = true;
+    hyprlock.enable = true;
     fuse.userAllowOther = true;
     virt-manager.enable = true;
     mtr.enable = true;

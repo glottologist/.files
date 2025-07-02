@@ -41,7 +41,6 @@
       inherit system;
       config.allowUnfree = true;
     };
-    useHyprland = builtins.getEnv "ENABLE_HYPRLAND" == "0";
     nixosSystem = inputs.nixpkgs.lib.nixosSystem;
     homeManagerConfig = inputs.home-manager.lib.homeManagerConfiguration;
   in {
@@ -52,7 +51,7 @@
           username = "glottologist";
         };
         modules = [
-        stylix.homeModules.stylix
+          stylix.homeModules.stylix
           ./homes/glottologist
         ];
       };
@@ -62,8 +61,9 @@
           username = "jason";
         };
         modules = [
-        stylix.homeModules.stylix
-        ./homes/jason.nix];
+          stylix.homeModules.stylix
+          ./homes/jason.nix
+        ];
       };
     };
 
@@ -71,9 +71,6 @@
       "bebop" = nixosSystem {
         inherit pkgs;
         inherit system;
-        specialArgs = {
-          inherit useHyprland;
-        };
         modules = [
           stylix.nixosModules.stylix
           ./hosts/bebop/configuration.nix

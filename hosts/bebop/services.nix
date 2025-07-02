@@ -3,7 +3,6 @@
   lib,
   pkgs,
   modulesPath,
-  useHyprland,
   ...
 }: let
   inherit (import ./variables.nix) username;
@@ -33,8 +32,8 @@ in {
       };
     };
     dbus.enable = true;
-    displayManager.sddm.enable = !useHyprland;
-    desktopManager.plasma6.enable = !useHyprland;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
     printing.enable = true;
     libinput.enable = true;
@@ -60,7 +59,7 @@ in {
     };
 
     xserver = {
-      enable = !useHyprland;
+      enable = true;
       xkb = {
         layout = "gb";
         variant = "";
@@ -74,7 +73,7 @@ in {
       pulse.enable = true;
     };
     greetd = {
-      enable = !useHyprland;
+      enable = true;
       vt = 3;
       settings = {
         default_session = {

@@ -1,6 +1,5 @@
 {
   pkgs,
-  useHyprland,
   ...
 }: let
   inherit (import ./variables.nix) username;

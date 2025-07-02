@@ -1,6 +1,5 @@
 {
   pkgs,
-  useHyprland,
   ...
 }: let
   username = "jason";
