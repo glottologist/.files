@@ -5,6 +5,7 @@
   stdenv,
   ...
 }: {
+
   systemd.user.services.maestral = {
     Unit = {
       Description = "Maestral daemon";
@@ -41,6 +42,8 @@
     dropbox-cli
     maestral-gui
     maestral
+    xivlauncher
+    syncthingtray-minimal
   ];
 
   imports = [

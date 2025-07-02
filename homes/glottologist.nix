@@ -19,6 +19,15 @@ in {
 
   home.enableNixpkgsReleaseCheck = false;
 
+  systemd.user.targets.tray = {
+    Unit = {
+      Description = "Home Manager System Tray";
+      Requires = ["graphical-session-pre.target"];
+    };
+  };
+
+  qt.platformTheme = "kde";
+
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [

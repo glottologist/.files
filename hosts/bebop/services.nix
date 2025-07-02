@@ -13,9 +13,12 @@ in {
     syncthing = {
       enable = true;
       openDefaultPorts = true;
+      user = "${username}";
+      dataDir = "/home/${username}/syncthing";
+      configDir = "/home/${username}/syncthing/.config/syncthing";
       settings = {
         gui = {
-          user = "glottologist";
+          user = "${username}";
           password = "syncthing";
         };
         devices = {
@@ -23,7 +26,7 @@ in {
         };
         folders = {
           "BEBOP" = {
-            path = "/home/glottologist/BEBOP";
+            path = "/home/${username}/syncthing/BEBOP";
             devices = ["CALYPSO"];
           };
         };
@@ -90,6 +93,5 @@ in {
       '';
     };
     syncthing.environment.STNODEFAULTFOLDER = "true";
-
   };
 }
