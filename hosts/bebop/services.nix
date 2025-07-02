@@ -7,12 +7,28 @@
   ...
 }: let
   inherit (import ./variables.nix) username;
+  syncthingSecrets = import ../../secrets/syncthing.nix;
 in {
   services = {
-  syncthing = {
-  enable = true;
-  openDefaultPorts = true; # Open ports in the firewall for Syncthing
-};
+    syncthing = {
+      enable = true;
+      openDefaultPorts = true;
+      settings = {
+        gui = {
+          user = "glottologist";
+          password = "syncthing";
+        };
+        devices = {
+          "CALYPSO" = {id = syncthingSecrets.CALYPSO_ID;};
+        };
+        folders = {
+          "BEBOP" = {
+            path = "/home/glottologist/BEBOP";
+            devices = ["CALYPSO"];
+          };
+        };
+      };
+    };
     dbus.enable = true;
     displayManager.sddm.enable = !useHyprland;
     desktopManager.plasma6.enable = !useHyprland;
@@ -65,11 +81,15 @@ in {
       };
     };
   };
-  systemd.services.flatpak-repo = {
-    wantedBy = ["multi-user.target"];
-    path = [pkgs.flatpak];
-    script = ''
-      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    '';
+  systemd.services = {
+    flatpak-repo = {
+      wantedBy = ["multi-user.target"];
+      path = [pkgs.flatpak];
+      script = ''
+        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      '';
+    };
+    syncthing.environment.STNODEFAULTFOLDER = "true";
+
   };
 }
