@@ -9,8 +9,8 @@
 
   # Program Options
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "kitty"; # Set Default System Terminal
-  keyboardLayout = "uk";
+  terminal = "ghostty"; # Set Default System Terminal
+  keyboardLayout = "gb";
   consoleKeyMap = "uk";
 
   # For Nvidia Prime support
@@ -32,7 +32,8 @@
   #waybarChoice = ../../modules/home/waybar/Jerry-curved.nix;
   #waybarChoice = ../../modules/home/waybar/Jerry-waybar.nix;
   #waybarChoice = ../../modules/home/waybar/waybar-ddubs.nix;
-  waybarChoice = ../../shared/wm/waybar/waybar-ddubs-2.nix;
+  #waybarChoice = ../../shared/wm/waybar/waybar-ddubs-2.nix;
+  waybarChoice = ../../shared/wm/waybar/waybar-glottologist.nix;
 
   # Set Animation style
   # Available options are:

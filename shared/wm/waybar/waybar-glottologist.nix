@@ -5,20 +5,23 @@
   ...
 }: let
   terminal = "ghostty";
-  base00 = "0F1419";
-  base01 = "131721";
-  base03 = "3E4B59";
-  base05 = "E6E1CF";
-  base06 = "E6E1CF";
-  base07 = "F3F4F5";
-  base08 = "F07178";
-  base09 = "FF8F40";
-  base0A = "FFB454";
-  base0B = "B8CC52";
-  base0C = "95E6CB";
-  base0D = "59C2FF";
-  base0E = "D2A6FF";
-  base0F = "E6B673";
+  # Catppuccin Latte Color Scheme
+  base00 = "eff1f5"; # Base - main background
+  base01 = "e6e9ef"; # Mantle - lighter background
+  base02 = "dce0e8"; # Crust - selection background
+  base03 = "bcc0cc"; # Surface1 - comments, invisibles
+  base04 = "acb0be"; # Surface2 - dark foreground
+  base05 = "4c4f69"; # Text - default foreground
+  base06 = "5c5f77"; # Subtext1 - light foreground
+  base07 = "6c6f85"; # Subtext0 - lightest foreground
+  base08 = "d20f39"; # Red - variables, markup
+  base09 = "fe640b"; # Peach - integers, constants
+  base0A = "df8e1d"; # Yellow - classes, search
+  base0B = "40a02b"; # Green - strings, additions
+  base0C = "179299"; # Teal - support, regex
+  base0D = "1e66f5"; # Blue - functions, methods
+  base0E = "8839ef"; # Mauve - keywords, storage
+  base0F = "dc8a78"; # Rosewater - deprecated, tags
 in
   with lib; {
     # Configure & Theme Waybar
@@ -45,9 +48,9 @@ in
             on-scroll-down = "hyprctl dispatch workspace e-1";
           };
           "clock" = {
-            format = '' {:%H:%M}'';
+            format = '' {:%H:%M}'';
             /*
-            ''{: %I:%M %p}'';
+            ''{: %I:%M %p}'';
             */
             tooltip = true;
             tooltip-format = "<big>{:%A, %d.%B %Y }</big><tt><small>{calendar}</small></tt>";
@@ -58,26 +61,26 @@ in
           };
           "memory" = {
             interval = 5;
-            format = " {}%";
+            format = " {}%";
             tooltip = true;
             on-click = "${terminal} -e btop";
           };
           "cpu" = {
             interval = 5;
-            format = " {usage:2}%";
+            format = " {usage:2}%";
             tooltip = true;
             on-click = "${terminal} -e btop";
           };
           "disk" = {
-            format = " {free}";
+            format = " {free}";
             tooltip = true;
             # Not working with zaneyos window open then closes
             #on-click = "${terminal} -e sh -c df -h ; read";
           };
           "network" = {
             format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-            format-ethernet = " {bandwidthDownBits}";
-            format-wifi = " {bandwidthDownBits}";
+            format-ethernet = " {bandwidthDownBits}";
+            format-wifi = " {bandwidthDownBits}";
             format-disconnected = "󰤮";
             tooltip = false;
             on-click = "${terminal} -e btop";
@@ -87,19 +90,19 @@ in
           };
           "pulseaudio" = {
             format = "{icon} {volume}% {format_source}";
-            format-bluetooth = "{volume}% {icon} {format_source}";
-            format-bluetooth-muted = " {icon} {format_source}";
-            format-muted = " {format_source}";
-            format-source = " {volume}%";
-            format-source-muted = "";
+            format-bluetooth = "{volume}% {icon} {format_source}";
+            format-bluetooth-muted = " {icon} {format_source}";
+            format-muted = " {format_source}";
+            format-source = " {volume}%";
+            format-source-muted = "";
             format-icons = {
-              headphone = "";
-              hands-free = "";
-              headset = "";
-              phone = "";
-              portable = "";
-              car = "";
-              default = ["" "" ""];
+              headphone = "";
+              hands-free = "";
+              headset = "";
+              phone = "";
+              portable = "";
+              car = "";
+              default = ["" "" ""];
             };
             on-click = "pavucontrol";
           };
@@ -110,15 +113,15 @@ in
           };
           "custom/startmenu" = {
             tooltip = false;
-            format = " ";
+            format = " ";
             # exec = "rofi -show drun";
             on-click = "rofi -show drun";
           };
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = " ";
-              deactivated = " ";
+              activated = " ";
+              deactivated = " ";
             };
             tooltip = "true";
           };
@@ -126,14 +129,14 @@ in
             tooltip = false;
             format = "{icon} {}";
             format-icons = {
-              notification = "<span foreground='red'><sup></sup></span>";
-              none = "";
-              dnd-notification = "<span foreground='red'><sup></sup></span>";
-              dnd-none = "";
-              inhibited-notification = "<span foreground='red'><sup></sup></span>";
-              inhibited-none = "";
-              dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
-              dnd-inhibited-none = "";
+              notification = "<span foreground='red'><sup></sup></span>";
+              none = "";
+              dnd-notification = "<span foreground='red'><sup></sup></span>";
+              dnd-none = "";
+              inhibited-notification = "<span foreground='red'><sup></sup></span>";
+              inhibited-none = "";
+              dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+              dnd-inhibited-none = "";
             };
             return-type = "json";
             exec-if = "which swaync-client";
@@ -163,37 +166,19 @@ in
             font-weight: bold;
           }
           window#waybar {
-            /*
-
-              background-color: rgba(26,27,38,0);
-              border-bottom: 1px solid rgba(26,27,38,0);
-              border-radius: 0px;
-              color: #${base0F};
-            */
-
-            background-color: rgba(26,27,38,0);
-            border-bottom: 1px solid rgba(26,27,38,0);
+            background-color: rgba(239,241,245,0.95);
+            border-bottom: 1px solid rgba(220,224,232,0.8);
             border-radius: 0px;
-            color: #${base0F};
+            color: #${base05};
           }
           #workspaces {
-            /*
-              Eternal
-              background: linear-gradient(180deg, #${base00}, #${base01});
-              margin: 5px 5px 5px 0px;
-              padding: 0px 10px;
-              border-radius: 0px 15px 15px 0px;
-              border: 0px;
-              font-style: normal;
-              color: #${base00};
-            */
-            background: linear-gradient(45deg, #${base01}, #${base01});
+            background: linear-gradient(45deg, #${base01}, #${base02});
             margin: 5px;
             padding: 0px 1px;
             border-radius: 15px;
-            border: 0px;
+            border: 1px solid #${base03};
             font-style: normal;
-            color: #${base00};
+            color: #${base05};
           }
           #workspaces button {
             padding: 0px 5px;
@@ -202,7 +187,7 @@ in
             border: 0px;
             color: #${base00};
             background: linear-gradient(45deg, #${base0D}, #${base0E});
-            opacity: 0.5;
+            opacity: 0.6;
             transition: all 0.3s ease-in-out;
           }
           #workspaces button.active {
@@ -228,68 +213,60 @@ in
             border-radius: 10px;
           }
           tooltip label {
-            color: #${base07};
+            color: #${base05};
           }
           #window {
-            /*
-              Eternal
-              color: #${base05};
-              background: #${base00};
-              border-radius: 15px;
-              margin: 5px;
-              padding: 2px 20px;
-            */
             margin: 5px;
             padding: 2px 20px;
             color: #${base05};
             background: #${base01};
+            border: 1px solid #${base03};
             border-radius: 15px 15px 15px 15px;
           }
           #memory {
             color: #${base0F};
-            /*
-              Eternal
-              background: #${base00};
-              border-radius: 15px 15px 15px 15px;
-              margin: 5px;
-              padding: 2px 20px;
-            */
             background: #${base01};
+            border: 1px solid #${base03};
             margin: 5px;
             padding: 2px 20px;
             border-radius: 15px 15px 15px 15px;
           }
           #clock {
             color: #${base0B};
-              background: #${base00};
-              border-radius: 15px 15px 15px 15px;
-              margin: 5px;
-              padding: 2px 20px;
+            background: #${base00};
+            border: 1px solid #${base03};
+            border-radius: 15px 15px 15px 15px;
+            margin: 5px;
+            padding: 2px 20px;
           }
           #idle_inhibitor {
             color: #${base0A};
-              background: #${base00};
-              border-radius: 15px 15px 15px 15px;
-              margin: 3px;
-              padding: 2px 20px;
+            background: #${base00};
+            border: 1px solid #${base03};
+            border-radius: 15px 15px 15px 15px;
+            margin: 3px;
+            padding: 2px 20px;
           }
           #cpu {
-            color: #${base07};
-              background: #${base00};
-              border-radius: 15px 15px 15px 15px;
-              margin: 5px;
-              padding: 2px 20px;
+            color: #${base08};
+            background: #${base00};
+            border: 1px solid #${base03};
+            border-radius: 15px 15px 15px 15px;
+            margin: 5px;
+            padding: 2px 20px;
           }
           #disk {
             color: #${base0F};
-              background: #${base00};
-              border-radius: 15px 15px 15px 15px;
-              margin: 5px;
-              padding: 2px 20px;
+            background: #${base00};
+            border: 1px solid #${base03};
+            border-radius: 15px 15px 15px 15px;
+            margin: 5px;
+            padding: 2px 20px;
           }
           #battery {
             color: #${base08};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 15px 15px 15px 15px;
             margin: 5px;
             padding: 2px 20px;
@@ -297,6 +274,7 @@ in
           #network {
             color: #${base09};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 15px 15px 15px 15px;
             margin: 5px;
             padding: 2px 20px;
@@ -304,20 +282,15 @@ in
           #tray {
             color: #${base05};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 15px 15px 15px 15px;
             margin: 5px;
             padding: 2px 15px;
           }
           #pulseaudio {
             color: #${base0D};
-            /*
-              Eternal
-              background: #${base00};
-              border-radius: 15px 15px 15px 15px;
-              margin: 5px;
-              padding: 2px 20px;
-            */
             background: #${base01};
+            border: 1px solid #${base03};
             margin: 4px;
             padding: 2px 20px;
             border-radius: 15px 15px 15px 15px;
@@ -325,6 +298,7 @@ in
           #custom-notification {
             color: #${base0C};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 15px 15px 15px 15px;
             margin: 5px;
             padding: 2px 20px;
@@ -332,6 +306,7 @@ in
           #custom-startmenu {
             color: #${base0E};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 0px 15px 15px 0px;
             margin: 5px 5px 5px 0px;
             padding: 2px 20px;
@@ -339,6 +314,7 @@ in
           #idle_inhibitor {
             color: #${base09};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 15px 15px 15px 15px;
             margin: 5px;
             padding: 2px 20px;
@@ -346,6 +322,7 @@ in
           #custom-exit {
             color: #${base0E};
             background: #${base00};
+            border: 1px solid #${base03};
             border-radius: 15px 0px 0px 15px;
             margin: 5px 0px 5px 5px;
             padding: 2px 20px;

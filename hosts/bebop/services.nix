@@ -3,6 +3,7 @@
   lib,
   pkgs,
   modulesPath,
+  inputs,
   ...
 }: let
   inherit (import ./variables.nix) username;
@@ -32,7 +33,10 @@ in {
       };
     };
     dbus.enable = true;
-    displayManager.sddm.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
     desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
     printing.enable = true;

@@ -1,8 +1,15 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs,lib, ...}: let
   inherit (import ./variables.nix) username;
+  # Detect current session
+  isHyprland =
+    builtins.getEnv "XDG_CURRENT_DESKTOP"
+    == "Hyprland"
+    || builtins.getEnv "HYPRLAND_INSTANCE_SIGNATURE" != "";
+  isKDE =
+    builtins.getEnv "XDG_CURRENT_DESKTOP"
+    == "KDE"
+    || builtins.getEnv "KDE_FULL_SESSION" == "true";
+
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
@@ -17,15 +24,27 @@ in {
   };
 
   home.enableNixpkgsReleaseCheck = false;
+  # Conditional systemd targets based on session
+  systemd.user.targets = lib.mkMerge [
+    {
+      tray = {
+        Unit = {
+          Description = "Home Manager System Tray";
+          Requires = ["graphical-session-pre.target"];
+        };
+      };
+    }
+    (lib.mkIf isHyprland {
+      hyprland-session.Unit.Wants = [
+        "xdg-desktop-autostart.target"
+      ];
+    })
+  ];
 
-  systemd.user.targets.tray = {
-    Unit = {
-      Description = "Home Manager System Tray";
-      Requires = ["graphical-session-pre.target"];
-    };
-  };
-
-  qt.platformTheme = "kde";
+  qt.platformTheme =
+    if isKDE
+    then "kde"
+    else "gtk2";
 
   nixpkgs.config = {
     allowUnfree = true;
