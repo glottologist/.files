@@ -5,28 +5,43 @@
   stdenv,
   ...
 }: {
-
- systemd.user.services.dropbox = {
-      Unit = {Description = "dropbox";};
-
-      Install = {WantedBy = ["graphical-session.target"];};
-
-      Service = {
-        Environment = [
-        ];
-
-        Restart = "on-failure";
-        PrivateTmp = true;
-        ProtectSystem = "full";
-        Nice = 10;
-
-        ExecStart = "${lib.getBin pkgs.dropbox}/bin/dropbox";
-        ExecReload = "${lib.getBin pkgs.coreutils}/bin/kill -HUP $MAINPID";
-        ExecStop = "${lib.getBin pkgs.dropbox-cli}/bin/dropbox stop";
-        KillMode = "control-group";
-      };
+  systemd.user.services.maestral = {
+    Unit = {
+      Description = "Maestral daemon";
+      After = ["graphical-session-pre.target"];
+      PartOf = ["graphical-session.target"];
     };
-    home.packages = [pkgs.dropbox-cli];
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.maestral}/bin/maestral start -f";
+      ExecStop = "${pkgs.maestral}/bin/maestral stop";
+      Restart = "on-failure";
+      Nice = 10;
+    };
+  };
+  systemd.user.services.maestral-gui = {
+    Unit = {
+      Description = "Maestral GUI daemon";
+      After = ["graphical-session-pre.target"];
+      PartOf = ["graphical-session.target"];
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.maestral-gui}/bin/maestral_qt";
+      ExecReload = "${pkgs.util-linux}/bin/kill -HUP $MAINPID";
+      KillMode = "process";
+      Restart = "on-failure";
+    };
+  };
+  home.packages = with pkgs; [
+    dropbox-cli
+    maestral-gui
+    maestral
+  ];
 
   imports = [
   ];

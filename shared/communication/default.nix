@@ -19,6 +19,7 @@
     turses # A twitter terminal client
   ];
   services = {
+  kbfs.enable = true;
     keybase.enable = true; # Keybase is a key directory that maps social media identities to encryption keys in a publicly auditable manner.
   };
 }
