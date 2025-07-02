@@ -11,6 +11,7 @@ in {
       "$modifier,K,exec,list-keybinds"
       "$modifier,D,exec,rofi-launcher"
       "$modifier SHIFT,W,exec,web-search"
+      "$modifier SHIFT,Q,exec,wlogout"
       "$modifier ALT,W,exec,wallsetter"
       "$modifier SHIFT,N,exec,swaync-client -rs"
       "$modifier,W,exec,${browser}"
