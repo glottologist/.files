@@ -1,6 +1,6 @@
-{host, ...}: let
+{username, ...}: let
   inherit
-    (import ../../../hosts/${host}/variables.nix)
+    (import ../../../homes/${username}/variables.nix)
     browser
     terminal
     ;

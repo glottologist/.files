@@ -48,12 +48,22 @@
     homeConfigurations = {
       "glottologist" = homeManagerConfig {
         inherit pkgs;
+        extraSpecialArgs = {
+          username = "glottologist";
+        };
         modules = [
-        ./homes/glottologist.nix];
+        stylix.homeModules.stylix
+          ./homes/glottologist
+        ];
       };
       "jason" = homeManagerConfig {
         inherit pkgs;
-        modules = [./homes/jason.nix];
+        extraSpecialArgs = {
+          username = "jason";
+        };
+        modules = [
+        stylix.homeModules.stylix
+        ./homes/jason.nix];
       };
     };
 

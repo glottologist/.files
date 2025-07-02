@@ -1,8 +1,12 @@
-{pkgs, ...}: {
-  # Styling Options
+{
+  username,
+  pkgs,
+  ...
+}: let
+  inherit (import ../../homes/${username}/variables.nix) stylixImage;
+in {
   stylix = {
     enable = true;
-    image = ../../wallpapers/glottologist.jpg;
     base16Scheme = {
       base00 = "282936";
       base01 = "3a3c4e";
@@ -23,10 +27,13 @@
     };
     polarity = "light";
     opacity.terminal = 1.0;
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 24;
+    targets = {
+      waybar.enable = false;
+      starship.enable = false;
+      rofi.enable = false;
+      hyprland.enable = false;
+      hyprlock.enable = false;
+      ghostty.enable = false;
     };
     fonts = {
       monospace = {
