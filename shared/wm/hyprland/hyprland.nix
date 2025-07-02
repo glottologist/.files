@@ -16,6 +16,7 @@ in {
     grim
     slurp
     wl-clipboard
+    wlr-randr
     swappy
     ydotool
     hyprpolkitagent

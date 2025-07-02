@@ -4,7 +4,7 @@
   ...
 }: let
   plugins = pkgs.tmuxPlugins // pkgs.callPackage ./plugins.nix {};
-  tmuxConf = builtins.readFile ./default.conf + builtins.readFile ./zenbones.conf;
+  tmuxConf = builtins.readFile ./default.conf + builtins.readFile ./latte.conf;
   tmx = pkgs.writeShellScript "tmx" ''
     #!${pkgs.stdenv.shell}
 

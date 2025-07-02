@@ -5,13 +5,12 @@
   ...
 }: let
   terminal = "ghostty";
-  # Catppuccin Latte Color Scheme
-  base00 = "eff1f5"; # Base - main background
+    base00 = "eff1f5"; # Base - main background (light)
   base01 = "e6e9ef"; # Mantle - lighter background
   base02 = "dce0e8"; # Crust - selection background
   base03 = "bcc0cc"; # Surface1 - comments, invisibles
   base04 = "acb0be"; # Surface2 - dark foreground
-  base05 = "4c4f69"; # Text - default foreground
+  base05 = "4c4f69"; # Text - default foreground (dark)
   base06 = "5c5f77"; # Subtext1 - light foreground
   base07 = "6c6f85"; # Subtext0 - lightest foreground
   base08 = "d20f39"; # Red - variables, markup
@@ -48,7 +47,7 @@ in
             on-scroll-down = "hyprctl dispatch workspace e-1";
           };
           "clock" = {
-            format = '' {:%H:%M}'';
+            format = ''{:%H:%M}'';
             /*
             ''{: %I:%M %p}'';
             */
@@ -74,8 +73,6 @@ in
           "disk" = {
             format = " {free}";
             tooltip = true;
-            # Not working with zaneyos window open then closes
-            #on-click = "${terminal} -e sh -c df -h ; read";
           };
           "network" = {
             format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
@@ -114,7 +111,6 @@ in
           "custom/startmenu" = {
             tooltip = false;
             format = " ";
-            # exec = "rofi -show drun";
             on-click = "rofi -show drun";
           };
           "idle_inhibitor" = {
