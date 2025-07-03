@@ -68,19 +68,19 @@
       label = [
         {
           text = "Welcome back, ${username}";
-          color = "rgb(76, 79, 105)"; # Catppuccin Latte Text
+          color = "rgb(17, 17, 27)"; # Catppuccin Mocha Crust (darkest)
           font_size = 25;
           font_family = "JetBrainsMono Nerd Font";
-          position = "0, 120";
+          position = "0, 500";
           halign = "center";
           valign = "center";
         }
         {
           text = "$TIME";
-          color = "rgb(92, 95, 119)"; # Catppuccin Latte Subtext1
+          color = "rgb(17, 17, 27)"; # Catppuccin Mocha Crust (darkest)
           font_size = 55;
           font_family = "JetBrainsMono Nerd Font";
-          position = "0, 300";
+          position = "0, 400";
           halign = "center";
           valign = "center";
         }

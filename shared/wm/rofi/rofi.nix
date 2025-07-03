@@ -22,14 +22,14 @@
       in {
         "*" = {
           bg = mkLiteral "#${config.stylix.base16Scheme.base00}";
-          bg-alt = mkLiteral "#${config.stylix.base16Scheme.base09}";
+          bg-alt = mkLiteral "#${config.stylix.base16Scheme.base0F}";
           foreground = mkLiteral "#${config.stylix.base16Scheme.base01}";
-          selected = mkLiteral "#${config.stylix.base16Scheme.base08}";
+          selected = mkLiteral "#${config.stylix.base16Scheme.base0E}";
           active = mkLiteral "#${config.stylix.base16Scheme.base0B}";
           text-selected = mkLiteral "#${config.stylix.base16Scheme.base00}";
           text-color = mkLiteral "#${config.stylix.base16Scheme.base05}";
-          border-color = mkLiteral "#${config.stylix.base16Scheme.base0F}";
-          urgent = mkLiteral "#${config.stylix.base16Scheme.base0E}";
+          border-color = mkLiteral "#${config.stylix.base16Scheme.base09}";
+          urgent = mkLiteral "#${config.stylix.base16Scheme.base08}";
         };
         "window" = {
           transparency = "real";
@@ -57,7 +57,7 @@
         "imagebox" = {
           padding = mkLiteral "20px";
           background-color = mkLiteral "transparent";
-          background-image = mkLiteral ''url("~/Pictures/Common/Stars.jpg", height)'';
+          background-image = mkLiteral ''url("~/Pictures/Common/City.jpg", height)'';
           orientation = mkLiteral "vertical";
           children = map mkLiteral [
             "inputbar"
