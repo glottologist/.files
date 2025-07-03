@@ -9,7 +9,6 @@
   ];
 
   home.packages = with pkgs; [
-    adobe-reader # PDF Reader
     digikam # Photo Management Program
     dosage # A comic strip downloader and archiver
     dstask # Command line todo list with super-reliable git sync

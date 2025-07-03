@@ -33,11 +33,14 @@ in {
       };
     };
     dbus.enable = true;
-    displayManager.sddm = {
+    displayManager = {
+    sddm = {
       enable = true;
       wayland.enable = true;
     };
-    desktopManager.plasma6.enable = true;
+    defaultSession = "hyprland";
+    };
+    #desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
     printing.enable = true;
     libinput.enable = true;
