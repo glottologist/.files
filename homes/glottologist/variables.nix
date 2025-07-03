@@ -24,7 +24,7 @@
   printEnable = false;
 
   # Set Stylix Image
-  stylixImage = ../../wallpapers/AnimeGirlNightSky.jpg;
+  stylixImage = ../../wallpapers/Common/AnimeGirlNightSky.jpg;
 
   # Set Waybar
   # Available options:

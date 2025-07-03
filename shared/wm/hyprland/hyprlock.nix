@@ -10,14 +10,14 @@
       };
       background = [
         {
-          path = "/home/${username}/Pictures/Wallpapers/beautifulmountainscape.jpg";
+          path = "/home/${username}/Pictures/Common/beautifulmountainscape.jpg";
           blur_passes = 3;
           blur_size = 8;
         }
       ];
       image = [
         {
-          path = "/home/${username}/.config/face.jpg";
+          path = "/home/${username}/.config/face.png";
           size = 150;
           border_size = 4;
           border_color = "rgb(30, 102, 245)"; # Catppuccin Latte Blue (#1e66f5)
@@ -34,36 +34,36 @@
           monitor = "";
           dots_center = true;
           fade_on_empty = false;
-          font_color = "rgb(76, 79, 105)";        # Catppuccin Latte Text (#4c4f69)
-          inner_color = "rgb(239, 241, 245)";     # Catppuccin Latte Base (#eff1f5)
-          outer_color = "rgb(220, 224, 232)";     # Catppuccin Latte Crust (#dce0e8)
+          font_color = "rgb(76, 79, 105)"; # Catppuccin Latte Text (#4c4f69)
+          inner_color = "rgb(239, 241, 245)"; # Catppuccin Latte Base (#eff1f5)
+          outer_color = "rgb(220, 224, 232)"; # Catppuccin Latte Crust (#dce0e8)
           outline_thickness = 3;
           placeholder_text = "Enter Password...";
           shadow_passes = 2;
-          shadow_color = "rgb(188, 192, 204)";    # Catppuccin Latte Surface1 (#bcc0cc)
-          
+          shadow_color = "rgb(188, 192, 204)"; # Catppuccin Latte Surface1 (#bcc0cc)
+
           # Password-only authentication
           hide_input = false;
           dots_spacing = 0.15;
           dots_rounding = -1; # Circle dots
-          
+
           # Enhanced styling for light theme
-          check_color = "rgb(64, 160, 43)";       # Catppuccin Latte Green (#40a02b)
-          fail_color = "rgb(210, 15, 57)";        # Catppuccin Latte Red (#d20f39)
-          capslock_color = "rgb(254, 100, 11)";   # Catppuccin Latte Peach (#fe640b)
-          numlock_color = "rgb(136, 57, 239)";    # Catppuccin Latte Mauve (#8839ef)
-          
+          check_color = "rgb(64, 160, 43)"; # Catppuccin Latte Green (#40a02b)
+          fail_color = "rgb(210, 15, 57)"; # Catppuccin Latte Red (#d20f39)
+          capslock_color = "rgb(254, 100, 11)"; # Catppuccin Latte Peach (#fe640b)
+          numlock_color = "rgb(136, 57, 239)"; # Catppuccin Latte Mauve (#8839ef)
+
           # Positioning and behavior
           halign = "center";
           valign = "center";
-          
+
           # Input field behavior
           fail_text = "Authentication Failed";
           fail_timeout = 2000; # 2 seconds
           fail_transition = 300; # 300ms transition
         }
       ];
-      
+
       # Optional: Add a label for better UX
       label = [
         {

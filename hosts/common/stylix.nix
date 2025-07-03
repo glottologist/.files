@@ -2,7 +2,7 @@
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../wallpapers/glottologist.jpg;
+    image = ../../wallpapers/common/glottologist.png;
     base16Scheme = {
       base00 = "282936";
       base01 = "3a3c4e";

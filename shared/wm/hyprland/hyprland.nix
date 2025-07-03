@@ -31,8 +31,12 @@ in {
       source = ../../../wallpapers/bebop;
       recursive = true;
     };
-    ".face.icon".source = ./face.jpg;
-    ".config/face.jpg".source = ./face.jpg;
+    "Pictures/Common" = {
+      source = ../../../wallpapers/common;
+      recursive = true;
+    };
+    ".face.icon".source = ../../../wallpapers/common/face.png;
+    ".config/face.png".source = ../../../wallpapers/common/face.png;
   };
   wayland.windowManager.hyprland = {
     enable = true;
