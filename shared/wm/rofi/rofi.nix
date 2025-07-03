@@ -57,7 +57,7 @@
         "imagebox" = {
           padding = mkLiteral "20px";
           background-color = mkLiteral "transparent";
-          background-image = mkLiteral ''url("~/Pictures/Common/Rainnight.jpg", height)'';
+          background-image = mkLiteral ''url("~/Pictures/Common/Stars.jpg", height)'';
           orientation = mkLiteral "vertical";
           children = map mkLiteral [
             "inputbar"

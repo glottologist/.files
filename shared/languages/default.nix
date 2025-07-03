@@ -41,6 +41,7 @@
     ./r
     ./racket
     ./raku
+    ./rust
     ./scala
     ./solidity
     ./standardml
