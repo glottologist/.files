@@ -1,103 +1,82 @@
-{ config, ... }:
-
 {
+  config,
+  username,
+  ...
+}: let
+  theme = "latte";
+  flavour = "lavender";
+in {
   programs.wlogout = {
     enable = true;
     layout = [
       {
         label = "shutdown";
         action = "sleep 1; systemctl poweroff";
-        text = "Shutdown";
+        text = "Shutdown (s)";
         keybind = "s";
       }
       {
         "label" = "reboot";
         "action" = "sleep 1; systemctl reboot";
-        "text" = "Reboot";
+        "text" = "Reboot (r)";
         "keybind" = "r";
       }
       {
         "label" = "logout";
         "action" = "sleep 1; hyprctl dispatch exit";
-        "text" = "Exit";
+        "text" = "Logout (e)";
         "keybind" = "e";
       }
       {
         "label" = "suspend";
         "action" = "sleep 1; systemctl suspend";
-        "text" = "Suspend";
+        "text" = "Suspend (u)";
         "keybind" = "u";
       }
       {
         "label" = "lock";
         "action" = "sleep 1; hyprlock";
-        "text" = "Lock";
+        "text" = "Lock (l)";
         "keybind" = "l";
       }
       {
         "label" = "hibernate";
         "action" = "sleep 1; systemctl hibernate";
-        "text" = "Hibernate";
+        "text" = "Hibernate (h)";
         "keybind" = "h";
       }
     ];
     style = ''
-      * {
-        font-family: "JetBrainsMono NF", FontAwesome, sans-serif;
-      	background-image: none;
-      	transition: 20ms;
-      }
-      window {
-      	background-color: rgba(12, 12, 12, 0.1);
-      }
-      button {
-      	color: #${config.lib.stylix.colors.base05};
-        font-size:20px;
-        background-repeat: no-repeat;
-      	background-position: center;
-      	background-size: 25%;
-      	border-style: solid;
-      	background-color: rgba(12, 12, 12, 0.3);
-      	border: 3px solid #${config.lib.stylix.colors.base05};
-      }
-      button:focus,
-      button:active,
-      button:hover {
-        color: #${config.lib.stylix.colors.base0B};
-        background-color: rgba(12, 12, 12, 0.5);
-        border: 3px solid #${config.lib.stylix.colors.base0B};
-      }
-      #logout {
-      	margin: 10px;
-      	border-radius: 20px;
-      	background-image: image(url("icons/logout.png"));
-      }
-      #suspend {
-      	margin: 10px;
-      	border-radius: 20px;
-      	background-image: image(url("icons/suspend.png"));
-      }
-      #shutdown {
-      	margin: 10px;
-      	border-radius: 20px;
-      	background-image: image(url("icons/shutdown.png"));
-      }
-      #reboot {
-      	margin: 10px;
-      	border-radius: 20px;
-      	background-image: image(url("icons/reboot.png"));
-      }
+          /* Import the base wlogout styles */
+      @import "${flavour}.css";
       #lock {
-      	margin: 10px;
-      	border-radius: 20px;
-      	background-image: image(url("icons/lock.png"));
+          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/lock.svg");
       }
+
+      #logout {
+          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/logout.svg");
+      }
+
+      #suspend {
+          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/suspend.svg");
+      }
+
       #hibernate {
-      	margin: 10px;
-      	border-radius: 20px;
-      	background-image: image(url("icons/hibernate.png"));
+          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/hibernate.svg");
+      }
+
+      #shutdown {
+          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/shutdown.svg");
+      }
+
+      #reboot {
+          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/reboot.svg");
       }
     '';
+  };
+  home.file.".config/wlogout/${flavour}.css" = {
+    source = ./themes/${theme}/${flavour}.css;
+    recursive = true;
   };
   home.file.".config/wlogout/icons" = {
     source = ./icons;
