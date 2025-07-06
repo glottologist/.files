@@ -42,7 +42,6 @@
     maestral-gui
     maestral
     xivlauncher
-    syncthingtray-minimal
   ];
 
   imports = [
