@@ -14,6 +14,7 @@
   ];
 
   home.packages = with pkgs; [
+  windsurf
     nvim-flake.packages.${system}.developer
     devbox # Dev envs
     difftastic # A syntax-aware diff
