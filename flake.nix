@@ -7,6 +7,7 @@
     nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix/release-25.05";
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.05";
+    nvim-flake.url = "github:glottologist/nvim-flake";
     home-manager = {
       url = "github:glottologist/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +34,7 @@
     hyprland,
     agenix,
     foundry,
+    nvim-flake,
     nix,
     ...
   } @ inputs: let
@@ -51,6 +53,7 @@
           username = "glottologist";
         };
         modules = [
+          {_module.args = {inherit nvim-flake;};}
           stylix.homeModules.stylix
           ./homes/glottologist
         ];
@@ -61,6 +64,7 @@
           username = "jason";
         };
         modules = [
+          {_module.args = {inherit nvim-flake;};}
           stylix.homeModules.stylix
           ./homes/jason.nix
         ];
