@@ -14,16 +14,18 @@
   ];
 
   home.packages = with pkgs; [
-  windsurf
-    nvim-flake.packages.${system}.developer
     devbox # Dev envs
     difftastic # A syntax-aware diff
     earthly # Build automation for the container era
     helix # A post-modern modal text editor
     jupyter # The Jupyter HTML notebook is a web-based notebook environment for interactive computing
+    leetcode-cli #A command-line tool for LeetCode
+    leetgo #A command-line tool for LeetCode
     logkeys # A GNU/Linux keylogger that works!
     netlify-cli # CLI to manage netlify deployments
     newman # A command line runner for Postman
+    nvim-flake.packages.${system}.developer
+    opencommit #AI-powered commit message generator
     poedit # Cross-platform gettext catalogs (.po files) editor
     remarshal # Convert between TOML, YAML and JSON
     rpi-imager # Raspberry Pi Imaging Utility
@@ -33,7 +35,7 @@
     usbutils # USb Utlities
     wakatime # Wakatime dev stats command line
     watchexec # Universal watcher
-    opencommit #AI-powered commit message generator
+    windsurf
   ];
 
   programs = {

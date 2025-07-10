@@ -10,7 +10,7 @@
     window-theme = light
     window-height = 32
     window-width = 110
-    background-opacity = 0.95
+    background-opacity = 0.99
     background-blur-radius = 60
     selection-background = #2d3f76
     selection-foreground = #c8d3f5
@@ -73,7 +73,7 @@
     shell-integration = detect
     window-save-state = always
     gtk-single-instance = true
-    unfocused-split-opacity = 0.5
+    unfocused-split-opacity = 0.8
     quick-terminal-position = center
     shell-integration-features = cursor,sudo
   '';
