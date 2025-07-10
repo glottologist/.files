@@ -10,5 +10,8 @@
     coreutils
     cmake
     gnumake
+    bruno
+    insomnia
+    websocat
   ];
 }
