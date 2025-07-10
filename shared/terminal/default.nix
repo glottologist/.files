@@ -31,6 +31,7 @@
     termdown # Command line timer
     tldr # Community driven manpages
     tmate # Instant terminal sharing
+    neofetch # Collect system settings
     wayshot # A native, blazing-fast screenshot tool for wlroots based compositors such as sway and river
   ];
 

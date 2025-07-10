@@ -16,5 +16,6 @@
     woeusb # Create bootable USB diskc from Windows ISO images
     #woeusb-ng   # Create bootable USB diskc from Windows ISO images
     zip # Compression utils
+    dysk #Disk space until
   ];
 }
