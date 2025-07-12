@@ -119,6 +119,7 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
+    fastfetch.enable = true; # aria2 is a lightweight multi-protocol & multi-source command-line download utility.
     fzf = {
       # A command line fuzzy finder
       enable = true;
