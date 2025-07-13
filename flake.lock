@@ -2075,11 +2075,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1752153521,
-        "narHash": "sha256-WtPDwU8nfAOm6WvIh8jpfdl1QLo8a1CPwupKObRYA9I=",
+        "lastModified": 1752392691,
+        "narHash": "sha256-5PtX9h2gJeZcc8p8+6fdacrVfRcO98A1H4Qd0MWLRtA=",
         "owner": "glottologist",
         "repo": "nvim-flake",
-        "rev": "a2211f89994c94f56d381fde20cb6e0946db3424",
+        "rev": "26dd3c418599981f98e7ae79504ba8e9b5802b2f",
         "type": "github"
       },
       "original": {
@@ -2462,11 +2462,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1752251601,
-        "narHash": "sha256-QnhCeqR9DTYWu5ZN+WfVJcfDy8efeVODjUreRldj4oU=",
+        "lastModified": 1752373703,
+        "narHash": "sha256-kJEYMaZYMBDDjUBLwI4u+OEwRwYaumKjrhCVFu2zfMs=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "4d5e38f041f70725b1ef47b704f7a1944783001f",
+        "rev": "8d803bb9de0a762299142ffbe6c969c904f70b92",
         "type": "github"
       },
       "original": {

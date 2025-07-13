@@ -14,7 +14,6 @@ in {
     anki # Spaced repitition flashcards
     bookworm # A simple, focused eBook reader
     epr # CLI Epub reader
-    exercism # A Go based command line tool for exercism.io
     gotypist # A touch-typing tutor
     gtypist # Universal typing tutorial
     koreader # An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats, running on Cervantes, Kindle, Kobo, PocketBook and Android devices
