@@ -2075,11 +2075,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1752392691,
-        "narHash": "sha256-5PtX9h2gJeZcc8p8+6fdacrVfRcO98A1H4Qd0MWLRtA=",
+        "lastModified": 1752394262,
+        "narHash": "sha256-9X9pW+ClSZYTTQ+jTGsdtCvad/fypqqT3222AQ9fdLA=",
         "owner": "glottologist",
         "repo": "nvim-flake",
-        "rev": "26dd3c418599981f98e7ae79504ba8e9b5802b2f",
+        "rev": "7d2c42e4dc5e515d89e8f24f9d1caf36c1da6984",
         "type": "github"
       },
       "original": {
