@@ -33,7 +33,7 @@
   #waybarChoice = ../../modules/home/waybar/Jerry-waybar.nix;
   #waybarChoice = ../../modules/home/waybar/waybar-ddubs.nix;
   #waybarChoice = ../../shared/wm/waybar/waybar-ddubs-2.nix;
-  waybarChoice = ../../shared/wm/waybar/waybar-glottologist.nix;
+  waybarChoice = ../../shared/wm/waybar/waybar-glottologist2.nix;
 
   # Set Animation style
   # Available options are:
