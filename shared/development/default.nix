@@ -26,7 +26,7 @@
     logkeys # A GNU/Linux keylogger that works!
     netlify-cli # CLI to manage netlify deployments
     newman # A command line runner for Postman
-    nvim-flake.packages.${system}.developer
+    #nvim-flake.packages.${system}.developer
     opencommit #AI-powered commit message generator
     poedit # Cross-platform gettext catalogs (.po files) editor
     remarshal # Convert between TOML, YAML and JSON
