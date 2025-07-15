@@ -813,11 +813,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752311419,
-        "narHash": "sha256-2OY4KND3B32yLV1WIPyqaJIQfXljAORw+6QnJWuUUsI=",
+        "lastModified": 1752484433,
+        "narHash": "sha256-AyI0gstFqt9IMnAPKKPbwpGbDJ6ogxOpoyI6wmJjulw=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "074d939e9fa32ed64def13bc64372a2ec5be8779",
+        "rev": "cc93a25d24d8d72f36e6797566755c51d1e28fc4",
         "type": "github"
       },
       "original": {
@@ -1036,11 +1036,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749154018,
-        "narHash": "sha256-gjN3j7joRvT3a8Zgcylnd4NFsnXeDBumqiu4HmY1RIg=",
+        "lastModified": 1752544374,
+        "narHash": "sha256-ReX0NG6nIAEtQQjLqeu1vUU2jjZuMlpymNtb4VQYeus=",
         "owner": "glottologist",
         "repo": "home-manager",
-        "rev": "7aae0ee71a17b19708b93b3ed448a1a0952bf111",
+        "rev": "2e00ed310c218127e02ffcf28ddd4e0f669fde3e",
         "type": "github"
       },
       "original": {
@@ -1140,11 +1140,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1752337367,
-        "narHash": "sha256-kEumflYEdQSrZZQEr7kik2sBfFohEx0TsJB1rBVAQy4=",
+        "lastModified": 1752526483,
+        "narHash": "sha256-XbCDmM9uL5i88gPNcY+gU5JTWogFeNogxb+x09UWaH4=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "d0f58baf296a2cdd5df0f82212fe17dfbef8438e",
+        "rev": "bc764f7065c8e46b4e62cbb511b419034712c509",
         "type": "github"
       },
       "original": {
@@ -1593,11 +1593,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1752306459,
-        "narHash": "sha256-asBUtSonedNfMO0/Z6HUi8RK/y/7I1qBDHv2UryichA=",
+        "lastModified": 1752486690,
+        "narHash": "sha256-EHjCvgRYF7o+MG0SsFI3rEo6fEnMSLivOjPennuR9aQ=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "b124512388378cd38c4e353ddb387905d296e877",
+        "rev": "e8314e69ab481c2023034006d3d2366cf9325c1a",
         "type": "github"
       },
       "original": {
@@ -1690,11 +1690,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1750755059,
-        "narHash": "sha256-UtX7SRQRyIYqsqUsg9udw8jWlZ3JiU9Da4bwHXjvoA8=",
+        "lastModified": 1752567604,
+        "narHash": "sha256-YbmkFuRBNdMq1x/IwGa4Kvq3IU2WvmEoDxXi5bcW14Y=",
         "owner": "glottologist",
         "repo": "nixpkgs",
-        "rev": "a0a49943172dcd879bf66c23552b08629644d995",
+        "rev": "faa58b0701ca35b1e3508109a5c77eb6037262b8",
         "type": "github"
       },
       "original": {
@@ -1867,11 +1867,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1752180730,
-        "narHash": "sha256-aSmib/P5DWXrpOdwFOo+lxuupUlNTGUDsLVSxJwWfUg=",
+        "lastModified": 1752417534,
+        "narHash": "sha256-06CASFKAxc81QycTSsTw26EJOKi6VgMie6wp0ZUnvqE=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "8ea010d7e3bf00c2a1f24d52da88afaed87d96f5",
+        "rev": "5e2df2dd5b83c07bad3d5e17dc056b52541ecb9c",
         "type": "github"
       },
       "original": {
@@ -2076,7 +2076,7 @@
       },
       "locked": {
         "lastModified": 1752394262,
-        "narHash": "sha256-9X9pW+ClSZYTTQ+jTGsdtCvad/fypqqT3222AQ9fdLA=",
+        "narHash": "sha256-8fz012Lx9+vYVTFv9O+0yPrUbVtV145znRyStMXoLv4=",
         "owner": "glottologist",
         "repo": "nvim-flake",
         "rev": "7d2c42e4dc5e515d89e8f24f9d1caf36c1da6984",
@@ -2462,11 +2462,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1752373703,
-        "narHash": "sha256-kJEYMaZYMBDDjUBLwI4u+OEwRwYaumKjrhCVFu2zfMs=",
+        "lastModified": 1752531913,
+        "narHash": "sha256-5NCCOtkbNQEjXc7c+QO41p8etnIfCGQvmOC1SXBcNqQ=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "8d803bb9de0a762299142ffbe6c969c904f70b92",
+        "rev": "fd4572ba1673cc37a3cf96679bb3638d3d890a34",
         "type": "github"
       },
       "original": {
