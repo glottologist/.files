@@ -14,7 +14,10 @@
     #   enable = true;
     # };
     loader = {
-      systemd-boot.enable = lib.mkDefault true;
+      systemd-boot = {
+	  enable = lib.mkDefault true;
+	  configurationLimit = 2;
+	  };
       efi.canTouchEfiVariables = lib.mkDefault true;
       timeout = 0;
     };

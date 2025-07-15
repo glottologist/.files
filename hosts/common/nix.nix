@@ -20,8 +20,8 @@
     # Automate garbage collection
     gc = {
       automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 55d";
+      dates = "weekly";
+      options = "--delete-older-than 2d";
     };
 
     # Automatically optimise nix store
