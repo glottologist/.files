@@ -365,6 +365,13 @@ in {
       vnd = "nix run ~/development/glottologist/nvim-flake#developer";
       vndr = "nix run ~/development/glottologist/nvim-flake#developer -w ~/.vimlog";
       vnl = "nix run -I ~/development/glottologist/nvim-flake";
+      lv = "nix run ~/development/glottologist/lazyvim-flake#developer";
+      lvg = "nix run github:glottologist/lazyvim-flake";
+      lvgd = "nix run github:glottologist/lazyvim-flake#developer";
+      lvn = "nix run ~/development/glottologist/lazyvim-flake";
+      lvnd = "nix run ~/development/glottologist/lazyvim-flake#developer";
+      lvndr = "nix run ~/development/glottologist/lazyvim-flake#developer -w ~/.vimlog";
+      lvnl = "nix run -I ~/development/glottologist/lazyvim-flake";
       vpn = "nordvpn";
       vpnc = "nordvpn connect";
       vpnd = "nordvpn disconnect";

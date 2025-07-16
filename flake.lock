@@ -768,11 +768,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752570880,
-        "narHash": "sha256-6DHrXg9GAk3F7m+0e3G4cbpFgDVYsyAjJM4w2ykwKGc=",
+        "lastModified": 1752657157,
+        "narHash": "sha256-nutdwpDKZBUapOUNptlMSaoLUSDzSM4O/eyQkkErljA=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "a99079b9c29feb9f4c393a34ada01b517cc99a1e",
+        "rev": "baddc143ecf66b297fcf739d6fc44025e37cd36c",
         "type": "github"
       },
       "original": {
@@ -1079,11 +1079,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1752611080,
-        "narHash": "sha256-dHv7iufYA6Bd3JnF0An2biBCLXstSk5VB0ULgS50umE=",
+        "lastModified": 1752658422,
+        "narHash": "sha256-02Gwtihml2IY3l03sumRwuxJUzHe/fCe5DmkPNIZCSc=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "8453fbf4eb0af2e3265fd34a693b7d0e9167f4d2",
+        "rev": "c4a4c341568944bd4fb9cd503558b2de602c0213",
         "type": "github"
       },
       "original": {
@@ -1929,11 +1929,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1752656185,
-        "narHash": "sha256-aQAoOoG5knavL9vxEQftXB97yKGwAiV65uRstxnWa9g=",
+        "lastModified": 1752660957,
+        "narHash": "sha256-P5SyitQDMImmOPeZhGs6AqliXk1HsBNv6o95mmS7qSc=",
         "owner": "glottologist",
         "repo": "nvim-flake",
-        "rev": "28c4288f55928556ed8f3a2ee9e3591eb76d0c20",
+        "rev": "0608fd12a4be58edf107f36fb3c4a052620bf0c3",
         "type": "github"
       },
       "original": {

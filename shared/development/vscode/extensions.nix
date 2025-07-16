@@ -2,7 +2,7 @@
   extensions = [
     { name = "bash-ide-vscode";                publisher = "mads-hartmann";      version = "1.11.0";          sha256 = "1hq41fy2v1grjrw77mbs9k6ps6gncwlydm03ipawjnsinxc9rdkp"; }
     { name = "better-comments";                publisher = "aaron-bond";         version = "2.1.0";           sha256 = "0kmmk6bpsdrvbb7dqf0d3annpg41n9g6ljzc1dh0akjzpbchdcwp"; }
-    { name = "bracket-pair-colorizer-2";       publisher = "coenraads";          version = "0.2.2";           sha256 = "0nppgfbmw0d089rka9cqs3sbd5260dhhiipmjfga3nar9vp87slh"; }
+    #{ name = "bracket-pair-colorizer-2";       publisher = "coenraads";          version = "0.2.2";           sha256 = "0nppgfbmw0d089rka9cqs3sbd5260dhhiipmjfga3nar9vp87slh"; }
     { name = "clojure";                        publisher = "avli";               version = "0.13.1";          sha256 = "1qh17lp7xpc9ggf5awya9d65wxxmr0z1cbpb2w6i63w0118iggx8"; }
     { name = "elixir-ls";                      publisher = "jakebecker";         version = "0.9.0";           sha256 = "1qz8jxpzanaccd5v68z4v1344kw0iy671ksi1bmpyavinlxdkmr8"; }
     { name = "errorlens";                      publisher = "usernamehw";         version = "3.4.1";           sha256 = "0caxmf6v0s5kgp6cp3j1kk7slhspjv5kzhn4sq3miyl5jkrn95kx"; }
