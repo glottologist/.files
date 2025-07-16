@@ -10,6 +10,7 @@
         fontLigatures = true;
         lineNumbers = "relative";
       };
+      workbench.colorTheme = "Default Light Modern";
       rust-analyzer.procMacro.enable =  false;
       rust-client.disableRustup = true;
       explorer.confirmDelete = false;
