@@ -48,7 +48,11 @@
       auto-optimise-store = true;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = ["root" "jason"];
+      trusted-users = ["root" "jason" "glottologist"];
+
+      access-tokens = [
+       "github.com=${builtins.readFile ../../secrets/github-token}"
+     ];
 
       substituters = [
         "https://nix-community.cachix.org"
