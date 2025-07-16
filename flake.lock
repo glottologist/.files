@@ -1079,11 +1079,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1752658422,
-        "narHash": "sha256-02Gwtihml2IY3l03sumRwuxJUzHe/fCe5DmkPNIZCSc=",
+        "lastModified": 1752673871,
+        "narHash": "sha256-FGgy2m96csE/qxjGVsgsro4rDnhvcuV89yccatbRn4c=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "c4a4c341568944bd4fb9cd503558b2de602c0213",
+        "rev": "5349667992f5047be0c607468e8c0d74a5e7e00c",
         "type": "github"
       },
       "original": {
@@ -1478,11 +1478,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1752608143,
-        "narHash": "sha256-rIZTJ6gc2mXlCoXCLOyAQFW8HLktaVVz+uKdR0NWtsE=",
+        "lastModified": 1752670454,
+        "narHash": "sha256-aN8GPB3ho5sRPFUbEQAjgeMEa2iUBYQCB8Exd1zVQow=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "d7c340afbfda28806e9ac6b6264a2b598933c7c2",
+        "rev": "1272c4957f10bbb1228893fd0159201407b0f003",
         "type": "github"
       },
       "original": {
@@ -1749,11 +1749,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1752417534,
-        "narHash": "sha256-06CASFKAxc81QycTSsTw26EJOKi6VgMie6wp0ZUnvqE=",
+        "lastModified": 1752672660,
+        "narHash": "sha256-tuJDd2ZPvK+A1PmX0DdZgmxOHCePMkPNDCW+CMQGlic=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "5e2df2dd5b83c07bad3d5e17dc056b52541ecb9c",
+        "rev": "08bbe925325f4a1fc6f888212963e5588d8ed4eb",
         "type": "github"
       },
       "original": {
@@ -1930,7 +1930,7 @@
       },
       "locked": {
         "lastModified": 1752660957,
-        "narHash": "sha256-P5SyitQDMImmOPeZhGs6AqliXk1HsBNv6o95mmS7qSc=",
+        "narHash": "sha256-E5GTE68M6DuzHod+IgQ0wcivSVZ+X5uXzps9F/IjjoI=",
         "owner": "glottologist",
         "repo": "nvim-flake",
         "rev": "0608fd12a4be58edf107f36fb3c4a052620bf0c3",
@@ -2241,11 +2241,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1752629832,
-        "narHash": "sha256-Nxr6czAZIZSu8IR5b+d1fZxj5/d6hWNmPpX3eLvlfMs=",
+        "lastModified": 1752672274,
+        "narHash": "sha256-UpUSLSoH31iV2QttW3/BO2i+QZqcPMVVPZ+gNm/66O8=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "2e93f697edec6a127d872bfb63bcc765ee6e5d49",
+        "rev": "ab4ae25851db16a6abd4c8e08dd1afb49ec37944",
         "type": "github"
       },
       "original": {
