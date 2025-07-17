@@ -43,6 +43,8 @@ in
               active = " ";
               urgent = " ";
             };
+            "tooltip": true,
+            "tooltip-format": "Workspace {name}",
             on-scroll-up = "hyprctl dispatch workspace e+1";
             on-scroll-down = "hyprctl dispatch workspace e-1";
           };

@@ -8,6 +8,7 @@
     stylix.url = "github:danth/stylix/release-25.05";
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.05";
     nvim-flake.url = "github:glottologist/nvim-flake";
+    neovim-flake.url = "github:glottologist/neovim-flake";
     home-manager = {
       url = "github:glottologist/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,6 +37,7 @@
     agenix,
     foundry,
     nvim-flake,
+    neovim-flake,
     claude-code-nix,
     nix,
     ...
@@ -55,7 +57,7 @@
           username = "glottologist";
         };
         modules = [
-          {_module.args = {inherit nvim-flake claude-code-nix;};}
+          {_module.args = {inherit nvim-flake neovim-flake claude-code-nix;};}
           stylix.homeModules.stylix
           ./homes/glottologist
         ];
@@ -66,7 +68,7 @@
           username = "jason";
         };
         modules = [
-          {_module.args = {inherit nvim-flake claude-code-nix;};}
+          {_module.args = {inherit nvim-flake neovim-flake claude-code-nix;};}
           stylix.homeModules.stylix
           ./homes/jason.nix
         ];

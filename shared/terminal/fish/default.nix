@@ -20,8 +20,7 @@
     set -g theme_newline_cursor yes
     set -g theme_color_scheme catppuccin_latte
   '';
-
-  fishConfig =
+fishConfig =
     ''
       bind \t accept-autosuggestion
       set fish_greeting
@@ -365,13 +364,13 @@ in {
       vnd = "nix run ~/development/glottologist/nvim-flake#developer";
       vndr = "nix run ~/development/glottologist/nvim-flake#developer -w ~/.vimlog";
       vnl = "nix run -I ~/development/glottologist/nvim-flake";
-      lv = "nix run ~/development/glottologist/lazyvim-flake#developer";
-      lvg = "nix run github:glottologist/lazyvim-flake";
-      lvgd = "nix run github:glottologist/lazyvim-flake#developer";
-      lvn = "nix run ~/development/glottologist/lazyvim-flake";
-      lvnd = "nix run ~/development/glottologist/lazyvim-flake#developer";
-      lvndr = "nix run ~/development/glottologist/lazyvim-flake#developer -w ~/.vimlog";
-      lvnl = "nix run -I ~/development/glottologist/lazyvim-flake";
+      nv = "nix run ~/development/glottologist/neovim-flake#developer";
+      nvg = "nix run github:glottologist/neovim-flake";
+      nvgd = "nix run github:glottologist/neovim-flake#developer";
+      nvn = "nix run ~/development/glottologist/neovim-flake";
+      nvnd = "nix run ~/development/glottologist/neovim-flake#developer";
+      nvndr = "nix run ~/development/glottologist/neovim-flake#developer -w ~/.vimlog";
+      nvnl = "nix run -I ~/development/glottologist/neovim-flake";
       vpn = "nordvpn";
       vpnc = "nordvpn connect";
       vpnd = "nordvpn disconnect";
