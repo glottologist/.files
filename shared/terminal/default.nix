@@ -18,6 +18,7 @@
   home.packages = with pkgs; [
     atac #A simple API client (postman like) in your terminal
     eza # Command line file tree
+    fd # Alternative to find
     flameshot # Powerfull yet simple to use screenshot software
     grc # Colourizer
     hushboard # Mute your microphone while typing
