@@ -9,7 +9,7 @@
 
   # Program Options
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "ghostty"; # Set Default System Terminal
+  terminal = "kitty"; # Set Default System Terminal
   keyboardLayout = "gb";
   consoleKeyMap = "uk";
 
@@ -24,7 +24,7 @@
   printEnable = false;
 
   # Set Stylix Image
-  stylixImage = ../../wallpapers/Common/AnimeGirlNightSky.jpg;
+  stylixImage = ../../wallpapers/Common/glottologist.png;
 
   # Set Waybar
   # Available options:
