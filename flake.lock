@@ -2195,6 +2195,22 @@
         "type": "github"
       }
     },
+    "neogit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753093256,
+        "narHash": "sha256-bAOSLGO9D0NarX5xeP9IHUyn4qagkqyNjt1zcaHYcy4=",
+        "owner": "NeogitOrg",
+        "repo": "neogit",
+        "rev": "55410182748755baf5c3944c9825cd082644f1c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NeogitOrg",
+        "repo": "neogit",
+        "type": "github"
+      }
+    },
     "neotree": {
       "flake": false,
       "locked": {
@@ -2252,6 +2268,7 @@
         "mini-icons": "mini-icons",
         "mini-nvim": "mini-nvim",
         "modes-nvim": "modes-nvim",
+        "neogit": "neogit",
         "neotree": "neotree",
         "nil": "nil",
         "nixpkgs": "nixpkgs_5",
@@ -2264,6 +2281,7 @@
         "nvim-lspconfig": "nvim-lspconfig",
         "nvim-nio": "nvim-nio",
         "nvim-notify": "nvim-notify",
+        "nvim-spectre": "nvim-spectre",
         "nvim-spider": "nvim-spider",
         "nvim-treesitter": "nvim-treesitter",
         "nvim-treesitter-context": "nvim-treesitter-context",
@@ -2292,11 +2310,11 @@
         "zenmode": "zenmode"
       },
       "locked": {
-        "lastModified": 1753211275,
-        "narHash": "sha256-OIhp2/MU7YetXC3ZwRv1IBYhS/PGV++p7C3bTyf2iBU=",
+        "lastModified": 1753213741,
+        "narHash": "sha256-V4JPkhnsMszAmRwbHkx9NDnBzRKsGsD6PYXQOuPbBYA=",
         "owner": "glottologist",
         "repo": "neovim-flake",
-        "rev": "a9dae5083059a9a4239822a8c09a80354c9ba735",
+        "rev": "10ede0b85f3f8288710f83301e554ed889035e38",
         "type": "github"
       },
       "original": {
@@ -3104,6 +3122,22 @@
       "original": {
         "owner": "rcarriga",
         "repo": "nvim-notify",
+        "type": "github"
+      }
+    },
+    "nvim-spectre": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747104704,
+        "narHash": "sha256-WPEizIClDmseDEhomCasLx/zfAMT7lq7ZBnfc/a8CuA=",
+        "owner": "nvim-pack",
+        "repo": "nvim-spectre",
+        "rev": "72f56f7585903cd7bf92c665351aa585e150af0f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-pack",
+        "repo": "nvim-spectre",
         "type": "github"
       }
     },
