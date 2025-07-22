@@ -5,6 +5,7 @@
     ghc
     haskell-language-server # haskell IDE (ships with ghcide)
     haskellPackages.ihaskell
+    haskellPackages.haskell-debug-adapter
     hlint
     hpack
     ormolu

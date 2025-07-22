@@ -11,6 +11,7 @@
     ocaml-ng.ocamlPackages.odoc
     ocaml-ng.ocamlPackages.odoc
     ocaml-ng.ocamlPackages.utop
+    ocaml-ng.ocamlPackages.earlybird
     ocaml-top
     ocamlformat
   ];
