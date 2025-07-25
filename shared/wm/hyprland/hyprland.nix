@@ -12,6 +12,7 @@
     ;
 in {
   home.packages = with pkgs; [
+  hyprland-autoname-workspaces
     swww
     grim
     slurp
