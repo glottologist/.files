@@ -12,6 +12,7 @@
     gnumake
     bruno
     insomnia
+    openssl
     websocat
   ];
 }
