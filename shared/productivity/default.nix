@@ -19,6 +19,7 @@
     hydroxide # A third-party, open-source ProtonMail bridge
     inkscape-with-extensions # Vector graphics editor
     krita # A free and open source painting application
+    libreoffice # Office suite
     motrix # A full-featured download manager
     ntfy-sh # Send push notifications to your phone or desktop via PUT/POST
     #ntfy #A utility for sending notifications, on demand and when commands finish:with
