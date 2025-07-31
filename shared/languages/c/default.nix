@@ -6,6 +6,7 @@
     clang
     libclang
     gdb
+    gmp
     valgrind
   ];
 }
