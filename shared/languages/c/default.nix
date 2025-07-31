@@ -3,6 +3,8 @@
     stdenv
     gnumake
     ccls
+    clang
+    libclang
     gdb
     valgrind
   ];
