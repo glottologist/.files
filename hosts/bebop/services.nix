@@ -34,11 +34,11 @@ in {
     };
     dbus.enable = true;
     displayManager = {
-    sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
-    defaultSession = "hyprland";
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+      defaultSession = "hyprland";
     };
     #desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
@@ -72,6 +72,10 @@ in {
         variant = "";
       };
       videoDrivers = ["amdgpu"];
+      displayManager.sessionCommands = ''
+        eval $(gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
+        export SSH_AUTH_SOCK
+      '';
     };
     pipewire = {
       enable = true;

@@ -22,6 +22,7 @@ in {
     tuxtype # An educational typing tutor game starring Tmux
     typespeed # A curses based typing game
     obsidian # Powerful knowledge base that works on top of a local folder of plain text Markdown files
+    googleearth-pro # Globe viewer
   ];
 
   programs = {

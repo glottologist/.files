@@ -21,6 +21,7 @@
     gimp # Great Photo Editor
     git
     git-crypt
+    gnome-keyring
     greetd.tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
     htop # Simple Terminal Based System Monitor
     hyprpicker
