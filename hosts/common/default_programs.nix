@@ -60,7 +60,7 @@
   ];
 
   programs = {
-    ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+    ssh.askPassword = lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
     firefox.enable = true;
     fish.enable = true;
     gnupg.agent = {
