@@ -26,7 +26,10 @@
     maestral
     xivlauncher
   ];
-
+  # services.dropbox = {
+  #   enable = true;
+  #   path = "${config.home.homeDirectory}/Dropbox"; # Optional custom path
+  # };
   imports = [
   ];
 }

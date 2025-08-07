@@ -14,6 +14,7 @@
     ./nix.nix
     ./security.nix
     ./services.nix
+    ./storage.nix
     ./users.nix
     ./xdg.nix
     ../common/ai.nix
