@@ -4,6 +4,10 @@
   ...
 }: {
   home.packages = with pkgs; [
+    feh
+    gthumb
+    shotwell
+    xfce.ristretto
   ];
 
   xdg.dataFile."noahisla.png".source = ./noahisla.png;
