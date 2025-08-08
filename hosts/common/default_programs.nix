@@ -80,6 +80,9 @@
       plugins = with pkgs.xfce; [
         thunar-archive-plugin
         thunar-volman
+        thunar-dropbox-plugin
+        thunar-media-tags-plugin
+        thunar-archive-plugin
       ];
     };
   };
