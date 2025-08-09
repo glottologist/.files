@@ -11,7 +11,7 @@ in {
       "$modifier,K,exec,list-keybinds"
       "$modifier,D,exec,rofi-launcher"
       "$modifier SHIFT,W,exec,web-search"
-      "$modifier SHIFT,Q,exec,sleep 0.1 && wlogout --css ~/.config/wlogout/style.css"
+      "$modifier SHIFT,Q,exec,sleep 0.1 && wlogout"
       "$modifier SHIFT,L,exec,hyprlock"
       "$modifier ALT,W,exec,wallsetter"
       "$modifier SHIFT,N,exec,swaync-client -rs"

@@ -83,8 +83,8 @@ in
           };
           "network" = {
             format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-            format-ethernet = " {bandwidthDownBits}";
-            format-wifi = " {bandwidthDownBits}";
+            format-ethernet = "󰈀 {bandwidthDownBits}";
+            format-wifi = "{icon} {bandwidthDownBits}";
             format-disconnected = "󰤮";
             tooltip = false;
             on-click = "${terminal} -e speedtest";
@@ -103,18 +103,18 @@ in
           "pulseaudio" = {
             format = "{icon} {volume}% {format_source}";
             format-bluetooth = "{volume}% {icon} {format_source}";
-            format-bluetooth-muted = " {icon} {format_source}";
-            format-muted = " {format_source}";
-            format-source = " {volume}%";
-            format-source-muted = "";
+            format-bluetooth-muted = "󰂲 {icon} {format_source}";
+            format-muted = "󰝟 {format_source}";
+            format-source = "󰍬 {volume}%";
+            format-source-muted = "󰍭";
             format-icons = {
-              headphone = "";
-              hands-free = "";
-              headset = "";
-              phone = "";
-              portable = "";
-              car = "";
-              default = ["" "" ""];
+              headphone = "󰋋";
+              hands-free = "󰋎";
+              headset = "󰋎";
+              phone = "󰄜";
+              portable = "󰦧";
+              car = "󰄋";
+              default = ["󰕿" "󰖀" "󰕾"];
             };
             on-click = "pavucontrol";
           };
@@ -126,7 +126,6 @@ in
           "custom/startmenu" = {
             tooltip = false;
             format = "❄ ";
-            # exec = "rofi -show drun";
             on-click = "rofi -show drun";
           };
           "idle_inhibitor" = {
@@ -335,6 +334,7 @@ in
                   border-radius: 0px 15px 15px 0px;
                   margin: 2px 2px 2px 0px;
                   padding: 2px 20px;
+                  font-size: 20px;
                 }
                 #idle_inhibitor {
                   color: #${base09};
