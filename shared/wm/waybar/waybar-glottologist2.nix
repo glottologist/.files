@@ -43,9 +43,9 @@ in
           "hyprland/workspaces" = {
             format = "{name}";
             format-icons = {
-              default = " ";
-              active = " ";
-              urgent = " ";
+              default = "";
+              active = "";
+              urgent = "";
             };
             tooltip = true;
             tooltip-format = "Workspace {name}";
@@ -125,15 +125,15 @@ in
           };
           "custom/startmenu" = {
             tooltip = false;
-            format = " ";
+            format = "❄ ";
             # exec = "rofi -show drun";
             on-click = "rofi -show drun";
           };
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = " ";
-              deactivated = " ";
+              activated = "";
+              deactivated = "";
             };
             tooltip = "true";
           };

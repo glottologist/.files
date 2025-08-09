@@ -45,6 +45,7 @@
     ./scala
     ./solidity
     ./standardml
+    ./systemd
     ./terraform
     ./typescript
     ./typst

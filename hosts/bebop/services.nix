@@ -9,6 +9,10 @@
   inherit (import ./variables.nix) username;
   syncthingSecrets = import ../../secrets/syncthing.nix;
 in {
+  environment.systemPackages = with pkgs; [
+    systemdgenie
+    systemctl-tui
+  ];
   services = {
     syncthing = {
       enable = true;
