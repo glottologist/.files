@@ -24,11 +24,11 @@
   printEnable = false;
 
   # Set Stylix Image
-  stylixImage = ../../wallpapers/Common/${username}.png;
+  stylixImage = ../../wallpapers/Common/glottologist.png;
 
   # Set Waybar
   # Available options:
-  waybarChoice = ../../shared/wm/waybar/${username}.nix;
+  waybarChoice = ../../shared/wm/waybar/glottologist.nix;
 
   # Set Animation style
   # Available options are:
