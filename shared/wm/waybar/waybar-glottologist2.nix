@@ -93,7 +93,7 @@ in
           "custom/systemstats" = {
             format = "{}";
             interval = 5;
-            exec = "echo \"󰍛 $(free | awk '/Mem:/ {printf \"%.0f%%\", ($3/$2)*100}') | 󰻠 $(cat /proc/loadavg | awk '{printf \"%.1f\", $1}') | 󰋊 $(df -h / | awk 'NR==2 {print $5}')\"";
+            exec = "echo \"󰍛 $(free | awk '/Mem:/ {printf \"%.0f%%\", ($3/$2)*100}') | 󰻠 $(cat /proc/pressure/cpu | awk '/^some/ {print $2}'| cut -d= -f2) | 󰋊 $(df -h / | awk 'NR==2 {print $5}')\"";
             tooltip = true;
             on-click = "${terminal} -e btop & ${terminal} -e ncdu";
           };
