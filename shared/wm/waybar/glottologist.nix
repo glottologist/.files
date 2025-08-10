@@ -53,10 +53,7 @@ in
             on-scroll-down = "hyprctl dispatch workspace e-1";
           };
           "clock" = {
-            format = ''{:%H:%M}'';
-            /*
-            ''{: %I:%M %p}'';
-            */
+            format = '' {:%H:%M}'';
             tooltip = true;
             tooltip-format = "<big>{:%A, %d %B %Y }</big><tt><small>{calendar}</small></tt>";
           };
@@ -125,14 +122,14 @@ in
           };
           "custom/startmenu" = {
             tooltip = false;
-            format = "❄ ";
+            format = " ";
             on-click = "rofi -show drun";
           };
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = "";
-              deactivated = "";
+              activated = " ";
+              deactivated = " ";
             };
             tooltip = "true";
           };
