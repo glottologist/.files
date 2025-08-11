@@ -170,7 +170,7 @@ in
         ''
                 * {
                   font-size: 14px;
-                  font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
+                  font-family: "JetBrainsMono Nerd Font", "JetBrainsMono NF", "Font Awesome 6 Free", sans-serif;
                   font-weight: bold;
                 }
                 window#waybar {

@@ -9,7 +9,7 @@
 
   # Program Options
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "ghostty"; # Set Default System Terminal
+  terminal = "kitty"; # Set Default System Terminal
   keyboardLayout = "gb";
   consoleKeyMap = "uk";
 
@@ -31,11 +31,6 @@
   waybarChoice = ../../shared/wm/waybar/glottologist.nix;
 
   # Set Animation style
-  # Available options are:
-  # animations-def.nix  (default)
-  # animations-end4.nix (end-4 project)
-  # animations-dynamic.nix (ml4w project)
-  # animations-moving.nix (ml4w project)
   animChoice = ../../shared/wm/hyprland/animations-end4.nix;
 
   # Enable Thunar GUI File Manager

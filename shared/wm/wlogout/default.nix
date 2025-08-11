@@ -48,29 +48,30 @@ in {
     ];
     style = ''
           /* Import the base wlogout styles */
-      @import "${flavour}.css";
+      @import url("file://${config.home.homeDirectory}/.config/wlogout/${flavour}.css");
+      
       #lock {
-          background-image: url("icons/${theme}/${flavour}/lock.svg");
+          background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/lock.svg");
       }
 
       #logout {
-          background-image: url("icons/${theme}/${flavour}/logout.svg");
+          background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/logout.svg");
       }
 
       #suspend {
-          background-image: url("icons/${theme}/${flavour}/suspend.svg");
+          background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/suspend.svg");
       }
 
       #hibernate {
-          background-image: url("icons/${theme}/${flavour}/hibernate.svg");
+          background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/hibernate.svg");
       }
 
       #shutdown {
-          background-image: url("icons/${theme}/${flavour}/shutdown.svg");
+          background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/shutdown.svg");
       }
 
       #reboot {
-          background-image: url("icons/${theme}/${flavour}/reboot.svg");
+          background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/reboot.svg");
       }
     '';
   };
