@@ -1,0 +1,32 @@
+  @import "theme.css";
+
+  /* Icon definitions - using PNG for better compatibility */
+  #lock {
+      background-image: url("icons/lock.png");
+      background-size: 64px 64px;
+  }
+
+  #logout {
+      background-image: url("icons/logout.png");
+      background-size: 64px 64px;
+  }
+
+  #suspend {
+      background-image: url("icons/suspend.png");
+      background-size: 64px 64px;
+  }
+
+  #hibernate {
+      background-image: url("icons/hibernate.png");
+      background-size: 64px 64px;
+  }
+
+  #shutdown {
+      background-image: url("icons/shutdown.png");
+      background-size: 64px 64px;
+  }
+
+  #reboot {
+      background-image: url("icons/reboot.png");
+      background-size: 64px 64px;
+  }

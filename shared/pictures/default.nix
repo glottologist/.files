@@ -8,6 +8,8 @@
     gthumb
     shotwell
     xfce.ristretto
+    imagemagick
+
   ];
 
   xdg.dataFile."noahisla.png".source = ./noahisla.png;
