@@ -46,10 +46,15 @@ in {
         "keybind" = "h";
       }
     ];
-    style = ''
-          /* Import the base wlogout styles */
-      @import url("file://${config.home.homeDirectory}/.config/wlogout/${flavour}.css");
-      
+    style = "";
+  };
+  # Create main CSS file with theme and icon definitions
+  home.file.".config/wlogout/main.css" = {
+    text = ''
+      /* Import the base theme styles */
+      @import url("file://${config.home.homeDirectory}/.config/wlogout/theme.css");
+
+      /* Icon definitions */
       #lock {
           background-image: url("file://${config.home.homeDirectory}/.config/wlogout/icons/${theme}/${flavour}/lock.svg");
       }
@@ -75,10 +80,13 @@ in {
       }
     '';
   };
-  home.file.".config/wlogout/${flavour}.css" = {
+  
+  # Copy theme CSS file
+  home.file.".config/wlogout/theme.css" = {
     source = ./themes/${theme}/${flavour}.css;
-    recursive = true;
   };
+  
+  # Copy icon files
   home.file.".config/wlogout/icons" = {
     source = ./icons;
     recursive = true;
