@@ -118,7 +118,7 @@ in
           "custom/exit" = {
             tooltip = false;
             format = "⏻";
-            on-click = "sleep 0.1 && wlogout";
+            on-click = "sleep 0.1 && wlogout --css ~/.config/wlogout/main.css";
           };
           "custom/startmenu" = {
             tooltip = false;
