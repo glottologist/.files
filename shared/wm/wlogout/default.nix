@@ -46,40 +46,23 @@ in {
         "keybind" = "h";
       }
     ];
-    style = ''
-          /* Import the base wlogout styles */
-      @import "${flavour}.css";
-      #lock {
-          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/lock.svg");
-      }
-
-      #logout {
-          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/logout.svg");
-      }
-
-      #suspend {
-          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/suspend.svg");
-      }
-
-      #hibernate {
-          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/hibernate.svg");
-      }
-
-      #shutdown {
-          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/shutdown.svg");
-      }
-
-      #reboot {
-          background-image: url("/home/${username}/.config/wlogout/icons/${theme}/${flavour}/reboot.svg");
-      }
-    '';
+    style = "";
   };
-  home.file.".config/wlogout/${flavour}.css" = {
+  # Create main CSS file with theme and icon definitions
+  home.file.".config/wlogout/main.css" = {
+    source = ./theme.css;
+    recursive = true;
+  };
+
+  # Copy theme CSS file
+  home.file.".config/wlogout/theme.css" = {
     source = ./themes/${theme}/${flavour}.css;
     recursive = true;
   };
+
+  # Copy icon files
   home.file.".config/wlogout/icons" = {
-    source = ./icons;
+    source = ./icons/${theme}/${flavour};
     recursive = true;
   };
 }

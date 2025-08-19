@@ -43,9 +43,9 @@ in
           "hyprland/workspaces" = {
             format = "{name}";
             format-icons = {
-              default = " ";
-              active = " ";
-              urgent = " ";
+              default = "";
+              active = "";
+              urgent = "";
             };
             tooltip = true;
             tooltip-format = "Workspace {name}";
@@ -53,10 +53,7 @@ in
             on-scroll-down = "hyprctl dispatch workspace e-1";
           };
           "clock" = {
-            format = ''{:%H:%M}'';
-            /*
-            ''{: %I:%M %p}'';
-            */
+            format = '' {:%H:%M}'';
             tooltip = true;
             tooltip-format = "<big>{:%A, %d %B %Y }</big><tt><small>{calendar}</small></tt>";
           };
@@ -83,8 +80,8 @@ in
           };
           "network" = {
             format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-            format-ethernet = " {bandwidthDownBits}";
-            format-wifi = " {bandwidthDownBits}";
+            format-ethernet = "󰈀 {bandwidthDownBits}";
+            format-wifi = "{icon} {bandwidthDownBits}";
             format-disconnected = "󰤮";
             tooltip = false;
             on-click = "${terminal} -e speedtest";
@@ -93,7 +90,7 @@ in
           "custom/systemstats" = {
             format = "{}";
             interval = 5;
-            exec = "echo \"󰍛 $(free | awk '/Mem:/ {printf \"%.0f%%\", ($3/$2)*100}') | 󰻠 $(cat /proc/loadavg | awk '{printf \"%.1f\", $1}') | 󰋊 $(df -h / | awk 'NR==2 {print $5}')\"";
+            exec = "echo \"󰍛 $(free | awk '/Mem:/ {printf \"%.0f%%\", ($3/$2)*100}') | 󰻠 $(cat /proc/pressure/cpu | awk '/^some/ {print $2}'| cut -d= -f2) | 󰋊 $(df -h / | awk 'NR==2 {print $5}')\"";
             tooltip = true;
             on-click = "${terminal} -e btop & ${terminal} -e ncdu";
           };
@@ -103,37 +100,36 @@ in
           "pulseaudio" = {
             format = "{icon} {volume}% {format_source}";
             format-bluetooth = "{volume}% {icon} {format_source}";
-            format-bluetooth-muted = " {icon} {format_source}";
-            format-muted = " {format_source}";
-            format-source = " {volume}%";
-            format-source-muted = "";
+            format-bluetooth-muted = "󰂲 {icon} {format_source}";
+            format-muted = "󰝟 {format_source}";
+            format-source = "󰍬 {volume}%";
+            format-source-muted = "󰍭";
             format-icons = {
-              headphone = "";
-              hands-free = "";
-              headset = "";
-              phone = "";
-              portable = "";
-              car = "";
-              default = ["" "" ""];
+              headphone = "󰋋";
+              hands-free = "󰋎";
+              headset = "󰋎";
+              phone = "󰄜";
+              portable = "󰦧";
+              car = "󰄋";
+              default = ["󰕿" "󰖀" "󰕾"];
             };
             on-click = "pavucontrol";
           };
           "custom/exit" = {
             tooltip = false;
             format = "⏻";
-            on-click = "sleep 0.1 && wlogout";
+            on-click = "sleep 0.1 && wlogout --css ~/.config/wlogout/main.css";
           };
           "custom/startmenu" = {
             tooltip = false;
-            format = " ";
-            # exec = "rofi -show drun";
+            format = " ";
             on-click = "rofi -show drun";
           };
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = " ";
-              deactivated = " ";
+              activated = " ";
+              deactivated = " ";
             };
             tooltip = "true";
           };
@@ -174,7 +170,7 @@ in
         ''
                 * {
                   font-size: 14px;
-                  font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
+                  font-family: "JetBrainsMono Nerd Font", "JetBrainsMono NF", "Font Awesome 6 Free", sans-serif;
                   font-weight: bold;
                 }
                 window#waybar {
@@ -335,6 +331,7 @@ in
                   border-radius: 0px 15px 15px 0px;
                   margin: 2px 2px 2px 0px;
                   padding: 2px 20px;
+                  font-size: 20px;
                 }
                 #idle_inhibitor {
                   color: #${base09};

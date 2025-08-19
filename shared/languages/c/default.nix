@@ -3,10 +3,5 @@
     stdenv
     gnumake
     ccls
-    clang
-    libclang
-    gdb
-    gmp
-    valgrind
   ];
 }

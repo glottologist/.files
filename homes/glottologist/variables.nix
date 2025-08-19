@@ -9,7 +9,7 @@
 
   # Program Options
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "ghostty"; # Set Default System Terminal
+  terminal = "kitty"; # Set Default System Terminal
   keyboardLayout = "gb";
   consoleKeyMap = "uk";
 
@@ -28,19 +28,9 @@
 
   # Set Waybar
   # Available options:
-  #waybarChoice = ../../modules/home/waybar/Jerry-simple.nix;
-  #waybarChoice = ../../modules/home/waybar/Jerry-curved.nix;
-  #waybarChoice = ../../modules/home/waybar/Jerry-waybar.nix;
-  #waybarChoice = ../../modules/home/waybar/waybar-ddubs.nix;
-  #waybarChoice = ../../shared/wm/waybar/waybar-ddubs-2.nix;
-  waybarChoice = ../../shared/wm/waybar/waybar-glottologist2.nix;
+  waybarChoice = ../../shared/wm/waybar/glottologist.nix;
 
   # Set Animation style
-  # Available options are:
-  # animations-def.nix  (default)
-  # animations-end4.nix (end-4 project)
-  # animations-dynamic.nix (ml4w project)
-  # animations-moving.nix (ml4w project)
   animChoice = ../../shared/wm/hyprland/animations-end4.nix;
 
   # Enable Thunar GUI File Manager

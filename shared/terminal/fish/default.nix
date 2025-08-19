@@ -227,6 +227,7 @@ in {
       hm = "home-manager";
       hmrg = "home-manager expire-generations 'now'";
       hy = "history";
+      irys = "cd ~/development/irys";
       jjb = "jj bookmark";
       jjbla = "jj bookmark list --all";
       jjdg = "jj diff --git";

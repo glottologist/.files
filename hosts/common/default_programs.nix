@@ -5,6 +5,9 @@
   modulesPath,
   ...
 }: {
+# /etc/nixos/configuration.nix
+programs.nix-ld.enable = true;
+programs.nix-ld.libraries = with pkgs; [ zlib ];
   environment.systemPackages = with pkgs; [
     amfora # Fancy Terminal Browser For Gemini Protocol
     appimage-run # Needed For AppImage Support

@@ -3,6 +3,9 @@
   config,
   ...
 }: {
+home.packages =with pkgs; [
+rofi-systemd
+];
   programs = {
     rofi = {
       enable = true;
