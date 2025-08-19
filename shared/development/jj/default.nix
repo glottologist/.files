@@ -53,6 +53,7 @@
 
         push = "origin";
         push-bookmark-prefix = "moni/";
+        auto-local-bookmark = true;
       };
       signing = let
         gitCfg = config.programs.git.extraConfig;
