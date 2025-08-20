@@ -2290,11 +2290,11 @@
         "zenmode": "zenmode"
       },
       "locked": {
-        "lastModified": 1755690799,
-        "narHash": "sha256-BrMCYj84zYwwX4ygCr1Xcf1+lTp92LR3c7UDGLuOqBU=",
+        "lastModified": 1755691651,
+        "narHash": "sha256-PKlQiulCb1GFXn7r3WCuYS5JyQggBWppq2fgDGcMLWw=",
         "owner": "glottologist",
         "repo": "neovim-flake",
-        "rev": "f661fc0109d046a8ed638f32481502587c536118",
+        "rev": "8880912053b5b88e4edd4823a0585c19ff4c889f",
         "type": "github"
       },
       "original": {
