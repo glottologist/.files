@@ -205,6 +205,7 @@ in {
       gpt = "git push --tags";
       grba = "git rebase --abort";
       grbc = "git rebase --continue";
+      grbe = "git rebase --edit-todo";
       grbi = "git rebase -i";
       grbm = "git rebase main";
       grbms = "git rebase master";
