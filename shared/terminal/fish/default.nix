@@ -20,7 +20,7 @@
     set -g theme_newline_cursor yes
     set -g theme_color_scheme catppuccin_latte
   '';
-fishConfig =
+  fishConfig =
     ''
       bind \t accept-autosuggestion
       set fish_greeting
@@ -203,9 +203,12 @@ in {
       gpgtty = "export GPG_TTY=$(tty)";
       gps = "git push";
       gpt = "git push --tags";
+      grba = "git rebase --abort";
+      grbc = "git rebase --continue";
       grbi = "git rebase -i";
       grbm = "git rebase main";
       grbms = "git rebase master";
+      grbq = "git rebase --quit";
       grh = "git reset --hard HEAD~1";
       grm = "git reset --merge";
       grs = "git reset --soft HEAD~1";
@@ -391,4 +394,3 @@ in {
 
   xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
 }
-
