@@ -334,6 +334,7 @@ in {
       recr = "cd ~/development/glottologist/recruitment";
       ref = "cd ~/development/reference";
       rf = "rofi -show drun -show-icons";
+      rmrf = "rm -rf";
       rmcaps = "xmodmap -e 'remove lock = Caps_Lock' && xmodmap -e 'keysym Caps_Lock = Control space'";
       scr = "cd ~/development/scratch";
       setmtu = "sudo ip link set dev eth0 mtu 1350";
