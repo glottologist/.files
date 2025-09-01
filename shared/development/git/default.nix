@@ -19,12 +19,12 @@
     init.defaultBranch = "main";
     commit.gpgSign = lib.mkDefault true;
     gpg.program = "${config.programs.gpg.package}/bin/gpg2";
-      commit.verbose = true;
-      diff.algorithm = "histogram";
-      log.date = "iso";
-      column.ui = "auto";
-      branch.sort = "committerdate";
-      rerere.enabled = true;
+    commit.verbose = true;
+    diff.algorithm = "histogram";
+    log.date = "iso";
+    column.ui = "auto";
+    branch.sort = "committerdate";
+    rerere.enabled = true;
   };
 in {
   home.packages = with pkgs.gitAndTools; [
@@ -32,6 +32,13 @@ in {
     #diff-so-fancy # git diff with colors
     #commitizen #Tool to create committing rules for projects, auto bump versions, and generate changelogs
     #cz-cli #The commitizen command line utility
+    gita #Command-line tool to manage multiple git repos
+    gitui # Blazing fast terminal-ui for Git written in Rust
+    gitty # Contextual information about your git projects, right on the command-line
+    gitrs # Simple, opinionated, tool, written in Rust, for declaratively managing Git repos on your machine
+    gitnr # Create `.gitignore` files using one or more templates from TopTal, GitHub or your own collection
+    gitcs # Scan local git repositories and generate a visual contributions graph
+    git-cola # Git GUI
     gh # gh command line
     gist # upload code to gist
     git-crypt # git files encryption
