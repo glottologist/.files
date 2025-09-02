@@ -3,9 +3,9 @@
   config,
   ...
 }: {
-home.packages =with pkgs; [
-rofi-systemd
-];
+  home.packages = with pkgs; [
+    rofi-systemd
+  ];
   programs = {
     rofi = {
       enable = true;
@@ -60,7 +60,7 @@ rofi-systemd
         "imagebox" = {
           padding = mkLiteral "20px";
           background-color = mkLiteral "transparent";
-          background-image = mkLiteral ''url("~/Pictures/Common/City.jpg", height)'';
+          background-image = mkLiteral ''url("~/Pictures/Common/face.png", height)'';
           orientation = mkLiteral "vertical";
           children = map mkLiteral [
             "inputbar"

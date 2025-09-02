@@ -1,5 +1,6 @@
 {
   username = "glottologist";
+  wallpapers = "bing";
 
   # Hyprland Settings
   extraMonitorSettings = "monitor=Virtual-1,1920x1080@75,auto,1";
@@ -24,7 +25,7 @@
   printEnable = false;
 
   # Set Stylix Image
-  stylixImage = ../../wallpapers/Common/glottologist.png;
+  stylixImage = ../../secrets/wallpapers/Common/glottologist.png;
 
   # Set Waybar
   # Available options:

@@ -10,7 +10,7 @@
       };
       background = [
         {
-          path = "/home/${username}/Pictures/Common/beautifulmountainscape.jpg";
+          path = "/home/${username}/Pictures/Common/${username}.png";
           blur_passes = 3;
           blur_size = 8;
         }

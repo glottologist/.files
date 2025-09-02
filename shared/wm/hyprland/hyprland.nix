@@ -9,10 +9,11 @@
     extraMonitorSettings
     keyboardLayout
     stylixImage
+    wallpapers
     ;
 in {
   home.packages = with pkgs; [
-  hyprland-autoname-workspaces
+    hyprland-autoname-workspaces
     swww
     grim
     slurp
@@ -29,15 +30,15 @@ in {
   # Place Files Inside Home Directory
   home.file = {
     "Pictures/Wallpapers" = {
-      source = ../../../wallpapers/bebop;
+      source = ../../../secrets/wallpapers/${wallpapers};
       recursive = true;
     };
     "Pictures/Common" = {
-      source = ../../../wallpapers/common;
+      source = ../../../secrets/wallpapers/common;
       recursive = true;
     };
-    ".face.icon".source = ../../../wallpapers/common/face.png;
-    ".config/face.png".source = ../../../wallpapers/common/face.png;
+    ".face.icon".source = ../../../secrets/wallpapers/common/face.png;
+    ".config/face.png".source = ../../../secrets/wallpapers/common/face.png;
   };
   wayland.windowManager.hyprland = {
     enable = true;
