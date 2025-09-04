@@ -35,9 +35,7 @@ in {
     gita #Command-line tool to manage multiple git repos
     gitui # Blazing fast terminal-ui for Git written in Rust
     gitty # Contextual information about your git projects, right on the command-line
-    gitrs # Simple, opinionated, tool, written in Rust, for declaratively managing Git repos on your machine
     gitnr # Create `.gitignore` files using one or more templates from TopTal, GitHub or your own collection
-    gitcs # Scan local git repositories and generate a visual contributions graph
     git-cola # Git GUI
     gh # gh command line
     gist # upload code to gist

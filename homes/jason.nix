@@ -1,12 +1,10 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   username = "jason";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../secrets/anthropic-api-key.txt);
+  gitty_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../secrets/github_gitty_token);
 
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
@@ -73,6 +71,7 @@ in {
       BROWSER = "brave";
       TERMINAL = "foot";
       ANTHROPIC_API_KEY = anthropic_api_key;
+      GITTY_TOKENS = "github.com=${gitty_key}"
     };
     pointerCursor = {
       gtk.enable = true;
