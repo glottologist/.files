@@ -5,7 +5,7 @@
   modulesPath,
   ...
 }: {
-  time.timeZone = "Europe/London";
+  time.timeZone = "Europe/Istanbul";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
