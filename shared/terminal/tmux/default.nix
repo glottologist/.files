@@ -23,7 +23,7 @@
       ${pkgs.tmux}/bin/tmux new-session -d -s "$SESSION_NAME" -n "editor" -c "$WORKING_DIR"
 
       # Create additional windows, all in the current working directory
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:2" -n "claude" -c "$WORKING_DIR"
+      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:2" -n "assist" -c "$WORKING_DIR"
       ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:3" -n "watch" -c "$WORKING_DIR"
       ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:4" -n "terminal" -c "$WORKING_DIR"
       ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:5" -n "git" -c "$WORKING_DIR"
@@ -115,11 +115,16 @@ in {
       sysstat
       tpm
       tmux-menus
-      tmux-which-key
       {
         plugin = fingers;
         extraConfig = ''
           set -g @fingers-key F
+        '';
+      }
+      {
+        plugin = tmux-which-key;
+        extraConfig = ''
+          set -g @tmux-which-key-key 'k'
         '';
       }
       {
