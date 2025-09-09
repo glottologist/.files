@@ -232,7 +232,7 @@ in {
       hm = "home-manager";
       hmrg = "home-manager expire-generations 'now'";
       hy = "history";
-      irys = "cd ~/development/irys";
+      irys = "cd ~/development/irys/irys";
       jjb = "jj bookmark";
       jjbla = "jj bookmark list --all";
       jjdg = "jj diff --git";
@@ -299,7 +299,6 @@ in {
       ndi = "nix develop --impure";
       ne = "nix-env";
       news = "newsboat";
-      nill = "cd ~/development/nillion";
       notes = "cd ~/Documents/notes";
       npks = "cd ~/development/glottologist/nixpkgs";
       nr = "nix run";
@@ -399,7 +398,6 @@ in {
       tns = "export TERM=foot && tmux new-session -s ";
       tree = "exa -T";
       tsk = "cd ~/Documents/tasks && dstask sync && dstask";
-      tuk = "cd ~/development/tuktoken";
       unlock = "sudo cryptsetup luksOpen";
       v = "nix run ~/development/glottologist/nvim-flake#developer";
       vd = "vimdiff";
