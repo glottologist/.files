@@ -53,6 +53,7 @@ in {
     ../../shared/cloud/default.nix
     ../../shared/comics/default.nix
     ../../shared/communication/default.nix
+    ../../shared/dashboard/default.nix
     ../../shared/database/default.nix
     ../../shared/desktop/default.nix
     ../../shared/development/default.nix
