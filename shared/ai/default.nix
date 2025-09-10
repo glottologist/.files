@@ -17,6 +17,7 @@
   home.file.".claude/commands/explain.md".text = builtins.readFile ../../secrets/claude/commands/explain.md;
   home.file.".claude/commands/fix.md".text = builtins.readFile ../../secrets/claude/commands/fix.md;
   home.file.".claude/commands/pr.md".text = builtins.readFile ../../secrets/claude/commands/pr.md;
+  home.file.".claude/commands/pr_desc.md".text = builtins.readFile ../../secrets/claude/commands/pr_desc.md;
   home.file.".claude/commands/review.md".text = builtins.readFile ../../secrets/claude/commands/review.md;
   home.file.".claude/commands/staged.md".text = builtins.readFile ../../secrets/claude/commands/staged.md;
 }
