@@ -13,7 +13,6 @@
   terminal = "kitty"; # Set Default System Terminal
   keyboardLayout = "gb";
   consoleKeyMap = "uk";
-
   # For Nvidia Prime support
   intelID = "PCI:1:0:0";
   nvidiaID = "PCI:0:2:0";
