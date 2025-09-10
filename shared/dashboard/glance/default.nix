@@ -37,6 +37,24 @@ in {
                   type = "calendar";
                   first-day-of-week = "monday";
                 }
+                {
+                  type = "clock";
+                  hour-format = "24h";
+                  timezones = [
+                    {
+                      timezone = "Europe/London";
+                      label = "London";
+                    }
+                    {
+                      timezone = "America/New_York";
+                      label = "New York";
+                    }
+                    {
+                      timezone = "America/Los_Angeles";
+                      label = "Los Angeles";
+                    }
+                  ];
+                }
               ];
             }
             {
@@ -45,7 +63,7 @@ in {
                 {
                   type = "search";
                   autofocus = true;
-                  search-engine = "google";
+                  search-engine = "https://presearch.com/search?q={QUERY}";
                   new-tab = true;
                   bangs = [
                     {
@@ -70,6 +88,10 @@ in {
                   location = "${location}";
                   units = "metric";
                   hour-format = "24h";
+                  show-area-name = true;
+                }
+                {
+                  type = "to-do";
                 }
               ];
             }
@@ -105,14 +127,33 @@ in {
                   type = "group";
                   widgets = [
                     {type = "hacker-news";}
-                    {type = "lobsters";}
                   ];
                 }
                 {
                   type = "videos";
+                  style = "grid-cards";
+                  collapse-after-rows = 5;
                   channels = [
+                    "UCnLxFpGiCi-u3RLx9uF8bOg" # Russell Howard
+                    "UCjSEJkpGbcZhvo0lr-44X_w" # TechHut
+                    "UCOzMAa6IhV6uwYQATYG_2kg" # Novara Media
+                    "UCeFNDxd7NqmM6FkMQC-tgMw" # Kingsland Records
                     "UCXuqSBlHAE6Xw-yeJA0Tunw" # Linus Tech Tips
                     "UCR-DXc1voovS8nhAvccRZhg" # Jeff Geerling
+                    "UCGq-a57w-aPwyi3pW7XLiHw" # Diary of a CEO
+                    "UCsufaClk5if2RGqABb-09Uw" # The Rest Is Politics
+                    "UCg3hvCXDzFq6ZwSNcmZ62YA" # The Rest Is Politics : Leading
+                    "UC7IcJI8PUf5Z3zKxnZvTBog" # The School of Life
+                    "UCLksRXfBiEITZMUo2ssjSdA" # Rust Nation
+                    "UC9x0AN7BWHpCDHSm9NiJFJQ" # Network Chuck
+                    "UCPmfPl-BsCd3wmE8i45LAoA" # Simon Sinek
+                    "UC5Ghe5TBQGYIOANuiNW4hDQ" # Gary's Economics
+                    "UCwWhs_6x42TyRM4Wstoq8HA" # The Daily Show
+                    "UCYJpsKWYfZU8kOHZf_tUzQw" # The Rest Is Entertainment
+                    "UCWiiMnsnw5Isc2PP1to9nNw" # Unchained
+                    "UCUyeluBRhGPCW4rPe_UvBZQ" # The Primeagen
+                    "UC_iD0xppBwwsrM9DegC5cQQ" # Jon Gjengset
+                    "UCeRYN0tYBQVrC2cKsxJjdow" # Double Down News
                   ];
                 }
                 {
@@ -135,10 +176,22 @@ in {
           ];
         }
         {
-          name = "Development";
+          name = "Glottologist";
           hide-desktop-navigation = false;
           center-vertically = true;
           columns = [
+            {
+              size = "small";
+              widgets = [
+                {
+                  type = "releases";
+                  cache = "1d";
+                  repositories = [
+                    "glottologist/seedmixer"
+                  ];
+                }
+              ];
+            }
             {
               size = "full";
               widgets = [
@@ -162,13 +215,6 @@ in {
                   pull-requests-limit = 5;
                   issues-limit = 5;
                   commits-limit = 5;
-                }
-                {
-                  type = "releases";
-                  cache = "1d";
-                  repositories = [
-                    "glottologist/seedmixer"
-                  ];
                 }
               ];
             }
@@ -197,10 +243,11 @@ in {
           name = "Finance";
           columns = [
             {
-              size = "full";
+              size = "small";
               widgets = [
                 {
                   type = "markets";
+                  title = "Fiat";
                   markets = [
                     {
                       symbol = "^FTSE";
@@ -210,10 +257,13 @@ in {
                 }
                 {
                   type = "markets";
+                  title = "Crypto";
                   markets = [
                     {
-                      symbol = "BTC";
+                      symbol = "BTC-USD";
                       name = "Bitcoin (USD)";
+                      symbol-link = "https://www.tradingview.com/symbols/BTCUSD/news?exchange=COINBASE";
+                      chart-link = "https://www.tradingview.com/symbols/BTCUSD/chart?exchange=COINBASE";
                     }
                     {
                       symbol = "ETH";
@@ -222,6 +272,26 @@ in {
                     {
                       symbol = "SOL";
                       name = "Solana (USD)";
+                    }
+                  ];
+                }
+              ];
+            }
+            {
+              size = "full";
+              widgets = [
+                {
+                  type = "rss";
+                  title = "Financial News";
+                  style = "detailed-list";
+                  limit = 20;
+                  collapse-after = 10;
+                  cache = "2h";
+                  feeds = [
+                    {
+                      url = "https://feeds.bloomberg.com/markets/news.rss";
+                      title = "Bloomberg";
+                      limit = 10;
                     }
                   ];
                 }
