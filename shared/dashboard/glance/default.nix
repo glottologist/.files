@@ -17,14 +17,17 @@ in {
     enable = true;
     settings = {
       theme = {
-        background-color = lib.mkForce "239 241 245"; # Latte base
-        primary-color = lib.mkForce "30 102 245"; # Latte blue
-        positive-color = lib.mkForce "64 160 43"; # Latte green
-        negative-color = lib.mkForce "210 15 57"; # Latte red
+         light = lib.mkForce "true";
+        background-color = lib.mkForce "220 23 95"; # Latte base
+  contrast-multiplier = lib.mkForce "1.0";
+        primary-color = lib.mkForce "220 91 54"; # Latte blue
+        positive-color = lib.mkForce "109 58 40"; # Latte green
+        negative-color = lib.mkForce "347 87 44"; # Latte red
+
       };
       pages = [
         {
-          name = "Startpage";
+          name = "Start";
           width = "slim";
           hide-desktop-navigation = false;
           center-vertically = true;
@@ -35,9 +38,9 @@ in {
                 {
                   type = "repository";
                   repository = "Irys-xyz/irys";
-                  pull-requests-limit = 5;
-                  issues-limit = 3;
-                  commits-limit = 3;
+                  pull-requests-limit = 20;
+                  issues-limit = 10;
+                  commits-limit = 5;
                 }
               ];
             }
@@ -139,20 +142,40 @@ in {
                   symbol-link-template = "https://www.tradingview.com/symbols/{SYMBOL}/news";
                   markets = [
                     {
-                      symbol = "LTC-USD";
-                      name = "Litecoin";
+                      symbol = "UKX";
+                      name = "FTSE 100";
                     }
                     {
-                      symbol = "XRP-USD";
-                      name = "Ripple";
+                      symbol = "LUK2";
+                      name = "FTSE 100 Long 2x";
                     }
                     {
-                      symbol = "AAPL";
-                      name = "Apple";
+                      symbol = "SUK2";
+                      name = "FTSE 100 Short 2x";
                     }
                     {
-                      symbol = "MSFT";
-                      name = "Microsoft";
+                      symbol = "3UKL";
+                      name = "FTSE 100 Long 3x";
+                    }
+                    {
+                      symbol = "3UKS";
+                      name = "FTSE 100 Short 3x";
+                    }
+                    {
+                      symbol = "BTCUSD";
+                      name = "Bitcoin (USD)";
+                    }
+                    {
+                      symbol = "ETHUSD";
+                      name = "Ethereum (USD)";
+                    }
+                    {
+                      symbol = "SOLUSD";
+                      name = "Solana (USD)";
+                    }
+                    {
+                      symbol = "NILUSD";
+                      name = "Nillio";
                     }
                   ];
                 }
