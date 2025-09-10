@@ -8,8 +8,6 @@
   host = "127.0.0.1";
   port = 1234;
   location = lib.strings.removeSuffix "\n" (builtins.readFile ../../../secrets/location.txt);
-  testnetHtml = builtins.readFile ../../../secrets/irys/testnet.html;
-  peersHtml = builtins.readFile ../../../secrets/irys/peers.html;
 in {
   home.packages = with pkgs; [
   ];
