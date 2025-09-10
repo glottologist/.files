@@ -166,9 +166,29 @@ in {
                     }
                     {
                       type = "reddit";
-                      subreddit = "selfhosted";
+                      subreddit = "Damnthatsinteresting";
                       show-thumbnails = true;
                     }
+                    {
+                      type = "reddit";
+                      subreddit = "europe";
+                      show-thumbnails = true;
+                    }
+                    {
+                      type = "reddit";
+                      subreddit = "mildlyinfuriating";
+                      show-thumbnails = true;
+                    }
+                    {
+                      type = "reddit";
+                      subreddit = " interestingasfuck";
+                      show-thumbnails = true;
+                    }
+
+
+
+                   
+
                   ];
                 }
               ];
