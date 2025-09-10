@@ -8,6 +8,8 @@
   host = "127.0.0.1";
   port = 1234;
   location = lib.strings.removeSuffix "\n" (builtins.readFile ../../../secrets/location.txt);
+  testnetHtml = builtins.readFile ../../../secrets/irys/testnet.html;
+  peersHtml = builtins.readFile ../../../secrets/irys/peers.html;
 in {
   home.packages = with pkgs; [
   ];
@@ -17,18 +19,16 @@ in {
     enable = true;
     settings = {
       theme = {
-         light = lib.mkForce "true";
+        light = lib.mkForce true;
         background-color = lib.mkForce "220 23 95"; # Latte base
-  contrast-multiplier = lib.mkForce "1.0";
+        contrast-multiplier = lib.mkForce 1.0;
         primary-color = lib.mkForce "220 91 54"; # Latte blue
         positive-color = lib.mkForce "109 58 40"; # Latte green
         negative-color = lib.mkForce "347 87 44"; # Latte red
-
       };
       pages = [
         {
-          name = "Start";
-          width = "slim";
+          name = "Home";
           hide-desktop-navigation = false;
           center-vertically = true;
           columns = [
@@ -36,11 +36,8 @@ in {
               size = "small";
               widgets = [
                 {
-                  type = "repository";
-                  repository = "Irys-xyz/irys";
-                  pull-requests-limit = 20;
-                  issues-limit = 10;
-                  commits-limit = 5;
+                  type = "calendar";
+                  first-day-of-week = "monday";
                 }
               ];
             }
@@ -67,18 +64,27 @@ in {
                 }
               ];
             }
-          ];
-        }
-        {
-          name = "Home";
-          columns = [
             {
               size = "small";
               widgets = [
                 {
-                  type = "calendar";
-                  first-day-of-week = "monday";
+                  type = "weather";
+                  location = "${location}";
+                  units = "metric";
+                  hour-format = "24h";
                 }
+              ];
+            }
+          ];
+        }
+        {
+          name = "Social";
+          hide-desktop-navigation = false;
+          center-vertically = true;
+          columns = [
+            {
+              size = "small";
+              widgets = [
                 {
                   type = "rss";
                   limit = 10;
@@ -128,64 +134,97 @@ in {
                 }
               ];
             }
+          ];
+        }
+        {
+          name = "Development";
+          hide-desktop-navigation = false;
+          center-vertically = true;
+          columns = [
             {
-              size = "small";
+              size = "full";
               widgets = [
                 {
-                  type = "weather";
-                  location = "London, Europe";
-                  units = "imperial";
-                  hour-format = "12h";
+                  type = "repository";
+                  repository = "glottologist/seedmixer";
+                  pull-requests-limit = 5;
+                  issues-limit = 5;
+                  commits-limit = 5;
                 }
                 {
-                  type = "markets";
-                  symbol-link-template = "https://www.tradingview.com/symbols/{SYMBOL}/news";
-                  markets = [
-                    {
-                      symbol = "UKX";
-                      name = "FTSE 100";
-                    }
-                    {
-                      symbol = "LUK2";
-                      name = "FTSE 100 Long 2x";
-                    }
-                    {
-                      symbol = "SUK2";
-                      name = "FTSE 100 Short 2x";
-                    }
-                    {
-                      symbol = "3UKL";
-                      name = "FTSE 100 Long 3x";
-                    }
-                    {
-                      symbol = "3UKS";
-                      name = "FTSE 100 Short 3x";
-                    }
-                    {
-                      symbol = "BTCUSD";
-                      name = "Bitcoin (USD)";
-                    }
-                    {
-                      symbol = "ETHUSD";
-                      name = "Ethereum (USD)";
-                    }
-                    {
-                      symbol = "SOLUSD";
-                      name = "Solana (USD)";
-                    }
-                    {
-                      symbol = "NILUSD";
-                      name = "Nillio";
-                    }
-                  ];
+                  type = "repository";
+                  repository = "glottologist/wisecrow";
+                  pull-requests-limit = 5;
+                  issues-limit = 5;
+                  commits-limit = 5;
+                }
+                {
+                  type = "repository";
+                  repository = "glottologist/towl";
+                  pull-requests-limit = 5;
+                  issues-limit = 5;
+                  commits-limit = 5;
                 }
                 {
                   type = "releases";
                   cache = "1d";
                   repositories = [
                     "glottologist/seedmixer"
-                    "glottologist/wisecrow"
-                    "glottologist/towl"
+                  ];
+                }
+              ];
+            }
+          ];
+        }
+        {
+          name = "Irys";
+          hide-desktop-navigation = false;
+          center-vertically = true;
+          columns = [
+            {
+              size = "full";
+              widgets = [
+                {
+                  type = "repository";
+                  repository = "Irys-xyz/irys";
+                  pull-requests-limit = 20;
+                  issues-limit = 10;
+                  commits-limit = 10;
+                }
+              ];
+            }
+          ];
+        }
+        {
+          name = "Finance";
+          columns = [
+            {
+              size = "full";
+              widgets = [
+                {
+                  type = "markets";
+                  markets = [
+                    {
+                      symbol = "^FTSE";
+                      name = "FTSE 100";
+                    }
+                  ];
+                }
+                {
+                  type = "markets";
+                  markets = [
+                    {
+                      symbol = "BTC";
+                      name = "Bitcoin (USD)";
+                    }
+                    {
+                      symbol = "ETH";
+                      name = "Ethereum (USD)";
+                    }
+                    {
+                      symbol = "SOL";
+                      name = "Solana (USD)";
+                    }
                   ];
                 }
               ];
