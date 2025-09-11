@@ -1,6 +1,6 @@
 {
   username = "glottologist";
-  wallpapers = "butterflys";
+  wallpapers = "bing";
 
   # Hyprland Settings
   extraMonitorSettings = "monitor=Virtual-1,1920x1080@75,auto,1";
