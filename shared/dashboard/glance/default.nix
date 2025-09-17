@@ -154,6 +154,7 @@ in {
                     "UCUyeluBRhGPCW4rPe_UvBZQ" # The Primeagen
                     "UC_iD0xppBwwsrM9DegC5cQQ" # Jon Gjengset
                     "UCeRYN0tYBQVrC2cKsxJjdow" # Double Down News
+                    "UCUBj_5pwQZaoXfBrEQQbADw" # Chase Hughes
                   ];
                 }
                 {
@@ -184,11 +185,6 @@ in {
                       subreddit = " interestingasfuck";
                       show-thumbnails = true;
                     }
-
-
-
-                   
-
                   ];
                 }
               ];
