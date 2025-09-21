@@ -5,9 +5,9 @@
   modulesPath,
   ...
 }: {
-# /etc/nixos/configuration.nix
-programs.nix-ld.enable = true;
-programs.nix-ld.libraries = with pkgs; [ zlib ];
+  # /etc/nixos/configuration.nix
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [zlib];
   environment.systemPackages = with pkgs; [
     amfora # Fancy Terminal Browser For Gemini Protocol
     appimage-run # Needed For AppImage Support
@@ -32,6 +32,9 @@ programs.nix-ld.libraries = with pkgs; [ zlib ];
     inxi
     jq
     kdePackages.kate
+    kdePackages.dolphin
+    kdePackages.kio-fuse
+    kdePackages.kio-extras
     killall
     libnotify
     libvirt
@@ -43,6 +46,7 @@ programs.nix-ld.libraries = with pkgs; [ zlib ];
     mpv
     ncdu
     neovim
+    nemo-with-extensions
     ninja
     nixfmt-rfc-style
     pavucontrol
