@@ -127,7 +127,7 @@ in {
       deu = "devenv update";
       dev = "cd ~/development";
       di = "docker images";
-      disk = "diskonaut /";
+      disk = "dua i /";
       dka = "docker kill (docker ps | awk '{print $1}' | grep -v CONTAINER)";
       doa = "./do apply";
       dob = "./do build";
@@ -225,6 +225,7 @@ in {
       gwm = "git worktree move";
       gwp = "git worktree prune";
       gwr = "git worktree remove";
+      gwrf = "git worktree remove --force";
       gwrp = "git worktree repair";
       gwu = "git worktree unlock";
       h = "history";
