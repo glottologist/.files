@@ -204,6 +204,7 @@ in {
       gpgtty = "export GPG_TTY=$(tty)";
       gps = "git push";
       gpt = "git push --tags";
+      gprw = "pr_worktree";
       grba = "git rebase --abort";
       grbc = "git rebase --continue";
       grbe = "git rebase --edit-todo";
@@ -228,6 +229,7 @@ in {
       gwrf = "git worktree remove --force";
       gwrp = "git worktree repair";
       gwu = "git worktree unlock";
+      gwtc = "git_worktree_create";
       h = "history";
       hg = "history | grep";
       hm = "home-manager";

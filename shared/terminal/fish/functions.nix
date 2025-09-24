@@ -14,4 +14,6 @@
   xdg.configFile."fish/functions/wifi_toggle.fish".source = ./functions/wifi_toggle.fish;
   xdg.configFile."fish/functions/rgmatch.fish".source = ./functions/rgmatch.fish;
   xdg.configFile."fish/functions/uz.fish".source = ./functions/uz.fish;
+  xdg.configFile."fish/functions/pr_worktree.fish".source = ./functions/pr_worktree.fish;
+  xdg.configFile."fish/functions/git_worktree_create.fish".source = ./functions/git_worktree_create.fish;
 }
