@@ -13,7 +13,6 @@
     ./vscode/default.nix
   ];
 
-  
   home.packages = with pkgs; [
     devbox # Dev envs
     difftastic # A syntax-aware diff
@@ -23,9 +22,11 @@
     helix # A post-modern modal text editor
     jupyter # The Jupyter HTML notebook is a web-based notebook environment for interactive computing
     (vimPlugins.LazyVim.overrideAttrs (old: {
-      installPhase = old.installPhase + ''
-        rm -f $out/LICENSE
-      '';
+      installPhase =
+        old.installPhase
+        + ''
+          rm -f $out/LICENSE
+        '';
     }))
     leetcode-cli #A command-line tool for LeetCode
     leetgo #A command-line tool for LeetCode
@@ -44,7 +45,9 @@
     usbutils # USb Utlities
     wakatime # Wakatime dev stats command line
     watchexec # Universal watcher
-    windsurf
+    windsurf # Agentic IDE powered by AI Flow paradigm
+    lftp # File transfer program supporting a number of network protocols
+    filezilla # Graphical FTP, FTPS and SFTP client
   ];
 
   programs = {
