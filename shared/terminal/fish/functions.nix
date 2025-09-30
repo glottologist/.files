@@ -16,4 +16,5 @@
   xdg.configFile."fish/functions/uz.fish".source = ./functions/uz.fish;
   xdg.configFile."fish/functions/pr_worktree.fish".source = ./functions/pr_worktree.fish;
   xdg.configFile."fish/functions/git_worktree_create.fish".source = ./functions/git_worktree_create.fish;
+  xdg.configFile."fish/functions/git_worktree_remove_matching.fish".source = ./functions/git_worktree_remove_matching.fish;
 }
