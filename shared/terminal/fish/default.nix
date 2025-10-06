@@ -221,11 +221,13 @@ in {
       gts = "cd $HOME/.config/tmux git pull && cd -";
       gus = "git submodule update --init --recursive";
       gwa = "git worktree add";
+      gwc = "git_worktree_create";
       gwl = "git worktree list";
       gwlk = "git worktree lock";
       gwm = "git worktree move";
       gwp = "git worktree prune";
       gwr = "git worktree remove";
+      gwpr = "pr_worktree";
       gwrf = "git worktree remove --force";
       gwrm = "git_worktree_remove_matching";
       gwrp = "git worktree repair";
