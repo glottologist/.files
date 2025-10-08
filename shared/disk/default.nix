@@ -5,6 +5,7 @@
 }: {
   home.packages = with pkgs; [
     dua # Tool to conveniently learn about the disk usage of directories
+    dupd # Deplicate File Finder
     dysk #Disk space until
     exfatprogs # Exfat utils that work wih gparted
     fuse3 # Fuse filesystems

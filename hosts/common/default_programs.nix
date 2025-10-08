@@ -12,6 +12,10 @@
     amfora # Fancy Terminal Browser For Gemini Protocol
     appimage-run # Needed For AppImage Support
     brave
+    tor # The Overlay Netwrok
+    tor-browser # TOR web browser
+    onionshare # Securely and anonymously send and receive files
+    onionshare-gui # GUI for Onionshare
     brightnessctl # For Screen Brightness Control
     cmatrix # Matrix Movie Effect In Terminal
     cowsay # Great Fun Terminal Program
