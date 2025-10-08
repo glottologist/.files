@@ -16,6 +16,7 @@
     protonvpn-gui # GUI client for ProtonVPN
     protonvpn-cli # CLI client for ProtonVPN
     pinentry-curses # GnuPG’s interface to passphrase input
+    twingate # Twingate Client
     vault # Hashicorp vault
     yubico-pam # Yubico PAM module
     yubico-piv-tool # Used for interacting with the Privilege and Identification Card (PIV) application on a YubiKey

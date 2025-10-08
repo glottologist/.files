@@ -14,6 +14,7 @@ in {
     systemctl-tui
   ];
   services = {
+    twingate.enable = true;
     syncthing = {
       enable = true;
       openDefaultPorts = true;
@@ -108,4 +109,8 @@ in {
     };
     syncthing.environment.STNODEFAULTFOLDER = "true";
   };
+    # Declaratively create /etc/twingate directory
+  systemd.tmpfiles.rules = [
+    "d /etc/twingate 0755 root root -"
+  ];
 }
