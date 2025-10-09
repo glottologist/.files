@@ -284,10 +284,14 @@ in {
                     {
                       symbol = "ETH";
                       name = "Ethereum (USD)";
+                      symbol-link = "https://www.tradingview.com/symbols/ETHUSD/news?exchange=COINBASE";
+                      chart-link = "https://www.tradingview.com/symbols/ETHUSD/chart?exchange=COINBASE";
                     }
                     {
                       symbol = "SOL";
                       name = "Solana (USD)";
+                      symbol-link = "https://www.tradingview.com/symbols/SOLUSD/news?exchange=COINBASE";
+                      chart-link = "https://www.tradingview.com/symbols/SOLUSD/chart?exchange=COINBASE";
                     }
                   ];
                 }
@@ -307,6 +311,21 @@ in {
                     {
                       url = "https://feeds.bloomberg.com/markets/news.rss";
                       title = "Bloomberg";
+                      limit = 10;
+                    }
+                    {
+                      url = "https://www.ft.com/rss/home";
+                      title = "FT";
+                      limit = 10;
+                    }
+                    {
+                      url = "https://seekingalpha.com/feed.xml";
+                      title = "Seeking Alpha";
+                      limit = 10;
+                    }
+                    {
+                      url = "https://www.fool.com/a/feeds/partner/googlechromefollow?apikey=5e092c1f-c5f9-4428-9219-908a47d2e2de";
+                      title = "The Motley Fool";
                       limit = 10;
                     }
                   ];
