@@ -11,8 +11,11 @@
   ];
 
   networking.firewall = {
+    enable = true;
     allowedTCPPorts = [17500];
     allowedUDPPorts = [17500];
+    # Allow Twingate connections (it needs outbound, which is allowed by default)
+    checkReversePath = false; # Disable reverse path filtering for VPN compatibility
   };
 
   systemd.user.services.dropbox = {

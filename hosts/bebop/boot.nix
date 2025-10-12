@@ -31,6 +31,10 @@
     };
     kernelModules = ["kvm-amd" "v4l2loopback"];
     kernelPackages = pkgs.linuxPackages_zen;
+    extraModprobeConfig = ''
+      # Fix MediaTek MT7925e wifi disconnection issues
+      options mt7925e disable_aspm=1
+    '';
     kernel.sysctl = {"vm.max_map_count" = 2147483642;};
     kernelParams = [
       "quiet"
