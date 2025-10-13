@@ -109,7 +109,7 @@ in {
     };
     syncthing.environment.STNODEFAULTFOLDER = "true";
   };
-    # Declaratively create /etc/twingate directory
+  # Declaratively create /etc/twingate directory
   systemd.tmpfiles.rules = [
     "d /etc/twingate 0755 root root -"
   ];
