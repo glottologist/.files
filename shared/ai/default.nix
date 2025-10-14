@@ -27,6 +27,7 @@
   home.file.".claude/commands/tests.md".text = builtins.readFile ../../secrets/claude/commands/tests.md;
   home.file.".claude/commands/tests_overlap.md".text = builtins.readFile ../../secrets/claude/commands/tests_overlap.md;
   home.file.".claude/commands/review.md".text = builtins.readFile ../../secrets/claude/commands/review.md;
+  home.file.".claude/commands/analyze.md".text = builtins.readFile ../../secrets/claude/commands/analyze.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
@@ -38,4 +39,5 @@
   home.file.".claude/agents/security-auditor.md".text = builtins.readFile ../../secrets/claude/agents/security-auditor.md;
   home.file.".claude/agents/test-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/test-analyzer.md;
   home.file.".claude/agents/test-strategist.md".text = builtins.readFile ../../secrets/claude/agents/test-strategist.md;
+  home.file.".claude/agents/super-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/super-analyzer.md;
 }
