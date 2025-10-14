@@ -108,6 +108,8 @@ in {
       clrp = "cabal repl";
       clt = "cabal test";
       cn = "cargo new";
+      cnt = "cargo nextest run --jobs 8";
+      cntr = "cargo nextest run --jobs 8 --retries 3";
       coin = "cointop";
       cprf = "cp -rf";
       cr = "cargo run";
