@@ -4,6 +4,7 @@
   ...
 }: {
   home.packages = with pkgs; [
+  cointop
   ];
   home.file.".seed_shares/c_4_of_5".text = builtins.readFile ../../secrets/seed_shares/g_4_of_5.json;
   home.file.".seed_shares/g_4_of_5".text = builtins.readFile ../../secrets/seed_shares/g_4_of_5.json;
