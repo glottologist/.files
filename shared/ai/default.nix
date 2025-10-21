@@ -40,4 +40,8 @@
   home.file.".claude/agents/test-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/test-analyzer.md;
   home.file.".claude/agents/test-strategist.md".text = builtins.readFile ../../secrets/claude/agents/test-strategist.md;
   home.file.".claude/agents/super-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/super-analyzer.md;
+
+  # SKILLS
+  home.file.".claude/skills/coding-skills/rust/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/SKILL.md;
+  home.file.".claude/skills/coding-skills/rust/guidelines.txt".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/guidelines.txt;
 }
