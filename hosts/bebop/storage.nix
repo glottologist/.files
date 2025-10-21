@@ -1,4 +1,3 @@
-
 {
   config,
   lib,
@@ -8,6 +7,7 @@
 }: {
   environment.systemPackages = with pkgs; [
     dropbox-cli # For command-line management
+    android-file-transfer # Alternative GUI tool
   ];
 
   networking.firewall = {
@@ -17,6 +17,9 @@
     # Allow Twingate connections (it needs outbound, which is allowed by default)
     checkReversePath = false; # Disable reverse path filtering for VPN compatibility
   };
+
+  services.udev.packages = [pkgs.libmtp];
+  services.gvfs.enable = true;
 
   systemd.user.services.dropbox = {
     description = "Dropbox";

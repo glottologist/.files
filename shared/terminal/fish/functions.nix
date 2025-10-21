@@ -13,8 +13,10 @@
   xdg.configFile."fish/functions/fish_greeting.fish".source = ./functions/fish_greeting.fish;
   xdg.configFile."fish/functions/git_worktree_create.fish".source = ./functions/git_worktree_create.fish;
   xdg.configFile."fish/functions/git_worktree_remove_matching.fish".source = ./functions/git_worktree_remove_matching.fish;
+  xdg.configFile."fish/functions/jj_track_bookmark.fish".source = ./functions/jj_track_bookmark.fish;
   xdg.configFile."fish/functions/pr_worktree.fish".source = ./functions/pr_worktree.fish;
   xdg.configFile."fish/functions/rgmatch.fish".source = ./functions/rgmatch.fish;
+  xdg.configFile."fish/functions/sync_directories.fish".source = ./functions/sync_directories.fish;
   xdg.configFile."fish/functions/uz.fish".source = ./functions/uz.fish;
   xdg.configFile."fish/functions/wifi_monitor.fish".source = ./functions/wifi_monitor.fish;
   xdg.configFile."fish/functions/wifi_toggle.fish".source = ./functions/wifi_toggle.fish;

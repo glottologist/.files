@@ -7,6 +7,8 @@
 }: {
   home.packages = with pkgs; [
     xivlauncher
+    jmtpfs
+    libmtp
   ];
   imports = [
   ];
