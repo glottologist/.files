@@ -43,5 +43,4 @@
 
   # SKILLS
   home.file.".claude/skills/coding-skills/rust/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/SKILL.md;
-  home.file.".claude/skills/coding-skills/rust/guidelines.txt".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/guidelines.txt;
 }
