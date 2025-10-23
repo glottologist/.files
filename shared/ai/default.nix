@@ -20,7 +20,7 @@
   home.file.".claude/commands/explain.md".text = builtins.readFile ../../secrets/claude/commands/explain.md;
   home.file.".claude/commands/fix.md".text = builtins.readFile ../../secrets/claude/commands/fix.md;
   #home.file.".claude/commands/pr.md".text = builtins.readFile ../../secrets/claude/commands/pr.md;
-  #home.file.".claude/commands/pr_desc.md".text = builtins.readFile ../../secrets/claude/commands/pr_desc.md;
+  home.file.".claude/commands/pr_desc.md".text = builtins.readFile ../../secrets/claude/commands/pr_desc.md;
   home.file.".claude/commands/refactor.md".text = builtins.readFile ../../secrets/claude/commands/refactor.md;
   #home.file.".claude/commands/staged.md".text = builtins.readFile ../../secrets/claude/commands/staged.md;
   home.file.".claude/commands/test_summary.md".text = builtins.readFile ../../secrets/claude/commands/test_summary.md;
