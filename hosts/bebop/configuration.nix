@@ -19,6 +19,7 @@
     ./xdg.nix
     ../common/ai.nix
     ../common/blockchain.nix
+    ../common/comics.nix
     ../common/communication.nix
     ../common/default_programs.nix
     ../common/development.nix

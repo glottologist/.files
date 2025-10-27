@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  username,
   ...
 }: {
   home.packages = with pkgs; [
@@ -12,5 +13,6 @@
     cbconvert-gui
     qcomicbook
     kcc
+    komga # Free and open source comics/mangas server
   ];
 }

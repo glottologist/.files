@@ -79,6 +79,9 @@
       "bebop" = nixosSystem {
         inherit pkgs;
         inherit system;
+        specialArgs = {
+          username = "glottologist";
+        };
         modules = [
           stylix.nixosModules.stylix
           ./hosts/bebop/configuration.nix
