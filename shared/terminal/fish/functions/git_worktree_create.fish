@@ -22,46 +22,60 @@ function git_worktree_create
 
     set -l created_branch 0
 
-    if git show-ref --verify --quiet "refs/heads/$branch_name"
-        # Local branch exists: just add the worktree
-        echo "Creating worktree for existing branch '$branch_name'..."
-        git worktree add "$worktree_path" "$branch_name"; or begin
-            echo "Failed to create worktree for branch '$branch_name'"
-            return 1
-        end
-    else if test -n "$start_point"
-        # No local branch; create new branch at start_point via worktree directly
+    if test -n "$start_point"
+        # Create new branch at start_point via worktree directly
         echo "Creating new branch '$branch_name' at '$start_point' in a worktree..."
+
+        # If local branch exists, delete it first
+        if git show-ref --verify --quiet "refs/heads/$branch_name"
+            echo "Removing existing local branch '$branch_name'..."
+            git branch -D "$branch_name" >/dev/null 2>&1
+        end
+
         git worktree add -b "$branch_name" "$worktree_path" "$start_point"; or begin
             echo "Failed to create worktree/branch '$branch_name' at '$start_point'"
             return 1
         end
         set created_branch 1
     else
-        # Try to base local branch on origin/$branch_name
-        echo "Branch '$branch_name' not local; checking remote 'origin/$branch_name'..."
+        # Always sync with remote to get fresh copy
+        echo "Checking remote 'origin/$branch_name'..."
         git ls-remote --exit-code --heads origin "$branch_name" >/dev/null; or begin
             echo "Remote branch 'origin/$branch_name' not found and no start_point provided."
             return 1
         end
 
-        echo "Fetching 'origin/$branch_name'..."
+        echo "Fetching latest 'origin/$branch_name'..."
         git fetch origin "$branch_name"; or begin
             echo "Failed to fetch 'origin/$branch_name'"
             return 1
         end
 
-        echo "Creating local tracking branch '$branch_name' from 'origin/$branch_name'..."
-        git branch --track "$branch_name" "origin/$branch_name"; or begin
-            echo "Failed to create local branch from origin/$branch_name"
-            return 1
+        # Check if local branch exists
+        if git show-ref --verify --quiet "refs/heads/$branch_name"
+            # Local branch exists: reset it to match remote (fresh copy)
+            echo "Resetting local branch '$branch_name' to match 'origin/$branch_name'..."
+            git branch -f "$branch_name" "origin/$branch_name"; or begin
+                echo "Failed to reset local branch to origin/$branch_name"
+                return 1
+            end
+        else
+            # Create new tracking branch
+            echo "Creating local tracking branch '$branch_name' from 'origin/$branch_name'..."
+            git branch --track "$branch_name" "origin/$branch_name"; or begin
+                echo "Failed to create local branch from origin/$branch_name"
+                return 1
+            end
+            set created_branch 1
         end
-        set created_branch 1
 
         echo "Creating worktree for branch '$branch_name'..."
         git worktree add "$worktree_path" "$branch_name"; or begin
-            echo "Failed to create worktree for branch '$branch_name'; cleaning up created branch..."
-            git branch -D "$branch_name" >/dev/null 2>&1
+            echo "Failed to create worktree for branch '$branch_name'"
+            if test $created_branch -eq 1
+                echo "Cleaning up created branch..."
+                git branch -D "$branch_name" >/dev/null 2>&1
+            end
             return 1
         end
     end
