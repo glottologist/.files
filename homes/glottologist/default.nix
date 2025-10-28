@@ -65,6 +65,7 @@ in {
     ../../shared/learning/default.nix
     ../../shared/media/default.nix
     ../../shared/network/default.nix
+    ../../shared/osint/default.nix
     ../../shared/pentesting/default.nix
     ../../shared/pictures/default.nix
     ../../shared/productivity/default.nix
