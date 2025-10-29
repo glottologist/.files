@@ -13,7 +13,7 @@
       url = "github:glottologist/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    claude-code-nix.url = "github:sadjow/claude-code-nix?rev=cd630019c910d622e739bb8768cc08115deae3fe";
+    claude-code-nix.url = "github:sadjow/claude-code-nix?rev=ae3b0a08c5dbdb24ac125477698e2eac95584c3c";
 
     nix = {
       url = "github:nixos/nix";
