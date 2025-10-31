@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  username,
   ...
 }: let
   whatpulse = pkgs.appimageTools.wrapType2 {
@@ -30,6 +31,8 @@ in {
       RestartSec = "5s";
     };
   };
+
+  users.users.${username}.extraGroups = ["input"];
 
   services = {
     udev = {
