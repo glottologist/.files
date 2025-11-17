@@ -1,0 +1,18 @@
+// Zenbones theme for Zellij
+// Equivalent to tmux zenbones.conf
+
+themes {
+    zenbones {
+        fg 136 80 125       // #88507D - Main text
+        bg 44 54 60         // #2C363C - Background
+        black 68 78 84      // #444E54 - Darker shade
+        red 189 70 63       // #BD463F - Red
+        green 103 122 68    // #677A44 - Green
+        yellow 177 122 70   // #B17A46 - Yellow/Gold
+        blue 87 119 135     // #577787 - Blue
+        magenta 136 80 125  // #88507D - Purple (primary accent)
+        cyan 94 135 135     // #5E8787 - Cyan
+        white 240 237 236   // #F0EDEC - Light text
+        orange 206 117 78   // #CE754E - Orange
+    }
+}

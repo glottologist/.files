@@ -1,0 +1,18 @@
+// Catppuccin Latte theme for Zellij
+// Equivalent to tmux latte.conf
+
+themes {
+    latte {
+        fg 76 79 105        // #4c4f69 - Text
+        bg 239 241 245      // #eff1f5 - Base
+        black 92 95 119     // #5c5f77 - Subtext0
+        red 210 15 57       // #d20f39 - Red
+        green 64 160 43     // #40a02b - Green
+        yellow 223 142 29   // #df8e1d - Yellow
+        blue 30 102 245     // #1e66f5 - Blue (primary accent)
+        magenta 234 118 203 // #ea76cb - Pink
+        cyan 4 165 229      // #04a5e5 - Sky
+        white 76 79 105     // #4c4f69 - Text
+        orange 254 100 11   // #fe640b - Peach
+    }
+}

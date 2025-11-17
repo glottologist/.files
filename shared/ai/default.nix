@@ -27,12 +27,14 @@
   #home.file.".claude/commands/tests.md".text = builtins.readFile ../../secrets/claude/commands/tests.md;
   home.file.".claude/commands/tests_overlap.md".text = builtins.readFile ../../secrets/claude/commands/tests_overlap.md;
   home.file.".claude/commands/review.md".text = builtins.readFile ../../secrets/claude/commands/review.md;
+  home.file.".claude/commands/review_strict.md".text = builtins.readFile ../../secrets/claude/commands/review_strict.md;
   home.file.".claude/commands/analyze.md".text = builtins.readFile ../../secrets/claude/commands/analyze.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
   home.file.".claude/agents/code-refactoring-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/code-refactoring-analyzer.md;
   home.file.".claude/agents/code-reviewer.md".text = builtins.readFile ../../secrets/claude/agents/code-reviewer.md;
+  home.file.".claude/agents/code-reviewer-strict.md".text = builtins.readFile ../../secrets/claude/agents/code-reviewer-strict.md;
   #home.file.".claude/agents/comment-optimizer.md".text = builtins.readFile ../../secrets/claude/agents/comment-optimizer.md;
   home.file.".claude/agents/documentation-generator.md".text = builtins.readFile ../../secrets/claude/agents/documentation-generator.md;
   home.file.".claude/agents/issue-fixer.md".text = builtins.readFile ../../secrets/claude/agents/issue-fixer.md;

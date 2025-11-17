@@ -9,6 +9,7 @@
     ./fastfetch/default.nix
     ./fish/default.nix
     ./foot/default.nix
+    ./zellij/default.nix
     ./kitty/default.nix
     ./ghostty/default.nix
     ./starship/default.nix
