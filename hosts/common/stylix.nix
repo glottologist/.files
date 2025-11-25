@@ -2,6 +2,7 @@
   # Styling Options
   stylix = {
     enable = true;
+    targets.qt.enable = false;
     image = ../../secrets/wallpapers/common/glottologist.png;
     base16Scheme = {
       base00 = "282936";

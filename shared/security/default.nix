@@ -14,7 +14,6 @@
     proton-pass # Desktop application for Proton Pass
     protonmail-desktop # Desktop application for Proton Mail
     protonvpn-gui # GUI client for ProtonVPN
-    protonvpn-cli # CLI client for ProtonVPN
     pinentry-curses # GnuPG’s interface to passphrase input
     twingate # Twingate Client
     vault # Hashicorp vault

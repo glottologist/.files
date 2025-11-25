@@ -6,7 +6,7 @@
   inputs = {
     nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix/release-25.05";
-    nixpkgs.url = "github:glottologist/nixpkgs/release-25.05";
+    nixpkgs.url = "github:glottologist/nixpkgs/release-25.11";
     nvim-flake.url = "github:glottologist/nvim-flake";
     neovim-flake.url = "github:glottologist/neovim-flake";
     home-manager = {

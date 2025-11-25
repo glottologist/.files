@@ -27,7 +27,7 @@
     rerere.enabled = true;
   };
 in {
-  home.packages = with pkgs.gitAndTools; [
+  home.packages = with pkgs; [
     act # run GH actions locally
     #diff-so-fancy # git diff with colors
     #commitizen #Tool to create committing rules for projects, auto bump versions, and generate changelogs

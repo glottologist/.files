@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-  erlang_27
-  erlang-ls
-  rebar3
+    erlang_27
+    erlang-language-platform
+    rebar3
   ];
 }
