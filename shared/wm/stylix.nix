@@ -34,7 +34,7 @@ in {
       rofi.enable = false;
       hyprland.enable = false;
       hyprlock.enable = false;
-      ghostty.enable = false;
+      ghostty.enable = true;
       foot.enable = false; # If you want to configure foot manually
       kitty.enable = false; # If you want to configure kitty manually
       vim.enable = false; # If you want to configure vim manually

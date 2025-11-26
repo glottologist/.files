@@ -5,7 +5,6 @@
   };
   home.file."./.config/ghostty/config".text = ''
 
-    theme = catppuccin-latte
     adjust-cell-height = 10%
     window-theme = light
     window-height = 32
