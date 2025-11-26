@@ -67,6 +67,8 @@ in {
       extraRules = ''
         # HiDock P1 - allow browser WebUSB access
         SUBSYSTEM=="usb", ATTR{idVendor}=="10d6", ATTR{idProduct}=="b00e", MODE="0666", GROUP="plugdev"
+        # HiDock P1 mini - allow browser WebUSB access
+        SUBSYSTEM=="usb", ATTR{idVendor}=="3887", ATTR{idProduct}=="2041", MODE="0666", GROUP="plugdev"
       '';
     };
   };
