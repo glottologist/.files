@@ -12,7 +12,7 @@ in {
   home.packages = with pkgs; [
     #toipe             # Trusty terminal typing tester
     anki # Spaced repitition flashcards
-    bookworm # A simple, focused eBook reader
+    #bookworm # A simple, focused eBook reader - marked as broken
     epr # CLI Epub reader
     gotypist # A touch-typing tutor
     gtypist # Universal typing tutorial

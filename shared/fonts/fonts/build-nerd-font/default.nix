@@ -13,7 +13,7 @@ fetchzip {
   url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v${nfversion}/${pzip}";
   postFetch = ''
     mkdir -p $out/share/fonts/${pname}
-    unzip -j $renamed -d $out/share/fonts/${pname}
+    unzip -j $renamed -d $out/share/fonts/${pname} -x LICENSE readme.md README.md
   '';
 
   sha256 = phash;

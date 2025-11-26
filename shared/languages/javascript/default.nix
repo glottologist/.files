@@ -4,7 +4,5 @@
     corepack
     mise
     nodejs-slim
-    pnpm
-    yarn
   ];
 }

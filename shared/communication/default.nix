@@ -14,9 +14,9 @@
     neomutt
     signal-desktop # signam messenger
     slack-term # Slack client for your term
-    tdesktop # Telegram Desktop messaging app
-    tuir # Command line reddit
-    turses # A twitter terminal client
+    telegram-desktop # Telegram Desktop messaging app
+    #tuir # Command line reddit - removed: incompatible with Python 3.13
+    #turses # A twitter terminal client - removed: incompatible with Python 3.13
   ];
   services = {
   kbfs.enable = true;

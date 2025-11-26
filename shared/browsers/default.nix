@@ -6,7 +6,7 @@
   home.packages = with pkgs; [
     google-chrome # Chrome browser
     qutebrowser # Keyboard-focused browser with a minimal GUI.
-    tor-browser-bundle-bin # Tor Browser Bundle built by torproject.org
+    tor-browser # Tor Browser Bundle built by torproject.org
   ];
 
   xdg.configFile."qutebrowser/config.py".text = builtins.readFile ../../secrets/qb_config.py;

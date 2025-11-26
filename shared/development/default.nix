@@ -43,7 +43,7 @@
     silver-searcher # Ack like searcher focused on code
     universal-ctags # A maintained ctags implementation
     usbutils # USb Utlities
-    wakatime # Wakatime dev stats command line
+    wakatime-cli # Wakatime dev stats command line
     watchexec # Universal watcher
     windsurf # Agentic IDE powered by AI Flow paradigm
     lftp # File transfer program supporting a number of network protocols
