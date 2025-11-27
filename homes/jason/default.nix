@@ -98,7 +98,7 @@ in {
       name = "Bibata-Modern-Ice";
       size = 22;
     };
-    stateVersion = "25.05";
+    stateVersion = "25.11";
   };
 
   # Make home manager news silent

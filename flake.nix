@@ -5,12 +5,12 @@
 
   inputs = {
     nvf.url = "github:notashelf/nvf";
-    stylix.url = "github:danth/stylix/release-25.05";
+    stylix.url = "github:danth/stylix/release-25.11";
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.11";
     nvim-flake.url = "github:glottologist/nvim-flake";
     neovim-flake.url = "github:glottologist/neovim-flake";
     home-manager = {
-      url = "github:glottologist/home-manager/release-25.05";
+      url = "github:glottologist/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code-nix.url = "github:sadjow/claude-code-nix?rev=ed2fdc7b4be393cbd16edc6e35e19dcce91ac380";
