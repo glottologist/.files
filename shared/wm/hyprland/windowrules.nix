@@ -21,7 +21,6 @@ in {
         "tag +im, class:^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$"
         "tag +im, class:^(teams-for-linux)$"
         "tag +games, class:^(gamescope)$"
-        "tag +games, class:^(steam_app_\d+)$"
         "tag +gamestore, class:^([Ss]team)$"
         "tag +gamestore, title:^([Ll]utris)$"
         "tag +gamestore, class:^(com.heroicgameslauncher.hgl)$"
