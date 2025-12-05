@@ -44,6 +44,10 @@
   home.file.".claude/agents/super-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/super-analyzer.md;
 
   # SKILLS
+  ## Rust
   home.file.".claude/skills/coding-skills/rust/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/SKILL.md;
   home.file.".claude/skills/coding-skills/rust/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/QUICK-REFERENCE.md;
+  ## Typescript
+  home.file.".claude/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/typescript/SKILL.md;
+  home.file.".claude/skills/coding-skills/typescript/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/typescript/QUICK-REFERENCE.md;
 }
