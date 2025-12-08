@@ -50,4 +50,19 @@
   ## Typescript
   home.file.".claude/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/typescript/SKILL.md;
   home.file.".claude/skills/coding-skills/typescript/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/typescript/QUICK-REFERENCE.md;
+  ## Python
+  home.file.".claude/skills/coding-skills/python/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/python/SKILL.md;
+  home.file.".claude/skills/coding-skills/python/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/python/QUICK-REFERENCE.md;
+  ## Haskell
+  home.file.".claude/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/haskell/SKILL.md;
+  home.file.".claude/skills/coding-skills/haskell/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/haskell/QUICK-REFERENCE.md;
+  ## OCaml
+  home.file.".claude/skills/coding-skills/ocaml/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/ocaml/SKILL.md;
+  home.file.".claude/skills/coding-skills/ocaml/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/ocaml/QUICK-REFERENCE.md;
+  ## Go
+  home.file.".claude/skills/coding-skills/go/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/go/SKILL.md;
+  home.file.".claude/skills/coding-skills/go/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/go/QUICK-REFERENCE.md;
+  ## Scala
+  home.file.".claude/skills/coding-skills/scala/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/scala/SKILL.md;
+  home.file.".claude/skills/coding-skills/scala/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/scala/QUICK-REFERENCE.md;
 }
