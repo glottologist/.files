@@ -29,13 +29,19 @@
       luks.devices."luks-82f26c36-a2bc-41a5-872c-20121af02fd2".device = "/dev/disk/by-uuid/82f26c36-a2bc-41a5-872c-20121af02fd2";
 
     };
-    kernelModules = ["kvm-amd" "v4l2loopback"];
+    kernelModules = ["kvm-amd" "v4l2loopback" "mt7921e"];
     kernelPackages = pkgs.linuxPackages_zen;
     extraModprobeConfig = ''
       # Fix MediaTek MT7925e wifi disconnection issues
       options mt7925e disable_aspm=1
+      # Fix MediaTek MT7922/MT7921 wifi disconnection issues
+      options mt7921e disable_aspm=1
     '';
-    kernel.sysctl = {"vm.max_map_count" = 2147483642;};
+    kernel.sysctl = {
+      "vm.max_map_count" = 2147483642;
+      "net.core.rmem_max" = 7500000;
+      "net.core.wmem_max" = 7500000;
+    };
     kernelParams = [
       "quiet"
       "splash"

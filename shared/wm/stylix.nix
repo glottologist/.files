@@ -35,11 +35,12 @@ in {
       hyprland.enable = false;
       hyprlock.enable = false;
       ghostty.enable = true;
-      foot.enable = false; # If you want to configure foot manually
-      kitty.enable = false; # If you want to configure kitty manually
-      vim.enable = false; # If you want to configure vim manually
-      vscode.enable = false; # If you want to configure vscode manually
+      foot.enable = false;
+      kitty.enable = false;
+      vim.enable = false;
+      vscode.enable = false;
       gtk.enable = false;
+      qt.enable = false;
     };
     fonts = {
       monospace = {
