@@ -14,8 +14,7 @@
     proton-pass # Desktop application for Proton Pass
     protonmail-desktop # Desktop application for Proton Mail
     protonvpn-gui # GUI client for ProtonVPN
-    pinentry-curses # GnuPG’s interface to passphrase input
-    twingate # Twingate Client
+    pinentry-curses # GnuPG's interface to passphrase input
     vault # Hashicorp vault
     yubico-pam # Yubico PAM module
     yubico-piv-tool # Used for interacting with the Privilege and Identification Card (PIV) application on a YubiKey

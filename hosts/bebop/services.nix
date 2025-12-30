@@ -14,7 +14,7 @@ in {
     systemctl-tui
   ];
   services = {
-    twingate.enable = true;
+    tailscale.enable = true;
     syncthing = {
       enable = true;
       openDefaultPorts = true;
@@ -28,11 +28,21 @@ in {
         };
         devices = {
           "CALYPSO" = {id = syncthingSecrets.CALYPSO_ID;};
+          "MARAUDER" = {id = syncthingSecrets.MARAUDER_ID;};
+          "RAPTOR" = {id = syncthingSecrets.RAPTOR_ID;};
         };
         folders = {
           "BEBOP" = {
             path = "/home/${username}/syncthing/BEBOP";
             devices = ["CALYPSO"];
+          };
+          "MARAUDER" = {
+            path = "/home/${username}/syncthing/MARAUDER";
+            devices = ["MARAUDER"];
+          };
+          "RAPTOR" = {
+            path = "/home/${username}/syncthing/RAPTOR";
+            devices = ["RAPTOR"];
           };
         };
       };
@@ -108,8 +118,4 @@ in {
     };
     syncthing.environment.STNODEFAULTFOLDER = "true";
   };
-  systemd.tmpfiles.rules = [
-    "d /etc/twingate 0755 root root -"
-    "d /run/twingate 0755 root root -"
-  ];
 }
