@@ -14,7 +14,11 @@ in {
     systemctl-tui
   ];
   services = {
-    tailscale.enable = true;
+    chrony.enable = true;
+    tailscale = {
+      enable = true;
+      extraUpFlags = ["--accept-routes"];
+    };
     syncthing = {
       enable = true;
       openDefaultPorts = true;

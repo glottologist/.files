@@ -43,6 +43,18 @@
   #home.file.".claude/agents/test-strategist.md".text = builtins.readFile ../../secrets/claude/agents/test-strategist.md;
   home.file.".claude/agents/super-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/super-analyzer.md;
 
+  # REFERENCES
+  home.file.".claude/references/error-handling.md".text = builtins.readFile ../../secrets/claude/references/error-handling.md;
+  home.file.".claude/references/idioms.md".text = builtins.readFile ../../secrets/claude/references/idioms.md;
+  home.file.".claude/references/performance.md".text = builtins.readFile ../../secrets/claude/references/performance.md;
+  home.file.".claude/references/unsafe-audit.md".text = builtins.readFile ../../secrets/claude/references/unsafe-audit.md;
+
+  # SCRIPTS
+  home.file.".claude/scripts/run_clippy.sh" = {
+    source = ../../secrets/claude/scripts/run_clippy.sh;
+    executable = true;
+  };
+
   # SKILLS
   ## Rust
   home.file.".claude/skills/coding-skills/rust/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/rust/SKILL.md;
