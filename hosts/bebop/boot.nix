@@ -51,6 +51,10 @@
       "rd.udev.log_level=3"
       "udev.log_priority=3"
       "pcie_aspm=off"
+      # AMD Strix Point GPU fixes
+      "amdgpu.sg_display=0"
+      "amdgpu.dcdebugmask=0x10"
+      "amdgpu.gpu_recovery=1"
     ];
     extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
     binfmt.registrations.appimage = {
