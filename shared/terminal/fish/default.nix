@@ -433,7 +433,6 @@ in {
       wipehelp = "lethe wipe --help";
       wipewith = "lethe wipe -s";
       wipezero = "lethe wipe -s zero";
-      wp = "export QT_QPA_PLATFORM=xcb; whatpulse";
     };
     shellInit = fishConfig;
   };

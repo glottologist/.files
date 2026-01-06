@@ -30,7 +30,7 @@
 
     };
     kernelModules = ["kvm-amd" "v4l2loopback" "mt7921e"];
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_6_12;
     extraModprobeConfig = ''
       # Fix MediaTek MT7925e wifi disconnection issues
       options mt7925e disable_aspm=1
