@@ -30,6 +30,7 @@
   home.file.".claude/commands/review.md".text = builtins.readFile ../../secrets/claude/commands/review.md;
   home.file.".claude/commands/review_strict.md".text = builtins.readFile ../../secrets/claude/commands/review_strict.md;
   home.file.".claude/commands/analyze.md".text = builtins.readFile ../../secrets/claude/commands/analyze.md;
+  home.file.".claude/commands/interview_scorecard.md".text = builtins.readFile ../../secrets/claude/commands/interview_scorecard.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
