@@ -10,6 +10,7 @@
   xdg.configFile."fish/functions/bluetooth_toggle.fish".source = ./functions/bluetooth_toggle.fish;
   xdg.configFile."fish/functions/check_airplane_mode.fish".source = ./functions/check_airplane_mode.fish;
   xdg.configFile."fish/functions/dunst_pause.fish".source = ./functions/dunst_pause.fish;
+  xdg.configFile."fish/functions/env2fish.fish".source = ./functions/env2fish.fish;
   xdg.configFile."fish/functions/fish_greeting.fish".source = ./functions/fish_greeting.fish;
   xdg.configFile."fish/functions/git_worktree_create.fish".source = ./functions/git_worktree_create.fish;
   xdg.configFile."fish/functions/git_worktree_remove_matching.fish".source = ./functions/git_worktree_remove_matching.fish;
