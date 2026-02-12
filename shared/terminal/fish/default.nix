@@ -95,6 +95,10 @@ in {
       bt = "bluetoothctl";
       btt = "bluetooth_toggle";
       c = "claude";
+      cm = "claude-monitor --plan max20";
+      cmd = "claude-monitor --plan max20 --view daily";
+      cmm = "claude-monitor --plan max20 --view monthly";
+      cms = "claude-monitor --plan max20 --view session";
       cb = "clear && cargo build";
       cbh = "cargo bench";
       cc = "cargo clean";
