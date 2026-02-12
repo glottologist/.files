@@ -9,6 +9,7 @@
     llm
     gorilla-cli
     claude-code-nix.packages.${system}.default
+    claude-monitor
   ];
   home.file.".claude/CLAUDE.md".text = builtins.readFile ../../secrets/claude/CLAUDE.md;
   # COMMANDS
@@ -31,6 +32,8 @@
   home.file.".claude/commands/review_strict.md".text = builtins.readFile ../../secrets/claude/commands/review_strict.md;
   home.file.".claude/commands/analyze.md".text = builtins.readFile ../../secrets/claude/commands/analyze.md;
   home.file.".claude/commands/interview_scorecard.md".text = builtins.readFile ../../secrets/claude/commands/interview_scorecard.md;
+  home.file.".claude/commands/plan.md".text = builtins.readFile ../../secrets/claude/commands/plan.md;
+  home.file.".claude/commands/build-fix.md".text = builtins.readFile ../../secrets/claude/commands/build-fix.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
@@ -44,16 +47,31 @@
   #home.file.".claude/agents/test-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/test-analyzer.md;
   #home.file.".claude/agents/test-strategist.md".text = builtins.readFile ../../secrets/claude/agents/test-strategist.md;
   home.file.".claude/agents/super-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/super-analyzer.md;
+  home.file.".claude/agents/planner.md".text = builtins.readFile ../../secrets/claude/agents/planner.md;
+  home.file.".claude/agents/build-error-resolver.md".text = builtins.readFile ../../secrets/claude/agents/build-error-resolver.md;
 
   # REFERENCES
   home.file.".claude/references/error-handling.md".text = builtins.readFile ../../secrets/claude/references/error-handling.md;
   home.file.".claude/references/idioms.md".text = builtins.readFile ../../secrets/claude/references/idioms.md;
   home.file.".claude/references/performance.md".text = builtins.readFile ../../secrets/claude/references/performance.md;
   home.file.".claude/references/unsafe-audit.md".text = builtins.readFile ../../secrets/claude/references/unsafe-audit.md;
+  home.file.".claude/references/conductor.md".text = builtins.readFile ../../secrets/claude/references/conductor.md;
 
   # SCRIPTS
   home.file.".claude/scripts/run_clippy.sh" = {
     source = ../../secrets/claude/scripts/run_clippy.sh;
+    executable = true;
+  };
+  home.file.".claude/scripts/scan_duplicates.sh" = {
+    source = ../../secrets/claude/scripts/scan_duplicates.sh;
+    executable = true;
+  };
+  home.file.".claude/scripts/detect_test_violations.sh" = {
+    source = ../../secrets/claude/scripts/detect_test_violations.sh;
+    executable = true;
+  };
+  home.file.".claude/scripts/detect_trivial_tests.sh" = {
+    source = ../../secrets/claude/scripts/detect_trivial_tests.sh;
     executable = true;
   };
 
@@ -79,4 +97,7 @@
   ## Scala
   home.file.".claude/skills/coding-skills/scala/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/scala/SKILL.md;
   home.file.".claude/skills/coding-skills/scala/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/scala/QUICK-REFERENCE.md;
+  ## Nix
+  home.file.".claude/skills/coding-skills/nix/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/nix/SKILL.md;
+  home.file.".claude/skills/coding-skills/nix/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/nix/QUICK-REFERENCE.md;
 }
