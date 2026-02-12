@@ -34,6 +34,8 @@
   home.file.".claude/commands/interview_scorecard.md".text = builtins.readFile ../../secrets/claude/commands/interview_scorecard.md;
   home.file.".claude/commands/plan.md".text = builtins.readFile ../../secrets/claude/commands/plan.md;
   home.file.".claude/commands/build-fix.md".text = builtins.readFile ../../secrets/claude/commands/build-fix.md;
+  home.file.".claude/commands/handoff.md".text = builtins.readFile ../../secrets/claude/commands/handoff.md;
+  home.file.".claude/commands/continue.md".text = builtins.readFile ../../secrets/claude/commands/continue.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
