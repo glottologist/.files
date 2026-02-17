@@ -10,6 +10,7 @@
     gorilla-cli
     claude-code-nix.packages.${system}.default
     claude-monitor
+    opencode
   ];
   home.file.".claude/CLAUDE.md".text = builtins.readFile ../../secrets/claude/CLAUDE.md;
   # COMMANDS
@@ -36,7 +37,6 @@
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
-  home.file.".claude/agents/code-refactoring-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/code-refactoring-analyzer.md;
   home.file.".claude/agents/code-reviewer.md".text = builtins.readFile ../../secrets/claude/agents/code-reviewer.md;
   home.file.".claude/agents/code-reviewer-strict.md".text = builtins.readFile ../../secrets/claude/agents/code-reviewer-strict.md;
   home.file.".claude/agents/documentation-generator.md".text = builtins.readFile ../../secrets/claude/agents/documentation-generator.md;
@@ -45,6 +45,8 @@
   home.file.".claude/agents/super-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/super-analyzer.md;
   home.file.".claude/agents/planner.md".text = builtins.readFile ../../secrets/claude/agents/planner.md;
   home.file.".claude/agents/build-error-resolver.md".text = builtins.readFile ../../secrets/claude/agents/build-error-resolver.md;
+  home.file.".claude/agents/investigator.md".text = builtins.readFile ../../secrets/claude/agents/investigator.md;
+  home.file.".claude/agents/test-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/test-analyzer.md;
 
   # REFERENCES
   home.file.".claude/references/error-handling.md".text = builtins.readFile ../../secrets/claude/references/error-handling.md;
@@ -96,4 +98,59 @@
   ## Nix
   home.file.".claude/skills/coding-skills/nix/SKILL.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/nix/SKILL.md;
   home.file.".claude/skills/coding-skills/nix/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/nix/QUICK-REFERENCE.md;
+
+  # PLUGINS (declarative config only - runtime state stays mutable)
+  home.file.".claude/plugins/config.json".text = builtins.toJSON {
+    repositories = {};
+  };
+  home.file.".claude/plugins/known_marketplaces.json".text = builtins.toJSON {
+    claude-plugins-official = {
+      source = {
+        source = "github";
+        repo = "anthropics/claude-plugins-official";
+      };
+      installLocation = "/home/glottologist/.claude/plugins/marketplaces/claude-plugins-official";
+      lastUpdated = "2025-12-22T11:39:04.045Z";
+    };
+    superpowers-dev = {
+      source = {
+        source = "github";
+        repo = "obra/superpowers";
+      };
+      installLocation = "/home/glottologist/.claude/plugins/marketplaces/superpowers-dev";
+      lastUpdated = "2026-02-17T17:02:09.509Z";
+    };
+    prompts-chat = {
+      source = {
+        source = "github";
+        repo = "f/prompts.chat";
+      };
+      installLocation = "/home/glottologist/.claude/plugins/marketplaces/prompts-chat";
+      lastUpdated = "2026-02-17T00:00:00.000Z";
+    };
+    anthropics-claude-code = {
+      source = {
+        source = "github";
+        repo = "anthropics/claude-code";
+      };
+      installLocation = "/home/glottologist/.claude/plugins/marketplaces/anthropics-claude-code";
+      lastUpdated = "2026-02-17T00:00:00.000Z";
+    };
+    everything-claude-code = {
+      source = {
+        source = "github";
+        repo = "affaan-m/everything-claude-code";
+      };
+      installLocation = "/home/glottologist/.claude/plugins/marketplaces/everything-claude-code";
+      lastUpdated = "2026-02-17T00:00:00.000Z";
+    };
+    awesome-claude-skills = {
+      source = {
+        source = "github";
+        repo = "ComposioHQ/awesome-claude-skills";
+      };
+      installLocation = "/home/glottologist/.claude/plugins/marketplaces/awesome-claude-skills";
+      lastUpdated = "2026-02-17T00:00:00.000Z";
+    };
+  };
 }
