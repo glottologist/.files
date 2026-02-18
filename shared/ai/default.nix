@@ -100,57 +100,57 @@
   home.file.".claude/skills/coding-skills/nix/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/claude/skills/coding-skills/nix/QUICK-REFERENCE.md;
 
   # PLUGINS (declarative config only - runtime state stays mutable)
-  home.file.".claude/plugins/config.json".text = builtins.toJSON {
-    repositories = {};
-  };
-  home.file.".claude/plugins/known_marketplaces.json".text = builtins.toJSON {
-    claude-plugins-official = {
-      source = {
-        source = "github";
-        repo = "anthropics/claude-plugins-official";
-      };
-      installLocation = "/home/glottologist/.claude/plugins/marketplaces/claude-plugins-official";
-      lastUpdated = "2025-12-22T11:39:04.045Z";
-    };
-    superpowers-dev = {
-      source = {
-        source = "github";
-        repo = "obra/superpowers";
-      };
-      installLocation = "/home/glottologist/.claude/plugins/marketplaces/superpowers-dev";
-      lastUpdated = "2026-02-17T17:02:09.509Z";
-    };
-    prompts-chat = {
-      source = {
-        source = "github";
-        repo = "f/prompts.chat";
-      };
-      installLocation = "/home/glottologist/.claude/plugins/marketplaces/prompts-chat";
-      lastUpdated = "2026-02-17T00:00:00.000Z";
-    };
-    anthropics-claude-code = {
-      source = {
-        source = "github";
-        repo = "anthropics/claude-code";
-      };
-      installLocation = "/home/glottologist/.claude/plugins/marketplaces/anthropics-claude-code";
-      lastUpdated = "2026-02-17T00:00:00.000Z";
-    };
-    everything-claude-code = {
-      source = {
-        source = "github";
-        repo = "affaan-m/everything-claude-code";
-      };
-      installLocation = "/home/glottologist/.claude/plugins/marketplaces/everything-claude-code";
-      lastUpdated = "2026-02-17T00:00:00.000Z";
-    };
-    awesome-claude-skills = {
-      source = {
-        source = "github";
-        repo = "ComposioHQ/awesome-claude-skills";
-      };
-      installLocation = "/home/glottologist/.claude/plugins/marketplaces/awesome-claude-skills";
-      lastUpdated = "2026-02-17T00:00:00.000Z";
-    };
-  };
+  # home.file.".claude/plugins/config.json".text = builtins.toJSON {
+  #   repositories = {};
+  # };
+  # home.file.".claude/plugins/known_marketplaces.json".text = builtins.toJSON {
+  #   claude-plugins-official = {
+  #     source = {
+  #       source = "github";
+  #       repo = "anthropics/claude-plugins-official";
+  #     };
+  #     installLocation = "/home/glottologist/.claude/plugins/marketplaces/claude-plugins-official";
+  #     lastUpdated = "2025-12-22T11:39:04.045Z";
+  #   };
+  #   superpowers-dev = {
+  #     source = {
+  #       source = "github";
+  #       repo = "obra/superpowers";
+  #     };
+  #     installLocation = "/home/glottologist/.claude/plugins/marketplaces/superpowers-dev";
+  #     lastUpdated = "2026-02-17T17:02:09.509Z";
+  #   };
+  #   prompts-chat = {
+  #     source = {
+  #       source = "github";
+  #       repo = "f/prompts.chat";
+  #     };
+  #     installLocation = "/home/glottologist/.claude/plugins/marketplaces/prompts-chat";
+  #     lastUpdated = "2026-02-17T00:00:00.000Z";
+  #   };
+  #   anthropics-claude-code = {
+  #     source = {
+  #       source = "github";
+  #       repo = "anthropics/claude-code";
+  #     };
+  #     installLocation = "/home/glottologist/.claude/plugins/marketplaces/anthropics-claude-code";
+  #     lastUpdated = "2026-02-17T00:00:00.000Z";
+  #   };
+  #   everything-claude-code = {
+  #     source = {
+  #       source = "github";
+  #       repo = "affaan-m/everything-claude-code";
+  #     };
+  #     installLocation = "/home/glottologist/.claude/plugins/marketplaces/everything-claude-code";
+  #     lastUpdated = "2026-02-17T00:00:00.000Z";
+  #   };
+  #   awesome-claude-skills = {
+  #     source = {
+  #       source = "github";
+  #       repo = "ComposioHQ/awesome-claude-skills";
+  #     };
+  #     installLocation = "/home/glottologist/.claude/plugins/marketplaces/awesome-claude-skills";
+  #     lastUpdated = "2026-02-17T00:00:00.000Z";
+  #   };
+  # };
 }
