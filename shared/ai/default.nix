@@ -11,6 +11,8 @@
     claude-code-nix.packages.${system}.default
     claude-monitor
     opencode
+    codex
+    gemini-cli
   ];
   home.file.".claude/CLAUDE.md".text = builtins.readFile ../../secrets/claude/CLAUDE.md;
   # COMMANDS
