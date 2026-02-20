@@ -36,6 +36,7 @@
   home.file.".claude/commands/build-fix.md".text = builtins.readFile ../../secrets/claude/commands/build-fix.md;
   home.file.".claude/commands/handoff.md".text = builtins.readFile ../../secrets/claude/commands/handoff.md;
   home.file.".claude/commands/continue.md".text = builtins.readFile ../../secrets/claude/commands/continue.md;
+  home.file.".claude/commands/external-audit.md".text = builtins.readFile ../../secrets/claude/commands/external-audit.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/claude/agents/code-explainer.md;
@@ -49,6 +50,7 @@
   home.file.".claude/agents/build-error-resolver.md".text = builtins.readFile ../../secrets/claude/agents/build-error-resolver.md;
   home.file.".claude/agents/investigator.md".text = builtins.readFile ../../secrets/claude/agents/investigator.md;
   home.file.".claude/agents/test-analyzer.md".text = builtins.readFile ../../secrets/claude/agents/test-analyzer.md;
+  home.file.".claude/agents/external-auditor.md".text = builtins.readFile ../../secrets/claude/agents/external-auditor.md;
 
   # REFERENCES
   home.file.".claude/references/error-handling.md".text = builtins.readFile ../../secrets/claude/references/error-handling.md;
