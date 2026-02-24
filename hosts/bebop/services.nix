@@ -34,6 +34,7 @@ in {
           "CALYPSO" = {id = syncthingSecrets.CALYPSO_ID;};
           "MARAUDER" = {id = syncthingSecrets.MARAUDER_ID;};
           "RAPTOR" = {id = syncthingSecrets.RAPTOR_ID;};
+          "CIRCE" = {id = syncthingSecrets.CIRCE_ID;};
         };
         folders = {
           "BEBOP" = {
@@ -47,6 +48,10 @@ in {
           "RAPTOR" = {
             path = "/home/${username}/syncthing/RAPTOR";
             devices = ["RAPTOR"];
+          };
+          "CIRCE" = {
+            path = "/home/${username}/syncthing/CIRCE";
+            devices = ["CIRCE"];
           };
         };
       };
