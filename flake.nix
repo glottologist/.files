@@ -9,11 +9,12 @@
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.11";
     nvim-flake.url = "github:glottologist/nvim-flake";
     neovim-flake.url = "github:glottologist/neovim-flake";
+    certora-prover-flake.url = "github:glottologist/certora-prover-flake";
     home-manager = {
       url = "github:glottologist/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    claude-code-nix.url = "github:sadjow/claude-code-nix?rev=e19fe035570c067491be4bbc581a3bb198d0a754";
+    claude-code-nix.url = "github:sadjow/claude-code-nix?rev=d1c93b327e51f32011e650fa7835d95388c77d52";
 
     nix = {
       url = "github:nixos/nix";
@@ -38,6 +39,7 @@
     foundry,
     nvim-flake,
     neovim-flake,
+    certora-prover-flake,
     claude-code-nix,
     nix,
     ...
@@ -57,7 +59,7 @@
           username = "glottologist";
         };
         modules = [
-          {_module.args = {inherit nvim-flake neovim-flake claude-code-nix;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix;};}
           stylix.homeModules.stylix
           ./homes/glottologist
         ];
@@ -68,7 +70,7 @@
           username = "jason";
         };
         modules = [
-          {_module.args = {inherit nvim-flake neovim-flake claude-code-nix;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix;};}
           stylix.homeModules.stylix
           ./homes/jason.nix
         ];
