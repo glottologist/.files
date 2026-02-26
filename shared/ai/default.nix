@@ -14,6 +14,26 @@
     codex
     gemini-cli
   ];
+  home.file.".config/opencode/opencode.json".text = builtins.toJSON {
+    "$schema" = "https://opencode.ai/config.json";
+    provider = {
+      anthropic = {};
+      openai = {};
+      ollama = {
+        npm = "@ai-sdk/openai-compatible";
+        name = "Ollama (local)";
+        options = {
+          baseURL = "http://127.0.0.1:11434/v1";
+        };
+        models = {
+          "qwen3-coder-next" = {
+            name = "Qwen3 Coder Next";
+          };
+        };
+      };
+    };
+    model = "anthropic/claude-sonnet-4-20250514";
+  };
   home.file.".claude/CLAUDE.md".text = builtins.readFile ../../secrets/ai/claude/CLAUDE.md;
   home.file.".codex/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
   home.file.".gemini/GEMINI.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;

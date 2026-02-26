@@ -4,7 +4,9 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}: let
+  hosts = import ../../secrets/hosts.nix;
+in {
   environment.systemPackages = with pkgs; [networkmanagerapplet];
   networking = {
     hostName = "bebop"; # Define your hostname.
@@ -14,7 +16,9 @@
       dns = "systemd-resolved";
     };
     useDHCP = lib.mkDefault true;
-    extraHosts = builtins.readFile ../../secrets/hosts;
+    extraHosts = builtins.concatStringsSep "\n" (
+      builtins.attrValues (builtins.mapAttrs (name: ip: "${ip} ${name}") hosts)
+    );
   };
 
   # Enable systemd-resolved with DNS-over-TLS for Quad9

@@ -8,6 +8,7 @@
 }: let
   inherit (import ./variables.nix) username;
   syncthingSecrets = import ../../secrets/syncthing.nix;
+  hosts = import ../../secrets/hosts.nix;
 in {
   environment.systemPackages = with pkgs; [
     systemdgenie
@@ -31,10 +32,19 @@ in {
           password = "syncthing";
         };
         devices = {
-          "CALYPSO" = {id = syncthingSecrets.CALYPSO_ID;};
-          "MARAUDER" = {id = syncthingSecrets.MARAUDER_ID;};
+          "CALYPSO" = {
+            id = syncthingSecrets.CALYPSO_ID;
+            addresses = ["tcp://${hosts.calypso}:22000" "dynamic"];
+          };
+          "MARAUDER" = {
+            id = syncthingSecrets.MARAUDER_ID;
+            addresses = ["tcp://${hosts.marauder}:22000" "dynamic"];
+          };
           "RAPTOR" = {id = syncthingSecrets.RAPTOR_ID;};
-          "CIRCE" = {id = syncthingSecrets.CIRCE_ID;};
+          "CIRCE" = {
+            id = syncthingSecrets.CIRCE_ID;
+            addresses = ["tcp://${hosts.circe}:22000" "dynamic"];
+          };
         };
         folders = {
           "BEBOP" = {

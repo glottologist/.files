@@ -5,7 +5,7 @@
 }: {
   services.ollama = {
     enable = true;
-    loadModels = ["deepcoder:14b" "gemma3:27b" "qwen3:8b"];
+    loadModels = ["qwen3-coder-next"];
     acceleration = "rocm";
     host = "127.0.0.1";
     port = 11434;
