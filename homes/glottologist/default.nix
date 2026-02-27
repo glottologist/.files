@@ -89,6 +89,10 @@ in {
 
     packages = defaultPkgs;
 
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
+
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "vim";
