@@ -22,6 +22,10 @@
   '';
   fishConfig =
     ''
+      # Skip shell setup for Claude Code agent subprocesses
+      if set -q CLAUDECODE
+        return
+      end
       bind \t accept-autosuggestion
       set fish_greeting
       fish_vi_key_bindings
@@ -82,6 +86,10 @@ in {
       }
     ];
     interactiveShellInit = ''
+      # Skip interactive setup for Claude Code agent subprocesses
+      if set -q CLAUDECODE
+        return
+      end
       if test -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh
          bass source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
       end
