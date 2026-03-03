@@ -59,6 +59,7 @@
   home.file.".claude/commands/handoff.md".text = builtins.readFile ../../secrets/ai/claude/commands/handoff.md;
   home.file.".claude/commands/continue.md".text = builtins.readFile ../../secrets/ai/claude/commands/continue.md;
   home.file.".claude/commands/external-audit.md".text = builtins.readFile ../../secrets/ai/claude/commands/external-audit.md;
+  home.file.".claude/commands/cr_comments.md".text = builtins.readFile ../../secrets/ai/claude/commands/cr_comments.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/ai/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/ai/claude/agents/code-explainer.md;
