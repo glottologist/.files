@@ -2,6 +2,7 @@
   config,
   pkgs,
   claude-code-nix,
+  ennio,
   ...
 }: {
   home.packages = with pkgs; [
@@ -9,6 +10,8 @@
     llm
     gorilla-cli
     claude-code-nix.packages.${system}.default
+    ennio.packages.${system}.ennio
+    ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
     codex
