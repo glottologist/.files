@@ -16,6 +16,8 @@
     };
     claude-code-nix.url = "github:sadjow/claude-code-nix?rev=42c9207e79f1e6b8b95b54a64c10452275717466";
 
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     nix = {
       url = "github:nixos/nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +34,7 @@
 
   outputs = {
     nixpkgs,
+    nixpkgs-unstable,
     stylix,
     home-manager,
     hyprland,
@@ -45,22 +48,19 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
+    pkgs-unstable = import inputs.nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
     pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
       overlays = [
         (final: prev: {
-          ollama = prev.ollama.overrideAttrs (old: rec {
-            version = "0.17.4";
-            src = prev.fetchFromGitHub {
-              owner = "ollama";
-              repo = "ollama";
-              tag = "v${version}";
-              hash = "sha256-9yJ8Jbgrgiz/Pr6Se398DLkk1U2Lf5DDUi+tpEIjAaI=";
-            };
-            vendorHash = "sha256-Lc1Ktdqtv2VhJQssk8K1UOimeEjVNvDWePE9WkamCos=";
-            proxyVendor = true;
-          });
+          ollama = pkgs-unstable.ollama;
+          ollama-rocm = pkgs-unstable.ollama-rocm;
+          ollama-cuda = pkgs-unstable.ollama-cuda;
+          ollama-vulkan = pkgs-unstable.ollama-vulkan;
         })
       ];
     };
