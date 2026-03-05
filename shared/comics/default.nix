@@ -12,6 +12,6 @@
     #cbconvert-gui # Broken - depends on cbconvert
     qcomicbook
     kcc
-    komga # Free and open source comics/mangas server
+    #komga # Free and open source comics/mangas server
   ];
 }

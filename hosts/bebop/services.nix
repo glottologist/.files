@@ -63,6 +63,26 @@ in {
             path = "/home/${username}/syncthing/CIRCE";
             devices = ["CIRCE"];
           };
+          "circe" = {
+            id = "2rhrs-g2dmh";
+            path = "/home/${username}/circe";
+            devices = ["CIRCE"];
+          };
+          "BEBOP_BACKUP" = {
+            id = "7rcyx-qs5iz";
+            path = "/home/${username}/BEBOP_BACKUP";
+            devices = ["CALYPSO"];
+          };
+          "TRANSFER" = {
+            id = "aekzk-4jpel";
+            path = "/home/${username}/TRANSFER";
+            devices = ["MARAUDER" "CALYPSO"];
+          };
+          "TRADING" = {
+            id = "vtxmx-7yym4";
+            path = "/home/${username}/development/glottologist/trading";
+            devices = ["CALYPSO"];
+          };
         };
       };
     };
