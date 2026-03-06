@@ -2,6 +2,7 @@
   config,
   pkgs,
   claude-code-nix,
+  ccstatusline,
   ennio,
   ...
 }: {
@@ -10,6 +11,7 @@
     llm
     gorilla-cli
     claude-code-nix.packages.${system}.default
+    ccstatusline.packages.${system}.default
     ennio.packages.${system}.ennio
     ennio.packages.${system}.ennio-node
     claude-monitor
@@ -63,6 +65,7 @@
   home.file.".claude/commands/continue.md".text = builtins.readFile ../../secrets/ai/claude/commands/continue.md;
   home.file.".claude/commands/external-audit.md".text = builtins.readFile ../../secrets/ai/claude/commands/external-audit.md;
   home.file.".claude/commands/cr_comments.md".text = builtins.readFile ../../secrets/ai/claude/commands/cr_comments.md;
+  home.file.".claude/commands/open_issues.md".text = builtins.readFile ../../secrets/ai/claude/commands/open_issues.md;
   # SUB-AGENTS
   home.file.".claude/agents/benchmark-specialist.md".text = builtins.readFile ../../secrets/ai/claude/agents/benchmark-specialist.md;
   home.file.".claude/agents/code-explainer.md".text = builtins.readFile ../../secrets/ai/claude/agents/code-explainer.md;
@@ -106,28 +109,20 @@
   # SKILLS
   ## Rust
   home.file.".claude/skills/coding-skills/rust/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/rust/SKILL.md;
-  home.file.".claude/skills/coding-skills/rust/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/rust/QUICK-REFERENCE.md;
   ## Typescript
   home.file.".claude/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/typescript/SKILL.md;
-  home.file.".claude/skills/coding-skills/typescript/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/typescript/QUICK-REFERENCE.md;
   ## Python
   home.file.".claude/skills/coding-skills/python/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/python/SKILL.md;
-  home.file.".claude/skills/coding-skills/python/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/python/QUICK-REFERENCE.md;
   ## Haskell
   home.file.".claude/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/haskell/SKILL.md;
-  home.file.".claude/skills/coding-skills/haskell/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/haskell/QUICK-REFERENCE.md;
   ## OCaml
   home.file.".claude/skills/coding-skills/ocaml/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/ocaml/SKILL.md;
-  home.file.".claude/skills/coding-skills/ocaml/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/ocaml/QUICK-REFERENCE.md;
   ## Go
   home.file.".claude/skills/coding-skills/go/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/go/SKILL.md;
-  home.file.".claude/skills/coding-skills/go/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/go/QUICK-REFERENCE.md;
   ## Scala
   home.file.".claude/skills/coding-skills/scala/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/scala/SKILL.md;
-  home.file.".claude/skills/coding-skills/scala/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/scala/QUICK-REFERENCE.md;
   ## Nix
   home.file.".claude/skills/coding-skills/nix/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/nix/SKILL.md;
-  home.file.".claude/skills/coding-skills/nix/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/nix/QUICK-REFERENCE.md;
   ## Algorithmic Art
   home.file.".claude/skills/algorithmic-art/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/algorithmic-art/SKILL.md;
   home.file.".claude/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile ../../secrets/ai/claude/skills/algorithmic-art/LICENSE.txt;

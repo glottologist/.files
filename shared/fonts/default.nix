@@ -18,5 +18,6 @@
     fira-code-symbols
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
+    powerline-fonts
   ];
 }
