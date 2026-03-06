@@ -128,6 +128,57 @@
   ## Nix
   home.file.".claude/skills/coding-skills/nix/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/nix/SKILL.md;
   home.file.".claude/skills/coding-skills/nix/QUICK-REFERENCE.md".text = builtins.readFile ../../secrets/ai/claude/skills/coding-skills/nix/QUICK-REFERENCE.md;
+  ## Algorithmic Art
+  home.file.".claude/skills/algorithmic-art/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/algorithmic-art/SKILL.md;
+  home.file.".claude/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile ../../secrets/ai/claude/skills/algorithmic-art/LICENSE.txt;
+  home.file.".claude/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile ../../secrets/ai/claude/skills/algorithmic-art/templates/generator_template.js;
+  home.file.".claude/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile ../../secrets/ai/claude/skills/algorithmic-art/templates/viewer.html;
+  ## Skill Creator
+  home.file.".claude/skills/skill-creator/SKILL.md".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/SKILL.md;
+  home.file.".claude/skills/skill-creator/LICENSE.txt".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/LICENSE.txt;
+  home.file.".claude/skills/skill-creator/agents/analyzer.md".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/agents/analyzer.md;
+  home.file.".claude/skills/skill-creator/agents/comparator.md".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/agents/comparator.md;
+  home.file.".claude/skills/skill-creator/agents/grader.md".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/agents/grader.md;
+  home.file.".claude/skills/skill-creator/references/schemas.md".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/references/schemas.md;
+  home.file.".claude/skills/skill-creator/assets/eval_review.html".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/assets/eval_review.html;
+  home.file.".claude/skills/skill-creator/eval-viewer/viewer.html".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/eval-viewer/viewer.html;
+  home.file.".claude/skills/skill-creator/eval-viewer/generate_review.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/eval-viewer/generate_review.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/__init__.py".text = builtins.readFile ../../secrets/ai/claude/skills/skill-creator/scripts/__init__.py;
+  home.file.".claude/skills/skill-creator/scripts/aggregate_benchmark.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/aggregate_benchmark.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/generate_report.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/generate_report.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/improve_description.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/improve_description.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/package_skill.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/package_skill.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/quick_validate.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/quick_validate.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/run_eval.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/run_eval.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/run_loop.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/run_loop.py;
+    executable = true;
+  };
+  home.file.".claude/skills/skill-creator/scripts/utils.py" = {
+    source = ../../secrets/ai/claude/skills/skill-creator/scripts/utils.py;
+    executable = true;
+  };
 
   # PLUGINS (declarative config only - runtime state stays mutable)
   # home.file.".claude/plugins/config.json".text = builtins.toJSON {
