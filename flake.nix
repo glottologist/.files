@@ -28,6 +28,7 @@
     hyprland.url = "github:hyprwm/Hyprland";
     ennio.url = "github:glottologist/ennio";
     nix-everywhere.url = "github:glottologist/nix-everywhere";
+    ccstatusline.url = "github:glottologist/ccstatusline-flake";
     foundry = {
       url = "github:shazow/foundry.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,6 +49,7 @@
     claude-code-nix,
     ennio,
     nix-everywhere,
+    ccstatusline,
     nix,
     ...
   } @ inputs: let
@@ -78,7 +80,7 @@
           username = "glottologist";
         };
         modules = [
-          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere ccstatusline;};}
           stylix.homeModules.stylix
           ./homes/glottologist
         ];
@@ -89,7 +91,7 @@
           username = "jason";
         };
         modules = [
-          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere ccstatusline;};}
           stylix.homeModules.stylix
           ./homes/jason.nix
         ];
