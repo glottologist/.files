@@ -53,8 +53,6 @@
   home.file.".claude/commands/investigate.md".text = builtins.readFile ../../secrets/ai/claude/commands/investigate.md;
   home.file.".claude/commands/pr_desc.md".text = builtins.readFile ../../secrets/ai/claude/commands/pr_desc.md;
   home.file.".claude/commands/refactor.md".text = builtins.readFile ../../secrets/ai/claude/commands/refactor.md;
-  home.file.".claude/commands/test_summary.md".text = builtins.readFile ../../secrets/ai/claude/commands/test_summary.md;
-  home.file.".claude/commands/tests_overlap.md".text = builtins.readFile ../../secrets/ai/claude/commands/tests_overlap.md;
   home.file.".claude/commands/review.md".text = builtins.readFile ../../secrets/ai/claude/commands/review.md;
   home.file.".claude/commands/review_strict.md".text = builtins.readFile ../../secrets/ai/claude/commands/review_strict.md;
   home.file.".claude/commands/analyze.md".text = builtins.readFile ../../secrets/ai/claude/commands/analyze.md;
