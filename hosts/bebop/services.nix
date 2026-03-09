@@ -83,6 +83,11 @@ in {
             path = "/home/${username}/development/glottologist/trading";
             devices = ["CALYPSO"];
           };
+          "WISECROW" = {
+            id = "uvfxc-mzysl";
+            path = "/home/${username}/development/glottologist/wisecrow";
+            devices = ["CALYPSO"];
+          };
         };
       };
     };

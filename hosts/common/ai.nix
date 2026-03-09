@@ -3,16 +3,16 @@
   pkgs,
   ...
 }: {
-  services.ollama = {
-    enable = true;
-    loadModels = ["qwen3-coder-next"];
-    acceleration = "rocm";
-    host = "127.0.0.1";
-    port = 11434;
-  };
-  systemd.services.ollama.serviceConfig = {
-    Environment = ["OLLAMA_HOST=0.0.0.0:11434"];
-  };
+  # services.ollama = {
+  #   enable = true;
+  #   loadModels = ["qwen3-coder-next"];
+  #   acceleration = "rocm";
+  #   host = "127.0.0.1";
+  #   port = 11434;
+  # };
+  # systemd.services.ollama.serviceConfig = {
+  #   Environment = ["OLLAMA_HOST=0.0.0.0:11434"];
+  # };
 
   services.open-webui = {
     enable = true;
