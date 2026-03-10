@@ -44,6 +44,7 @@
   home.file.".gemini/GEMINI.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
   # COMMANDS
   home.file.".claude/settings.json".text = builtins.readFile ../../secrets/ai/claude/settings.json;
+  home.file.".claude/mcp.json".text = builtins.readFile ../../secrets/ai/claude/mcp.json;
   home.file.".claude/commands/audit.md".text = builtins.readFile ../../secrets/ai/claude/commands/audit.md;
   home.file.".claude/commands/benchmark.md".text = builtins.readFile ../../secrets/ai/claude/commands/benchmark.md;
   home.file.".claude/commands/commit_msg.md".text = builtins.readFile ../../secrets/ai/claude/commands/commit_msg.md;
