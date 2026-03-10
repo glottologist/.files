@@ -175,7 +175,8 @@
     executable = true;
   };
 
-  # PLUGINS (declarative config only - runtime state stays mutable)
+  # PLUGINS
+  home.file.".claude/plugins/installed_plugins.json".text = builtins.readFile ../../secrets/ai/claude/plugins/installed_plugins.json;
   # home.file.".claude/plugins/config.json".text = builtins.toJSON {
   #   repositories = {};
   # };
