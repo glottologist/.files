@@ -129,6 +129,7 @@ in {
       crg = "crate2nix generate";
       ct = "cargo test";
       cu = "cargo update";
+      cv = "claude --verbose";
       cw = "cargo watch -s 'clear; cargo check --tests --color=always 2>&1 | head -40'";
       db = "docker build -t";
       dc = "docker-compose";

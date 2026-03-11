@@ -14,7 +14,7 @@
     neomutt
     signal-desktop # signam messenger
     slack-term # Slack client for your term
-    telegram-desktop # Telegram Desktop messaging app
+    #telegram-desktop # TODO: re-enable once nixpkgs fixes -Wrange-loop-construct build failure in 6.4.1
     #tuir # Command line reddit - removed: incompatible with Python 3.13
     #turses # A twitter terminal client - removed: incompatible with Python 3.13
   ];
