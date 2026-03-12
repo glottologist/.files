@@ -69,7 +69,10 @@ in {
   };
 
   imports = [
-    "${fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master"}/modules/vscode-server/home.nix"
+    "${builtins.fetchTarball {
+      url = "https://github.com/nix-community/nixos-vscode-server/archive/92ce71c3ba5a94f854e02d57b14af4997ab54ef0.tar.gz";
+      sha256 = "0xjal4zcbmdjdaspfkjbpx1680q7390wfzmj7iad04kp3pc9syf8";
+    }}/modules/vscode-server/home.nix"
   ];
 
   services.vscode-server.enable = true;

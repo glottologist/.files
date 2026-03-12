@@ -18,6 +18,7 @@
     difftastic # A syntax-aware diff
     earthly # Build automation for the container era
     exercism # A Go based command line tool for exercism.io
+    git-filter-repo # Rewrite git repository history
 
     helix # A post-modern modal text editor
     jupyter # The Jupyter HTML notebook is a web-based notebook environment for interactive computing

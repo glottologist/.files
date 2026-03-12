@@ -828,6 +828,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773025010,
+        "narHash": "sha256-khlHllTsovXgT2GZ0WxT4+RvuMjNeR5OW0UYeEHPYQo=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "7b9f7f88ab3b339f8142dc246445abb3c370d3d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "dracula": {
       "flake": false,
       "locked": {
@@ -1427,11 +1447,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773213477,
-        "narHash": "sha256-Pv1Z3QqGkSGEUV+9pM5vYIiI7VJo7Tfm6ZmR+JSp1zo=",
+        "lastModified": 1773299921,
+        "narHash": "sha256-rWct6gVjwyf7SvZtF20Cnygk7vxTnOuw+euCnFB3xGs=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "3c73daa86c823d706824fd9bbcb85aa23fd0f668",
+        "rev": "990dffbe41f725d77e2bb31f6bbbeaa42f1e1a1f",
         "type": "github"
       },
       "original": {
@@ -1806,11 +1826,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1773171407,
-        "narHash": "sha256-mtSDWOrekyWpJnuPu4uFxqOfSvsow74mmCm3PffqRTE=",
+        "lastModified": 1773262128,
+        "narHash": "sha256-8gE53NTbj6k1B/uTiAeRJXRWGn3NvOX4F0PQl9vhebU=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "0e083e886f02034c56b851649a6c27f55fe85e32",
+        "rev": "8662ecba03bb4b4626963c080aa9353a6aa38854",
         "type": "github"
       },
       "original": {
@@ -2586,11 +2606,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1773181371,
-        "narHash": "sha256-r0bAHMy+rEwS17y25v2l6mJEsMgVCX5wDuKFAFa6gU0=",
+        "lastModified": 1773275661,
+        "narHash": "sha256-uNebcZa0GhTAlnLRBoDIjCbOsgpDaba/lj818Wd+JL8=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "4d0a79d67e543491bc1dc9a3c325c3fd02424a04",
+        "rev": "3c6a93fd5255f2f787f83c80e591772327df29f7",
         "type": "github"
       },
       "original": {
@@ -2752,11 +2772,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1772963539,
-        "narHash": "sha256-9jVDGZnvCckTGdYT53d/EfznygLskyLQXYwJLKMPsZs=",
+        "lastModified": 1773122722,
+        "narHash": "sha256-FIqHByVqxCprNjor1NqF80F2QQoiiyqanNNefdlvOg4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+        "rev": "62dc67aa6a52b4364dd75994ec00b51fbf474e50",
         "type": "github"
       },
       "original": {
@@ -2896,11 +2916,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1772963539,
-        "narHash": "sha256-9jVDGZnvCckTGdYT53d/EfznygLskyLQXYwJLKMPsZs=",
+        "lastModified": 1773122722,
+        "narHash": "sha256-FIqHByVqxCprNjor1NqF80F2QQoiiyqanNNefdlvOg4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+        "rev": "62dc67aa6a52b4364dd75994ec00b51fbf474e50",
         "type": "github"
       },
       "original": {
@@ -3137,11 +3157,11 @@
         "systems": "systems_8"
       },
       "locked": {
-        "lastModified": 1773176554,
-        "narHash": "sha256-i7lgK73pvk5ClHgfVEeIiHFM1S2kjeCF2uvODf2oKlE=",
+        "lastModified": 1773298574,
+        "narHash": "sha256-P+lq+UrKrN+Vx15G4p+J2MPp+aQgygDjI2jAD5T6hTc=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "d057f50cc4ce26d5f8a43cd8ea16a0ac7805b228",
+        "rev": "c56ec752ba093075d75c4da9101067bd41a90961",
         "type": "github"
       },
       "original": {
@@ -3863,6 +3883,7 @@
         "ccstatusline": "ccstatusline",
         "certora-prover-flake": "certora-prover-flake",
         "claude-code-nix": "claude-code-nix",
+        "disko": "disko",
         "ennio": "ennio",
         "foundry": "foundry",
         "home-manager": "home-manager_2",

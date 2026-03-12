@@ -24,6 +24,10 @@
     };
 
     agenix.url = "github:ryantm/agenix";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland.url = "github:hyprwm/Hyprland";
     ennio.url = "github:glottologist/ennio";
@@ -42,6 +46,7 @@
     home-manager,
     hyprland,
     agenix,
+    disko,
     foundry,
     nvim-flake,
     neovim-flake,
@@ -108,6 +113,33 @@
         modules = [
           stylix.nixosModules.stylix
           ./hosts/bebop/configuration.nix
+        ];
+      };
+      "athena" = nixosSystem {
+        inherit pkgs;
+        inherit system;
+        specialArgs = {
+          username = "glottologist";
+        };
+        modules = [
+          disko.nixosModules.disko
+          stylix.nixosModules.stylix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              username = "glottologist";
+            };
+            home-manager.users.glottologist = {
+              imports = [
+                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere ccstatusline;};}
+                stylix.homeModules.stylix
+                ./homes/glottologist
+              ];
+            };
+          }
+          ./hosts/athena/configuration.nix
         ];
       };
     };

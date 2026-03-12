@@ -25,7 +25,7 @@
   printEnable = false;
 
   # Set Stylix Image
-  stylixImage = ../../secrets/wallpapers/Common/glottologist.png;
+  stylixImage = ../../secrets/wallpapers/common/glottologist.png;
 
   # Set Waybar
   # Available options:
