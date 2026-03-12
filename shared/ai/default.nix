@@ -5,7 +5,9 @@
   ccstatusline,
   ennio,
   ...
-}: {
+}: let
+  anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/anthropic-api-key.txt);
+in {
   home.packages = with pkgs; [
     lmstudio
     llm
@@ -175,6 +177,9 @@
     source = ../../secrets/ai/claude/skills/skill-creator/scripts/utils.py;
     executable = true;
   };
+
+  # OUROBOROS
+  home.file.".ouroboros/.env".text = "ANTHROPIC_API_KEY=${anthropic_api_key}\n";
 
   # PLUGINS
   home.file.".claude/plugins/installed_plugins.json".text = builtins.readFile ../../secrets/ai/claude/plugins/installed_plugins.json;

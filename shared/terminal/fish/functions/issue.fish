@@ -44,7 +44,7 @@ function issue
         return 1
     end
 
-    set -l slug (echo "$raw_title" | string lower | string replace -ra '[^a-z0-9]+' '-' | string trim --chars='-' | string sub -l 60 | string replace -r '-+$' '')
+    set -l slug (echo "$raw_title" | string lower | string replace -ra '[^a-z0-9]+' '-' | string trim --chars='-' | string sub -l 60 | string replace -r -- '-+$' '')
     set -l branch_name "jason/$slug"
     set -l worktree_path "./worktrees/$branch_name"
 
@@ -77,6 +77,12 @@ function issue
 
     git worktree add -b "$branch_name" "$worktree_path" "origin/$default_branch"; or begin
         echo "[ERROR] Failed to create worktree/branch '$branch_name'" >&2
+        return 1
+    end
+
+    echo "[INFO] Pushing branch '$branch_name' to origin..."
+    git -C "$worktree_path" push -u origin "$branch_name"; or begin
+        echo "[ERROR] Failed to push '$branch_name' to origin" >&2
         return 1
     end
 
