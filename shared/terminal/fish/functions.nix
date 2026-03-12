@@ -13,6 +13,7 @@
   xdg.configFile."fish/functions/env2fish.fish".source = ./functions/env2fish.fish;
   xdg.configFile."fish/functions/fish_greeting.fish".source = ./functions/fish_greeting.fish;
   xdg.configFile."fish/functions/git_worktree_create.fish".source = ./functions/git_worktree_create.fish;
+  xdg.configFile."fish/functions/issue.fish".source = ./functions/issue.fish;
   xdg.configFile."fish/functions/git_worktree_remove_matching.fish".source = ./functions/git_worktree_remove_matching.fish;
   xdg.configFile."fish/functions/jj_track_bookmark.fish".source = ./functions/jj_track_bookmark.fish;
   xdg.configFile."fish/functions/pr_worktree.fish".source = ./functions/pr_worktree.fish;
