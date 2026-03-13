@@ -39,6 +39,7 @@
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (s + "/commands/analyse_tests.md");
     "${dir}/commands/weekly_report.md".text = builtins.readFile (s + "/commands/weekly_report.md");
     "${dir}/commands/create_pr.md".text = builtins.readFile (s + "/commands/create_pr.md");
+    "${dir}/commands/superplan.md".text = builtins.readFile (s + "/commands/superplan.md");
     # SUB-AGENTS
     "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (s + "/agents/benchmark-specialist.md");
     "${dir}/agents/code-explainer.md".text = builtins.readFile (s + "/agents/code-explainer.md");
@@ -53,6 +54,7 @@
     "${dir}/agents/investigator.md".text = builtins.readFile (s + "/agents/investigator.md");
     "${dir}/agents/test-analyzer.md".text = builtins.readFile (s + "/agents/test-analyzer.md");
     "${dir}/agents/external-auditor.md".text = builtins.readFile (s + "/agents/external-auditor.md");
+    "${dir}/agents/superplanner.md".text = builtins.readFile (s + "/agents/superplanner.md");
     # REFERENCES
     "${dir}/references/error-handling.md".text = builtins.readFile (s + "/references/error-handling.md");
     "${dir}/references/idioms.md".text = builtins.readFile (s + "/references/idioms.md");
@@ -73,6 +75,10 @@
     "${dir}/skills/coding-skills/go/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/go/SKILL.md");
     "${dir}/skills/coding-skills/scala/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/scala/SKILL.md");
     "${dir}/skills/coding-skills/nix/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/nix/SKILL.md");
+    "${dir}/skills/superplan/SKILL.md".text = builtins.readFile (s + "/skills/superplan/SKILL.md");
+    "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
+    "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
+    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
     "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (s + "/skills/algorithmic-art/SKILL.md");
     "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (s + "/skills/algorithmic-art/LICENSE.txt");
     "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
