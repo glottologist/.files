@@ -102,7 +102,8 @@ in {
       b = "bacon";
       bt = "bluetoothctl";
       btt = "bluetooth_toggle";
-      c = "claude";
+      ccp = "env CLAUDE_CONFIG_DIR=$HOME/.claude-personal claude";
+      ccw = "env CLAUDE_CONFIG_DIR=$HOME/.claude-work claude";
       cb = "clear && cargo build";
       cbh = "cargo bench";
       cc = "cargo clean";
