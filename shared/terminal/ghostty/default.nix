@@ -9,7 +9,7 @@
     window-theme = light
     window-height = 32
     window-width = 110
-    background-opacity = 0.99
+    background-opacity = 1
     background-blur-radius = 60
     cursor-style = bar
     mouse-hide-while-typing = true

@@ -37,6 +37,8 @@
     "${dir}/commands/open_issues.md".text = builtins.readFile (s + "/commands/open_issues.md");
     "${dir}/commands/plan_issue.md".text = builtins.readFile (s + "/commands/plan_issue.md");
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (s + "/commands/analyse_tests.md");
+    "${dir}/commands/weekly_report.md".text = builtins.readFile (s + "/commands/weekly_report.md");
+    "${dir}/commands/create_pr.md".text = builtins.readFile (s + "/commands/create_pr.md");
     # SUB-AGENTS
     "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (s + "/agents/benchmark-specialist.md");
     "${dir}/agents/code-explainer.md".text = builtins.readFile (s + "/agents/code-explainer.md");
@@ -97,7 +99,8 @@
     "${dir}/plugins/installed_plugins.json".text = builtins.readFile (s + "/plugins/installed_plugins.json");
   };
 
-  claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
+  #claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
+  claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude-personal" ".claude-work"]);
 in {
   home.packages = with pkgs; [
     lmstudio
@@ -111,6 +114,7 @@ in {
     opencode
     codex
     gemini-cli
+    (lib.lowPrio sox)
   ];
   home.file =
     claudeFiles
