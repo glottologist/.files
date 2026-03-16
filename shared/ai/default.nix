@@ -3,6 +3,7 @@
   pkgs,
   lib,
   claude-code-nix,
+  codex-cli-nix,
   ccstatusline,
   ennio,
   ...
@@ -114,12 +115,12 @@ in {
     llm
     gorilla-cli
     claude-code-nix.packages.${system}.default
+    codex-cli-nix.packages.${system}.default
     ccstatusline.packages.${system}.default
     ennio.packages.${system}.ennio
     ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
-    codex
     gemini-cli
     (lib.lowPrio sox)
   ];

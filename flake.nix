@@ -15,6 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code-nix.url = "github:sadjow/claude-code-nix?rev=00189c0d55fd64d8f7880979d9f91dcb675996e0";
+    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
 
 
 
@@ -55,6 +56,7 @@
     neovim-flake,
     certora-prover-flake,
     claude-code-nix,
+    codex-cli-nix,
     ennio,
     nix-everywhere,
     ccstatusline,
@@ -88,7 +90,7 @@
           username = "glottologist";
         };
         modules = [
-          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere ccstatusline;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix ennio nix-everywhere ccstatusline;};}
           stylix.homeModules.stylix
           ./homes/glottologist
         ];
@@ -99,7 +101,7 @@
           username = "jason";
         };
         modules = [
-          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere ccstatusline;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix ennio nix-everywhere ccstatusline;};}
           stylix.homeModules.stylix
           ./homes/jason.nix
         ];
@@ -136,7 +138,7 @@
             };
             home-manager.users.glottologist = {
               imports = [
-                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix ennio nix-everywhere ccstatusline;};}
+                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix ennio nix-everywhere ccstatusline;};}
                 stylix.homeModules.stylix
                 ./homes/glottologist
               ];
