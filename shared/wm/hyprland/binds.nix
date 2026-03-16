@@ -22,6 +22,7 @@ in {
       "$modifier,W,exec,${browser}"
       "$modifier,E,exec,emopicker9000"
       "$modifier,S,exec,screenshootin"
+      "$modifier SHIFT,V,exec,gpu-screen-recorder-gtk"
       "$modifier,B,exec,brave"
       "$modifier,O,exec,obsidian"
       "$modifier,C,exec,hyprpicker -a"

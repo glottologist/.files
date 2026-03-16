@@ -7,6 +7,7 @@
 
       darktable            # Virtual lighttable and darkroom for photographers
       kazam                # A screencasting program created with design in mind
+      gpu-screen-recorder-gtk # GPU-accelerated screen recorder GUI
       obs-studio           # Free and open source software for video recording and live streaming
       plex-desktop         # Streaming media player for Plex
       rawtherapee          # RAW converter and digital photo processing software

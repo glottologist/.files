@@ -82,6 +82,7 @@
     hyprland.enable = true;
     seahorse.enable = true;
     hyprlock.enable = true;
+    gpu-screen-recorder.enable = true;
     fuse.userAllowOther = true;
     virt-manager.enable = true;
     mtr.enable = true;
