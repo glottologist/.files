@@ -38,6 +38,7 @@
     "${dir}/commands/open_issues.md".text = builtins.readFile (s + "/commands/open_issues.md");
     "${dir}/commands/plan_issue.md".text = builtins.readFile (s + "/commands/plan_issue.md");
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (s + "/commands/analyse_tests.md");
+    "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (s + "/commands/analyse_bench_fuzz.md");
     "${dir}/commands/weekly_report.md".text = builtins.readFile (s + "/commands/weekly_report.md");
     "${dir}/commands/create_pr.md".text = builtins.readFile (s + "/commands/create_pr.md");
     "${dir}/commands/superplan.md".text = builtins.readFile (s + "/commands/superplan.md");
@@ -68,6 +69,8 @@
     "${dir}/scripts/scan_duplicates.sh" = {source = s + "/scripts/scan_duplicates.sh"; executable = true;};
     "${dir}/scripts/detect_test_violations.sh" = {source = s + "/scripts/detect_test_violations.sh"; executable = true;};
     "${dir}/scripts/detect_trivial_tests.sh" = {source = s + "/scripts/detect_trivial_tests.sh"; executable = true;};
+    # HOOKS
+    "${dir}/hooks/notify.sh" = {source = s + "/hooks/notify.sh"; executable = true;};
     # SKILLS
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/rust/SKILL.md");
     "${dir}/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/SKILL.md");
