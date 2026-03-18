@@ -4,7 +4,6 @@
   ...
 }: {
   home.packages = with pkgs; [
-    #obsidian # A powerful knowledge base that works on top of a local folder of plain text Markdown files
     mdbook # Create books from Markdown
     mdbook-katex # A backend for mdBook written in Rust for latex
     mdbook-mermaid # A backend for mdBook written in Rust for mermaid

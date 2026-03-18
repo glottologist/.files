@@ -11,8 +11,8 @@
     pam_u2f # A PAM module for allowing authentication with a U2F device
     paperkey # Store OpenPGP or GnuPG on paper
     pass # Stores, retrieves, generates, and synchronizes passwords securely
-    proton-pass # Desktop application for Proton Pass
-    protonmail-desktop # Desktop application for Proton Mail
+    #proton-pass # Desktop application for Proton Pass
+    #protonmail-desktop # Desktop application for Proton Mail
     protonvpn-gui # GUI client for ProtonVPN
     pinentry-curses # GnuPG's interface to passphrase input
     vault # Hashicorp vault

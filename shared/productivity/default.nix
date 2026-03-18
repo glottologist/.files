@@ -12,7 +12,7 @@
     digikam # Photo Management Program
     dosage # A comic strip downloader and archiver
     dstask # Command line todo list with super-reliable git sync
-    electron-mail # ElectronMail is an Electron-based unofficial desktop client for ProtonMail
+    #electron-mail # ElectronMail is an Electron-based unofficial desktop client for ProtonMail
     fetchmail # Utility to fetch mails locally
     #frostwire #BitTorrent Client and Cloud File Downloader
     gimp # GNU image editor
