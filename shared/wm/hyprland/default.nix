@@ -9,7 +9,7 @@ in {
     ./hyprland.nix
     ./hyprlock.nix
     ./pyprland.nix
-    ./swaync.nix
+    ./dunst.nix
     ./windowrules.nix
   ];
 }
