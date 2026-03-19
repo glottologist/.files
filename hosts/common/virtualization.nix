@@ -29,7 +29,7 @@
     dive # A tool for exploring each layer in a docker image
     podman # A program for managing pods, containers and container images
     podman-compose # An implementation of docker-compose with podman backend
-    #podman-desktop # A graphical tool for developing on containers and Kubernetes
+    podman-desktop
     podman-tui # Podman Terminal UI
     spice # Complete open source solution for interaction with virtualized desktop devices
     spice-gtk

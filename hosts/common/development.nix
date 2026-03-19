@@ -10,7 +10,7 @@
     coreutils
     cmake
     gnumake
-    #bruno
+    bruno
     insomnia
     openssl
     websocat

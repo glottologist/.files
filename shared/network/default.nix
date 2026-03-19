@@ -6,14 +6,14 @@
   ...
 }: {
   home.packages = with pkgs; [
-    #anydesk # Desktop sharing application, providing remote support and online meetings
+    anydesk
     bmon # Network bandwidth monitor
     fast-cli # Test your download and upload speed using fast.com
     gping # Graphical ping
     inetutils # Collection of common network programs
     ipcalc # Simple IP network calculator
     iproute2 # A collection of utilities for controlling TCP/IP networking and traffic control in Linux
-    #ipscan # Fast and friendly network scanner - broken: swt build fails with deprecated GTK APIs
+    ipscan
     iw # Tool to use nl80211
     linssid # Graphical wireless scanning for Linux
     macchanger # A utility for viewing/manipulating the MAC address of network interfaces

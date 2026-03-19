@@ -23,7 +23,7 @@
       kernelModules = ["dm-raid" "md_mod" "raid1"];
     };
     kernelModules = ["kvm-intel"];
-    kernelPackages = pkgs.linuxPackages_6_12;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642;
       "net.core.rmem_max" = 7500000;

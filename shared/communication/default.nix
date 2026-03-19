@@ -14,7 +14,7 @@
     neomutt
     signal-desktop # signam messenger
     slack-term # Slack client for your term
-    #telegram-desktop # TODO: re-enable once nixpkgs fixes -Wrange-loop-construct build failure in 6.4.1
+    telegram-desktop
   ];
   services = {
   kbfs.enable = true;

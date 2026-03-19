@@ -5,14 +5,10 @@
   stdenv,
   ...
 }: let
-  #emanote = import (builtins.fetchTarball "https://github.com/srid/emanote/archive/master.tar.gz");
 in {
-  #imports = [ emanote.homeManagerModule ];
-
   home.packages = with pkgs; [
-    #toipe             # Trusty terminal typing tester
-    anki # Spaced repitition flashcards
-    #bookworm # A simple, focused eBook reader - marked as broken
+    toipe
+    anki
     epr # CLI Epub reader
     gotypist # A touch-typing tutor
     gtypist # Universal typing tutorial

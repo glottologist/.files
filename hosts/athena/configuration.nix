@@ -17,6 +17,7 @@
     ../common/development.nix
     ../common/nix.nix
   ];
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
   system = {
     stateVersion = "25.11";
   };

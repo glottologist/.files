@@ -29,9 +29,8 @@
 in {
   home.packages = with pkgs; [
     act # run GH actions locally
-    #diff-so-fancy # git diff with colors
-    #commitizen #Tool to create committing rules for projects, auto bump versions, and generate changelogs
-    #cz-cli #The commitizen command line utility
+    diff-so-fancy
+    commitizen
     gita #Command-line tool to manage multiple git repos
     gitui # Blazing fast terminal-ui for Git written in Rust
     gitty # Contextual information about your git projects, right on the command-line
