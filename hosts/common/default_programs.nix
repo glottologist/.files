@@ -49,7 +49,6 @@
     meson
     mpv
     ncdu
-    neovim
     nemo-with-extensions
     ninja
     nixfmt-rfc-style

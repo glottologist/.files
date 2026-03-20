@@ -428,12 +428,12 @@ in {
       vnd = "nix run ~/development/glottologist/nvim-flake#developer";
       vndr = "nix run ~/development/glottologist/nvim-flake#developer -w ~/.vimlog";
       vnl = "nix run -I ~/development/glottologist/nvim-flake";
-      nv = "nix run ~/development/glottologist/neovim-flake#developer";
+      nv = "nvim";
       nvg = "nix run github:glottologist/neovim-flake";
       nvgd = "nix run github:glottologist/neovim-flake#developer";
       nvn = "nix run ~/development/glottologist/neovim-flake";
-      nvnd = "nix run ~/development/glottologist/neovim-flake#developer";
-      nvndr = "nix run ~/development/glottologist/neovim-flake#developer -w ~/.vimlog";
+      nvnd = "nvim";
+      nvndr = "nvim -w ~/.vimlog";
       nvnl = "nix run -I ~/development/glottologist/neovim-flake";
       vpn = "nordvpn";
       vpnc = "nordvpn connect";

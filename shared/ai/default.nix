@@ -143,6 +143,15 @@ in {
               baseURL = "http://127.0.0.1:11434/v1";
             };
             models = {
+              "minimax-m2.7" = {
+                name = "MiniMax M2.7";
+              };
+              "nemotron-3-super" = {
+                name = "Nemotron 3 Super";
+              };
+              "qwen3.5" = {
+                name = "Qwen 3.5";
+              };
               "qwen3-coder-next" = {
                 name = "Qwen3 Coder Next";
               };

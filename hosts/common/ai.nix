@@ -5,7 +5,12 @@
 }: {
   services.ollama = {
     enable = true;
-    loadModels = ["qwen3-coder-next"];
+    loadModels = [
+      "minimax-m2.7"
+      "nemotron-3-super"
+      "qwen3.5"
+      "qwen3-coder-next"
+    ];
     acceleration = "rocm";
     host = "127.0.0.1";
     port = 11434;
