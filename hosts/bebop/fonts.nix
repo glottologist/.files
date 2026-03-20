@@ -29,7 +29,6 @@
       tela-circle-icon-theme # 🎯 Perfect rounded icons for Catppuccin Latte
       tela-icon-theme # Square version of Tela
       unidings
-      # weather-icon
       whitesur-icon-theme # macOS-inspired
     ];
   };

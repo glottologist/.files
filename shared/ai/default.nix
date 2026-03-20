@@ -64,6 +64,7 @@
     "${dir}/references/performance.md".text = builtins.readFile (s + "/references/performance.md");
     "${dir}/references/unsafe-audit.md".text = builtins.readFile (s + "/references/unsafe-audit.md");
     "${dir}/references/conductor.md".text = builtins.readFile (s + "/references/conductor.md");
+    "${dir}/references/writing-style.md".text = builtins.readFile (s + "/references/writing-style.md");
     # SCRIPTS
     "${dir}/scripts/run_clippy.sh" = {source = s + "/scripts/run_clippy.sh"; executable = true;};
     "${dir}/scripts/scan_duplicates.sh" = {source = s + "/scripts/scan_duplicates.sh"; executable = true;};
@@ -179,6 +180,8 @@ in {
       ".codex/skills/superplan/SKILL.md".text = builtins.readFile ../../secrets/ai/codex/skills/superplan/SKILL.md;
       ".codex/skills/implement/SKILL.md".text = builtins.readFile ../../secrets/ai/codex/skills/implement/SKILL.md;
       ".codex/skills/analyse-bench-fuzz/SKILL.md".text = builtins.readFile ../../secrets/ai/codex/skills/analyse-bench-fuzz/SKILL.md;
+      # CODEX REFERENCES
+      ".codex/references/writing-style.md".text = builtins.readFile ../../secrets/ai/codex/references/writing-style.md;
       ".gemini/GEMINI.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
       ".ouroboros/.env".text = "ANTHROPIC_API_KEY=${anthropic_api_key}\n";
     };

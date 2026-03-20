@@ -5,8 +5,8 @@
 }: {
   home.packages = with pkgs; [
     # - spiderfoot          # Automated OSINT platform (200+ modules)
-    # netcat                # Network Swiss Army knife (usually pre-installed)
-    # tcpdump               # Command-line packet analyzer (usually pre-installed)
+    netcat                # Network Swiss Army knife
+    tcpdump               # Command-line packet analyzer
     amass # Comprehensive subdomain discovery (100+ sources)
     arp-scan # ARP-level network reconnaissance
     binwalk # Firmware analysis and extraction

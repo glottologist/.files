@@ -8,7 +8,7 @@
   inherit (pkgs) vscode-utils vscode-extensions;
   native-ext = with vscode-extensions; [
     arcticicestudio.nord-visual-studio-code
-    # asvetliakov.vscode-neovim
+    asvetliakov.vscode-neovim
     b4dm4n.vscode-nixpkgs-fmt
     bbenoist.nix
     brandonkirbyson.solarized-palenight
