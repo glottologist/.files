@@ -8,7 +8,12 @@
   };
 
   virtualisation = {
-    containers.enable = true;
+    containers = {
+      enable = true;
+      containersConf.settings = {
+        containers.dns_servers = ["8.8.8.8" "1.1.1.1"];
+      };
+    };
     oci-containers.backend = "podman";
     libvirtd = {
       enable = true;
