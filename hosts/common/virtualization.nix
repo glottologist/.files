@@ -11,7 +11,7 @@
     containers = {
       enable = true;
       containersConf.settings = {
-        containers.dns_servers = ["8.8.8.8" "1.1.1.1"];
+        containers.dns_servers = ["100.64.0.7" "8.8.8.8" "1.1.1.1"];
       };
     };
     oci-containers.backend = "podman";
