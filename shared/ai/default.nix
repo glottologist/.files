@@ -4,6 +4,7 @@
   lib,
   claude-code-nix,
   codex-cli-nix,
+  gemini-cli-nix,
   ccstatusline,
   ennio,
   ...
@@ -125,7 +126,7 @@ in {
     ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
-    gemini-cli
+    gemini-cli-nix.packages.${system}.default
     (lib.lowPrio sox)
   ];
   home.file =
