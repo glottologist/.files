@@ -44,6 +44,7 @@
     "${dir}/commands/create_pr.md".text = builtins.readFile (s + "/commands/create_pr.md");
     "${dir}/commands/superplan.md".text = builtins.readFile (s + "/commands/superplan.md");
     "${dir}/commands/implement.md".text = builtins.readFile (s + "/commands/implement.md");
+    "${dir}/commands/extract_context.md".text = builtins.readFile (s + "/commands/extract_context.md");
     # SUB-AGENTS
     "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (s + "/agents/benchmark-specialist.md");
     "${dir}/agents/code-explainer.md".text = builtins.readFile (s + "/agents/code-explainer.md");
