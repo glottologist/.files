@@ -388,6 +388,7 @@ in {
       pri = "podman run -it --rm";
       prmi = "podman rmi --force (podman images | awk '{print $3}')";
       pullall = "find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;";
+      qw = "cd ~/development/quireware";
       recr = "cd ~/development/glottologist/recruitment";
       ref = "cd ~/development/reference";
       rf = "rofi -show drun -show-icons";
