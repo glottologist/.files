@@ -5,10 +5,12 @@
   claude-code-nix,
   codex-cli-nix,
   gemini-cli-nix,
+  llm-agents-nix,
   ccstatusline,
   ennio,
   ...
 }: let
+  system = pkgs.stdenv.hostPlatform.system;
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/anthropic-api-key.txt);
   s = ../../secrets/ai/claude;
 
@@ -128,6 +130,7 @@ in {
     claude-monitor
     opencode
     gemini-cli-nix.packages.${system}.default
+    llm-agents-nix.packages.${system}.coderabbit-cli
     (lib.lowPrio sox)
   ];
   home.file =
