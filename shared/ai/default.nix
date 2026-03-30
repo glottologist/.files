@@ -111,8 +111,6 @@
     "${dir}/skills/skill-creator/scripts/run_eval.py" = {source = s + "/skills/skill-creator/scripts/run_eval.py"; executable = true;};
     "${dir}/skills/skill-creator/scripts/run_loop.py" = {source = s + "/skills/skill-creator/scripts/run_loop.py"; executable = true;};
     "${dir}/skills/skill-creator/scripts/utils.py" = {source = s + "/skills/skill-creator/scripts/utils.py"; executable = true;};
-    # PLUGINS
-    "${dir}/plugins/installed_plugins.json".text = builtins.readFile (s + "/plugins/installed_plugins.json");
   };
 
   #claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
@@ -198,5 +196,12 @@ in {
       ".codex/references/writing-style.md".text = builtins.readFile ../../secrets/ai/codex/references/writing-style.md;
       ".gemini/GEMINI.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
       ".ouroboros/.env".text = "ANTHROPIC_API_KEY=${anthropic_api_key}\n";
+      # CODERABBIT PLUGIN CACHE
+      ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/.claude-plugin/plugin.json".text = builtins.readFile (s + "/plugins/coderabbit/plugin.json");
+      ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/commands/review.md".text = builtins.readFile (s + "/plugins/coderabbit/commands/review.md");
+      ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/agents/code-reviewer.md".text = builtins.readFile (s + "/plugins/coderabbit/agents/code-reviewer.md");
+      ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/skills/code-review/SKILL.md".text = builtins.readFile (s + "/plugins/coderabbit/skills/code-review/SKILL.md");
+      ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/skills/autofix/SKILL.md".text = builtins.readFile (s + "/plugins/coderabbit/skills/autofix/SKILL.md");
+      ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/skills/autofix/github.md".text = builtins.readFile (s + "/plugins/coderabbit/skills/autofix/github.md");
     };
 }
