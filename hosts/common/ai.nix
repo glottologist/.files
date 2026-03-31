@@ -6,7 +6,7 @@
   services.ollama = {
     enable = true;
     loadModels = [
-      "minimax-m2.7"
+      "minimax-m2.7:cloud"
       "nemotron-3-super"
       "qwen3.5"
       "qwen3-coder-next"

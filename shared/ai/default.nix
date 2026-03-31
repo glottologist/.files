@@ -127,7 +127,7 @@ in {
     ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
-    gemini-cli-nix.packages.${system}.default
+    # gemini-cli-nix.packages.${system}.default
     llm-agents-nix.packages.${system}.coderabbit-cli
     (lib.lowPrio sox)
   ];
