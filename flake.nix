@@ -70,11 +70,11 @@
     system = "x86_64-linux";
     pkgs-unstable = import inputs.nixpkgs-unstable {
       inherit system;
-      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" ]; };
+      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" ]; };
     };
     pkgs = import nixpkgs {
       inherit system;
-      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" ]; };
+      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" ]; };
       overlays = [
         (final: prev: {
           ollama = pkgs-unstable.ollama;
