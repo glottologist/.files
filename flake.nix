@@ -151,6 +151,33 @@
           ./hosts/athena/configuration.nix
         ];
       };
+      "hermes" = nixosSystem {
+        inherit pkgs;
+        inherit system;
+        specialArgs = {
+          username = "glottologist";
+        };
+        modules = [
+          disko.nixosModules.disko
+          stylix.nixosModules.stylix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              username = "glottologist";
+            };
+            home-manager.users.glottologist = {
+              imports = [
+                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix ennio nix-everywhere ccstatusline;};}
+                stylix.homeModules.stylix
+                ./homes/glottologist
+              ];
+            };
+          }
+          ./hosts/hermes/configuration.nix
+        ];
+      };
     };
   };
 }
