@@ -19,8 +19,8 @@
       timeout = 3;
     };
     initrd = {
-      availableKernelModules = ["xhci_pci" "ahci" "nvme" "sd_mod" "raid1"];
-      kernelModules = ["dm-raid" "md_mod" "raid1"];
+      availableKernelModules = ["xhci_pci" "ahci" "nvme" "sd_mod"];
+      kernelModules = [];
     };
     kernelModules = ["kvm-amd"];
     kernelPackages = pkgs.linuxPackages_latest;
@@ -28,10 +28,6 @@
       "vm.max_map_count" = 2147483642;
       "net.core.rmem_max" = 7500000;
       "net.core.wmem_max" = 7500000;
-    };
-    swraid = {
-      enable = true;
-      mdadmConf = "MAILADDR root";
     };
   };
 }
