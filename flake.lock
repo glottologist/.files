@@ -1874,11 +1874,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774875830,
-        "narHash": "sha256-WPYlTmZvVa9dWlAziFkVjBdv1Z6giNIq40O1DxsBmiI=",
+        "lastModified": 1775425411,
+        "narHash": "sha256-KY6HsebJHEe5nHOWP7ur09mb0drGxYSzE3rQxy62rJo=",
         "owner": "glottologist",
         "repo": "home-manager",
-        "rev": "7afd8cebb99e25a64a745765920e663478eb8830",
+        "rev": "0d02ec1d0a05f88ef9e74b516842900c41f0f2fe",
         "type": "github"
       },
       "original": {
@@ -3043,11 +3043,11 @@
     },
     "nixpkgs_14": {
       "locked": {
-        "lastModified": 1775034905,
-        "narHash": "sha256-NqRoV6KZ48TpoYtIgcgqMgyNscIlAZXviGRqsZHhPSE=",
+        "lastModified": 1775555419,
+        "narHash": "sha256-oUCtRZHSQjyhea+Hw0AP/RQmEYy2o1385E03+RQwWso=",
         "owner": "glottologist",
         "repo": "nixpkgs",
-        "rev": "e4f687fc1caadcb540453a2ce7ea9c9f2763434d",
+        "rev": "83d310d36e9d6fd7cb1964fd9ca445e9a6f314f2",
         "type": "github"
       },
       "original": {
