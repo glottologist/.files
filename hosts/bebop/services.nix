@@ -15,7 +15,10 @@ in {
     systemctl-tui
   ];
   services = {
-    chrony.enable = true;
+    chrony = {
+      enable = true;
+      extraConfig = "makestep 1 -1";
+    };
     tailscale = {
       enable = true;
       extraUpFlags = ["--accept-routes"];
