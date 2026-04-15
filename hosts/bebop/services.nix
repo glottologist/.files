@@ -7,6 +7,8 @@
   ...
 }: let
   inherit (import ./variables.nix) username;
+  syncthingSecrets = import ../../secrets/syncthing.nix;
+  hosts = import ../../secrets/hosts.nix;
 in {
   environment.systemPackages = with pkgs; [
     systemdgenie
@@ -20,6 +22,77 @@ in {
     tailscale = {
       enable = true;
       extraUpFlags = ["--accept-routes"];
+    };
+    syncthing = {
+      enable = true;
+      openDefaultPorts = true;
+      user = "${username}";
+      dataDir = "/home/${username}/syncthing";
+      configDir = "/home/${username}/syncthing/.config/syncthing";
+      settings = {
+        gui = {
+          user = "${username}";
+          password = "syncthing";
+        };
+        devices = {
+          "CALYPSO" = {
+            id = syncthingSecrets.CALYPSO_ID;
+            addresses = ["tcp://${hosts.calypso}:22000" "dynamic"];
+          };
+          "MARAUDER" = {
+            id = syncthingSecrets.MARAUDER_ID;
+            addresses = ["tcp://${hosts.marauder}:22000" "dynamic"];
+          };
+          "RAPTOR" = {id = syncthingSecrets.RAPTOR_ID;};
+          "CIRCE" = {
+            id = syncthingSecrets.CIRCE_ID;
+            addresses = ["tcp://${hosts.circe}:22000" "dynamic"];
+          };
+        };
+        folders = {
+          "BEBOP" = {
+            path = "/home/${username}/syncthing/BEBOP";
+            devices = ["CALYPSO"];
+          };
+          "MARAUDER" = {
+            path = "/home/${username}/syncthing/MARAUDER";
+            devices = ["MARAUDER"];
+          };
+          "RAPTOR" = {
+            path = "/home/${username}/syncthing/RAPTOR";
+            devices = ["RAPTOR"];
+          };
+          "CIRCE" = {
+            path = "/home/${username}/syncthing/CIRCE";
+            devices = ["CIRCE"];
+          };
+          "circe" = {
+            id = "2rhrs-g2dmh";
+            path = "/home/${username}/circe";
+            devices = ["CIRCE"];
+          };
+          "BEBOP_BACKUP" = {
+            id = "7rcyx-qs5iz";
+            path = "/home/${username}/BEBOP_BACKUP";
+            devices = ["CALYPSO"];
+          };
+          "TRANSFER" = {
+            id = "aekzk-4jpel";
+            path = "/home/${username}/TRANSFER";
+            devices = ["MARAUDER" "CALYPSO"];
+          };
+          "TRADING" = {
+            id = "vtxmx-7yym4";
+            path = "/home/${username}/development/glottologist/trading";
+            devices = ["CALYPSO"];
+          };
+          "WISECROW" = {
+            id = "uvfxc-mzysl";
+            path = "/home/${username}/development/glottologist/wisecrow";
+            devices = ["CALYPSO"];
+          };
+        };
+      };
     };
     dbus.enable = true;
     displayManager = {
@@ -90,5 +163,6 @@ in {
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       '';
     };
+    syncthing.environment.STNODEFAULTFOLDER = "true";
   };
 }
