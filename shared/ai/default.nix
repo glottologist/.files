@@ -35,7 +35,7 @@
     "${dir}/commands/plan.md".text = builtins.readFile (s + "/commands/plan.md");
     "${dir}/commands/build-fix.md".text = builtins.readFile (s + "/commands/build-fix.md");
     "${dir}/commands/handoff.md".text = builtins.readFile (s + "/commands/handoff.md");
-    "${dir}/commands/continue.md".text = builtins.readFile (s + "/commands/continue.md");
+    "${dir}/commands/carryon.md".text = builtins.readFile (s + "/commands/carryon.md");
     "${dir}/commands/external-audit.md".text = builtins.readFile (s + "/commands/external-audit.md");
     "${dir}/commands/cr_comments.md".text = builtins.readFile (s + "/commands/cr_comments.md");
     "${dir}/commands/open_issues.md".text = builtins.readFile (s + "/commands/open_issues.md");
