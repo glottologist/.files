@@ -9,6 +9,7 @@
       "minimax-m2.7:cloud"
       "nemotron-3-super"
       "qwen3.5"
+      "qwen3.6"
       "qwen3-coder-next"
     ];
     acceleration = "rocm";
