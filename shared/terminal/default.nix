@@ -9,7 +9,7 @@
     ./fastfetch/default.nix
     ./fish/default.nix
     ./foot/default.nix
-    ./zellij/default.nix
+    # ./zellij/default.nix  # TODO: re-enable when nixpkgs ships rustc 1.92 — zellij 0.44.1 MSRV mismatch
     ./kitty/default.nix
     ./ghostty/default.nix
     ./starship/default.nix
