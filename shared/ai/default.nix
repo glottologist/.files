@@ -14,6 +14,7 @@
   system = pkgs.stdenv.hostPlatform.system;
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/anthropic-api-key.txt);
   s = ../../secrets/ai/claude;
+  f = ../../secrets/ai/forge;
 
   mkClaudeFiles = dir: {
     "${dir}/CLAUDE.md".text = builtins.readFile (s + "/CLAUDE.md");
@@ -114,6 +115,81 @@
     "${dir}/skills/skill-creator/scripts/utils.py" = {source = s + "/skills/skill-creator/scripts/utils.py"; executable = true;};
   };
 
+  mkForgeFiles = dir: {
+    "${dir}/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
+    "${dir}/.mcp.json".text = builtins.readFile (s + "/mcp.json");
+    # COMMANDS (converted to Forge `name`/`description` front-matter, `{{parameters}}` body)
+    "${dir}/commands/audit.md".text = builtins.readFile (f + "/commands/audit.md");
+    "${dir}/commands/benchmark.md".text = builtins.readFile (f + "/commands/benchmark.md");
+    "${dir}/commands/commit_msg.md".text = builtins.readFile (f + "/commands/commit_msg.md");
+    "${dir}/commands/document.md".text = builtins.readFile (f + "/commands/document.md");
+    "${dir}/commands/explain.md".text = builtins.readFile (f + "/commands/explain.md");
+    "${dir}/commands/fix.md".text = builtins.readFile (f + "/commands/fix.md");
+    "${dir}/commands/investigate.md".text = builtins.readFile (f + "/commands/investigate.md");
+    "${dir}/commands/pr_desc.md".text = builtins.readFile (f + "/commands/pr_desc.md");
+    "${dir}/commands/refactor.md".text = builtins.readFile (f + "/commands/refactor.md");
+    "${dir}/commands/review.md".text = builtins.readFile (f + "/commands/review.md");
+    "${dir}/commands/review_strict.md".text = builtins.readFile (f + "/commands/review_strict.md");
+    "${dir}/commands/analyze.md".text = builtins.readFile (f + "/commands/analyze.md");
+    "${dir}/commands/interview_scorecard.md".text = builtins.readFile (f + "/commands/interview_scorecard.md");
+    "${dir}/commands/plan.md".text = builtins.readFile (f + "/commands/plan.md");
+    "${dir}/commands/build-fix.md".text = builtins.readFile (f + "/commands/build-fix.md");
+    "${dir}/commands/handoff.md".text = builtins.readFile (f + "/commands/handoff.md");
+    "${dir}/commands/carryon.md".text = builtins.readFile (f + "/commands/carryon.md");
+    "${dir}/commands/external-audit.md".text = builtins.readFile (f + "/commands/external-audit.md");
+    "${dir}/commands/cr_comments.md".text = builtins.readFile (f + "/commands/cr_comments.md");
+    "${dir}/commands/open_issues.md".text = builtins.readFile (f + "/commands/open_issues.md");
+    "${dir}/commands/issue.md".text = builtins.readFile (f + "/commands/issue.md");
+    "${dir}/commands/analyse_tests.md".text = builtins.readFile (f + "/commands/analyse_tests.md");
+    "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (f + "/commands/analyse_bench_fuzz.md");
+    "${dir}/commands/weekly_report.md".text = builtins.readFile (f + "/commands/weekly_report.md");
+    "${dir}/commands/create_pr.md".text = builtins.readFile (f + "/commands/create_pr.md");
+    "${dir}/commands/superplan.md".text = builtins.readFile (f + "/commands/superplan.md");
+    "${dir}/commands/implement.md".text = builtins.readFile (f + "/commands/implement.md");
+    "${dir}/commands/extract_context.md".text = builtins.readFile (f + "/commands/extract_context.md");
+    # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
+    "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (f + "/agents/benchmark-specialist.md");
+    "${dir}/agents/code-explainer.md".text = builtins.readFile (f + "/agents/code-explainer.md");
+    "${dir}/agents/code-reviewer.md".text = builtins.readFile (f + "/agents/code-reviewer.md");
+    "${dir}/agents/code-reviewer-strict.md".text = builtins.readFile (f + "/agents/code-reviewer-strict.md");
+    "${dir}/agents/documentation-generator.md".text = builtins.readFile (f + "/agents/documentation-generator.md");
+    "${dir}/agents/issue-fixer.md".text = builtins.readFile (f + "/agents/issue-fixer.md");
+    "${dir}/agents/security-auditor.md".text = builtins.readFile (f + "/agents/security-auditor.md");
+    "${dir}/agents/super-analyzer.md".text = builtins.readFile (f + "/agents/super-analyzer.md");
+    "${dir}/agents/planner.md".text = builtins.readFile (f + "/agents/planner.md");
+    "${dir}/agents/build-error-resolver.md".text = builtins.readFile (f + "/agents/build-error-resolver.md");
+    "${dir}/agents/investigator.md".text = builtins.readFile (f + "/agents/investigator.md");
+    "${dir}/agents/test-analyzer.md".text = builtins.readFile (f + "/agents/test-analyzer.md");
+    "${dir}/agents/external-auditor.md".text = builtins.readFile (f + "/agents/external-auditor.md");
+    "${dir}/agents/superplanner.md".text = builtins.readFile (f + "/agents/superplanner.md");
+    # SKILLS (Forge SKILL.md format is identical to Claude's, so reuse the same source files)
+    "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/rust/SKILL.md");
+    "${dir}/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/SKILL.md");
+    "${dir}/skills/coding-skills/python/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/python/SKILL.md");
+    "${dir}/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/SKILL.md");
+    "${dir}/skills/coding-skills/ocaml/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/SKILL.md");
+    "${dir}/skills/coding-skills/go/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/go/SKILL.md");
+    "${dir}/skills/coding-skills/scala/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/scala/SKILL.md");
+    "${dir}/skills/coding-skills/nix/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/nix/SKILL.md");
+    "${dir}/skills/superplan/SKILL.md".text = builtins.readFile (s + "/skills/superplan/SKILL.md");
+    "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
+    "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
+    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (s + "/skills/algorithmic-art/SKILL.md");
+    "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (s + "/skills/algorithmic-art/LICENSE.txt");
+    "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
+    "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (s + "/skills/algorithmic-art/templates/viewer.html");
+    "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (s + "/skills/conflict-resolver/SKILL.md");
+    "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (s + "/skills/skill-creator/SKILL.md");
+    "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (s + "/skills/skill-creator/LICENSE.txt");
+    "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (s + "/skills/skill-creator/agents/analyzer.md");
+    "${dir}/skills/skill-creator/agents/comparator.md".text = builtins.readFile (s + "/skills/skill-creator/agents/comparator.md");
+    "${dir}/skills/skill-creator/agents/grader.md".text = builtins.readFile (s + "/skills/skill-creator/agents/grader.md");
+    "${dir}/skills/skill-creator/references/schemas.md".text = builtins.readFile (s + "/skills/skill-creator/references/schemas.md");
+  };
+
+  forgeFiles = mkForgeFiles ".forge";
+
   #claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
   claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude-personal" ".claude-work"]);
 in {
@@ -135,6 +211,7 @@ in {
   ];
   home.file =
     claudeFiles
+    // forgeFiles
     // {
       ".config/opencode/opencode.json".text = builtins.toJSON {
         "$schema" = "https://opencode.ai/config.json";
