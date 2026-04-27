@@ -185,6 +185,7 @@ in {
       eo = "eval (opam env)";
       eop = "eval (opam env)";
       exe = "cd ~/development/exercism";
+      fcp = "forge";
       files = "cd ~/development/glottologist/.files";
       fs = "flameshot gui";
       ga = "git add";

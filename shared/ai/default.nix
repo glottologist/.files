@@ -6,6 +6,7 @@
   codex-cli-nix,
   gemini-cli-nix,
   llm-agents-nix,
+  forgecode,
   ccstatusline,
   ennio,
   ...
@@ -122,6 +123,7 @@ in {
     gorilla-cli
     claude-code-nix.packages.${system}.default
     codex-cli-nix.packages.${system}.default
+    forgecode.packages.${system}.default
     ccstatusline.packages.${system}.default
     ennio.packages.${system}.ennio
     ennio.packages.${system}.ennio-node
