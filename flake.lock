@@ -1604,11 +1604,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777188700,
-        "narHash": "sha256-t7IvJ6SEMDse/TLa1NIR2TN1frm7qa+doJk47p2Rgcw=",
+        "lastModified": 1777276003,
+        "narHash": "sha256-nVsNUPzUq8HtlGtRf57EsLo0jgbuSHEWC4tBVQnfFgk=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "bebcce5ed932461eb6e660f0a7f8b5cde154d166",
+        "rev": "43a207e201a64db23785f869286667519bb15d9e",
         "type": "github"
       },
       "original": {
@@ -2754,11 +2754,11 @@
         "zenmode": "zenmode"
       },
       "locked": {
-        "lastModified": 1777273601,
-        "narHash": "sha256-kEeDhzILXi9DbQ+QMIRK/PhGNtmxJbB1MnOk03RkObA=",
+        "lastModified": 1777276607,
+        "narHash": "sha256-UvIpMqDEQbWA+3FQJqnw5h42iesKUR7vj1kA4l/YH+c=",
         "owner": "glottologist",
         "repo": "neovim-flake",
-        "rev": "f298fd19fb178feb9b0a1fa4bd7ef911febb4ae6",
+        "rev": "13541d21b1e9fadb537a00ea9d78698c654c539a",
         "type": "github"
       },
       "original": {

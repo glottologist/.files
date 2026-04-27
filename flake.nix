@@ -84,6 +84,15 @@
           ollama-cuda = pkgs-unstable.ollama-cuda;
           ollama-vulkan = pkgs-unstable.ollama-vulkan;
         })
+        (final: prev: {
+          pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
+            (pyfinal: pyprev: {
+              jupyter-server = pyprev.jupyter-server.overridePythonAttrs (_: {
+                doCheck = false;
+              });
+            })
+          ];
+        })
       ];
     };
     nixosSystem = inputs.nixpkgs.lib.nixosSystem;
