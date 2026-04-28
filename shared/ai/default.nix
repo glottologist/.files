@@ -95,6 +95,12 @@
     "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (s + "/skills/algorithmic-art/LICENSE.txt");
     "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
     "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (s + "/skills/algorithmic-art/templates/viewer.html");
+    "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (s + "/skills/conflict-resolver/SKILL.md");
+    "${dir}/skills/conflict-resolver/evals/evals.json".text = builtins.readFile (s + "/skills/conflict-resolver/evals/evals.json");
+    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {source = s + "/skills/conflict-resolver/scripts/detect.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve-all.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {source = s + "/skills/conflict-resolver/scripts/show-conflict.sh"; executable = true;};
     "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (s + "/skills/skill-creator/SKILL.md");
     "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (s + "/skills/skill-creator/LICENSE.txt");
     "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (s + "/skills/skill-creator/agents/analyzer.md");
@@ -180,6 +186,11 @@
     "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
     "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (s + "/skills/algorithmic-art/templates/viewer.html");
     "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (s + "/skills/conflict-resolver/SKILL.md");
+    "${dir}/skills/conflict-resolver/evals/evals.json".text = builtins.readFile (s + "/skills/conflict-resolver/evals/evals.json");
+    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {source = s + "/skills/conflict-resolver/scripts/detect.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve-all.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {source = s + "/skills/conflict-resolver/scripts/show-conflict.sh"; executable = true;};
     "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (s + "/skills/skill-creator/SKILL.md");
     "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (s + "/skills/skill-creator/LICENSE.txt");
     "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (s + "/skills/skill-creator/agents/analyzer.md");
