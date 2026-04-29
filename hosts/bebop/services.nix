@@ -81,16 +81,6 @@ in {
             path = "/home/${username}/TRANSFER";
             devices = ["MARAUDER" "CALYPSO"];
           };
-          "TRADING" = {
-            id = "vtxmx-7yym4";
-            path = "/home/${username}/development/glottologist/trading";
-            devices = ["CALYPSO"];
-          };
-          "WISECROW" = {
-            id = "uvfxc-mzysl";
-            path = "/home/${username}/development/glottologist/wisecrow";
-            devices = ["CALYPSO"];
-          };
         };
       };
     };
