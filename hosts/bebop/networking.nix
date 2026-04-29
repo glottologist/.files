@@ -7,7 +7,10 @@
 }: let
   hosts = import ../../secrets/hosts.nix;
 in {
-  environment.systemPackages = with pkgs; [networkmanagerapplet];
+  environment.systemPackages = with pkgs; [
+    networkmanagerapplet
+    wireguard-tools
+  ];
   networking = {
     hostName = "bebop"; # Define your hostname.
     networkmanager = {
