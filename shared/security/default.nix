@@ -14,7 +14,6 @@
     proton-pass
     protonmail-desktop
     protonvpn-gui # GUI client for ProtonVPN
-    pinentry-curses # GnuPG's interface to passphrase input
     vault # Hashicorp vault
     yubico-pam # Yubico PAM module
     yubico-piv-tool # Used for interacting with the Privilege and Identification Card (PIV) application on a YubiKey
@@ -24,4 +23,15 @@
     veracrypt #Free Open-Source filesystem on-the-fly encryption
     yubikey-personalization # A library and command line tool to personalize YubiKeys
   ];
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    enableFishIntegration = true;
+    pinentry.package = pkgs.pinentry-gnome3;
+    defaultCacheTtl = 600;
+    defaultCacheTtlSsh = 1800;
+    maxCacheTtl = 7200;
+    maxCacheTtlSsh = 7200;
+  };
 }
