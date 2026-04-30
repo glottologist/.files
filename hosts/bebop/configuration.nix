@@ -16,6 +16,7 @@
     ./services.nix
     ./storage.nix
     ./users.nix
+    ./wireguard.nix
     ./xdg.nix
     ../common/ai.nix
     ../common/blockchain.nix
@@ -32,6 +33,6 @@
     ../common/virtualization.nix
   ];
   system = {
-    stateVersion = "25.05";
+    stateVersion = "25.11";
   };
 }
