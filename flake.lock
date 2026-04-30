@@ -1579,11 +1579,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1777537106,
-        "narHash": "sha256-YqMq/Z65v83pDrYmH7K7RD5HLfexziTJ1AKBukNubDA=",
+        "lastModified": 1777553741,
+        "narHash": "sha256-vdAOAjPDygcdvQ2HxCXHNAyrO/70sf0OR7GsDYhHcx4=",
         "owner": "tailcallhq",
         "repo": "forgecode",
-        "rev": "82ae187a3c3a2703e0c408605c20f3aca3368291",
+        "rev": "404cfed3862b9cbe0a0f4a539eb12189cdd64cd7",
         "type": "github"
       },
       "original": {
@@ -1998,11 +1998,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1777550343,
-        "narHash": "sha256-onTHP/FGrF8nDn9EWRBxyBIUm7svUI/8rr1Dz0Wm1bE=",
+        "lastModified": 1777555818,
+        "narHash": "sha256-DXP/6/nIXTy6MkCFQtcTQS5qRT5uQBS9YmjPO1Nj/3I=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "8884b9e6ce608a22c993b1a871e864171626e8e5",
+        "rev": "859bbb11e16029bfa5ad6a1418bde23f29bd7d86",
         "type": "github"
       },
       "original": {

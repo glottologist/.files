@@ -8,6 +8,8 @@
   # Source: rendered by ansible at ~/trading-stack/wg0.conf.
   # Private key lives outside the nix store at /etc/wireguard/wg0-private.key
   # (root:root, mode 0600). Create it manually before the first rebuild.
+  networking.firewall.trustedInterfaces = [ "wg0" ];
+
   networking.wg-quick.interfaces.wg0 = {
     address = [ "10.100.0.2/24" ];
     privateKeyFile = "/etc/wireguard/wg0-private.key";
