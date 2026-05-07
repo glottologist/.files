@@ -18,7 +18,7 @@
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
     gemini-cli-nix.url = "github:sadjow/gemini-cli-nix";
     llm-agents-nix.url = "github:numtide/llm-agents.nix";
-    forgecode.url = "github:tailcallhq/forgecode";
+    forgecode.url = "github:tailcallhq/forgecode/7261cdb5e039218a371ea8dd376b55ac2e22e109";
 
 
 
