@@ -83,6 +83,7 @@
           ollama-rocm = pkgs-unstable.ollama-rocm;
           ollama-cuda = pkgs-unstable.ollama-cuda;
           ollama-vulkan = pkgs-unstable.ollama-vulkan;
+          pi-coding-agent = pkgs-unstable.pi-coding-agent;
         })
         (final: prev: {
           pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
