@@ -377,6 +377,8 @@ in {
       olps = "ollama ps";
       olcp = "ollama cp";
       olrm = "ollama rm";
+      picc = "pi --provider anthropic --model claude-opus-4-7";
+      pioa = "pi --provider openai --model gpt-5.5";
       pmi = "podman images";
       pmka = "podman kill (podman ps | awk '{print $1}' | grep -v CONTAINER)";
       pmps = "podman ps";
