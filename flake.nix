@@ -7,6 +7,8 @@
     nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix/release-25.11";
     nixpkgs.url = "github:glottologist/nixpkgs/release-25.11";
+    # Pinned revision packaging Linux 7.0.3 — see hosts/bebop/boot.nix.
+    nixpkgs-bt-kernel.url = "github:glottologist/nixpkgs/bafb2e8dcc6f2b77a011a13162b478b1074fc575";
     nvim-flake.url = "github:glottologist/nvim-flake";
     neovim-flake.url = "github:glottologist/neovim-flake";
     certora-prover-flake.url = "github:glottologist/certora-prover-flake";
@@ -130,6 +132,11 @@
         inherit system;
         specialArgs = {
           username = "glottologist";
+          # Linux 7.0.3 kernel, pinned for the MT7922 Bluetooth regression.
+          btKernelPackages = (import inputs.nixpkgs-bt-kernel {
+            inherit system;
+            config = { allowUnfree = true; };
+          }).linuxPackages_latest;
         };
         modules = [
           stylix.nixosModules.stylix

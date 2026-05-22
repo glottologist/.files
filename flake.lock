@@ -1994,11 +1994,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1779392427,
-        "narHash": "sha256-0SiD8JBx6cU0KL1XjLMsR/nSZB5XY3uhrNnvfxH0CtY=",
+        "lastModified": 1779444634,
+        "narHash": "sha256-/GsERxVHcW4OsPb0GQc8kHdruBkOy3N2FDFPzzt7Wxw=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "8b7110cc68662a343b6839f292ac0f44a64c3364",
+        "rev": "be2659c1b9b67cc81ea6119601b6860ce1c1beb5",
         "type": "github"
       },
       "original": {
@@ -2328,11 +2328,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1779437672,
-        "narHash": "sha256-Hxa1DQsBr/h9AEEQRPUhjg8fTkUEYoKVGwMCSmhNwoo=",
+        "lastModified": 1779440763,
+        "narHash": "sha256-MiCxxwf0v41G9p3Eq5Z9NQKdJotroeFwKCZjT6FGCLg=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "0808501cf1f2de532471e11e1955654466d26489",
+        "rev": "710ce07208cbfe9fc0b9f15c8d0f7602b8aa56bf",
         "type": "github"
       },
       "original": {
@@ -2898,6 +2898,22 @@
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "a62e6edd6d5e1fa0329b8653c801147986f8d446",
+        "type": "github"
+      }
+    },
+    "nixpkgs-bt-kernel": {
+      "locked": {
+        "lastModified": 1778062110,
+        "narHash": "sha256-GMszsFAIk6PkxMCeLVb09yvKt1ssP2pu42mGUFSGAvs=",
+        "owner": "glottologist",
+        "repo": "nixpkgs",
+        "rev": "bafb2e8dcc6f2b77a011a13162b478b1074fc575",
+        "type": "github"
+      },
+      "original": {
+        "owner": "glottologist",
+        "repo": "nixpkgs",
+        "rev": "bafb2e8dcc6f2b77a011a13162b478b1074fc575",
         "type": "github"
       }
     },
@@ -4168,6 +4184,7 @@
         "nix": "nix",
         "nix-everywhere": "nix-everywhere",
         "nixpkgs": "nixpkgs_15",
+        "nixpkgs-bt-kernel": "nixpkgs-bt-kernel",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvf": "nvf",
         "nvim-flake": "nvim-flake",

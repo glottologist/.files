@@ -3,6 +3,7 @@
   lib,
   pkgs,
   modulesPath,
+  btKernelPackages,
   ...
 }: {
   imports = [
@@ -30,11 +31,14 @@
 
     };
     kernelModules = ["kvm-amd" "v4l2loopback" "mt7921e"];
-    # Pinned off linuxPackages_latest: kernel 7.0.9 regressed the MT7922
-    # btmtk driver ("hci0: Failed to send wmt func ctrl -22"), so Bluetooth
-    # never initialises. 7.0.3 was last-good; 6.18 is the newest maintained
-    # series below the broken 7.0 line. Revert to _latest once fixed upstream.
-    kernelPackages = pkgs.linuxPackages_6_18;
+    # MT7922 Bluetooth regression: a btmtk change after Linux 7.0.3 breaks
+    # the WMT firmware handshake ("hci0: Failed to send wmt func ctrl -22")
+    # and the controller never initialises. Verified: 7.0.3 works, while
+    # 6.18.32 and 7.0.9 both fail (the bad commit is in 6.18-stable too).
+    # USB autosuspend was ruled out by direct test. Pinned to 7.0.3 — the
+    # last proven-good kernel — via the nixpkgs-bt-kernel flake input;
+    # revert to pkgs.linuxPackages_latest once fixed upstream.
+    kernelPackages = btKernelPackages;
     extraModprobeConfig = ''
       # Fix MediaTek MT7925e wifi disconnection issues
       options mt7925e disable_aspm=1
