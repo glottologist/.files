@@ -80,6 +80,27 @@
     "${dir}/hooks/notify.sh" = {source = s + "/hooks/notify.sh"; executable = true;};
     # SKILLS
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/rust/SKILL.md");
+    # SKILL REFERENCE FILES (shared principles + per-language deep-dives)
+    "${dir}/skills/coding-skills/shared/COMMON.md".text = builtins.readFile (s + "/skills/coding-skills/shared/COMMON.md");
+    "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (s + "/skills/coding-skills/shared/references/security-basics.md");
+    "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/advanced-types.md");
+    "${dir}/skills/coding-skills/rust/references/arithmetic-safety.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/arithmetic-safety.md");
+    "${dir}/skills/coding-skills/rust/references/async.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/async.md");
+    "${dir}/skills/coding-skills/rust/references/ffi.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/ffi.md");
+    "${dir}/skills/coding-skills/rust/references/macros.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/macros.md");
+    "${dir}/skills/coding-skills/rust/references/performance.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/performance.md");
+    "${dir}/skills/coding-skills/go/references/concurrency.md".text = builtins.readFile (s + "/skills/coding-skills/go/references/concurrency.md");
+    "${dir}/skills/coding-skills/go/references/performance.md".text = builtins.readFile (s + "/skills/coding-skills/go/references/performance.md");
+    "${dir}/skills/coding-skills/haskell/references/advanced-patterns.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/references/advanced-patterns.md");
+    "${dir}/skills/coding-skills/nix/references/derivations.md".text = builtins.readFile (s + "/skills/coding-skills/nix/references/derivations.md");
+    "${dir}/skills/coding-skills/ocaml/references/concurrency.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/references/concurrency.md");
+    "${dir}/skills/coding-skills/ocaml/references/modules.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/references/modules.md");
+    "${dir}/skills/coding-skills/python/references/advanced-patterns.md".text = builtins.readFile (s + "/skills/coding-skills/python/references/advanced-patterns.md");
+    "${dir}/skills/coding-skills/scala/references/functional.md".text = builtins.readFile (s + "/skills/coding-skills/scala/references/functional.md");
+    "${dir}/skills/coding-skills/scala/references/type-system.md".text = builtins.readFile (s + "/skills/coding-skills/scala/references/type-system.md");
+    "${dir}/skills/coding-skills/typescript/references/effect.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/effect.md");
+    "${dir}/skills/coding-skills/typescript/references/ffi.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/ffi.md");
+    "${dir}/skills/coding-skills/typescript/references/refactoring.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/refactoring.md");
     "${dir}/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/SKILL.md");
     "${dir}/skills/coding-skills/python/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/python/SKILL.md");
     "${dir}/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/SKILL.md");
@@ -170,6 +191,27 @@
     "${dir}/agents/superplanner.md".text = builtins.readFile (f + "/agents/superplanner.md");
     # SKILLS (Forge SKILL.md format is identical to Claude's, so reuse the same source files)
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/rust/SKILL.md");
+    # SKILL REFERENCE FILES (shared principles + per-language deep-dives)
+    "${dir}/skills/coding-skills/shared/COMMON.md".text = builtins.readFile (s + "/skills/coding-skills/shared/COMMON.md");
+    "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (s + "/skills/coding-skills/shared/references/security-basics.md");
+    "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/advanced-types.md");
+    "${dir}/skills/coding-skills/rust/references/arithmetic-safety.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/arithmetic-safety.md");
+    "${dir}/skills/coding-skills/rust/references/async.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/async.md");
+    "${dir}/skills/coding-skills/rust/references/ffi.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/ffi.md");
+    "${dir}/skills/coding-skills/rust/references/macros.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/macros.md");
+    "${dir}/skills/coding-skills/rust/references/performance.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/performance.md");
+    "${dir}/skills/coding-skills/go/references/concurrency.md".text = builtins.readFile (s + "/skills/coding-skills/go/references/concurrency.md");
+    "${dir}/skills/coding-skills/go/references/performance.md".text = builtins.readFile (s + "/skills/coding-skills/go/references/performance.md");
+    "${dir}/skills/coding-skills/haskell/references/advanced-patterns.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/references/advanced-patterns.md");
+    "${dir}/skills/coding-skills/nix/references/derivations.md".text = builtins.readFile (s + "/skills/coding-skills/nix/references/derivations.md");
+    "${dir}/skills/coding-skills/ocaml/references/concurrency.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/references/concurrency.md");
+    "${dir}/skills/coding-skills/ocaml/references/modules.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/references/modules.md");
+    "${dir}/skills/coding-skills/python/references/advanced-patterns.md".text = builtins.readFile (s + "/skills/coding-skills/python/references/advanced-patterns.md");
+    "${dir}/skills/coding-skills/scala/references/functional.md".text = builtins.readFile (s + "/skills/coding-skills/scala/references/functional.md");
+    "${dir}/skills/coding-skills/scala/references/type-system.md".text = builtins.readFile (s + "/skills/coding-skills/scala/references/type-system.md");
+    "${dir}/skills/coding-skills/typescript/references/effect.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/effect.md");
+    "${dir}/skills/coding-skills/typescript/references/ffi.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/ffi.md");
+    "${dir}/skills/coding-skills/typescript/references/refactoring.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/refactoring.md");
     "${dir}/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/SKILL.md");
     "${dir}/skills/coding-skills/python/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/python/SKILL.md");
     "${dir}/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/SKILL.md");
@@ -234,6 +276,27 @@
     "${dir}/prompts/extract_context.md".text = builtins.readFile (f + "/commands/extract_context.md");
     # SKILLS — pi follows the Agent Skills standard, identical to Claude/forge.
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/rust/SKILL.md");
+    # SKILL REFERENCE FILES (shared principles + per-language deep-dives)
+    "${dir}/skills/coding-skills/shared/COMMON.md".text = builtins.readFile (s + "/skills/coding-skills/shared/COMMON.md");
+    "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (s + "/skills/coding-skills/shared/references/security-basics.md");
+    "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/advanced-types.md");
+    "${dir}/skills/coding-skills/rust/references/arithmetic-safety.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/arithmetic-safety.md");
+    "${dir}/skills/coding-skills/rust/references/async.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/async.md");
+    "${dir}/skills/coding-skills/rust/references/ffi.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/ffi.md");
+    "${dir}/skills/coding-skills/rust/references/macros.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/macros.md");
+    "${dir}/skills/coding-skills/rust/references/performance.md".text = builtins.readFile (s + "/skills/coding-skills/rust/references/performance.md");
+    "${dir}/skills/coding-skills/go/references/concurrency.md".text = builtins.readFile (s + "/skills/coding-skills/go/references/concurrency.md");
+    "${dir}/skills/coding-skills/go/references/performance.md".text = builtins.readFile (s + "/skills/coding-skills/go/references/performance.md");
+    "${dir}/skills/coding-skills/haskell/references/advanced-patterns.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/references/advanced-patterns.md");
+    "${dir}/skills/coding-skills/nix/references/derivations.md".text = builtins.readFile (s + "/skills/coding-skills/nix/references/derivations.md");
+    "${dir}/skills/coding-skills/ocaml/references/concurrency.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/references/concurrency.md");
+    "${dir}/skills/coding-skills/ocaml/references/modules.md".text = builtins.readFile (s + "/skills/coding-skills/ocaml/references/modules.md");
+    "${dir}/skills/coding-skills/python/references/advanced-patterns.md".text = builtins.readFile (s + "/skills/coding-skills/python/references/advanced-patterns.md");
+    "${dir}/skills/coding-skills/scala/references/functional.md".text = builtins.readFile (s + "/skills/coding-skills/scala/references/functional.md");
+    "${dir}/skills/coding-skills/scala/references/type-system.md".text = builtins.readFile (s + "/skills/coding-skills/scala/references/type-system.md");
+    "${dir}/skills/coding-skills/typescript/references/effect.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/effect.md");
+    "${dir}/skills/coding-skills/typescript/references/ffi.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/ffi.md");
+    "${dir}/skills/coding-skills/typescript/references/refactoring.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/references/refactoring.md");
     "${dir}/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/typescript/SKILL.md");
     "${dir}/skills/coding-skills/python/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/python/SKILL.md");
     "${dir}/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/haskell/SKILL.md");
