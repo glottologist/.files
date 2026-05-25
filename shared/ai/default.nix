@@ -49,6 +49,7 @@
     "${dir}/commands/superplan.md".text = builtins.readFile (s + "/commands/superplan.md");
     "${dir}/commands/implement.md".text = builtins.readFile (s + "/commands/implement.md");
     "${dir}/commands/extract_context.md".text = builtins.readFile (s + "/commands/extract_context.md");
+    "${dir}/commands/osint.md".text = builtins.readFile (s + "/commands/osint.md");
     # SUB-AGENTS
     "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (s + "/agents/benchmark-specialist.md");
     "${dir}/agents/code-explainer.md".text = builtins.readFile (s + "/agents/code-explainer.md");
@@ -140,6 +141,12 @@
     "${dir}/skills/skill-creator/scripts/run_eval.py" = {source = s + "/skills/skill-creator/scripts/run_eval.py"; executable = true;};
     "${dir}/skills/skill-creator/scripts/run_loop.py" = {source = s + "/skills/skill-creator/scripts/run_loop.py"; executable = true;};
     "${dir}/skills/skill-creator/scripts/utils.py" = {source = s + "/skills/skill-creator/scripts/utils.py"; executable = true;};
+    "${dir}/skills/osint-investigator/SKILL.md".text = builtins.readFile (s + "/skills/osint-investigator/SKILL.md");
+    "${dir}/skills/osint-investigator/references/pivots.md".text = builtins.readFile (s + "/skills/osint-investigator/references/pivots.md");
+    "${dir}/skills/osint-investigator/references/verification.md".text = builtins.readFile (s + "/skills/osint-investigator/references/verification.md");
+    "${dir}/skills/osint-investigator/references/tools.md".text = builtins.readFile (s + "/skills/osint-investigator/references/tools.md");
+    "${dir}/skills/osint-investigator/references/psychoprofile.md".text = builtins.readFile (s + "/skills/osint-investigator/references/psychoprofile.md");
+    "${dir}/skills/osint-investigator/references/dossier.md".text = builtins.readFile (s + "/skills/osint-investigator/references/dossier.md");
   };
 
   mkForgeFiles = dir: {
