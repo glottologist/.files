@@ -7,6 +7,7 @@
     google-chrome # Chrome browser
     qutebrowser # Keyboard-focused browser with a minimal GUI.
     tor-browser # Tor Browser Bundle built by torproject.org
+    zen-browser # Zen browser (Firefox-based)
   ];
 
   xdg.configFile."qutebrowser/config.py".text = builtins.readFile ../../secrets/qb_config.py;

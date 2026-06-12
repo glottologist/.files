@@ -46,6 +46,10 @@
       url = "github:shazow/foundry.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -74,11 +78,11 @@
     system = "x86_64-linux";
     pkgs-unstable = import inputs.nixpkgs-unstable {
       inherit system;
-      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" ]; };
+      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1" ]; };
     };
     pkgs = import nixpkgs {
       inherit system;
-      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" ]; };
+      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1" ]; };
       overlays = [
         (final: prev: {
           ollama = pkgs-unstable.ollama;
@@ -86,6 +90,9 @@
           ollama-cuda = pkgs-unstable.ollama-cuda;
           ollama-vulkan = pkgs-unstable.ollama-vulkan;
           pi-coding-agent = pkgs-unstable.pi-coding-agent;
+        })
+        (final: prev: {
+          zen-browser = inputs.zen-browser.packages.${system}.default;
         })
         (final: prev: {
           pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
