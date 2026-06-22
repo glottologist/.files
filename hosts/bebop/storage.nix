@@ -12,7 +12,7 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [17500];
+    allowedTCPPorts = [17500 8088 8083];
     allowedUDPPorts = [17500];
     checkReversePath = false; # Disable reverse path filtering for VPN compatibility
   };
