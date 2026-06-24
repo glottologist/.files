@@ -5,15 +5,15 @@
 
   inputs = {
     nvf.url = "github:notashelf/nvf";
-    stylix.url = "github:danth/stylix/release-25.11";
-    nixpkgs.url = "github:glottologist/nixpkgs/release-25.11";
+    stylix.url = "github:danth/stylix/release-26.05";
+    nixpkgs.url = "github:glottologist/nixpkgs/release-26.05";
     # Pinned revision packaging Linux 7.0.3 — see hosts/bebop/boot.nix.
     nixpkgs-bt-kernel.url = "github:glottologist/nixpkgs/bafb2e8dcc6f2b77a011a13162b478b1074fc575";
     nvim-flake.url = "github:glottologist/nvim-flake";
     neovim-flake.url = "github:glottologist/neovim-flake";
     certora-prover-flake.url = "github:glottologist/certora-prover-flake";
     home-manager = {
-      url = "github:glottologist/home-manager/release-25.11";
+      url = "github:glottologist/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code-nix.url = "github:sadjow/claude-code-nix";
@@ -21,9 +21,6 @@
     gemini-cli-nix.url = "github:sadjow/gemini-cli-nix";
     llm-agents-nix.url = "github:numtide/llm-agents.nix";
     forgecode.url = "github:tailcallhq/forgecode/7261cdb5e039218a371ea8dd376b55ac2e22e109";
-
-
-
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -78,11 +75,17 @@
     system = "x86_64-linux";
     pkgs-unstable = import inputs.nixpkgs-unstable {
       inherit system;
-      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1" ]; };
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
+      };
     };
     pkgs = import nixpkgs {
       inherit system;
-      config = { allowUnfree = true; permittedInsecurePackages = [ "electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1" ]; };
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
+      };
       overlays = [
         (final: prev: {
           ollama = pkgs-unstable.ollama;
@@ -95,13 +98,15 @@
           zen-browser = inputs.zen-browser.packages.${system}.default;
         })
         (final: prev: {
-          pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
-            (pyfinal: pyprev: {
-              jupyter-server = pyprev.jupyter-server.overridePythonAttrs (_: {
-                doCheck = false;
-              });
-            })
-          ];
+          pythonPackagesExtensions =
+            (prev.pythonPackagesExtensions or [])
+            ++ [
+              (pyfinal: pyprev: {
+                jupyter-server = pyprev.jupyter-server.overridePythonAttrs (_: {
+                  doCheck = false;
+                });
+              })
+            ];
         })
       ];
     };
@@ -140,10 +145,11 @@
         specialArgs = {
           username = "glottologist";
           # Linux 7.0.3 kernel, pinned for the MT7922 Bluetooth regression.
-          btKernelPackages = (import inputs.nixpkgs-bt-kernel {
-            inherit system;
-            config = { allowUnfree = true; };
-          }).linuxPackages_latest;
+          btKernelPackages =
+            (import inputs.nixpkgs-bt-kernel {
+              inherit system;
+              config = {allowUnfree = true;};
+            }).linuxPackages_latest;
         };
         modules = [
           stylix.nixosModules.stylix

@@ -10,6 +10,7 @@
   programs.nix-ld.libraries = with pkgs; [zlib];
   environment.systemPackages = with pkgs; [
     amfora # Fancy Terminal Browser For Gemini Protocol
+    android-tools # Android Platform Tools Including adb And fastboot
     appimage-run # Needed For AppImage Support
     brave
     tor # The Overlay Netwrok
@@ -85,7 +86,6 @@
     fuse.userAllowOther = true;
     virt-manager.enable = true;
     mtr.enable = true;
-    adb.enable = true;
     thunar = {
       enable = true;
       plugins = with pkgs.xfce; [

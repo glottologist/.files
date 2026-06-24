@@ -12,7 +12,7 @@
       "qwen3.6"
       "qwen3-coder-next"
     ];
-    acceleration = "rocm";
+    package = pkgs.ollama-rocm;
     host = "127.0.0.1";
     port = 11434;
   };
