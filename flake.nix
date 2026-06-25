@@ -77,14 +77,14 @@
       inherit system;
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
+        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.7.1155" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
       };
     };
     pkgs = import nixpkgs {
       inherit system;
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.6.10201" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
+        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.7.1155" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
       };
       overlays = [
         (final: prev: {
@@ -104,6 +104,12 @@
               (pyfinal: pyprev: {
                 jupyter-server = pyprev.jupyter-server.overridePythonAttrs (_: {
                   doCheck = false;
+                });
+                # vLLM dep: upstream pins starlette<1.0.0 but 26.05 ships 1.1.0.
+                # The cap is a conservative upper bound — relax it so the
+                # runtime-deps check passes.
+                prometheus-fastapi-instrumentator = pyprev.prometheus-fastapi-instrumentator.overridePythonAttrs (old: {
+                  pythonRelaxDeps = (old.pythonRelaxDeps or []) ++ ["starlette"];
                 });
               })
             ];

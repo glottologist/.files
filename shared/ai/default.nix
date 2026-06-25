@@ -338,6 +338,10 @@
 
   #claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
   claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude-personal" ".claude-work"]);
+
+  # Context-compression layer (Core + MCP) — installed from the upstream
+  # prebuilt wheel; see ./headroom.nix for why source build is avoided.
+  headroom = pkgs.python3Packages.callPackage ./headroom.nix {};
 in {
   home.packages = with pkgs; [
     lmstudio
@@ -352,6 +356,7 @@ in {
     ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
+    headroom
     # gemini-cli-nix.packages.${system}.default
     llm-agents-nix.packages.${system}.coderabbit-cli
     (lib.lowPrio sox)

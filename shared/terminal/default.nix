@@ -34,7 +34,7 @@
     tldr # Community driven manpages
     tmux-cssh
     tmate # Instant terminal sharing
-    neofetch # Collect system settings
+    fastfetch # Collect system settings
     wayshot # A native, blazing-fast screenshot tool for wlroots based compositors such as sway and river
   ];
 

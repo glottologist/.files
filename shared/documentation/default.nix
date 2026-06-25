@@ -9,7 +9,6 @@
     mdbook-mermaid # A backend for mdBook written in Rust for mermaid
     mdbook-pdf # A backend for mdBook written in Rust for generating PDF
     mdslides # A slideshow presentation tool
-    notepadqq # Notepad++-like editor for the Linux desktop
     ghostscript # PostScript and PDF interpreter and renderer
     poppler-utils # PDF utils lib
     slides #Terminal based presentation tool

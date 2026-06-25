@@ -13,7 +13,7 @@
     pass # Stores, retrieves, generates, and synchronizes passwords securely
     proton-pass
     protonmail-desktop
-    protonvpn-gui # GUI client for ProtonVPN
+    proton-vpn # GUI client for ProtonVPN
     vault # Hashicorp vault
     yubico-pam # Yubico PAM module
     yubico-piv-tool # Used for interacting with the Privilege and Identification Card (PIV) application on a YubiKey

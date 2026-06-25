@@ -10,7 +10,7 @@
     nix-template
     nix-top
     nix-tree
-    nixfmt-classic
+    nixfmt
     nixos-generators
     nixos-shell
     nox

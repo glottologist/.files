@@ -4,11 +4,25 @@
   pkgs,
   stdenv,
   ...
-}: {
+}:
+let
+  # AnyDesk pulled the 8.0.2 tarball from their CDN, so the nixpkgs pin fails
+  # with a 404. 8.0.3 is the current upstream release; we repin the source and
+  # hash until nixpkgs catches up.
+  anydesk = pkgs.anydesk.overrideAttrs (_: {
+    version = "8.0.3";
+    src = pkgs.fetchurl {
+      urls = [
+        "https://download.anydesk.com/linux/anydesk-8.0.3-amd64.tar.gz"
+        "https://download.anydesk.com/linux/generic-linux/anydesk-8.0.3-amd64.tar.gz"
+      ];
+      hash = "sha256-Mjl17hh5A/pwRAi7giL1SJYlQ61O0SXX+KeH8STZ4bs=";
+    };
+  });
+in {
   home.packages = with pkgs; [
-    anydesk
+    anydesk # repinned to 8.0.3 in the let above; upstream 404'd 8.0.2
     bmon # Network bandwidth monitor
-    fast-cli # Test your download and upload speed using fast.com
     gping # Graphical ping
     inetutils # Collection of common network programs
     ipcalc # Simple IP network calculator

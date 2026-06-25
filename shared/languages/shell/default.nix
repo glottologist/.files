@@ -3,7 +3,7 @@
     bashate
     beautysh
      (pkgs.bats.withLibraries (p: [ p.bats-assert p.bats-file p.bats-support ]))
-      nodePackages.bash-language-server
+      bash-language-server
       shellcheck
       shfmt
   ];

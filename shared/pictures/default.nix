@@ -7,7 +7,7 @@
     feh
     gthumb
     shotwell
-    xfce.ristretto
+    ristretto
     imagemagick
 
   ];

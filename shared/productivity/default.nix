@@ -31,7 +31,6 @@
     youtube-dl # Command line video downloader
     youtube-tui # YouTube TUI
     tartube # A GUI front end for youtube-dl
-    clipgrab # Video download for YouTube
     yt-dlp
   ];
 

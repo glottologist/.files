@@ -52,7 +52,7 @@
     ncdu
     nemo-with-extensions
     ninja
-    nixfmt-rfc-style
+    nixfmt
     pavucontrol
     pciutils
     picard
@@ -88,7 +88,7 @@
     mtr.enable = true;
     thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-archive-plugin
         thunar-volman
         thunar-dropbox-plugin
