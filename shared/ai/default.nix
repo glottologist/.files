@@ -352,8 +352,8 @@ in {
     forgecode.packages.${system}.default
     pi-coding-agent
     ccstatusline.packages.${system}.default
-    ennio.packages.${system}.ennio
-    ennio.packages.${system}.ennio-node
+    #ennio.packages.${system}.ennio
+    #ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
     headroom

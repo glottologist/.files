@@ -33,7 +33,7 @@ in {
       "$modifier,Q,killactive,"
       "$modifier,P,pseudo,"
       "$modifier,V,exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-      "$modifier SHIFT,I,togglesplit,"
+      "$modifier SHIFT,I,layoutmsg,togglesplit"
       "$modifier,F,fullscreen,"
       "$modifier SHIFT,F,togglefloating,"
       "$modifier ALT,F,workspaceopt, allfloat"

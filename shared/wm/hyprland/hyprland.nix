@@ -43,6 +43,11 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.hyprland;
+    # HM 26.05 defaults configType to "lua" at stateVersion >= 26.05, which
+    # writes hyprland.lua and pastes extraConfig verbatim — but extraConfig
+    # below is hyprlang syntax (monitor=, #comments), invalid as Lua. Pin to
+    # the pre-26.05 generator so hyprland.conf is written as before.
+    configType = "hyprlang";
     systemd = {
       enable = true;
       enableXdgAutostart = true;
@@ -52,6 +57,13 @@ in {
       enable = true;
     };
     settings = {
+      # Declare at the top level so the generator emits it before any bind=
+      # line. HM 26.05's toHyprconf treats every list (including bind) as a
+      # section, ordered alphabetically ahead of the general block. A $modifier
+      # nested in general is therefore written after its first use, which
+      # Hyprland rejects with "Invalid mod". Top-level $-vars are emitted first.
+      "$modifier" = "SUPER";
+
       exec-once = [
         "wl-paste --type text --watch cliphist store # Stores only text data"
         "wl-paste --type image --watch cliphist store # Stores only image data"
@@ -95,7 +107,6 @@ in {
       };
 
       general = {
-        "$modifier" = "SUPER";
         layout = "dwindle";
         gaps_in = 6;
         gaps_out = 8;
@@ -113,7 +124,6 @@ in {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         enable_swallow = false;
-        vfr = true; # Variable Frame Rate
         vrr = 0; # Disabled - was causing freezes on AMD Strix Point
         # Screen flashing to black momentarily or going black when app is fullscreen
         # Try setting vrr to 0
@@ -123,8 +133,13 @@ in {
         anr_missed_pings = 20;
       };
 
+      # vfr (Variable Frame Rate) moved from misc: to debug: in Hyprland 0.55.
+      # On by default; kept explicit to preserve intent.
+      debug = {
+        vfr = true; # Variable Frame Rate
+      };
+
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
         force_split = 2;
       };

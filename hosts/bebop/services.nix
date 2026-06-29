@@ -92,7 +92,7 @@ in {
       };
       defaultSession = "hyprland";
     };
-    #desktopManager.plasma6.enable = true;
+    desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
     printing.enable = true;
     libinput.enable = true;
