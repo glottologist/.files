@@ -17,7 +17,10 @@
     loader = {
       systemd-boot = {
 	  enable = lib.mkDefault true;
-	  configurationLimit = 2;
+	  # 96M ESP is shared with Windows (~30M), leaving ~66M for NixOS. One
+	  # generation (initrd 28M + kernel 13M ≈ 41M) fits; two (~69M) overflow
+	  # the partition and the bootloader install fails on initrd copy.
+	  configurationLimit = 1;
 	  };
       efi.canTouchEfiVariables = lib.mkDefault true;
       timeout = 0;

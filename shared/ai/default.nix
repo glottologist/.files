@@ -73,12 +73,27 @@
     "${dir}/references/conductor.md".text = builtins.readFile (s + "/references/conductor.md");
     "${dir}/references/writing-style.md".text = builtins.readFile (s + "/references/writing-style.md");
     # SCRIPTS
-    "${dir}/scripts/run_clippy.sh" = {source = s + "/scripts/run_clippy.sh"; executable = true;};
-    "${dir}/scripts/scan_duplicates.sh" = {source = s + "/scripts/scan_duplicates.sh"; executable = true;};
-    "${dir}/scripts/detect_test_violations.sh" = {source = s + "/scripts/detect_test_violations.sh"; executable = true;};
-    "${dir}/scripts/detect_trivial_tests.sh" = {source = s + "/scripts/detect_trivial_tests.sh"; executable = true;};
+    "${dir}/scripts/run_clippy.sh" = {
+      source = s + "/scripts/run_clippy.sh";
+      executable = true;
+    };
+    "${dir}/scripts/scan_duplicates.sh" = {
+      source = s + "/scripts/scan_duplicates.sh";
+      executable = true;
+    };
+    "${dir}/scripts/detect_test_violations.sh" = {
+      source = s + "/scripts/detect_test_violations.sh";
+      executable = true;
+    };
+    "${dir}/scripts/detect_trivial_tests.sh" = {
+      source = s + "/scripts/detect_trivial_tests.sh";
+      executable = true;
+    };
     # HOOKS
-    "${dir}/hooks/notify.sh" = {source = s + "/hooks/notify.sh"; executable = true;};
+    "${dir}/hooks/notify.sh" = {
+      source = s + "/hooks/notify.sh";
+      executable = true;
+    };
     # SKILLS
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (s + "/skills/coding-skills/rust/SKILL.md");
     # SKILL REFERENCE FILES (shared principles + per-language deep-dives)
@@ -119,10 +134,22 @@
     "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (s + "/skills/algorithmic-art/templates/viewer.html");
     "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (s + "/skills/conflict-resolver/SKILL.md");
     "${dir}/skills/conflict-resolver/evals/evals.json".text = builtins.readFile (s + "/skills/conflict-resolver/evals/evals.json");
-    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {source = s + "/skills/conflict-resolver/scripts/detect.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve-all.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {source = s + "/skills/conflict-resolver/scripts/show-conflict.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/detect.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/resolve.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/resolve-all.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/show-conflict.sh";
+      executable = true;
+    };
     "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (s + "/skills/skill-creator/SKILL.md");
     "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (s + "/skills/skill-creator/LICENSE.txt");
     "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (s + "/skills/skill-creator/agents/analyzer.md");
@@ -131,16 +158,43 @@
     "${dir}/skills/skill-creator/references/schemas.md".text = builtins.readFile (s + "/skills/skill-creator/references/schemas.md");
     "${dir}/skills/skill-creator/assets/eval_review.html".text = builtins.readFile (s + "/skills/skill-creator/assets/eval_review.html");
     "${dir}/skills/skill-creator/eval-viewer/viewer.html".text = builtins.readFile (s + "/skills/skill-creator/eval-viewer/viewer.html");
-    "${dir}/skills/skill-creator/eval-viewer/generate_review.py" = {source = s + "/skills/skill-creator/eval-viewer/generate_review.py"; executable = true;};
+    "${dir}/skills/skill-creator/eval-viewer/generate_review.py" = {
+      source = s + "/skills/skill-creator/eval-viewer/generate_review.py";
+      executable = true;
+    };
     "${dir}/skills/skill-creator/scripts/__init__.py".text = builtins.readFile (s + "/skills/skill-creator/scripts/__init__.py");
-    "${dir}/skills/skill-creator/scripts/aggregate_benchmark.py" = {source = s + "/skills/skill-creator/scripts/aggregate_benchmark.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/generate_report.py" = {source = s + "/skills/skill-creator/scripts/generate_report.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/improve_description.py" = {source = s + "/skills/skill-creator/scripts/improve_description.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/package_skill.py" = {source = s + "/skills/skill-creator/scripts/package_skill.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/quick_validate.py" = {source = s + "/skills/skill-creator/scripts/quick_validate.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/run_eval.py" = {source = s + "/skills/skill-creator/scripts/run_eval.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/run_loop.py" = {source = s + "/skills/skill-creator/scripts/run_loop.py"; executable = true;};
-    "${dir}/skills/skill-creator/scripts/utils.py" = {source = s + "/skills/skill-creator/scripts/utils.py"; executable = true;};
+    "${dir}/skills/skill-creator/scripts/aggregate_benchmark.py" = {
+      source = s + "/skills/skill-creator/scripts/aggregate_benchmark.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/generate_report.py" = {
+      source = s + "/skills/skill-creator/scripts/generate_report.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/improve_description.py" = {
+      source = s + "/skills/skill-creator/scripts/improve_description.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/package_skill.py" = {
+      source = s + "/skills/skill-creator/scripts/package_skill.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/quick_validate.py" = {
+      source = s + "/skills/skill-creator/scripts/quick_validate.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/run_eval.py" = {
+      source = s + "/skills/skill-creator/scripts/run_eval.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/run_loop.py" = {
+      source = s + "/skills/skill-creator/scripts/run_loop.py";
+      executable = true;
+    };
+    "${dir}/skills/skill-creator/scripts/utils.py" = {
+      source = s + "/skills/skill-creator/scripts/utils.py";
+      executable = true;
+    };
     "${dir}/skills/osint-investigator/SKILL.md".text = builtins.readFile (s + "/skills/osint-investigator/SKILL.md");
     "${dir}/skills/osint-investigator/references/pivots.md".text = builtins.readFile (s + "/skills/osint-investigator/references/pivots.md");
     "${dir}/skills/osint-investigator/references/verification.md".text = builtins.readFile (s + "/skills/osint-investigator/references/verification.md");
@@ -236,10 +290,22 @@
     "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (s + "/skills/algorithmic-art/templates/viewer.html");
     "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (s + "/skills/conflict-resolver/SKILL.md");
     "${dir}/skills/conflict-resolver/evals/evals.json".text = builtins.readFile (s + "/skills/conflict-resolver/evals/evals.json");
-    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {source = s + "/skills/conflict-resolver/scripts/detect.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve-all.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {source = s + "/skills/conflict-resolver/scripts/show-conflict.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/detect.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/resolve.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/resolve-all.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/show-conflict.sh";
+      executable = true;
+    };
     "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (s + "/skills/skill-creator/SKILL.md");
     "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (s + "/skills/skill-creator/LICENSE.txt");
     "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (s + "/skills/skill-creator/agents/analyzer.md");
@@ -321,10 +387,22 @@
     "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (s + "/skills/algorithmic-art/templates/viewer.html");
     "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (s + "/skills/conflict-resolver/SKILL.md");
     "${dir}/skills/conflict-resolver/evals/evals.json".text = builtins.readFile (s + "/skills/conflict-resolver/evals/evals.json");
-    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {source = s + "/skills/conflict-resolver/scripts/detect.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {source = s + "/skills/conflict-resolver/scripts/resolve-all.sh"; executable = true;};
-    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {source = s + "/skills/conflict-resolver/scripts/show-conflict.sh"; executable = true;};
+    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/detect.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/resolve.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/resolve-all.sh";
+      executable = true;
+    };
+    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {
+      source = s + "/skills/conflict-resolver/scripts/show-conflict.sh";
+      executable = true;
+    };
     "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (s + "/skills/skill-creator/SKILL.md");
     "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (s + "/skills/skill-creator/LICENSE.txt");
     "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (s + "/skills/skill-creator/agents/analyzer.md");
@@ -352,8 +430,8 @@ in {
     forgecode.packages.${system}.default
     pi-coding-agent
     ccstatusline.packages.${system}.default
-    #ennio.packages.${system}.ennio
-    #ennio.packages.${system}.ennio-node
+    ennio.packages.${system}.ennio
+    ennio.packages.${system}.ennio-node
     claude-monitor
     opencode
     headroom

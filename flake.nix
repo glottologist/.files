@@ -77,14 +77,14 @@
       inherit system;
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.7.1155" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
+        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.7.1155" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1" "pnpm-10.29.2"];
       };
     };
     pkgs = import nixpkgs {
       inherit system;
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.7.1155" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1"];
+        permittedInsecurePackages = ["electron-12.2.3" "electron-13.6.9" "libgit2-0.27.10" "libsoup-2.74.3" "python3.13-youtube-dl-2021.12.17" "qtwebengine-5.15.19" "googleearth-pro-7.3.7.1155" "python3.12-vllm-0.11.2" "python3.12-pypdf2-3.0.1" "pnpm-10.29.2"];
       };
       overlays = [
         (final: prev: {
