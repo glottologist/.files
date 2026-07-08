@@ -106,6 +106,7 @@ in {
       cbh = "cargo bench";
       cc = "cargo clean";
       cck = "cargo check";
+      ccr = "cargo_clean_repos";
       cdoc = "cargo doc";
       cf = "cargo fmt --all";
       clb = "cabal build";
