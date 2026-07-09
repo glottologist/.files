@@ -468,11 +468,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1783474262,
-        "narHash": "sha256-psySCgprSZQ0dnh2lj7QYdCRohbb15uBZY9iMsoziIE=",
+        "lastModified": 1783545757,
+        "narHash": "sha256-ujyh71rjKf0frYqn4HDZ7baSp5+BNhYpux5Q/8nITRM=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "ffae169142dd07e04b61712ad9b509309269399c",
+        "rev": "1a4322b6de8b5f99968cb342ac4a1b25d0712698",
         "type": "github"
       },
       "original": {
@@ -1579,11 +1579,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783411570,
-        "narHash": "sha256-wOieL7cJ/91E5P2I7fC3QYWGF0aCQve2g1rgObWkhJ4=",
+        "lastModified": 1783584539,
+        "narHash": "sha256-LopfwWNjvWxc1ra5je/emyisn5GgAGNwmYSbU7OoMSo=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "92e4bf41cbdb0c73d538104d5b45cd4d1d8c1445",
+        "rev": "14c7a46cf085b918ac5beece7e2839600ad399f3",
         "type": "github"
       },
       "original": {
@@ -1646,11 +1646,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1783120138,
-        "narHash": "sha256-TBpbXG8IxYvRZ+GItXL7Z13G8xKsKLYDOYNmOAm78p8=",
+        "lastModified": 1783535991,
+        "narHash": "sha256-fWTRc2qnCRyaNsW+DvHq0q843nVaOD1e6cngWml3SvM=",
         "owner": "sadjow",
         "repo": "gemini-cli-nix",
-        "rev": "ba8e42bd9b96d3aef065de9adf7a7383761be2be",
+        "rev": "c181b9a9a8eff821f1ff7de545d9ff730be7c57d",
         "type": "github"
       },
       "original": {
@@ -1967,11 +1967,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1783449028,
-        "narHash": "sha256-X7T5MtKdw7daUN2r2v7zVLrN4OKowJ3hgm+rSPeESnw=",
+        "lastModified": 1783582777,
+        "narHash": "sha256-fsDLDZuvet2iZv6svhcMjcO5LjwHrY6VQnJAfND/N+U=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "6a8eb0490ce3ff3cbf9b00815f7a215e895d87e0",
+        "rev": "01f5c9aee4c31e5b782e99eb354ee7230b999821",
         "type": "github"
       },
       "original": {
@@ -2301,11 +2301,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1783492272,
-        "narHash": "sha256-4APwmEAAxW6MQAJgblXemdd0U5TkUa0w77/LpsPP8Po=",
+        "lastModified": 1783583789,
+        "narHash": "sha256-HbqSaikSTGq3iTsrqRwHxOCHA4RSdvZSB6WWx7/0cA0=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "e0319c8c10dffb2dc564417ce49baba49b149b33",
+        "rev": "f435ce87ba1f65542d2b67267757ca3fbd8b58bf",
         "type": "github"
       },
       "original": {
@@ -2749,11 +2749,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1783369919,
-        "narHash": "sha256-n06XChnmO2Dukk8vjBQNmNI3tEc4ugTD+6Gv1erBE6w=",
+        "lastModified": 1783546204,
+        "narHash": "sha256-lMvyBFy7jl8cnUI8efQuW8lxgIiwUhw6CHEmDpK0mfw=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "9a06fdc75f0b5c20e11276824b5cc3b034829e8a",
+        "rev": "ac94798c753e48fd0b36128a029ed8aecebe9b56",
         "type": "github"
       },
       "original": {
@@ -3216,11 +3216,11 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1782918843,
-        "narHash": "sha256-ETYnV9U7Sr+A45dohzZdfCZKOss4qrTkO+wgNZNvEc0=",
+        "lastModified": 1783279667,
+        "narHash": "sha256-/NAkDSsve+GNM0Bt6tleJdCGfsTlK89nPjkVOzZMo0s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e8273b29fe1390ec8d4603f2477357555291432e",
+        "rev": "f205b5574fd0cb7da5b702a2da51507b7f4fdd1b",
         "type": "github"
       },
       "original": {
@@ -3374,11 +3374,11 @@
         "nixpkgs": "nixpkgs_16"
       },
       "locked": {
-        "lastModified": 1783457578,
-        "narHash": "sha256-t8f/HFUfZC8SOllCFWXgbMKnWipdqoJNmplsn56s6EQ=",
+        "lastModified": 1783551490,
+        "narHash": "sha256-IgOE1Dh70GnGPWvrwiwUZkmzJURKM40oru0vvRPSu/M=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "a6f93c1e49d40246635ba30a8b79c21aae1cb0bc",
+        "rev": "84af0c160f0c1c83179809277124f6dc4712b2b3",
         "type": "github"
       },
       "original": {

@@ -66,7 +66,7 @@ in {
         "match:tag projects, opacity 0.9 0.8"
         "match:tag im, opacity 0.94 0.86"
         "match:tag file-manager, opacity 0.9 0.8"
-        "match:tag terminal, opacity 0.8 0.7"
+        "match:tag terminal, opacity 1.0 1.0"
         "match:tag settings, opacity 0.8 0.7"
         "match:class ^(gedit|org.gnome.TextEditor|mousepad)$, opacity 0.8 0.7"
         "match:class ^(seahorse)$, opacity 0.9 0.8 # gnome-keyring gui"
