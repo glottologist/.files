@@ -128,6 +128,10 @@
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
     "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (s + "/skills/review-strict/SKILL.md");
+    "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (s + "/skills/review-strict/references/report-template.md");
+    "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (s + "/skills/review-strict/references/review-checklists.md");
+    "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (s + "/skills/review-strict/references/rust-strict.md");
     "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (s + "/skills/algorithmic-art/SKILL.md");
     "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (s + "/skills/algorithmic-art/LICENSE.txt");
     "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
@@ -289,6 +293,10 @@
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
     "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (s + "/skills/review-strict/SKILL.md");
+    "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (s + "/skills/review-strict/references/report-template.md");
+    "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (s + "/skills/review-strict/references/review-checklists.md");
+    "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (s + "/skills/review-strict/references/rust-strict.md");
     "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (s + "/skills/algorithmic-art/SKILL.md");
     "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (s + "/skills/algorithmic-art/LICENSE.txt");
     "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
@@ -386,6 +394,10 @@
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
     "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (s + "/skills/review-strict/SKILL.md");
+    "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (s + "/skills/review-strict/references/report-template.md");
+    "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (s + "/skills/review-strict/references/review-checklists.md");
+    "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (s + "/skills/review-strict/references/rust-strict.md");
     "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (s + "/skills/algorithmic-art/SKILL.md");
     "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (s + "/skills/algorithmic-art/LICENSE.txt");
     "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (s + "/skills/algorithmic-art/templates/generator_template.js");
