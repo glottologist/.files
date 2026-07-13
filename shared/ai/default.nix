@@ -201,6 +201,11 @@
     "${dir}/skills/osint-investigator/references/tools.md".text = builtins.readFile (s + "/skills/osint-investigator/references/tools.md");
     "${dir}/skills/osint-investigator/references/psychoprofile.md".text = builtins.readFile (s + "/skills/osint-investigator/references/psychoprofile.md");
     "${dir}/skills/osint-investigator/references/dossier.md".text = builtins.readFile (s + "/skills/osint-investigator/references/dossier.md");
+    "${dir}/skills/teach/SKILL.md".text = builtins.readFile (s + "/skills/teach/SKILL.md");
+    "${dir}/skills/teach/MISSION-FORMAT.md".text = builtins.readFile (s + "/skills/teach/MISSION-FORMAT.md");
+    "${dir}/skills/teach/RESOURCES-FORMAT.md".text = builtins.readFile (s + "/skills/teach/RESOURCES-FORMAT.md");
+    "${dir}/skills/teach/LEARNING-RECORD-FORMAT.md".text = builtins.readFile (s + "/skills/teach/LEARNING-RECORD-FORMAT.md");
+    "${dir}/skills/teach/GLOSSARY-FORMAT.md".text = builtins.readFile (s + "/skills/teach/GLOSSARY-FORMAT.md");
   };
 
   mkForgeFiles = dir: {
@@ -429,6 +434,7 @@ in {
     codex-cli-nix.packages.${system}.default
     forgecode.packages.${system}.default
     pi-coding-agent
+    grok-cli
     ccstatusline.packages.${system}.default
     ennio.packages.${system}.ennio
     ennio.packages.${system}.ennio-node
@@ -463,6 +469,34 @@ in {
           };
         };
         model = "anthropic/claude-sonnet-4-20250514";
+      };
+      # Pi ships no local provider; custom ones come from this file. The endpoint
+      # is the llama-server unit in hosts/common/ai.nix, and `id` must match the
+      # --alias it serves under. llama.cpp rejects the `developer` role and
+      # `reasoning_effort`; --reasoning-format deepseek returns the model's
+      # thinking as `reasoning_content`, which is why `reasoning` is set anyway.
+      # contextWindow tracks the unit's -c, not the model's native 196608.
+      ".pi/agent/models.json".text = builtins.toJSON {
+        providers = {
+          llamacpp = {
+            baseUrl = "http://127.0.0.1:8080/v1";
+            api = "openai-completions";
+            apiKey = "llamacpp";
+            compat = {
+              supportsDeveloperRole = false;
+              supportsReasoningEffort = false;
+            };
+            models = [
+              {
+                id = "minimax-m2.7";
+                name = "MiniMax M2.7 (local)";
+                reasoning = true;
+                input = ["text"];
+                contextWindow = 32768;
+              }
+            ];
+          };
+        };
       };
       ".codex/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
       # CODEX SKILLS

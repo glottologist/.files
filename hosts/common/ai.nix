@@ -1,12 +1,12 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
   services.ollama = {
     enable = true;
     loadModels = [
-      "minimax-m2.7:cloud"
       "nemotron-3-super"
       "qwen3.5"
       "qwen3.6"
@@ -18,6 +18,40 @@
   };
   systemd.services.ollama.serviceConfig = {
     Environment = ["OLLAMA_HOST=0.0.0.0:11434"];
+  };
+
+  # MiniMax M2.7 (230B-A10B MoE) as an OpenAI-compatible endpoint for pi.
+  # Ollama's only tag for this model is :cloud, a passthrough to Ollama Cloud
+  # rather than local weights, so the GGUF comes from Hugging Face instead.
+  #
+  # UD-Q2_K_XL is 70.1 GiB across three shards against 93 GiB of RAM, which is
+  # what caps the context at 32768 rather than the model's native 196608.
+  # nixpkgs builds llama-cpp with the CPU and BLAS backends only, so there is no
+  # -ngl to set; the 10B active parameters are what keep this tractable.
+  systemd.services.llama-server = {
+    description = "llama.cpp OpenAI-compatible server (MiniMax M2.7, CPU)";
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      DynamicUser = true;
+      StateDirectory = "llama-server";
+      Environment = ["LLAMA_CACHE=/var/lib/llama-server"];
+      ExecStart = lib.concatStringsSep " " [
+        "${pkgs.llama-cpp}/bin/llama-server"
+        "-hf unsloth/MiniMax-M2.7-GGUF:UD-Q2_K_XL"
+        "--alias minimax-m2.7"
+        "--host 127.0.0.1"
+        "--port 8080"
+        "-c 32768"
+        "--jinja"
+        "--reasoning-format deepseek"
+      ];
+      # First activation downloads 70 GiB before the socket opens.
+      TimeoutStartSec = "infinity";
+      Restart = "on-failure";
+      RestartSec = 10;
+    };
   };
 
   #services.open-webui = {
