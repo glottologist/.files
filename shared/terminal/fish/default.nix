@@ -247,7 +247,7 @@ in {
       gwp = "git worktree prune";
       gwr = "git worktree remove";
       gwpr = "pr_worktree";
-      gwrf = "git worktree remove --force";
+      gwrf = "git_worktree_remove_matching";
       gwrm = "git_worktree_remove_matching";
       gwrp = "git worktree repair";
       gwu = "git worktree unlock";

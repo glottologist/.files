@@ -128,6 +128,15 @@
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
     "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (s + "/skills/superplan/references/codex-review.md");
+    "${dir}/skills/superplan/scripts/codex-review.sh" = {
+      source = s + "/skills/superplan/scripts/codex-review.sh";
+      executable = true;
+    };
+    "${dir}/skills/superplan/scripts/check-clarity-scores.py" = {
+      source = s + "/skills/superplan/scripts/check-clarity-scores.py";
+      executable = true;
+    };
     "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (s + "/skills/review-strict/SKILL.md");
     "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (s + "/skills/review-strict/references/report-template.md");
     "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (s + "/skills/review-strict/references/review-checklists.md");
@@ -293,6 +302,15 @@
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
     "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (s + "/skills/superplan/references/codex-review.md");
+    "${dir}/skills/superplan/scripts/codex-review.sh" = {
+      source = s + "/skills/superplan/scripts/codex-review.sh";
+      executable = true;
+    };
+    "${dir}/skills/superplan/scripts/check-clarity-scores.py" = {
+      source = s + "/skills/superplan/scripts/check-clarity-scores.py";
+      executable = true;
+    };
     "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (s + "/skills/review-strict/SKILL.md");
     "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (s + "/skills/review-strict/references/report-template.md");
     "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (s + "/skills/review-strict/references/review-checklists.md");
@@ -394,6 +412,15 @@
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (s + "/skills/superplan/references/modes.md");
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (s + "/skills/superplan/references/examples.md");
     "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (s + "/skills/superplan/references/plan-reviewer-prompt.md");
+    "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (s + "/skills/superplan/references/codex-review.md");
+    "${dir}/skills/superplan/scripts/codex-review.sh" = {
+      source = s + "/skills/superplan/scripts/codex-review.sh";
+      executable = true;
+    };
+    "${dir}/skills/superplan/scripts/check-clarity-scores.py" = {
+      source = s + "/skills/superplan/scripts/check-clarity-scores.py";
+      executable = true;
+    };
     "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (s + "/skills/review-strict/SKILL.md");
     "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (s + "/skills/review-strict/references/report-template.md");
     "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (s + "/skills/review-strict/references/review-checklists.md");
