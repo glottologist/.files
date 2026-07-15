@@ -46,6 +46,28 @@ let
       }
     ) sources;
 
+
+  # Rewrite project-local agent storage roots (agents/<name>/) to agents/<target>/.
+  # Used when packaging shared skill/command text for forge, pi, or grok.
+  rewriteAgentStorage =
+    target: text:
+    let
+      names = [
+        "claude"
+        "codex"
+        "forge"
+        "grok"
+        "pi"
+      ];
+      fromSlash = map (n: "agents/${n}/") names;
+      toSlash = map (_: "agents/${target}/") names;
+      fromBare = map (n: "agents/${n}") names;
+      toBare = map (_: "agents/${target}") names;
+    in
+    builtins.replaceStrings fromBare toBare (builtins.replaceStrings fromSlash toSlash text);
+
+  readForAgent = target: path: rewriteAgentStorage target (builtins.readFile path);
+
   mkClaudeFiles = dir: {
     "${dir}/CLAUDE.md".text = builtins.readFile (s + "/CLAUDE.md");
     "${dir}/settings.json".text = builtins.readFile (s + "/settings.json");
@@ -542,28 +564,28 @@ let
     "${dir}/skills/coding-skills/nix/SKILL.md".text = builtins.readFile (
       s + "/skills/coding-skills/nix/SKILL.md"
     );
-    "${dir}/skills/superplan/SKILL.md".text = builtins.readFile (s + "/skills/superplan/SKILL.md");
+    "${dir}/skills/superplan/SKILL.md".text = readForAgent "forge" (s + "/skills/superplan/SKILL.md");
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (
       s + "/skills/superplan/references/modes.md"
     );
-    "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (
+    "${dir}/skills/superplan/references/examples.md".text = readForAgent "forge" (
       s + "/skills/superplan/references/examples.md"
     );
-    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (
+    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = readForAgent "forge" (
       s + "/skills/superplan/references/plan-reviewer-prompt.md"
     );
     "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (
       s + "/skills/superplan/references/codex-review.md"
     );
     "${dir}/skills/superplan/scripts/codex-review.sh" = {
-      source = s + "/skills/superplan/scripts/codex-review.sh";
+      text = readForAgent "forge" (s + "/skills/superplan/scripts/codex-review.sh");
       executable = true;
     };
     "${dir}/skills/superplan/scripts/check-clarity-scores.py" = {
       source = s + "/skills/superplan/scripts/check-clarity-scores.py";
       executable = true;
     };
-    "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (
+    "${dir}/skills/review-strict/SKILL.md".text = readForAgent "forge" (
       s + "/skills/review-strict/SKILL.md"
     );
     "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (
@@ -820,28 +842,28 @@ let
     "${dir}/skills/coding-skills/nix/SKILL.md".text = builtins.readFile (
       s + "/skills/coding-skills/nix/SKILL.md"
     );
-    "${dir}/skills/superplan/SKILL.md".text = builtins.readFile (s + "/skills/superplan/SKILL.md");
+    "${dir}/skills/superplan/SKILL.md".text = readForAgent "pi" (s + "/skills/superplan/SKILL.md");
     "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (
       s + "/skills/superplan/references/modes.md"
     );
-    "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (
+    "${dir}/skills/superplan/references/examples.md".text = readForAgent "pi" (
       s + "/skills/superplan/references/examples.md"
     );
-    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (
+    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = readForAgent "pi" (
       s + "/skills/superplan/references/plan-reviewer-prompt.md"
     );
     "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (
       s + "/skills/superplan/references/codex-review.md"
     );
     "${dir}/skills/superplan/scripts/codex-review.sh" = {
-      source = s + "/skills/superplan/scripts/codex-review.sh";
+      text = readForAgent "pi" (s + "/skills/superplan/scripts/codex-review.sh");
       executable = true;
     };
     "${dir}/skills/superplan/scripts/check-clarity-scores.py" = {
       source = s + "/skills/superplan/scripts/check-clarity-scores.py";
       executable = true;
     };
-    "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (
+    "${dir}/skills/review-strict/SKILL.md".text = readForAgent "pi" (
       s + "/skills/review-strict/SKILL.md"
     );
     "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (
@@ -936,7 +958,7 @@ let
     inherit lib mkSkillFiles;
   };
   grokFiles = import ../../secrets/ai/grok {
-    inherit lib mkSkillFiles;
+    inherit lib pkgs mkSkillFiles;
   };
 
   #claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
