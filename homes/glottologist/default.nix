@@ -15,6 +15,8 @@
 
   grok_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/grok-api-key.txt);
 
+  openrouter_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/openrouter-api-key.txt);
+
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
   ];
@@ -94,6 +96,7 @@ in {
       OPENAI_API_KEY = openai_api_key;
       GROK_API_KEY = grok_api_key;
       XAI_API_KEY = grok_api_key;
+      OPENROUTER_API_KEY = openrouter_api_key;
     };
     pointerCursor = {
       gtk.enable = true;

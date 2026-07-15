@@ -473,7 +473,6 @@ in {
     codex-cli-nix.packages.${system}.default
     forgecode.packages.${system}.default
     pi-coding-agent
-    grok-cli
     ccstatusline.packages.${system}.default
     ennio.packages.${system}.ennio
     ennio.packages.${system}.ennio-node
@@ -532,6 +531,24 @@ in {
                 reasoning = true;
                 input = ["text"];
                 contextWindow = 32768;
+              }
+            ];
+          };
+          # pi's bundled registry (0.80.3) tops out at gpt-5.5 for the codex
+          # backend, so gpt-5.6-sol — the model codex-cli now uses — is missing.
+          # Declaring the built-in `openai-codex` provider with only a `models`
+          # array upserts the new id alongside the built-ins and inherits the
+          # provider's ChatGPT OAuth and Responses endpoint (no baseUrl/api here,
+          # since those are required only for non-built-in providers). Metadata
+          # mirrors pi's existing gpt-5.5 codex entry.
+          "openai-codex" = {
+            models = [
+              {
+                id = "gpt-5.6-sol";
+                reasoning = true;
+                input = ["text" "image"];
+                contextWindow = 272000;
+                maxTokens = 128000;
               }
             ];
           };
