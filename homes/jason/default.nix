@@ -9,7 +9,6 @@
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
-  anthropic_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/anthropic-api-key.txt);
   openai_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/openai-api-key.txt);
   grok_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/grok-api-key.txt);
 
@@ -92,7 +91,7 @@ in {
       EDITOR = "vim";
       BROWSER = "brave";
       TERMINAL = "foot";
-      ANTHROPIC_API_KEY = anthropic_api_key;
+      # ANTHROPIC_API_KEY intentionally not exported — Claude Code uses Max OAuth.
       OPENAI_API_KEY = openai_api_key;
       GROK_API_KEY = grok_api_key;
       XAI_API_KEY = grok_api_key;
