@@ -24,7 +24,6 @@
         numworks-udev-rules
         nitrokey-udev-rules
         apio-udev-rules
-        steam-devices-udev-rules
         meletrix-udev-rules
         uhk-udev-rules
         nrf-udev

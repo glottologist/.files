@@ -26,7 +26,6 @@
     ../common/development.nix
     ../common/devices.nix
     ../common/disk.nix
-    ../common/games.nix
     ../common/keyboards.nix
     ../common/nix.nix
     ../common/stylix.nix

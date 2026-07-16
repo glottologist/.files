@@ -24,10 +24,6 @@ in {
         "match:class ^([Ww]hatsapp-for-linux)$, tag +im"
         "match:class ^(org.telegram.desktop|io.github.tdesktop_x64.TDesktop)$, tag +im"
         "match:class ^(teams-for-linux)$, tag +im"
-        "match:class ^(gamescope)$, tag +games"
-        "match:class ^([Ss]team)$, tag +gamestore"
-        "match:title ^([Ll]utris)$, tag +gamestore"
-        "match:class ^(com.heroicgameslauncher.hgl)$, tag +gamestore"
         "match:class ^(gnome-disks|wihotspot(-gui)?)$, tag +settings"
         "match:class ^([Rr]ofi)$, tag +settings"
         "match:class ^(file-roller|org.gnome.FileRoller)$, tag +settings"
@@ -52,8 +48,6 @@ in {
         "match:class ^(mpv|com.github.rafostar.Clapper)$, float on"
         "match:title ^(Authentication Required)$, float on"
         "match:class (codium|codium-url-handler|VSCodium), match:title negative:(.*codium.*|.*VSCodium.*), float on"
-        "match:class ^(com.heroicgameslauncher.hgl)$, match:title negative:(Heroic Games Launcher), float on"
-        "match:class ^([Ss]team)$, match:title negative:^([Ss]team)$, float on"
         "match:class ([Tt]hunar), match:title negative:(.*[Tt]hunar.*), float on"
         "match:initial_title (Add Folder to Workspace), float on"
         "match:initial_title (Open Files), float on"
@@ -73,8 +67,6 @@ in {
         "match:title ^(Picture-in-Picture)$, opacity 0.95 0.75"
         "match:title ^(Picture-in-Picture)$, pin on"
         "match:title ^(Picture-in-Picture)$, keep_aspect_ratio on"
-        "match:tag games, no_blur on"
-        "match:tag games, fullscreen on"
       ];
     };
 
