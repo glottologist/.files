@@ -21,12 +21,24 @@
   base0D = "1e66f5"; # Blue - functions, methods
   base0E = "8839ef"; # Mauve - keywords, storage
   base0F = "dc8a78"; # Rosewater - deprecated, tags
+
+  codexbar = pkgs.callPackage ./codexbar-cli.nix {};
+  codexbar-waybar = pkgs.callPackage ./codexbar-waybar.nix {inherit codexbar;};
 in
   with lib; {
     home.packages = with pkgs; [
       libappindicator-gtk3
       libappindicator
+      # codexbar-waybar stack (CLI + waybar module + GTK4 popover)
+      codexbar
+      codexbar-waybar
+      jq
+      libnotify # right-click usage summary via notify-send
     ];
+
+    # Provider brand icons for the GTK4 popover tabs/settings rows.
+    xdg.dataFile."codexbar-waybar/icons".source = "${codexbar-waybar}/share/codexbar-waybar/icons";
+
     # Configure & Theme Waybar
     programs.waybar = {
       enable = true;
@@ -38,7 +50,15 @@ in
 
           modules-left = ["custom/startmenu" "custom/notification" "tray" "hyprland/window"];
           modules-center = ["hyprland/workspaces"];
-          modules-right = ["custom/systemstats" "network" "pulseaudio" "battery" "clock" "custom/exit"];
+          modules-right = [
+            "custom/systemstats"
+            "custom/codexbar"
+            "network"
+            "pulseaudio"
+            "battery"
+            "clock"
+            "custom/exit"
+          ];
 
           "hyprland/workspaces" = {
             format = "{name}";
@@ -93,6 +113,18 @@ in
             exec = "echo \"󰍛 $(free | awk '/Mem:/ {printf \"%.0f%%\", ($3/$2)*100}') | 󰻠 $(cat /proc/pressure/cpu | awk '/^some/ {print $2}'| cut -d= -f2) | 󰋊 $(df -h / | awk 'NR==2 {print $5}')\"";
             tooltip = true;
             on-click = "${terminal} -e btop & ${terminal} -e ncdu";
+          };
+          # CodexBar AI usage — https://github.com/Marouan-chak/codexbar-waybar
+          "custom/codexbar" = {
+            exec = "${codexbar-waybar}/bin/codexbar-waybar";
+            return-type = "json";
+            format = "{}";
+            interval = 30;
+            signal = 8;
+            on-click = "${codexbar-waybar}/bin/codexbar-popup";
+            on-click-right = "bash -c 'notify-send -a CodexBar -t 8000 \"AI usage\" \"$(${codexbar-waybar}/bin/codexbar-waybar | jq -r .tooltip)\"'";
+            tooltip = true;
+            max-length = 24;
           };
           "tray" = {
             spacing = 12;
@@ -346,6 +378,33 @@ in
                   border-radius: 15px 0px 0px 15px;
                   margin: 2px 0px 2px 2px;
                   padding: 2px 20px;
+                }
+                #custom-codexbar {
+                  color: #${base0C};
+                  background: #${base00};
+                  border-radius: 15px 15px 15px 15px;
+                  margin: 2px;
+                  padding: 2px 12px;
+                  font-weight: bold;
+                }
+                #custom-codexbar.ok {
+                  color: #${base0B};
+                }
+                #custom-codexbar.warning {
+                  color: #${base0A};
+                  background: alpha(#${base0A}, 0.18);
+                }
+                #custom-codexbar.critical {
+                  color: #${base08};
+                  background: alpha(#${base08}, 0.22);
+                  animation: codexbar-pulse 2s ease-in-out infinite alternate;
+                }
+                #custom-codexbar.stale {
+                  color: #${base04};
+                }
+                @keyframes codexbar-pulse {
+                  from { background: alpha(#${base08}, 0.22); }
+                  to   { background: alpha(#${base08}, 0.40); }
                 }
         ''
       ];
