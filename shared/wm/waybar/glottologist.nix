@@ -516,21 +516,22 @@ in
                 #custom-codexbar.ok {
                   color: #${base0B};
                 }
+                /* Opaque solid tints (waybar CSS has no alpha/color-mix). */
                 #custom-codexbar.warning {
                   color: #${base0A};
-                  background: alpha(#${base0A}, 0.18);
+                  background: #ebdbc5;
                 }
                 #custom-codexbar.critical {
                   color: #${base08};
-                  background: alpha(#${base08}, 0.22);
+                  background: #e9bfcc;
                   animation: codexbar-pulse 2s ease-in-out infinite alternate;
                 }
                 #custom-codexbar.stale {
                   color: #${base04};
                 }
                 @keyframes codexbar-pulse {
-                  from { background: alpha(#${base08}, 0.22); }
-                  to   { background: alpha(#${base08}, 0.40); }
+                  from { background: #e9bfcc; }
+                  to   { background: #e397aa; }
                 }
         ''
       ];

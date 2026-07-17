@@ -93,6 +93,18 @@
           ollama-cuda = pkgs-unstable.ollama-cuda;
           ollama-vulkan = pkgs-unstable.ollama-vulkan;
           pi-coding-agent = pkgs-unstable.pi-coding-agent;
+          # dosage 3.2: tests/test_robotstxt.py fails under nix build sandbox
+          # (OSError: robots.txt disallows http://e/somefile.html). Package is
+          # otherwise fine; used from shared/comics + shared/productivity.
+          dosage = prev.dosage.overridePythonAttrs (_: {
+            doCheck = false;
+          });
+          # commitizen 4.13.9: test_invalid_command file regression fails on
+          # Python 3.13 (argparse quotes choice names: choose from 'init' vs init).
+          # Used from shared/development/git.
+          commitizen = prev.commitizen.overridePythonAttrs (_: {
+            doCheck = false;
+          });
         })
         (final: prev: {
           zen-browser = inputs.zen-browser.packages.${system}.default;
@@ -103,6 +115,10 @@
             ++ [
               (pyfinal: pyprev: {
                 jupyter-server = pyprev.jupyter-server.overridePythonAttrs (_: {
+                  doCheck = false;
+                });
+                # Same argparse quote drift as top-level commitizen (see above).
+                commitizen = pyprev.commitizen.overridePythonAttrs (_: {
                   doCheck = false;
                 });
                 # vLLM dep: upstream pins starlette<1.0.0 but 26.05 ships 1.1.0.
