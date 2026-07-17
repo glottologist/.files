@@ -46,6 +46,23 @@ let
       }
     ) sources;
 
+  # Skills shared across all agents live under secrets/ai/shared/skills/<name>/.
+  # Each directory is installed into every agent skills root (Claude, Codex, Grok,
+  # Forge, Pi) plus ~/.agents/skills and ~/.claude/skills.
+  sharedSkillsDir = ../../secrets/ai/shared/skills;
+  sharedSkillNames = builtins.attrNames (
+    lib.filterAttrs (_: type: type == "directory") (builtins.readDir sharedSkillsDir)
+  );
+  mkSharedSkills = skillsRoot:
+    lib.listToAttrs (
+      map (name: {
+        name = "${skillsRoot}/${name}";
+        value = {
+          source = sharedSkillsDir + "/${name}";
+          recursive = true;
+        };
+      }) sharedSkillNames
+    );
 
   # Rewrite project-local agent storage roots (agents/<name>/) to agents/<target>/.
   # Used when packaging shared skill/command text for forge, pi, or grok.
@@ -417,7 +434,8 @@ let
       source = s + "/skills/review-strict/scripts/reviewers.sh";
       executable = true;
     };
-  };
+  }
+  // mkSharedSkills "${dir}/skills";
 
   mkForgeFiles = dir: {
     "${dir}/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
@@ -659,7 +677,8 @@ let
       source = s + "/skills/review-strict/scripts/reviewers.sh";
       executable = true;
     };
-  };
+  }
+  // mkSharedSkills "${dir}/skills";
 
   mkPiFiles = dir: {
     # Pi reads AGENTS.md/CLAUDE.md as context; reuse the shared prompt.
@@ -950,16 +969,26 @@ let
       source = s + "/skills/review-strict/scripts/reviewers.sh";
       executable = true;
     };
-  };
+  }
+  // mkSharedSkills "${dir}/skills";
 
   forgeFiles = mkForgeFiles ".forge";
   piFiles = mkPiFiles ".pi/agent";
-  codexFiles = import ../../secrets/ai/codex {
-    inherit lib mkSkillFiles;
-  };
-  grokFiles = import ../../secrets/ai/grok {
-    inherit lib pkgs mkSkillFiles;
-  };
+  codexFiles =
+    (import ../../secrets/ai/codex {
+      inherit lib mkSkillFiles;
+    })
+    // mkSharedSkills ".codex/skills";
+  grokFiles =
+    (import ../../secrets/ai/grok {
+      inherit lib pkgs mkSkillFiles;
+    })
+    // mkSharedSkills ".grok/skills";
+  # agentskills.io standard user path (Codex also scans ~/.agents/skills).
+  # Default Claude Code path (~/.claude/skills) in addition to personal/work profiles.
+  agentsSkillsFiles =
+    mkSharedSkills ".agents/skills"
+    // mkSharedSkills ".claude/skills";
 
   #claudeFiles = lib.foldl lib.recursiveUpdate {} (map mkClaudeFiles [".claude" ".claude-personal" ".claude-work"]);
   claudeFiles = lib.foldl lib.recursiveUpdate { } (
@@ -1036,6 +1065,7 @@ in
       // piFiles
       // codexFiles
       // grokFiles
+      // agentsSkillsFiles
       // {
         ".config/opencode/opencode.json".text = builtins.toJSON {
           "$schema" = "https://opencode.ai/config.json";
