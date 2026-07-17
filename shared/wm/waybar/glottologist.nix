@@ -33,6 +33,15 @@
   # Compact bar text: weekly (secondary) used% for each agent. Grok has no
   # secondary window — fall back to primary. Tooltip stays full detail via
   # the upstream codexbar-waybar aggregator.
+  #
+  # fetch() must NOT append `[]` when codexbar exits non-zero but still
+  # printed valid JSON (e.g. Claude OAuth expired). That used to produce
+  # `[{...}]\n[]`, which breaks jq --argjson and hides the whole module.
+  #
+  # Anthropic rate-limits the Claude usage endpoint under frequent polling.
+  # We cache last-good per-provider JSON and reuse it on transient errors
+  # (rate limit / timeout) so the bar does not flip to ⚠ after a successful
+  # `claude login`. Hard auth errors still surface as ⚠.
   codexbarWeekly = pkgs.writeShellScript "codexbar-weekly-waybar" ''
     set -euo pipefail
     export PATH="${lib.makeBinPath [pkgs.jq pkgs.coreutils pkgs.gnugrep]}:$PATH"
@@ -40,13 +49,50 @@
     export CODEXBAR_PROVIDERS="${codexbarProviders}"
 
     CB="${codexbar}/bin/codexbar"
-    timeout_s=20
+    timeout_s=25
+    cache_dir="''${XDG_CACHE_HOME:-$HOME/.cache}/codexbar-waybar"
+    mkdir -p "$cache_dir"
+
+    is_transient_error() {
+      local msg
+      msg=$(printf '%s' "$1" | jq -r '.[0].error.message // empty' 2>/dev/null || true)
+      case "$msg" in
+        *rate\ limited*|*Rate\ limited*|*try\ again*|*timeout*|*Timeout*|*temporar*) return 0 ;;
+        *) return 1 ;;
+      esac
+    }
+
+    has_usage() {
+      printf '%s' "$1" | jq -e '.[0].usage != null and .[0].error == null' >/dev/null 2>&1
+    }
 
     fetch() {
       local provider="$1"
       shift
-      timeout "$timeout_s" "$CB" usage --provider "$provider" --format json --no-color "$@" 2>/dev/null \
-        || echo '[]'
+      local cache_file="$cache_dir/$provider.json"
+      local out
+
+      out=$(timeout "$timeout_s" "$CB" usage --provider "$provider" --format json --no-color "$@" 2>/dev/null || true)
+
+      if [ -n "$out" ] && has_usage "$out"; then
+        printf '%s\n' "$out" >"$cache_file"
+        printf '%s\n' "$out"
+        return 0
+      fi
+
+      # Transient failure (rate limit / empty) — prefer last good sample.
+      if [ -f "$cache_file" ] && has_usage "$(cat "$cache_file")"; then
+        if [ -z "$out" ] || is_transient_error "$out"; then
+          cat "$cache_file"
+          return 0
+        fi
+      fi
+
+      if [ -n "$out" ] && printf '%s' "$out" | jq -e . >/dev/null 2>&1; then
+        printf '%s\n' "$out"
+      else
+        echo '[]'
+      fi
     }
 
     codex_json=$(fetch codex --source oauth)
@@ -181,7 +227,8 @@
       exec = "${codexbarWeekly}";
       return-type = "json";
       format = "{}";
-      interval = 30;
+      # 30s hammered Anthropic's usage endpoint and produced false ⚠ after login.
+      interval = 120;
       signal = 8;
       on-click = "env ${codexbarEnv} ${codexbar-waybar}/bin/codexbar-popup";
       on-click-right = "bash -c 'notify-send -a CodexBar -t 8000 \"AI usage\" \"$(${codexbarWeekly} | ${pkgs.jq}/bin/jq -r .tooltip)\"'";
@@ -264,15 +311,10 @@
       name = "top";
       layer = "top";
       position = "top";
-      modules-left = ["custom/startmenu" "tray"];
-      modules-center = [];
-      modules-right = [
-        "custom/systemstats"
-        "custom/codexbar"
-        "network"
-        "pulseaudio"
-        "battery"
-      ];
+      # Tray top-left; systemstats + codexbar centered; network + audio top-right.
+      modules-left = ["tray"];
+      modules-center = ["custom/systemstats" "custom/codexbar"];
+      modules-right = ["network" "pulseaudio"];
     }
     // modules;
 
@@ -281,9 +323,10 @@
       name = "bottom";
       layer = "top";
       position = "bottom";
-      modules-left = ["hyprland/workspaces"];
+      # Apps (startmenu) bottom-left. Power (battery) sits next to the clock.
+      modules-left = ["custom/startmenu" "hyprland/workspaces"];
       modules-center = ["hyprland/window"];
-      modules-right = ["custom/notification" "clock" "custom/exit"];
+      modules-right = ["custom/notification" "battery" "clock" "custom/exit"];
     }
     // modules;
 in
