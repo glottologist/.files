@@ -1005,6 +1005,10 @@ let
   # xAI Grok CLI (Grok Build) — pinned prebuilt static binary, not in nixpkgs;
   # see ./grok-build.nix for the artifact source and update procedure.
   grok-build = pkgs.callPackage ./grok-build.nix { };
+
+  # Moonshot Kimi Code CLI — pinned prebuilt binary, not in nixpkgs;
+  # see ./kimi-code.nix for the artifact source and update procedure.
+  kimi-code = pkgs.callPackage ./kimi-code.nix { };
 in
 {
   home = {
@@ -1056,6 +1060,7 @@ in
       opencode
       headroom
       grok-build
+      kimi-code
       llm-agents-nix.packages.${system}.coderabbit-cli
       (lib.lowPrio sox)
     ];

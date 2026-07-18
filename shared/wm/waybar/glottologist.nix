@@ -96,7 +96,15 @@
     }
 
     codex_json=$(fetch codex --source oauth)
+
+    # Claude OAuth tokens expire and codexbar cannot refresh them; the cli
+    # source reads Claude Code's local data and keeps working regardless.
+    # Mirrors upstream codexbar-waybar's FALLBACK_SOURCES[claude]=cli.
     claude_json=$(fetch claude --source oauth)
+    if ! has_usage "$claude_json"; then
+      claude_json=$(fetch claude --source cli)
+    fi
+
     grok_json=$(fetch grok)
 
     jq -nc \
