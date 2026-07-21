@@ -92,7 +92,6 @@ let
     # COMMANDS
     "${dir}/commands/audit.md".text = builtins.readFile (s + "/commands/audit.md");
     "${dir}/commands/benchmark.md".text = builtins.readFile (s + "/commands/benchmark.md");
-    "${dir}/commands/commit_msg.md".text = builtins.readFile (s + "/commands/commit_msg.md");
     "${dir}/commands/document.md".text = builtins.readFile (s + "/commands/document.md");
     "${dir}/commands/explain.md".text = builtins.readFile (s + "/commands/explain.md");
     "${dir}/commands/fix.md".text = builtins.readFile (s + "/commands/fix.md");
@@ -100,26 +99,17 @@ let
     "${dir}/commands/pr_desc.md".text = builtins.readFile (s + "/commands/pr_desc.md");
     "${dir}/commands/refactor.md".text = builtins.readFile (s + "/commands/refactor.md");
     "${dir}/commands/review.md".text = builtins.readFile (s + "/commands/review.md");
-    "${dir}/commands/review_strict.md".text = builtins.readFile (s + "/commands/review_strict.md");
     "${dir}/commands/analyze.md".text = builtins.readFile (s + "/commands/analyze.md");
-    "${dir}/commands/interview_scorecard.md".text = builtins.readFile (
-      s + "/commands/interview_scorecard.md"
-    );
     "${dir}/commands/plan.md".text = builtins.readFile (s + "/commands/plan.md");
-    "${dir}/commands/build-fix.md".text = builtins.readFile (s + "/commands/build-fix.md");
     "${dir}/commands/handoff.md".text = builtins.readFile (s + "/commands/handoff.md");
     "${dir}/commands/carryon.md".text = builtins.readFile (s + "/commands/carryon.md");
     "${dir}/commands/external-audit.md".text = builtins.readFile (s + "/commands/external-audit.md");
-    "${dir}/commands/cr_comments.md".text = builtins.readFile (s + "/commands/cr_comments.md");
-    "${dir}/commands/open_issues.md".text = builtins.readFile (s + "/commands/open_issues.md");
     "${dir}/commands/issue.md".text = builtins.readFile (s + "/commands/issue.md");
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (s + "/commands/analyse_tests.md");
     "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
       s + "/commands/analyse_bench_fuzz.md"
     );
     "${dir}/commands/weekly_report.md".text = builtins.readFile (s + "/commands/weekly_report.md");
-    "${dir}/commands/create_pr.md".text = builtins.readFile (s + "/commands/create_pr.md");
-    "${dir}/commands/superplan.md".text = builtins.readFile (s + "/commands/superplan.md");
     "${dir}/commands/implement.md".text = builtins.readFile (s + "/commands/implement.md");
     "${dir}/commands/extract_context.md".text = builtins.readFile (s + "/commands/extract_context.md");
     "${dir}/commands/osint.md".text = builtins.readFile (s + "/commands/osint.md");
@@ -443,7 +433,6 @@ let
     # COMMANDS (converted to Forge `name`/`description` front-matter, `{{parameters}}` body)
     "${dir}/commands/audit.md".text = builtins.readFile (f + "/commands/audit.md");
     "${dir}/commands/benchmark.md".text = builtins.readFile (f + "/commands/benchmark.md");
-    "${dir}/commands/commit_msg.md".text = builtins.readFile (f + "/commands/commit_msg.md");
     "${dir}/commands/document.md".text = builtins.readFile (f + "/commands/document.md");
     "${dir}/commands/explain.md".text = builtins.readFile (f + "/commands/explain.md");
     "${dir}/commands/fix.md".text = builtins.readFile (f + "/commands/fix.md");
@@ -451,26 +440,17 @@ let
     "${dir}/commands/pr_desc.md".text = builtins.readFile (f + "/commands/pr_desc.md");
     "${dir}/commands/refactor.md".text = builtins.readFile (f + "/commands/refactor.md");
     "${dir}/commands/review.md".text = builtins.readFile (f + "/commands/review.md");
-    "${dir}/commands/review_strict.md".text = builtins.readFile (f + "/commands/review_strict.md");
     "${dir}/commands/analyze.md".text = builtins.readFile (f + "/commands/analyze.md");
-    "${dir}/commands/interview_scorecard.md".text = builtins.readFile (
-      f + "/commands/interview_scorecard.md"
-    );
     "${dir}/commands/plan.md".text = builtins.readFile (f + "/commands/plan.md");
-    "${dir}/commands/build-fix.md".text = builtins.readFile (f + "/commands/build-fix.md");
     "${dir}/commands/handoff.md".text = builtins.readFile (f + "/commands/handoff.md");
     "${dir}/commands/carryon.md".text = builtins.readFile (f + "/commands/carryon.md");
     "${dir}/commands/external-audit.md".text = builtins.readFile (f + "/commands/external-audit.md");
-    "${dir}/commands/cr_comments.md".text = builtins.readFile (f + "/commands/cr_comments.md");
-    "${dir}/commands/open_issues.md".text = builtins.readFile (f + "/commands/open_issues.md");
     "${dir}/commands/issue.md".text = builtins.readFile (f + "/commands/issue.md");
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (f + "/commands/analyse_tests.md");
     "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
       f + "/commands/analyse_bench_fuzz.md"
     );
     "${dir}/commands/weekly_report.md".text = builtins.readFile (f + "/commands/weekly_report.md");
-    "${dir}/commands/create_pr.md".text = builtins.readFile (f + "/commands/create_pr.md");
-    "${dir}/commands/superplan.md".text = builtins.readFile (f + "/commands/superplan.md");
     "${dir}/commands/implement.md".text = builtins.readFile (f + "/commands/implement.md");
     "${dir}/commands/extract_context.md".text = builtins.readFile (f + "/commands/extract_context.md");
     # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
@@ -686,7 +666,6 @@ let
     # Pi prompt templates use $ARGUMENTS rather than Forge's {{parameters}}.
     "${dir}/prompts/audit.md".text = piSupport.mkPrompt (f + "/commands/audit.md");
     "${dir}/prompts/benchmark.md".text = piSupport.mkPrompt (f + "/commands/benchmark.md");
-    "${dir}/prompts/commit_msg.md".text = piSupport.mkPrompt (f + "/commands/commit_msg.md");
     "${dir}/prompts/document.md".text = piSupport.mkPrompt (f + "/commands/document.md");
     "${dir}/prompts/explain.md".text = piSupport.mkPrompt (f + "/commands/explain.md");
     "${dir}/prompts/fix.md".text = piSupport.mkPrompt (f + "/commands/fix.md");
@@ -694,26 +673,17 @@ let
     "${dir}/prompts/pr_desc.md".text = piSupport.mkPrompt (f + "/commands/pr_desc.md");
     "${dir}/prompts/refactor.md".text = piSupport.mkPrompt (f + "/commands/refactor.md");
     "${dir}/prompts/review.md".text = piSupport.mkPrompt (f + "/commands/review.md");
-    "${dir}/prompts/review_strict.md".text = piSupport.mkPrompt (f + "/commands/review_strict.md");
     "${dir}/prompts/analyze.md".text = piSupport.mkPrompt (f + "/commands/analyze.md");
-    "${dir}/prompts/interview_scorecard.md".text = piSupport.mkPrompt (
-      f + "/commands/interview_scorecard.md"
-    );
     "${dir}/prompts/plan-doc.md".text = piSupport.mkPrompt (f + "/commands/plan.md");
-    "${dir}/prompts/build-fix.md".text = piSupport.mkPrompt (f + "/commands/build-fix.md");
     "${dir}/prompts/handoff.md".text = piSupport.mkPrompt (f + "/commands/handoff.md");
     "${dir}/prompts/carryon.md".text = piSupport.mkPrompt (f + "/commands/carryon.md");
     "${dir}/prompts/external-audit.md".text = piSupport.mkPrompt (f + "/commands/external-audit.md");
-    "${dir}/prompts/cr_comments.md".text = piSupport.mkPrompt (f + "/commands/cr_comments.md");
-    "${dir}/prompts/open_issues.md".text = piSupport.mkPrompt (f + "/commands/open_issues.md");
     "${dir}/prompts/issue.md".text = piSupport.mkPrompt (f + "/commands/issue.md");
     "${dir}/prompts/analyse_tests.md".text = piSupport.mkPrompt (f + "/commands/analyse_tests.md");
     "${dir}/prompts/analyse_bench_fuzz.md".text = piSupport.mkPrompt (
       f + "/commands/analyse_bench_fuzz.md"
     );
     "${dir}/prompts/weekly_report.md".text = piSupport.mkPrompt (f + "/commands/weekly_report.md");
-    "${dir}/prompts/create_pr.md".text = piSupport.mkPrompt (f + "/commands/create_pr.md");
-    "${dir}/prompts/superplan.md".text = piSupport.mkPrompt (f + "/commands/superplan.md");
     "${dir}/prompts/implement.md".text = piSupport.mkPrompt (f + "/commands/implement.md");
     "${dir}/prompts/extract_context.md".text = piSupport.mkPrompt (f + "/commands/extract_context.md");
     # These agents are deliberately read-only; bash permits inspection, not fixes.
