@@ -7,11 +7,12 @@
   services.ollama = {
     enable = true;
     loadModels = [
-      "nemotron-3-super"
-      "qwen3.5"
       "qwen3.6"
       "qwen3-coder-next"
+      "laguna-s-2.1"
     ];
+
+
     package = pkgs.ollama-rocm;
     host = "127.0.0.1";
     port = 11434;
