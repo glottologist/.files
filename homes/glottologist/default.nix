@@ -42,6 +42,7 @@ in {
   imports = [
     ../../secrets/accounts.nix
     ../../shared/ai/default.nix
+    ../../shared/alerts/default.nix
     ../../shared/blockchain/default.nix
     ../../shared/browsers/default.nix
     ../../shared/cloud/default.nix

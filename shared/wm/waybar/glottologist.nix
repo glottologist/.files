@@ -175,6 +175,32 @@
       '
   '';
 
+  pushoverPaths = import ../../alerts/paths.nix;
+
+  # The pushover-bridge daemon owns this counter; waybar only reads it, and
+  # clears it on click. A missing file simply means nothing has arrived yet.
+  pushoverStatus = pkgs.writeShellScript "pushover-waybar" ''
+    set -euo pipefail
+    state="${pushoverPaths.stateFileShell}"
+    count=$(cat "$state" 2>/dev/null || echo 0)
+    [ "$count" -gt 0 ] 2>/dev/null || count=0
+    if [ "$count" -gt 0 ]; then
+      ${pkgs.jq}/bin/jq -cn --arg c "$count" \
+        '{text: $c, alt: "unread", tooltip: ("\($c) unread Pushover alert(s)"), class: "unread"}'
+    else
+      ${pkgs.jq}/bin/jq -cn \
+        '{text: "", alt: "none", tooltip: "No unread Pushover alerts", class: "none"}'
+    fi
+  '';
+
+  pushoverClear = pkgs.writeShellScript "pushover-waybar-clear" ''
+    set -euo pipefail
+    state="${pushoverPaths.stateFileShell}"
+    mkdir -p "$(dirname "$state")"
+    printf '0\n' >"$state"
+    ${pkgs.procps}/bin/pkill -RTMIN+${toString pushoverPaths.waybarSignal} waybar || true
+  '';
+
   # Shared module definitions for both bars.
   modules = {
     "hyprland/workspaces" = {
@@ -300,6 +326,22 @@
       on-click = "swaync-client -t";
       escape = true;
     };
+    # Fed by the pushover-bridge daemon. The signal makes the count appear the
+    # moment a message lands rather than at the end of the polling interval;
+    # the interval is only a backstop for a missed signal.
+    "custom/pushover" = {
+      exec = "${pushoverStatus}";
+      return-type = "json";
+      format = "{icon} {}";
+      format-icons = {
+        unread = "<span foreground='red'><sup></sup></span>";
+        none = "";
+      };
+      interval = 60;
+      signal = pushoverPaths.waybarSignal;
+      on-click = "${pushoverClear}";
+      tooltip = true;
+    };
     "battery" = {
       states = {
         warning = 30;
@@ -334,7 +376,7 @@
       # Apps (startmenu) bottom-left. Power (battery) sits next to the clock.
       modules-left = ["custom/startmenu" "hyprland/workspaces"];
       modules-center = ["hyprland/window"];
-      modules-right = ["custom/notification" "battery" "clock" "custom/exit"];
+      modules-right = ["custom/pushover" "custom/notification" "battery" "clock" "custom/exit"];
     }
     // modules;
 in
