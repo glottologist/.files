@@ -45,6 +45,12 @@
         "--host 127.0.0.1"
         "--port 8080"
         "-c 32768"
+        # One slot rather than the auto-chosen four: this is a single-user
+        # endpoint, and each slot holds its own 32768-token KV cache.
+        "-np 1"
+        # Release the compute buffers after five idle minutes; the next request
+        # wakes the server rather than paying the 70 GiB load again.
+        "--sleep-idle-seconds 300"
         "--jinja"
         "--reasoning-format deepseek"
       ];
