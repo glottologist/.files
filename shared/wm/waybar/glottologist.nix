@@ -309,7 +309,7 @@
     };
     "custom/notification" = {
       tooltip = false;
-      format = "{icon} {}";
+      format = "{icon} {text}";
       format-icons = {
         notification = "<span foreground='red'><sup></sup></span>";
         none = "";
@@ -332,7 +332,7 @@
     "custom/pushover" = {
       exec = "${pushoverStatus}";
       return-type = "json";
-      format = "{icon} {}";
+      format = "{icon} {text}";
       format-icons = {
         unread = "<span foreground='red'><sup></sup></span>";
         none = "";
@@ -398,6 +398,10 @@ in
     programs.waybar = {
       enable = true;
       package = pkgs.waybar;
+      # Run under systemd so waybar restarts on crash. Hyprland must not also
+      # launch it: the exec-once entry began with `killall -q waybar`, whose
+      # SIGTERM reads as a clean exit and leaves the unit stopped.
+      systemd.enable = true;
       settings = [topBar bottomBar];
       style = concatStrings [
         ''
