@@ -47,6 +47,10 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    colibri = {
+      url = "github:JustVugg/colibri/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -93,6 +97,7 @@
           ollama-cuda = pkgs-unstable.ollama-cuda;
           ollama-vulkan = pkgs-unstable.ollama-vulkan;
           pi-coding-agent = pkgs-unstable.pi-coding-agent;
+          colibri = inputs.colibri.packages.${system}.default;
           # dosage 3.2: tests/test_robotstxt.py fails under nix build sandbox
           # (OSError: robots.txt disallows http://e/somefile.html). Package is
           # otherwise fine; used from shared/comics + shared/productivity.

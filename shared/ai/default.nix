@@ -1059,6 +1059,18 @@ in
                 };
               };
             };
+            colibri = {
+              npm = "@ai-sdk/openai-compatible";
+              name = "Colibri (local)";
+              options = {
+                baseURL = "http://127.0.0.1:8000/v1";
+              };
+              models = {
+                "glm-5.2-colibri" = {
+                  name = "GLM-5.2 (local)";
+                };
+              };
+            };
           };
           model = "anthropic/claude-sonnet-4-20250514";
         };
@@ -1085,6 +1097,24 @@ in
                   reasoning = true;
                   input = [ "text" ];
                   contextWindow = 32768;
+                }
+              ];
+            };
+            # The colibri unit in hosts/common/ai.nix. Its server accepts the
+            # `developer` role and `reasoning_effort`, so no compat block;
+            # thinking comes back as `reasoning_content`. contextWindow is
+            # what the server reports on /v1/models.
+            colibri = {
+              baseUrl = "http://127.0.0.1:8000/v1";
+              api = "openai-completions";
+              apiKey = "colibri";
+              models = [
+                {
+                  id = "glm-5.2-colibri";
+                  name = "GLM-5.2 (colibri local)";
+                  reasoning = true;
+                  input = [ "text" ];
+                  contextWindow = 131072;
                 }
               ];
             };

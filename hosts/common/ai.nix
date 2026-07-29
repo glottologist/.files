@@ -54,6 +54,36 @@
     };
   };
 
+  # Colibrì serves GLM-5.2 (744B MoE) as an OpenAI-compatible endpoint by
+  # streaming experts from disk, needing ~25 GiB of RAM. The weights are a
+  # one-time offline conversion, not a download the unit can do itself:
+  #   mkdir -p /var/lib/colibri && coli convert --model /var/lib/colibri/glm52_i4
+  # Until that directory exists the ConditionPathExists leaves the unit
+  # skipped rather than crash-looping on a missing model.
+  systemd.services.colibri = {
+    description = "Colibri OpenAI-compatible server (GLM-5.2)";
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+    wantedBy = ["multi-user.target"];
+    unitConfig.ConditionPathExists = "/var/lib/colibri/glm52_i4";
+    serviceConfig = {
+      DynamicUser = true;
+      StateDirectory = "colibri";
+      ExecStart = lib.concatStringsSep " " [
+        "${pkgs.colibri}/bin/coli"
+        "serve"
+        "--model /var/lib/colibri/glm52_i4"
+        "--host 127.0.0.1"
+        "--port 8000"
+      ];
+      # First start mmaps and verifies the expert shards before the socket
+      # opens.
+      TimeoutStartSec = "infinity";
+      Restart = "on-failure";
+      RestartSec = 10;
+    };
+  };
+
   #services.open-webui = {
     #enable = true;
     #port = 8888;
