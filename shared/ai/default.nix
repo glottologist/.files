@@ -162,6 +162,10 @@ let
       source = s + "/scripts/detect_trivial_tests.sh";
       executable = true;
     };
+    "${dir}/scripts/analysis_peers.sh" = {
+      source = s + "/scripts/analysis_peers.sh";
+      executable = true;
+    };
     # HOOKS
     "${dir}/hooks/notify.sh" = {
       source = s + "/hooks/notify.sh";
