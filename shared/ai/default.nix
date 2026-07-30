@@ -49,6 +49,10 @@ let
   # Skills shared across all agents live under secrets/ai/shared/skills/<name>/.
   # Each directory is installed into every agent skills root (Claude, Codex, Grok,
   # Forge, Pi) plus ~/.agents/skills and ~/.claude/skills.
+  #
+  # Install as a directory-level symlink (same as mkSkillFiles), not recursive
+  # file-level links. Codex only advertises skills whose top-level entry under
+  # ~/.codex/skills is a directory symlink; recursive real dirs are invisible.
   sharedSkillsDir = ../../secrets/ai/shared/skills;
   sharedSkillNames = builtins.attrNames (
     lib.filterAttrs (_: type: type == "directory") (builtins.readDir sharedSkillsDir)
@@ -59,7 +63,6 @@ let
         name = "${skillsRoot}/${name}";
         value = {
           source = sharedSkillsDir + "/${name}";
-          recursive = true;
         };
       }) sharedSkillNames
     );
@@ -987,15 +990,37 @@ in
 {
   home = {
     activation = {
-      migrateCodexSkillDirectories = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
-        $DRY_RUN_CMD ${pkgs.bash}/bin/bash \
-          ${../../secrets/ai/codex/migrate-skill-dirs.sh} \
-          ${lib.escapeShellArg "${config.home.homeDirectory}/.codex/skills"} \
-          ${lib.escapeShellArgs (
-            builtins.attrNames (
-              lib.filterAttrs (_: type: type == "directory") (builtins.readDir ../../secrets/ai/codex/skills)
-            )
-          )}
+      # Remove recursive real skill dirs so home-manager can create directory
+      # symlinks (Codex only loads skills whose top-level entry is a symlink).
+      # Must run before checkLinkTargets: that phase cmps targets and fails when
+      # a real skill dir still occupies a path that the new gen wants as a symlink.
+      migrateSkillDirectories = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+        migrate=${../../secrets/ai/codex/migrate-skill-dirs.sh}
+        home=${lib.escapeShellArg config.home.homeDirectory}
+        shared_names=(${lib.escapeShellArgs sharedSkillNames})
+        codex_names=(${lib.escapeShellArgs (
+          builtins.attrNames (
+            lib.filterAttrs (_: type: type == "directory") (builtins.readDir ../../secrets/ai/codex/skills)
+          )
+        )})
+        grok_names=(${lib.escapeShellArgs [
+          "analyse-tests"
+          "analyze"
+          "carryon"
+          "document"
+          "handoff"
+          "implement"
+          "pr-desc"
+          "review-strict"
+          "superplan"
+          "teach"
+        ]})
+
+        $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.codex/skills" "''${codex_names[@]}" "''${shared_names[@]}"
+        $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.grok/skills" "''${grok_names[@]}" "''${shared_names[@]}"
+        for root in .agents/skills .claude/skills .claude-personal/skills .claude-work/skills .forge/skills .pi/agent/skills; do
+          $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/$root" "''${shared_names[@]}"
+        done
       '';
 
       mergePiSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
