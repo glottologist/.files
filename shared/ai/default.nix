@@ -109,6 +109,7 @@ let
     "${dir}/commands/external-audit.md".text = builtins.readFile (s + "/commands/external-audit.md");
     "${dir}/commands/issue.md".text = builtins.readFile (s + "/commands/issue.md");
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (s + "/commands/analyse_tests.md");
+    "${dir}/commands/analyse_perf.md".text = builtins.readFile (s + "/commands/analyse_perf.md");
     "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
       s + "/commands/analyse_bench_fuzz.md"
     );
@@ -454,6 +455,7 @@ let
     "${dir}/commands/external-audit.md".text = builtins.readFile (f + "/commands/external-audit.md");
     "${dir}/commands/issue.md".text = builtins.readFile (f + "/commands/issue.md");
     "${dir}/commands/analyse_tests.md".text = builtins.readFile (f + "/commands/analyse_tests.md");
+    "${dir}/commands/analyse_perf.md".text = builtins.readFile (f + "/commands/analyse_perf.md");
     "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
       f + "/commands/analyse_bench_fuzz.md"
     );
@@ -687,6 +689,7 @@ let
     "${dir}/prompts/external-audit.md".text = piSupport.mkPrompt (f + "/commands/external-audit.md");
     "${dir}/prompts/issue.md".text = piSupport.mkPrompt (f + "/commands/issue.md");
     "${dir}/prompts/analyse_tests.md".text = piSupport.mkPrompt (f + "/commands/analyse_tests.md");
+    "${dir}/prompts/analyse_perf.md".text = piSupport.mkPrompt (f + "/commands/analyse_perf.md");
     "${dir}/prompts/analyse_bench_fuzz.md".text = piSupport.mkPrompt (
       f + "/commands/analyse_bench_fuzz.md"
     );
@@ -1004,6 +1007,7 @@ in
           )
         )})
         grok_names=(${lib.escapeShellArgs [
+          "analyse-perf"
           "analyse-tests"
           "analyze"
           "carryon"
