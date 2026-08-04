@@ -19,10 +19,6 @@ in {
       enable = true;
       extraConfig = "makestep 1 -1";
     };
-    tailscale = {
-      enable = true;
-      extraUpFlags = ["--accept-routes"];
-    };
     syncthing = {
       enable = true;
       openDefaultPorts = true;
