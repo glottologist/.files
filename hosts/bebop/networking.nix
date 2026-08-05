@@ -7,10 +7,15 @@
 }: let
   hosts = import ../../secrets/hosts.nix;
 in {
-  environment.systemPackages = with pkgs; [
-    networkmanagerapplet
-    wireguard-tools
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      networkmanagerapplet
+      wireguard-tools
+    ];
+    # Clients use uplink resolvers, not the flaky 127.0.0.53 stub.
+    # mkForce: resolved.nix defaults this to stub-resolv.conf.
+    etc."resolv.conf".source = lib.mkForce "/run/systemd/resolve/resolv.conf";
+  };
   networking = {
     hostName = "bebop"; # Define your hostname.
     networkmanager = {
@@ -24,19 +29,19 @@ in {
     );
   };
 
-  # Enable systemd-resolved with DNS-over-TLS for Quad9
+  # Plain DNS to Quad9 (DoT off — opportunistic DoT stalled dig/musl on this link).
   services.resolved = {
     enable = true;
     settings.Resolve = {
       DNSSEC = "allow-downgrade";
       Domains = [ "~." ];
       FallbackDNS = [ "9.9.9.9" "149.112.112.112" ];
-      DNSOverTLS = "opportunistic";
+      DNSOverTLS = "no";
       DNS = [
-        "9.9.9.9#dns.quad9.net"
-        "149.112.112.112#dns.quad9.net"
-        "[2620:fe::fe]#dns.quad9.net"
-        "[2620:fe::9]#dns.quad9.net"
+        "9.9.9.9"
+        "149.112.112.112"
+        "2620:fe::fe"
+        "2620:fe::9"
       ];
     };
   };
