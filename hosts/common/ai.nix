@@ -9,6 +9,9 @@
     package = pkgs.ollama-rocm;
     host = "127.0.0.1";
     port = 11434;
+    # Cloud passthrough (284B MoE / 13B active, 1M context). Requires
+    # `ollama signin` for Ollama Cloud; no local weights download.
+    loadModels = ["deepseek-v4-flash:cloud"];
   };
   systemd.services.ollama.serviceConfig = {
     Environment = ["OLLAMA_HOST=0.0.0.0:11434"];

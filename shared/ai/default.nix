@@ -1090,6 +1090,9 @@ in
                 "qwen3.6" = {
                   name = "Qwen 3.6";
                 };
+                "deepseek-v4-flash:cloud" = {
+                  name = "DeepSeek V4 Flash (cloud)";
+                };
               };
             };
             colibri = {
