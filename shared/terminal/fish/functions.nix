@@ -23,6 +23,7 @@
   xdg.configFile."fish/functions/rgmatch.fish".source = ./functions/rgmatch.fish;
   xdg.configFile."fish/functions/sync_directories.fish".source = ./functions/sync_directories.fish;
   xdg.configFile."fish/functions/uz.fish".source = ./functions/uz.fish;
+  xdg.configFile."fish/functions/value_study.fish".source = ./functions/value_study.fish;
   xdg.configFile."fish/functions/wifi_monitor.fish".source = ./functions/wifi_monitor.fish;
   xdg.configFile."fish/functions/wifi_toggle.fish".source = ./functions/wifi_toggle.fish;
   xdg.configFile."fish/functions/wifi_watch.fish".source = ./functions/wifi_watch.fish;
