@@ -22,7 +22,10 @@
     exec ${pkgs.bash}/bin/bash ${../../secrets/alerts/pushover-register.sh} "$@"
   '';
 in {
-  imports = [./brickborrow-watch.nix];
+  imports = [
+    ./brickborrow-watch.nix
+    ./ntfy-notify.nix
+  ];
 
   home.packages = [bridge register];
 
