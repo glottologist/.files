@@ -22,6 +22,8 @@
     exec ${pkgs.bash}/bin/bash ${../../secrets/alerts/pushover-register.sh} "$@"
   '';
 in {
+  imports = [./brickborrow-watch.nix];
+
   home.packages = [bridge register];
 
   systemd.user.services.pushover-bridge = {

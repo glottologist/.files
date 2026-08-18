@@ -1167,6 +1167,10 @@ in
             };
           };
         };
+        # Host-wide agent tool store; see secrets/agent-tools/tool-metadata.md.
+        # A whole-directory link, so a new tool needs no entry here — only a
+        # `git add` and a rebuild.
+        "agent-tools".source = ../../secrets/agent-tools;
         ".codex/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
         # CODEX REFERENCES
         ".codex/references/writing-style.md".text =
