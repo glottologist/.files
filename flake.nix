@@ -45,7 +45,8 @@
     };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Latest Zen needs ffmpeg_9; 26.05 only has through ffmpeg_8.
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     colibri = {
       url = "github:JustVugg/colibri/v1.2.0";

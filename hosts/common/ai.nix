@@ -9,12 +9,25 @@
     package = pkgs.ollama-rocm;
     host = "127.0.0.1";
     port = 11434;
-    # Cloud passthrough (284B MoE / 13B active, 1M context). Requires
-    # `ollama signin` for Ollama Cloud; no local weights download.
-    loadModels = ["deepseek-v4-flash:cloud"];
+    # deepseek-v4-flash:cloud is a cloud passthrough (284B MoE / 13B active, 1M
+    # context) and requires `ollama signin`; no local weights download.
+    # qwen3.8:27b is local weights: 16.8 GB of model plus a 931 MB vision
+    # projector, pulled on every host importing this file.
+    loadModels = [
+      "deepseek-v4-flash:cloud"
+      "qwen3.8:27b"
+    ];
   };
+  # Ollama serves 4096 tokens unless told otherwise, which is too small to be
+  # useful for qwen3.8:27b. 65536 costs roughly 4 GiB of KV cache: the hybrid
+  # architecture puts a full attention layer every fourth block, so only 16 of
+  # the 65 blocks hold a cache, at 4 KV heads and 256-wide keys and values.
+  # Against 16.8 GB of weights that is ~21 GB of the 93 GiB shared with the APU.
   systemd.services.ollama.serviceConfig = {
-    Environment = ["OLLAMA_HOST=0.0.0.0:11434"];
+    Environment = [
+      "OLLAMA_HOST=0.0.0.0:11434"
+      "OLLAMA_CONTEXT_LENGTH=65536"
+    ];
   };
 
   # MiniMax M2.7 (230B-A10B MoE) as an OpenAI-compatible endpoint for pi.

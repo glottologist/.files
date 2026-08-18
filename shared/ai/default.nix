@@ -29,10 +29,13 @@ let
   '';
   piManagedSettings = pkgs.writeText "pi-managed-settings.json" (
     builtins.toJSON {
+      # An allowlist: pi offers only the models matching these patterns, so a
+      # provider in models.json stays invisible until it is named here.
       enabledModels = [
         "openai-codex/gpt-5.6-sol:xhigh"
         "anthropic/claude-opus-4-7:high"
         "llamacpp/minimax-m2.7:high"
+        "ollama/qwen3.8:27b"
       ];
     }
   );
@@ -1072,6 +1075,9 @@ in
                 "deepseek-v4-flash:cloud" = {
                   name = "DeepSeek V4 Flash (cloud)";
                 };
+                "qwen3.8:27b" = {
+                  name = "Qwen 3.8 27B";
+                };
               };
             };
             colibri = {
@@ -1130,6 +1136,32 @@ in
                   reasoning = true;
                   input = [ "text" ];
                   contextWindow = 131072;
+                }
+              ];
+            };
+            # The ollama unit in hosts/common/ai.nix, whose models are declared
+            # in its loadModels. `id` is the ollama tag, colon included; pi
+            # matches a pattern against model ids before it splits a trailing
+            # colon off as a thinking level, so the tag survives intact.
+            #
+            # Qwen 3.8 ships a vision projector, hence the image input, and
+            # ollama parses its thinking server-side, hence `reasoning`.
+            # contextWindow tracks OLLAMA_CONTEXT_LENGTH on the unit, not the
+            # model's native 262144.
+            ollama = {
+              baseUrl = "http://127.0.0.1:11434/v1";
+              api = "openai-completions";
+              apiKey = "ollama";
+              models = [
+                {
+                  id = "qwen3.8:27b";
+                  name = "Qwen 3.8 27B (ollama local)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 65536;
                 }
               ];
             };
