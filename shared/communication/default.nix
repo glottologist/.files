@@ -14,6 +14,7 @@
     neomutt
     signal-desktop # signam messenger
     slack-term # Slack client for your term
+    teams-for-linux # Unofficial Microsoft Teams client (official client is darwin-only in nixpkgs)
     telegram-desktop
   ];
   services = {
