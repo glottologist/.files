@@ -1047,6 +1047,7 @@ in
       grok-build
       kimi-code
       llm-agents-nix.packages.${system}.coderabbit-cli
+      llm-agents-nix.packages.${system}.dsh
       (lib.lowPrio sox)
     ];
     file =
