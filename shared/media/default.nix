@@ -5,6 +5,7 @@
 }: {
   home.packages = with pkgs; [
 
+      cliamp               # Terminal Winamp - retro terminal music player
       darktable            # Virtual lighttable and darkroom for photographers
       kazam                # A screencasting program created with design in mind
       gpu-screen-recorder-gtk # GPU-accelerated screen recorder GUI
