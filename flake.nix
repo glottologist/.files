@@ -36,6 +36,16 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      # Quickshell needs packages newer than the release-26.05 fork carries.
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    # Raw Lua Hyprland config vendored by shared/wm/caelestia; not a flake.
+    caelestia-dots = {
+      url = "github:caelestia-dots/caelestia";
+      flake = false;
+    };
     ennio.url = "github:glottologist/ennio";
     nix-everywhere.url = "github:glottologist/nix-everywhere";
     ccstatusline.url = "github:glottologist/ccstatusline-flake";
@@ -61,6 +71,8 @@
     stylix,
     home-manager,
     hyprland,
+    caelestia-shell,
+    caelestia-dots,
     agenix,
     disko,
     foundry,
@@ -150,8 +162,9 @@
           username = "glottologist";
         };
         modules = [
-          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline caelestia-dots;};}
           stylix.homeModules.stylix
+          caelestia-shell.homeManagerModules.default
           ./homes/glottologist
         ];
       };
@@ -161,8 +174,9 @@
           username = "jason";
         };
         modules = [
-          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline;};}
+          {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline caelestia-dots;};}
           stylix.homeModules.stylix
+          caelestia-shell.homeManagerModules.default
           ./homes/jason.nix
         ];
       };
@@ -204,8 +218,9 @@
             };
             home-manager.users.glottologist = {
               imports = [
-                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline;};}
+                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline caelestia-dots;};}
                 stylix.homeModules.stylix
+                caelestia-shell.homeManagerModules.default
                 ./homes/glottologist
               ];
             };
@@ -231,8 +246,9 @@
             };
             home-manager.users.glottologist = {
               imports = [
-                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline;};}
+                {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline caelestia-dots;};}
                 stylix.homeModules.stylix
+                caelestia-shell.homeManagerModules.default
                 ./homes/glottologist
               ];
             };

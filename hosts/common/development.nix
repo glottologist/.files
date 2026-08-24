@@ -14,6 +14,7 @@
     bruno
     insomnia
     openssl
+    pv # Pipe viewer: progress meter for data flowing through a pipe
     websocat
   ];
 }

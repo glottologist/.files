@@ -1,12 +1,8 @@
 {username, ...}: let
-  inherit (import ../../homes/${username}/variables.nix) waybarChoice;
+  inherit (import ../../homes/${username}/variables.nix) desktopChoice;
 in {
   imports = [
     ./stylix.nix
-    waybarChoice
-     ./hyprland/default.nix
-    ./rofi/default.nix
-    ./scripts/default.nix
-    ./wlogout/default.nix
+    desktopChoice
   ];
 }

@@ -27,6 +27,12 @@
   # Set Stylix Image
   stylixImage = ../../secrets/wallpapers/common/glottologist.png;
 
+  # Set Desktop profile
+  # Available options:
+  #   ../../shared/wm/classic/default.nix (waybar + rofi + dunst stack)
+  #   ../../shared/wm/caelestia/default.nix (caelestia shell + Lua hyprland config)
+  desktopChoice = ../../shared/wm/classic/default.nix;
+
   # Set Waybar
   # Available options:
   waybarChoice = ../../shared/wm/waybar/glottologist.nix;
