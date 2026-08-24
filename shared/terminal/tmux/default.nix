@@ -14,15 +14,13 @@ let
       local SESSION_NAME=$1
       local WORKING_DIR=$2
 
-      ${pkgs.tmux}/bin/tmux new-session -d -s "$SESSION_NAME" -n "nvim" -c "$WORKING_DIR"
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:2" -n "claude" -c "$WORKING_DIR"
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:3" -n "codex" -c "$WORKING_DIR"
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:4" -n "grok" -c "$WORKING_DIR"
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:5" -n "terminal" -c "$WORKING_DIR"
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:6" -n "source control" -c "$WORKING_DIR"
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:7" -n "containers" -c "$WORKING_DIR"
+      ${pkgs.tmux}/bin/tmux new-session -d -s "$SESSION_NAME" -n "edit" -c "$WORKING_DIR"
+      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:2" -n "agent" -c "$WORKING_DIR"
+      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:3" -n "terminal" -c "$WORKING_DIR"
+      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:4" -n "src ctl" -c "$WORKING_DIR"
+      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME:5" -n "containers" -c "$WORKING_DIR"
 
-      ${pkgs.tmux}/bin/tmux send-keys -t "$SESSION_NAME:6" "git status" C-m
+      ${pkgs.tmux}/bin/tmux send-keys -t "$SESSION_NAME:4" "git status" C-m
       ${pkgs.tmux}/bin/tmux select-window -t "$SESSION_NAME:1"
       ${pkgs.tmux}/bin/tmux attach-session -t "$SESSION_NAME"
     }
