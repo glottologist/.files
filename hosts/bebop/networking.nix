@@ -1,15 +1,16 @@
 {
-  config,
   lib,
   pkgs,
-  modulesPath,
   ...
-}: let
+}:
+let
   hosts = import ../../secrets/hosts.nix;
-in {
+in
+{
   environment = {
     systemPackages = with pkgs; [
       networkmanagerapplet
+      nym
       wireguard-tools
     ];
     # Clients use uplink resolvers, not the flaky 127.0.0.53 stub.
@@ -35,7 +36,10 @@ in {
     settings.Resolve = {
       DNSSEC = "allow-downgrade";
       Domains = [ "~." ];
-      FallbackDNS = [ "9.9.9.9" "149.112.112.112" ];
+      FallbackDNS = [
+        "9.9.9.9"
+        "149.112.112.112"
+      ];
       DNSOverTLS = "no";
       DNS = [
         "9.9.9.9"
@@ -46,3 +50,5 @@ in {
     };
   };
 }
+
+# Nix guideline compliant 2026-08-26
