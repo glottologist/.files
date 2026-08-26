@@ -121,7 +121,6 @@ let
     "${dir}/agents/investigator.md".text = builtins.readFile (s + "/agents/investigator.md");
     "${dir}/agents/test-analyzer.md".text = builtins.readFile (s + "/agents/test-analyzer.md");
     "${dir}/agents/external-auditor.md".text = builtins.readFile (s + "/agents/external-auditor.md");
-    "${dir}/agents/superplanner.md".text = builtins.readFile (s + "/agents/superplanner.md");
     # REFERENCES
     "${dir}/references/error-handling.md".text = builtins.readFile (
       s + "/references/error-handling.md"
@@ -249,9 +248,6 @@ let
     );
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (
       s + "/skills/superplan/references/examples.md"
-    );
-    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (
-      s + "/skills/superplan/references/plan-reviewer-prompt.md"
     );
     "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (
       s + "/skills/superplan/references/codex-review.md"
@@ -466,7 +462,6 @@ let
     "${dir}/agents/investigator.md".text = builtins.readFile (f + "/agents/investigator.md");
     "${dir}/agents/test-analyzer.md".text = builtins.readFile (f + "/agents/test-analyzer.md");
     "${dir}/agents/external-auditor.md".text = builtins.readFile (f + "/agents/external-auditor.md");
-    "${dir}/agents/superplanner.md".text = builtins.readFile (f + "/agents/superplanner.md");
     # SKILLS (Forge SKILL.md format is identical to Claude's, so reuse the same source files)
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (
       s + "/skills/coding-skills/rust/SKILL.md"
@@ -559,9 +554,6 @@ let
     );
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (
       s + "/skills/superplan/references/examples.md"
-    );
-    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (
-      s + "/skills/superplan/references/plan-reviewer-prompt.md"
     );
     "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (
       s + "/skills/superplan/references/codex-review.md"
@@ -829,9 +821,6 @@ let
     );
     "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (
       s + "/skills/superplan/references/examples.md"
-    );
-    "${dir}/skills/superplan/references/plan-reviewer-prompt.md".text = builtins.readFile (
-      s + "/skills/superplan/references/plan-reviewer-prompt.md"
     );
     "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (
       s + "/skills/superplan/references/codex-review.md"
