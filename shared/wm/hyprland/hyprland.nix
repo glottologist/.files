@@ -18,6 +18,7 @@ in {
     grim
     slurp
     wl-clipboard
+    cliphist
     wlr-randr
     swappy
     ydotool

@@ -1,17 +1,41 @@
 {pkgs}:
 pkgs.writeShellScriptBin "list-keybinds" ''
-  # check if rofi is already running
   if pidof rofi > /dev/null; then
     pkill rofi
   fi
 
-  msg='☣️ NOTE ☣️: Clicking with Mouse or Pressing ENTER will have NO function'
-  keybinds=$(cat ~/.config/hypr/hyprland.conf | grep -E '^bind')
-  
-  # replace #modifier with SUPER in the displayed keybinds for rofi
-  display_keybinds=$(echo "$keybinds" | sed 's/\$modifier/SUPER/g')
+  sheet=$(cat <<'EOF'
+== Launch ==
+SUPER+Return          Terminal
+SUPER+D               App launcher
+SUPER+W               Browser
+SUPER+E               Emoji picker
 
-  # use rofi to display the keybinds with the modified content
-  echo "$display_keybinds" | rofi -dmenu -i -config ~/.config/rofi/config-long.rasi -mesg "$msg"
+== Clipboard ==
+SUPER+C               Copy
+SUPER+X               Cut (GUI only)
+SUPER+V               Paste
+SUPER+CTRL+V          Clipboard history
+SUPER+ALT+C           Colour picker
 
+== Capture ==
+SUPER+S               Screenshot
+SUPER+SHIFT+V         Screen recorder
+
+== Session ==
+SUPER+SHIFT+L         Lock
+SUPER+SHIFT+Q         Logout menu
+SUPER+SHIFT+C         Exit Hyprland
+
+== Windows ==
+SUPER+Q               Close window
+SUPER+F               Fullscreen
+SUPER+H/J/K/L         Move focus
+EOF
+)
+
+  raw=$(grep -E '^bind' ~/.config/hypr/hyprland.conf 2>/dev/null | sed 's/\$modifier/SUPER/g' || true)
+  printf '%s\n\n== Raw binds ==\n%s\n' "$sheet" "$raw" \
+    | rofi -dmenu -i -config ~/.config/rofi/config-long.rasi \
+        -mesg 'Enter does nothing; this is a cheatsheet'
 ''

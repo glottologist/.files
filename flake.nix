@@ -173,7 +173,7 @@
           {_module.args = {inherit certora-prover-flake nvim-flake neovim-flake claude-code-nix codex-cli-nix gemini-cli-nix llm-agents-nix forgecode ennio nix-everywhere ccstatusline caelestia-dots;};}
           stylix.homeModules.stylix
           caelestia-shell.homeManagerModules.default
-          ./homes/jason.nix
+          ./homes/jason
         ];
       };
     };

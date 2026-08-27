@@ -12,7 +12,7 @@ in {
       # tag-assignment rules must precede rules that match on those tags.
       windowrule = [
         "match:class ^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$, tag +file-manager"
-        "match:class ^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm)$, tag +terminal"
+        "match:class ^(com.mitchellh.ghostty|org.wezfurlong.wezterm|Alacritty|kitty|kitty-dropterm|foot)$, tag +terminal"
         "match:class ^(Brave-browser(-beta|-dev|-unstable)?)$, tag +browser"
         "match:class ^([Ff]irefox|org.mozilla.firefox|[Ff]irefox-esr)$, tag +browser"
         "match:class ^([Gg]oogle-chrome(-beta|-dev|-unstable)?)$, tag +browser"

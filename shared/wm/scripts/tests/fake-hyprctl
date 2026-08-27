@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cmd="${1:-}"
+if [[ "$cmd" == "activewindow" ]]; then
+  printf '%s\n' "${FAKE_WINDOW_JSON:-{\"class\":\"firefox\",\"tags\":[\"browser\"]}}"
+  exit 0
+fi
+if [[ "$cmd" == "dispatch" && "${2:-}" == "sendshortcut" ]]; then
+  printf '%s\n' "$3" >>"${FAKE_DISPATCH_LOG:?}"
+  exit "${FAKE_DISPATCH_STATUS:-0}"
+fi
+echo "unexpected hyprctl: $*" >&2
+exit 90
