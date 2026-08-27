@@ -11,6 +11,7 @@
     ntfs3g # FUSE-based NTFS driver with full write support
     parted # Create, destroy, resize, check, and copy partitions
     tree # Command to produce a depth indented directory listing
+    ventoy # Create bootable USB drives from ISO files
     woeusb # Create bootable USB diskc from Windows ISO images
     woeusb-ng # Create bootable USB diskc from Windows ISO images
   ];
