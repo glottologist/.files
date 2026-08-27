@@ -113,15 +113,12 @@
           pi-coding-agent = pkgs-unstable.pi-coding-agent;
           colibri = inputs.colibri.packages.${system}.default;
           brickborrow-watch = inputs.brickborrow-watch.packages.${system}.default;
-          # dosage 3.2: tests/test_robotstxt.py fails under nix build sandbox
-          # (OSError: robots.txt disallows http://e/somefile.html). Package is
-          # otherwise fine; used from shared/comics + shared/productivity.
+          # Sandbox: tests/test_robotstxt.py hits OSError on http://e/somefile.html.
+          # pkgs.dosage.doCheck can read false while pytestCheckHook still runs.
           dosage = prev.dosage.overridePythonAttrs (_: {
             doCheck = false;
           });
-          # commitizen 4.13.9: test_invalid_command file regression fails on
-          # Python 3.13 (argparse quotes choice names: choose from 'init' vs init).
-          # Used from shared/development/git.
+          # Sandbox: test_invalid_command argparse quotes choice names on 3.13.
           commitizen = prev.commitizen.overridePythonAttrs (_: {
             doCheck = false;
           });
@@ -137,7 +134,6 @@
                 jupyter-server = pyprev.jupyter-server.overridePythonAttrs (_: {
                   doCheck = false;
                 });
-                # Same argparse quote drift as top-level commitizen (see above).
                 commitizen = pyprev.commitizen.overridePythonAttrs (_: {
                   doCheck = false;
                 });

@@ -357,11 +357,11 @@
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1787797916,
-        "narHash": "sha256-sly+gs1Lyyn8BIei7ixGZWGK3s7PtQgSMb0N4hVecTc=",
+        "lastModified": 1787830458,
+        "narHash": "sha256-2G8levHX3ohv0d3NacVBGlG54QvKgAdY3Rfu+81eAsI=",
         "owner": "caelestia-dots",
         "repo": "shell",
-        "rev": "5debe20729833669018bf9aa46dd3be4015c6a6f",
+        "rev": "32ee275058aede23b22ffd1756526c17c70f5b16",
         "type": "github"
       },
       "original": {
@@ -1676,11 +1676,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787642266,
-        "narHash": "sha256-PZji/zdBfd/ONsnSsWa6TUmgLLV9jfWgEK+I6ViJGlI=",
+        "lastModified": 1787825706,
+        "narHash": "sha256-Yd3bEL6smniJRQRgeXfWi8BAonzCNpvcn3dGf9tPo18=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "1835f76697a4025398fd1a731e799a1f60062cc0",
+        "rev": "16fc769a0edc0f1cc3bd945fd1661e919006be3f",
         "type": "github"
       },
       "original": {
@@ -2862,11 +2862,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1787782061,
-        "narHash": "sha256-V4exUPjffDBR72giOgxXwUwUHex6LVuEUQ4eA+tBE8I=",
+        "lastModified": 1787826722,
+        "narHash": "sha256-jwWYllWdjtnIyLpFY6NTOC0QGXdUJ/bz5k59x2DjDrc=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "aa9d7cdc4a913fc4ced56af5f12cfffbed5141d7",
+        "rev": "3ffa8b11e4720a80bc01fa502ad9a74c49f9abc1",
         "type": "github"
       },
       "original": {

@@ -34,7 +34,6 @@
       experimental-features = nix-command flakes
       keep-outputs          = true
       keep-derivations      = true
-      binary-caches-parallel-connections = 3
       connect-timeout = 5
     '';
 
