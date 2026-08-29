@@ -17,6 +17,7 @@
     ./storage.nix
     ./users.nix
     ./wireguard.nix
+    ./tailscale.nix
     ./xdg.nix
     ../common/ai.nix
     ../common/blockchain.nix

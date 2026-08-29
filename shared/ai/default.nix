@@ -1037,6 +1037,12 @@ in
       kimi-code
       llm-agents-nix.packages.${system}.coderabbit-cli
       llm-agents-nix.packages.${system}.dsh
+      llm-agents-nix.packages.${system}.herdr
+      llm-agents-nix.packages.${system}.crush
+      llm-agents-nix.packages.${system}.copilot-cli
+      llm-agents-nix.packages.${system}.antigravity-cli
+      llm-agents-nix.packages.${system}.voxtype
+      llm-agents-nix.packages.${system}.chatgpt
       (lib.lowPrio sox)
     ];
     file =

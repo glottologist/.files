@@ -98,6 +98,7 @@ in {
     shellAliases = {
       ".-" = "cd - ";
       ".." = "cd ..";
+      a = "default-agent";
       alarm = "termdown --blink --text 'FINISHED'";
       b = "bacon";
       bt = "bluetoothctl";

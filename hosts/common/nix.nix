@@ -34,7 +34,7 @@
       experimental-features = nix-command flakes
       keep-outputs          = true
       keep-derivations      = true
-      connect-timeout = 5
+      connect-timeout = 30
     '';
 
     sshServe = {

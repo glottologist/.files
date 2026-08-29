@@ -3,6 +3,8 @@
   pkgs,
   ...
 }: {
+  imports = [./webapps.nix];
+
   home.packages = with pkgs; [
     google-chrome # Chrome browser
     qutebrowser # Keyboard-focused browser with a minimal GUI.

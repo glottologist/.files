@@ -26,7 +26,11 @@ in
     };
     useDHCP = lib.mkDefault true;
     extraHosts = builtins.concatStringsSep "\n" (
-      builtins.attrValues (builtins.mapAttrs (name: ip: "${ip} ${name}") hosts)
+      (builtins.attrValues (builtins.mapAttrs (name: ip: "${ip} ${name}") hosts))
+      ++ [
+        # LAN split-horizon: skip hairpin NAT for the Headscale hostname.
+        "${hosts.mantis} hs.glottologist.co.uk"
+      ]
     );
   };
 

@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   pkgs,
   ...
 }:
@@ -72,6 +74,15 @@ in
     tds
     tsa
   ];
+
+  # Continuum calls @resurrect-save-script-path from the live tmux server.
+  # After a HM switch the old store path is GCed and save.sh exits 127 until
+  # the server reloads tmux.conf.
+  home.activation.reloadTmux = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    if ${pkgs.tmux}/bin/tmux info >/dev/null 2>&1; then
+      ${pkgs.tmux}/bin/tmux source-file "${config.xdg.configHome}/tmux/tmux.conf"
+    fi
+  '';
 
   programs.tmux = {
     enable = true;

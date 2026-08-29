@@ -17,5 +17,9 @@
     (import ./rofi-launcher.nix {inherit pkgs;})
     (import ./screenshootin.nix {inherit pkgs;})
     (import ./unified-clipboard.nix {inherit pkgs;})
+    (import ./ocr-clip.nix {inherit pkgs;})
+    (import ./reminder.nix {inherit pkgs;})
+    (import ./omarchy-menu.nix {inherit pkgs;})
+    (import ./default-agent.nix {inherit pkgs;})
   ];
 }

@@ -7,6 +7,7 @@
     aerc
     alpine
     discord # All-in-one cross-platform voice and text chat for gamers
+    localsend # LAN file sharing (Omarchy Share)
     himalaya
     kbfs
     keybase

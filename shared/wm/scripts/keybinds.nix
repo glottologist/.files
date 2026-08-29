@@ -7,9 +7,14 @@ pkgs.writeShellScriptBin "list-keybinds" ''
   sheet=$(cat <<'EOF'
 == Launch ==
 SUPER+Return          Terminal
+SUPER+SPACE           Action menu
 SUPER+D               App launcher
 SUPER+W               Browser
 SUPER+E               Emoji picker
+SUPER+SHIFT+A         ChatGPT web app
+SUPER+SHIFT+ALT+A     Grok web app
+SUPER+SHIFT+E         HEY Email
+SUPER+SHIFT+CTRL+A    Default agent
 
 == Clipboard ==
 SUPER+C               Copy
@@ -21,6 +26,15 @@ SUPER+ALT+C           Colour picker
 == Capture ==
 SUPER+S               Screenshot
 SUPER+SHIFT+V         Screen recorder
+SUPER+CTRL+Print      OCR region to clipboard
+
+== Reminders ==
+SUPER+CTRL+R          Set reminder
+SUPER+CTRL+ALT+R      List reminders
+SUPER+CTRL+SHIFT+R    Clear reminders
+
+== Agents ==
+SUPER+CTRL+Return     Herdr
 
 == Session ==
 SUPER+SHIFT+L         Lock
