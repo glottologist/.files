@@ -1,8 +1,8 @@
-{username, ...}: let
-  inherit (import ../../homes/${username}/variables.nix) desktopChoice;
-in {
+{...}: {
+  # Both profiles are installed; the login screen picks the session.
   imports = [
     ./stylix.nix
-    desktopChoice
+    ./classic/default.nix
+    ./caelestia/default.nix
   ];
 }

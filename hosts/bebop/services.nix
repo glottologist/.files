@@ -9,6 +9,35 @@
   inherit (import ./variables.nix) username;
   syncthingSecrets = import ../../secrets/syncthing.nix;
   hosts = import ../../secrets/hosts.nix;
+
+  # Both Hyprland configurations live in ~/.config/hypr; Hyprland prefers
+  # hyprland.lua when run bare, so each session names its file explicitly.
+  hyprlandWith = configFile:
+    pkgs.writeShellScript "hyprland-${configFile}" ''
+      exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/${configFile}"
+    '';
+  hyprlandSessions =
+    pkgs.runCommand "hyprland-sessions" {
+      passthru.providedSessions = ["hyprland-classic" "hyprland-caelestia"];
+    } ''
+      mkdir -p $out/share/wayland-sessions
+      cat > $out/share/wayland-sessions/hyprland-classic.desktop <<EOF
+      [Desktop Entry]
+      Type=Application
+      Name=Hyprland (Classic)
+      Comment=Hyprland with the waybar, rofi and dunst stack
+      Exec=${hyprlandWith "hyprland.conf"}
+      DesktopNames=Hyprland
+      EOF
+      cat > $out/share/wayland-sessions/hyprland-caelestia.desktop <<EOF
+      [Desktop Entry]
+      Type=Application
+      Name=Hyprland (Caelestia)
+      Comment=Hyprland with the caelestia shell
+      Exec=${hyprlandWith "hyprland.lua"}
+      DesktopNames=Hyprland
+      EOF
+    '';
 in {
   environment.systemPackages = with pkgs; [
     systemdgenie
@@ -87,6 +116,7 @@ in {
         wayland.enable = true;
       };
       defaultSession = "hyprland";
+      sessionPackages = [hyprlandSessions];
     };
     desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
@@ -136,7 +166,8 @@ in {
       settings = {
         default_session = {
           user = "${username}";
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland"; # start Hyprland with a TUI login manager
+          # F2 opens the session menu: both Hyprland profiles and Plasma.
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
         };
       };
     };

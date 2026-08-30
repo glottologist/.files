@@ -34,9 +34,9 @@ in {
   programs.caelestia = {
     enable = true;
     cli.enable = true;
-    # greetd launches Hyprland directly, so graphical-session.target never
-    # activates and the unit would sit idle; execs.lua starts the shell
-    # with `caelestia shell -d` as upstream intends.
+    # The session wrapper launches Hyprland directly, so
+    # graphical-session.target never activates and the unit would sit idle;
+    # execs.lua starts the shell with `caelestia shell -d` as upstream intends.
     systemd.enable = false;
   };
 
