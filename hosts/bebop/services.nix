@@ -38,6 +38,18 @@
       DesktopNames=Hyprland
       EOF
     '';
+  # programs.hyprland adds hyprland.desktop and hyprland-uwsm.desktop to the
+  # session list; bare Hyprland now resolves to the Lua config, so hide them.
+  greeterSessions =
+    pkgs.runCommand "greeter-sessions" {} ''
+      mkdir -p $out
+      for f in ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions/*.desktop; do
+        case "$(basename "$f")" in
+          hyprland.desktop | hyprland-uwsm.desktop) continue ;;
+        esac
+        ln -s "$f" "$out/"
+      done
+    '';
 in {
   environment.systemPackages = with pkgs; [
     systemdgenie
@@ -167,7 +179,7 @@ in {
         default_session = {
           user = "${username}";
           # F2 opens the session menu: both Hyprland profiles and Plasma.
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions}";
         };
       };
     };
