@@ -1125,11 +1125,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1788092704,
-        "narHash": "sha256-cPnktxPeiFqps0iIDn16+Ekdb+46YSFlqPJTUaw/U6E=",
+        "lastModified": 1788098535,
+        "narHash": "sha256-n0dFefXJRtS5TtG6vi3ybOv+zToJv8Uh9pa/Feql7zk=",
         "owner": "glottologist",
         "repo": "ennio",
-        "rev": "ee10e7a218f6c0f084e85f3cc2df4ccd22a686dd",
+        "rev": "a2f33546692c754b26ad4a842bbfca59c0936007",
         "type": "github"
       },
       "original": {
