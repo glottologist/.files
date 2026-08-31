@@ -96,6 +96,15 @@ in {
         }
       '';
 
+      # The CLI's scheme engine writes ~/.config/gtk-{3,4}.0/{gtk,thunar}.css
+      # and dconf's gtk-theme on every scheme apply. Those files are per-user,
+      # not per-session, so a caelestia login used to darken GTK apps in the
+      # classic session too; enableGtk = false keeps its theming inside the
+      # caelestia shell.
+      "caelestia/cli.json".text = builtins.toJSON {
+        theme.enableGtk = false;
+      };
+
       "caelestia/hypr-user.lua".text = ''
         -- input.lua hardcodes kb_layout = "us"
         hl.config({
