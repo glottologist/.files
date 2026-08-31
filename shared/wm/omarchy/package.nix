@@ -24,6 +24,8 @@
   wireplumber,
   quickshell,
   udiskie,
+  qrencode,
+  hyprsunset,
 }: let
   # Scripts whose job is pacman/yay package management; each becomes a
   # stub that raises a notification instead of failing silently.
@@ -117,6 +119,8 @@ in
       wireplumber
       quickshell
       udiskie
+      qrencode
+      hyprsunset
     ];
 
     meta = {

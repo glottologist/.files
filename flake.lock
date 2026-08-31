@@ -1125,11 +1125,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1788098535,
-        "narHash": "sha256-n0dFefXJRtS5TtG6vi3ybOv+zToJv8Uh9pa/Feql7zk=",
+        "lastModified": 1788182940,
+        "narHash": "sha256-ZnhBkOh0Fh64AGmzIX9w3hHaMn8O5sHmfQBhNoi5waM=",
         "owner": "glottologist",
         "repo": "ennio",
-        "rev": "a2f33546692c754b26ad4a842bbfca59c0936007",
+        "rev": "662183412a92f40330061b02257ce672e9cd8ed1",
         "type": "github"
       },
       "original": {
@@ -2867,11 +2867,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1788136312,
-        "narHash": "sha256-pCbuVA9LVjBY+j7XyTTWu2judbZa+yTdV9BKVUzqAdQ=",
+        "lastModified": 1788173690,
+        "narHash": "sha256-4inKKs9hhN3Zbym+AmfJuFRKNzrROIJTwUjgbUaGuV8=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "b983ba81582a30085a6e8f66d50b97ecfe5acce7",
+        "rev": "4306952f9122bf350a13842b1e958f448437108c",
         "type": "github"
       },
       "original": {
