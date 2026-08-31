@@ -127,7 +127,7 @@ in {
         enable = true;
         wayland.enable = true;
       };
-      defaultSession = "hyprland";
+      defaultSession = "hyprland-classic";
       sessionPackages = [hyprlandSessions];
     };
     desktopManager.plasma6.enable = true;
@@ -179,7 +179,11 @@ in {
         default_session = {
           user = "${username}";
           # F2 opens the session menu: both Hyprland profiles and Plasma.
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions}";
+          # --sessions replaces tuigreet's XDG_DATA_DIRS fallback (the source
+          # of the identically-named "Hyprland" entries), so only the named
+          # sessions appear. --cmd makes the classic profile the default
+          # until a session is remembered.
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions} --cmd ${hyprlandWith "hyprland.conf"}";
         };
       };
     };
