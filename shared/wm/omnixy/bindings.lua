@@ -1,4 +1,4 @@
-local classic = require("omarchy-cfg.classic-binds")
+local classic = require("omnixy-cfg.classic-binds")
 local loader = dofile(os.getenv("HOME") .. "/.config/hypr/binding-loader.lua")
 
 local exec_overrides = {
@@ -20,8 +20,20 @@ local exec_overrides = {
     ["cliphist list | rofi -dmenu | cliphist decode | wl-copy"] = function()
         return hl.dsp.exec_cmd("omarchy-menu-clipboard")
     end,
-    -- Pyprland is absent; Omarchy's special workspace supplies the dropdown.
-    ["pypr toggle term"] = function() return hl.dsp.workspace.toggle_special() end,
+    -- Spawn the dropdown once; [k] prevents pgrep matching this command itself.
+    ["pypr toggle term"] = function()
+        return hl.dsp.exec_cmd([[bash -c "pgrep -f '[k]itty --class kitty-dropterm' >/dev/null || hyprctl dispatch -- exec 'kitty --class kitty-dropterm'; hyprctl dispatch togglespecialworkspace term"]])
+    end,
+    ["desktop-reminder set"] = function() return hl.dsp.exec_cmd("omarchy-reminder -i") end,
+    ["desktop-reminder list"] = function() return hl.dsp.exec_cmd("omarchy-reminder show") end,
+    ["desktop-reminder clear"] = function() return hl.dsp.exec_cmd("omarchy-reminder clear") end,
 }
+
+o.window("kitty-dropterm", {
+    workspace = "special:term",
+    float = true,
+    center = true,
+    size = { "(monitor_w*7/10)", "(monitor_h*7/10)" },
+})
 
 loader.register(classic, { exec_overrides = exec_overrides })

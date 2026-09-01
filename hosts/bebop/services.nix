@@ -16,17 +16,19 @@
     pkgs.writeShellScript "hyprland-${configFile}" ''
       exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/${configFile}"
     '';
-  # The omarchy session needs OMARCHY_PATH before Hyprland parses its Lua
-  # config, and the quickshell process and every omarchy-* script inherit
-  # the session PATH.
-  omarchySession = pkgs.writeShellScript "hyprland-omarchy-session" ''
-    export OMARCHY_PATH="${pkgs.omarchy-nixified}"
-    export PATH="${pkgs.omarchy-nixified}/bin:${pkgs.omarchy-nixified.runtimePath}:$PATH"
-    exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/omarchy.lua"
-  '';
+  # The omarchy-based sessions (omarchy itself and omnixy, which iterates on
+  # the same base) need OMARCHY_PATH before Hyprland parses their Lua config,
+  # and the quickshell process and every omarchy-* script inherit the
+  # session PATH.
+  omarchySessionWith = name: configFile:
+    pkgs.writeShellScript "hyprland-${name}-session" ''
+      export OMARCHY_PATH="${pkgs.omarchy-nixified}"
+      export PATH="${pkgs.omarchy-nixified}/bin:${pkgs.omarchy-nixified.runtimePath}:$PATH"
+      exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/${configFile}"
+    '';
   hyprlandSessions =
     pkgs.runCommand "hyprland-sessions" {
-      passthru.providedSessions = ["hyprland-classic" "hyprland-caelestia" "hyprland-omarchy"];
+      passthru.providedSessions = ["hyprland-classic" "hyprland-caelestia" "hyprland-omarchy" "hyprland-omnixy"];
     } ''
       mkdir -p $out/share/wayland-sessions
       cat > $out/share/wayland-sessions/hyprland-classic.desktop <<EOF
@@ -50,7 +52,15 @@
       Type=Application
       Name=Hyprland (Omarchy)
       Comment=Hyprland with the Omarchy 4 quickshell desktop
-      Exec=${omarchySession}
+      Exec=${omarchySessionWith "omarchy" "omarchy.lua"}
+      DesktopNames=Hyprland
+      EOF
+      cat > $out/share/wayland-sessions/hyprland-omnixy.desktop <<EOF
+      [Desktop Entry]
+      Type=Application
+      Name=Hyprland (Omnixy)
+      Comment=Hyprland with the Omnixy quickshell desktop, iterating on the Omarchy base
+      Exec=${omarchySessionWith "omnixy" "omnixy.lua"}
       DesktopNames=Hyprland
       EOF
     '';

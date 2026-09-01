@@ -1,0 +1,79 @@
+bind
+	modmask: 64
+	submap: 
+	key: O
+	keycode: 0
+	catchall: false
+	description: 
+	dispatcher: exec
+	arg: obsidian
+
+bind
+	modmask: 8
+	submap: 
+	key: Tab
+	keycode: 0
+	catchall: false
+	description: [Windows] Focus next window / Bring active window to top
+	dispatcher: __lua
+	arg: 
+
+bind
+	modmask: 64
+	submap: 
+	key: Return
+	keycode: 0
+	catchall: false
+	description: [Applications] Terminal
+	dispatcher: exec
+	arg: kitty
+
+bind
+	modmask: 64
+	submap: 
+	key: mouse:272
+	keycode: 0
+	catchall: false
+	description: [Windows] Move window
+	dispatcher: movewindow
+	arg: 
+
+bind
+	modmask: 77
+	submap: 
+	key: K
+	keycode: 0
+	catchall: false
+	description: [Utilities] Keybindings
+	dispatcher: exec
+	arg: list-keybinds
+
+bind
+	modmask: 72
+	submap: 
+	key: 
+	keycode: 43
+	catchall: false
+	description: [Windows] Swap window left
+	dispatcher: swapwindow
+	arg: l
+
+bind
+	modmask: 0
+	submap: 
+	key: XF86AudioPlay
+	keycode: 0
+	catchall: false
+	description: [Media] Play or pause
+	dispatcher: exec
+	arg: playerctl play-pause
+
+bind
+	modmask: 64
+	submap: 
+	key: P
+	keycode: 0
+	catchall: false
+	description: 
+	dispatcher: __lua
+	arg: 42

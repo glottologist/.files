@@ -8,6 +8,7 @@
   forgecode,
   ccstatusline,
   ennio,
+  nix-everywhere,
   ...
 }:
 let
@@ -1030,6 +1031,7 @@ in
       ccstatusline.packages.${system}.default
       ennio.packages.${system}.ennio
       ennio.packages.${system}.ennio-node
+      nix-everywhere.packages.${system}.default
       claude-monitor
       opencode
       headroom

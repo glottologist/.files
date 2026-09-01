@@ -21,11 +21,13 @@
   wl-clipboard,
   networkmanager,
   bluez,
+  gtk3,
   wireplumber,
   quickshell,
   udiskie,
   qrencode,
   hyprsunset,
+  inotify-tools,
 }: let
   # Scripts whose job is pacman/yay package management; each becomes a
   # stub that raises a notification instead of failing silently.
@@ -116,11 +118,18 @@ in
       wl-clipboard
       networkmanager
       bluez
+      # The quickshell app launcher resolves desktop entries through
+      # gtk-launch (shell/services/AppLibrary.qml); without it every
+      # launch shows the OSD then dies on command-not-found.
+      gtk3
       wireplumber
       quickshell
       udiskie
       qrencode
       hyprsunset
+      # PluginRegistry watches ~/.config/omarchy/plugins with inotifywait
+      # and respawns the watcher every second when the binary is missing.
+      inotify-tools
     ];
 
     meta = {

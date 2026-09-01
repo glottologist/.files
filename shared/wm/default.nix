@@ -5,5 +5,6 @@
     ./classic/default.nix
     ./caelestia/default.nix
     ./omarchy/default.nix
+    ./omnixy/default.nix
   ];
 }

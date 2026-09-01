@@ -28,8 +28,8 @@ in
     extraHosts = builtins.concatStringsSep "\n" (
       (builtins.attrValues (builtins.mapAttrs (name: ip: "${ip} ${name}") hosts))
       ++ [
-        # LAN split-horizon: skip hairpin NAT for the Headscale hostname.
-        "${hosts.mantis} hs.glottologist.co.uk"
+        # Control plane is Docker on curunir (public Hetzner IP), not mantis.
+        "${hosts.curunir} hs.glottologist.co.uk"
       ]
     );
   };

@@ -1,47 +1,40 @@
+# Nix guideline compliant 2026-09-01
 {
   pkgs,
   lib,
   username,
   caelestia-dots,
   ...
-}: let
-  inherit
-    (import ../../../homes/${username}/variables.nix)
+}:
+let
+  inherit (import ../../../homes/${username}/variables.nix)
     browser
     terminal
     keyboardLayout
     extraMonitorSettings
     ;
 
-  # The caelestia session replays the classic keybindings: binds.nix is the
-  # single source of truth, serialised here into a Lua module that
-  # keybinds.lua translates into hl API calls.
-  classicHypr =
-    (import ../hyprland/binds.nix {
-      inherit username;
-      config = null;
-    }).wayland.windowManager.hyprland.settings;
-  toLuaBindList = binds:
-    lib.concatMapStrings
-    (b: "        [==[${lib.replaceStrings ["$modifier"] ["SUPER"] b}]==],\n")
-    binds;
+  # The caelestia session replays the annotated Classic catalog.
+  classicCatalog = import ../hyprland/keybind-catalog.nix { inherit username; };
+  catalogToLua = import ../hyprland/catalog-to-lua.nix { inherit lib; };
 
   # Every dots module except keybinds.lua, which ./keybinds.lua replaces.
   # Derived from the dots so an upstream module addition fails loudly at
   # build time (missing require) rather than silently keeping stale files.
-  dotsHyprModules =
-    builtins.filter (name: name != "keybinds.lua")
-    (builtins.attrNames (builtins.readDir "${caelestia-dots}/hypr/hyprland"));
+  dotsHyprModules = builtins.filter (name: name != "keybinds.lua") (
+    builtins.attrNames (builtins.readDir "${caelestia-dots}/hypr/hyprland")
+  );
 
   # Translate hyprlang "monitor=output,mode,position,scale" lines from
   # variables.nix into hl.monitor calls for the Lua config.
-  monitorLines =
-    builtins.filter
-    (line: lib.hasPrefix "monitor=" line)
-    (lib.splitString "\n" extraMonitorSettings);
-  toLuaMonitor = line: let
-    parts = lib.splitString "," (lib.removePrefix "monitor=" line);
-  in
+  monitorLines = builtins.filter (line: lib.hasPrefix "monitor=" line) (
+    lib.splitString "\n" extraMonitorSettings
+  );
+  toLuaMonitor =
+    line:
+    let
+      parts = lib.splitString "," (lib.removePrefix "monitor=" line);
+    in
     lib.optionalString (builtins.length parts >= 4) ''
       hl.monitor({
           output   = "${builtins.elemAt parts 0}",
@@ -50,7 +43,8 @@
           scale    = ${builtins.elemAt parts 3},
       })
     '';
-in {
+in
+{
   programs.caelestia = {
     enable = true;
     cli.enable = true;
@@ -65,11 +59,14 @@ in {
   # hyprland.lua copies default.lua to current.lua at load, and
   # `caelestia scheme set` rewrites current.lua at runtime.
   xdg.configFile =
-    lib.listToAttrs (map (name:
-      lib.nameValuePair "hypr/hyprland/${name}" {
-        source = "${caelestia-dots}/hypr/hyprland/${name}";
-      })
-    dotsHyprModules)
+    lib.listToAttrs (
+      map (
+        name:
+        lib.nameValuePair "hypr/hyprland/${name}" {
+          source = "${caelestia-dots}/hypr/hyprland/${name}";
+        }
+      ) dotsHyprModules
+    )
     // {
       "hypr/hyprland.lua".source = "${caelestia-dots}/hypr/hyprland.lua";
       "hypr/variables.lua".source = "${caelestia-dots}/hypr/variables.lua";
@@ -80,14 +77,7 @@ in {
       # Classic bindings serialised for keybinds.lua; hyprland.lua puts
       # ~/.config/caelestia on package.path, so require("classic-binds")
       # resolves here.
-      "caelestia/classic-binds.lua".text = ''
-        return {
-            bind = {
-        ${toLuaBindList classicHypr.bind}    },
-            bindm = {
-        ${toLuaBindList classicHypr.bindm}    },
-        }
-      '';
+      "caelestia/classic-binds.lua".text = catalogToLua classicCatalog;
 
       "caelestia/hypr-vars.lua".text = ''
         return {
@@ -119,7 +109,7 @@ in {
             hl.exec_cmd("${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1")
         end)
       '';
-  };
+    };
 
   # Tools the dots' execs.lua and keybinds.lua invoke.
   home.packages = with pkgs; [

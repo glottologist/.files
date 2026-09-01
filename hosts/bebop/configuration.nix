@@ -1,9 +1,5 @@
+{ ... }:
 {
-  config,
-  pkgs,
-  username,
-  ...
-}: {
   imports = [
     ./boot.nix
     ./filesystem.nix
@@ -16,8 +12,6 @@
     ./services.nix
     ./storage.nix
     ./users.nix
-    ./wireguard.nix
-    ./tailscale.nix
     ./xdg.nix
     ../common/ai.nix
     ../common/blockchain.nix
@@ -30,6 +24,7 @@
     ../common/keyboards.nix
     ../common/nix.nix
     ../common/stylix.nix
+    ../common/tailscale.nix
     ../common/virtualization.nix
   ];
   system = {

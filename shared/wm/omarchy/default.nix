@@ -1,39 +1,32 @@
+# Nix guideline compliant 2026-09-01
 {
   pkgs,
   lib,
   username,
   ...
-}: let
-  inherit
-    (import ../../../homes/${username}/variables.nix)
+}:
+let
+  inherit (import ../../../homes/${username}/variables.nix)
     keyboardLayout
     extraMonitorSettings
     ;
 
   omarchy = pkgs.omarchy-nixified;
 
-  # binds.nix serialised for bindings.lua, exactly as the caelestia module
-  # does it: the classic profile stays the single source of truth.
-  classicHypr =
-    (import ../hyprland/binds.nix {
-      inherit username;
-      config = null;
-    }).wayland.windowManager.hyprland.settings;
-  toLuaBindList = binds:
-    lib.concatMapStrings
-    (b: "        [==[${lib.replaceStrings ["$modifier"] ["SUPER"] b}]==],\n")
-    binds;
+  classicCatalog = import ../hyprland/keybind-catalog.nix { inherit username; };
+  catalogToLua = import ../hyprland/catalog-to-lua.nix { inherit lib; };
 
   # hyprlang "monitor=output,mode,position,scale" lines from variables.nix
   # translated to hl.monitor calls (same translation as the caelestia
   # module).
-  monitorLines =
-    builtins.filter
-    (line: lib.hasPrefix "monitor=" line)
-    (lib.splitString "\n" extraMonitorSettings);
-  toLuaMonitor = line: let
-    parts = lib.splitString "," (lib.removePrefix "monitor=" line);
-  in
+  monitorLines = builtins.filter (line: lib.hasPrefix "monitor=" line) (
+    lib.splitString "\n" extraMonitorSettings
+  );
+  toLuaMonitor =
+    line:
+    let
+      parts = lib.splitString "," (lib.removePrefix "monitor=" line);
+    in
     lib.optionalString (builtins.length parts >= 4) ''
       hl.monitor({
           output   = "${builtins.elemAt parts 0}",
@@ -42,7 +35,8 @@
           scale    = ${builtins.elemAt parts 3},
       })
     '';
-in {
+in
+{
   xdg.configFile = {
     # Session entry point; the greeter wrapper passes
     # --config ~/.config/hypr/omarchy.lua and exports OMARCHY_PATH.
@@ -80,20 +74,13 @@ in {
 
     "omarchy-cfg/bindings.lua".source = ./bindings.lua;
 
-    "omarchy-cfg/classic-binds.lua".text = ''
-      return {
-          bind = {
-      ${toLuaBindList classicHypr.bind}    },
-          bindm = {
-      ${toLuaBindList classicHypr.bindm}    },
-      }
-    '';
+    "omarchy-cfg/classic-binds.lua".text = catalogToLua classicCatalog;
   };
 
   # default/hypr resolves omarchy.current.theme.* from
   # ~/.local/state/omarchy; seed the default theme so the first omarchy
   # login is themed. omarchy-theme-set owns the links afterwards.
-  home.activation.omarchySeedTheme = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.omarchySeedTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     state="$HOME/.local/state/omarchy/current"
     if [ ! -e "$state/theme" ]; then
       mkdir -p "$state"
@@ -104,7 +91,7 @@ in {
   '';
 
   # Writable plugin/theme/hook directories omarchy expects to own.
-  home.activation.omarchyConfigDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.omarchyConfigDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p "$HOME/.config/omarchy/themes" \
              "$HOME/.config/omarchy/plugins" \
              "$HOME/.config/omarchy/hooks"

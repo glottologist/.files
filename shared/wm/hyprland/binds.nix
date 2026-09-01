@@ -1,152 +1,25 @@
+# Nix guideline compliant 2026-09-01
+{ username, ... }:
+let
+  catalog = import ./keybind-catalog.nix { inherit username; };
+  render =
+    record:
+    let
+      fields = builtins.match "([^,]*),([^,]*),(.*)" record.binding;
+    in
+    assert fields != null;
+    builtins.concatStringsSep "," [
+      (builtins.elemAt fields 0)
+      (builtins.elemAt fields 1)
+      "[${record.group}] ${record.description}"
+      (builtins.elemAt fields 2)
+    ];
+in
 {
-  username,
-  config,
-  ...
-}: let
-  inherit
-    (import ../../../homes/${username}/variables.nix)
-    browser
-    terminal
-    ;
-in {
-  wayland.windowManager.hyprland.settings = {
-    bind = [
-      "$modifier,Return,exec,${terminal}"
-      "$modifier,SPACE,exec,omarchy-menu"
-      "$modifier,K,exec,list-keybinds"
-      "$modifier,D,exec,rofi-launcher"
-      "$modifier SHIFT,W,exec,web-search"
-      "$modifier SHIFT,Q,exec,wlogout --css ~/.config/wlogout/main.css"
-      "$modifier SHIFT,L,exec,hyprlock"
-      "$modifier ALT,W,exec,wallsetter"
-      "$modifier SHIFT,N,exec,swaync-client -rs"
-      "$modifier,W,exec,${browser}"
-      "$modifier,E,exec,emopicker9000"
-      "$modifier,S,exec,screenshootin"
-      "$modifier SHIFT,V,exec,gpu-screen-recorder-gtk"
-      "$modifier,B,exec,brave"
-      "$modifier,O,exec,obsidian"
-      "$modifier,C,exec,unified-clipboard copy"
-      "$modifier,X,exec,unified-clipboard cut"
-      "$modifier,V,exec,unified-clipboard paste"
-      "$modifier CTRL,V,exec,cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-      "$modifier ALT,C,exec,hyprpicker -a"
-      "$modifier CTRL,Print,exec,ocr-clip"
-      "$modifier CTRL,R,exec,desktop-reminder set"
-      "$modifier CTRL ALT,R,exec,desktop-reminder list"
-      "$modifier CTRL SHIFT,R,exec,desktop-reminder clear"
-      "$modifier CTRL,Return,exec,${terminal} -e herdr"
-      "$modifier SHIFT CTRL,A,exec,${terminal} -e default-agent"
-      "$modifier SHIFT,A,exec,gtk-launch chatgpt-web"
-      "$modifier SHIFT ALT,A,exec,gtk-launch grok-web"
-      "$modifier SHIFT,E,exec,gtk-launch hey-email"
-      "$modifier SHIFT ALT,E,exec,gtk-launch hey-email"
-      "$modifier SHIFT ALT,C,exec,gtk-launch hey-calendar"
-      "$modifier SHIFT,Y,exec,gtk-launch youtube-web"
-      "$modifier SHIFT,X,exec,gtk-launch x-web"
-      "$modifier SHIFT,P,exec,gtk-launch google-photos-web"
-      "$modifier SHIFT ALT,G,exec,gtk-launch whatsapp-web"
-      "$modifier,G,exec,ghostty"
-      "$modifier,I,exec,gimp"
-      "$modifier,T,exec,pypr toggle term"
-      "$modifier,M,exec,pavucontrol"
-      "$modifier,Q,killactive,"
-      "$modifier,P,pseudo,"
-      "$modifier SHIFT,I,layoutmsg,togglesplit"
-      "$modifier,F,fullscreen,"
-      "$modifier SHIFT,F,togglefloating,"
-      "$modifier ALT,F,workspaceopt, allfloat"
-      "$modifier SHIFT,C,exit,"
-      "$modifier SHIFT,left,movewindow,l"
-      "$modifier SHIFT,right,movewindow,r"
-      "$modifier SHIFT,up,movewindow,u"
-      "$modifier SHIFT,down,movewindow,d"
-      "$modifier SHIFT,h,movewindow,l"
-      "$modifier SHIFT,l,movewindow,r"
-      "$modifier SHIFT,k,movewindow,u"
-      "$modifier SHIFT,j,movewindow,d"
-      "$modifier ALT, left, swapwindow,l"
-      "$modifier ALT, right, swapwindow,r"
-      "$modifier ALT, up, swapwindow,u"
-      "$modifier ALT, down, swapwindow,d"
-      "$modifier ALT, 43, swapwindow,l"
-      "$modifier ALT, 46, swapwindow,r"
-      "$modifier ALT, 45, swapwindow,u"
-      "$modifier ALT, 44, swapwindow,d"
-      "$modifier,left,movefocus,l"
-      "$modifier,right,movefocus,r"
-      "$modifier,up,movefocus,u"
-      "$modifier,down,movefocus,d"
-      "$modifier,h,movefocus,l"
-      "$modifier,l,movefocus,r"
-      "$modifier,k,movefocus,u"
-      "$modifier,j,movefocus,d"
-      "$modifier,1,workspace,1"
-      "$modifier,2,workspace,2"
-      "$modifier,3,workspace,3"
-      "$modifier,4,workspace,4"
-      "$modifier,5,workspace,5"
-      "$modifier,6,workspace,6"
-      "$modifier,7,workspace,7"
-      "$modifier,8,workspace,8"
-      "$modifier,9,workspace,9"
-      "$modifier,0,workspace,10"
-      "$modifier,F1,workspace,11"
-      "$modifier,F2,workspace,12"
-      "$modifier,F3,workspace,13"
-      "$modifier,F4,workspace,14"
-      "$modifier,F5,workspace,15"
-      "$modifier,F6,workspace,16"
-      "$modifier,F7,workspace,17"
-      "$modifier,F8,workspace,18"
-      "$modifier,F9,workspace,19"
-      "$modifier,F10,workspace,20"
-      "$modifier,F11,workspace,21"
-      "$modifier,F12,workspace,22"
-      "$modifier ALT SHIFT,SPACE,movetoworkspace,special"
-      "$modifier ALT,SPACE,togglespecialworkspace"
-      "$modifier SHIFT,1,movetoworkspace,1"
-      "$modifier SHIFT,2,movetoworkspace,2"
-      "$modifier SHIFT,3,movetoworkspace,3"
-      "$modifier SHIFT,4,movetoworkspace,4"
-      "$modifier SHIFT,5,movetoworkspace,5"
-      "$modifier SHIFT,6,movetoworkspace,6"
-      "$modifier SHIFT,7,movetoworkspace,7"
-      "$modifier SHIFT,8,movetoworkspace,8"
-      "$modifier SHIFT,9,movetoworkspace,9"
-      "$modifier SHIFT,0,movetoworkspace,10"
-      "$modifier SHIFT,F1,movetoworkspace,11"
-      "$modifier SHIFT,F2,movetoworkspace,12"
-      "$modifier SHIFT,F3,movetoworkspace,13"
-      "$modifier SHIFT,F4,movetoworkspace,14"
-      "$modifier SHIFT,F5,movetoworkspace,15"
-      "$modifier SHIFT,F6,movetoworkspace,16"
-      "$modifier SHIFT,F7,movetoworkspace,17"
-      "$modifier SHIFT,F8,movetoworkspace,18"
-      "$modifier SHIFT,F9,movetoworkspace,19"
-      "$modifier SHIFT,F10,movetoworkspace,20"
-      "$modifier SHIFT,F11,movetoworkspace,21"
-      "$modifier SHIFT,F12,movetoworkspace,22"
-      "$modifier CONTROL,right,workspace,e+1"
-      "$modifier CONTROL,left,workspace,e-1"
-      "$modifier,mouse_down,workspace, e+1"
-      "$modifier,mouse_up,workspace, e-1"
-      "ALT,Tab,cyclenext"
-      "ALT,Tab,bringactivetotop"
-      ",XF86AudioRaiseVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      " ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ",XF86AudioPlay, exec, playerctl play-pause"
-      ",XF86AudioPause, exec, playerctl play-pause"
-      ",XF86AudioNext, exec, playerctl next"
-      ",XF86AudioPrev, exec, playerctl previous"
-      ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
-      ",XF86MonBrightnessUp,exec,brightnessctl set +5%"
-    ];
+  xdg.configFile."hypr/binding-loader.lua".source = ./binding-loader.lua;
 
-    bindm = [
-      "$modifier, mouse:272, movewindow"
-      "$modifier, mouse:273, resizewindow"
-    ];
+  wayland.windowManager.hyprland.settings = {
+    bindd = builtins.map render catalog.bind;
+    bindmd = builtins.map render catalog.bindm;
   };
 }

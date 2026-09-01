@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+cd "$ROOT"
+
+bats shared/wm/scripts/tests/keybinds.bats
+nix-instantiate --eval --strict shared/wm/hyprland/tests/keybind-catalog.nix
+nix-build shared/wm/hyprland/tests/catalog-to-lua.nix --no-out-link
+catalog_lua="$(mktemp)"
+trap 'rm -f "$catalog_lua"' EXIT
+nix eval --impure --raw --expr '
+  let
+    pkgs = import <nixpkgs> { };
+    catalog = import ./shared/wm/hyprland/keybind-catalog.nix { username = "glottologist"; };
+    serializer = import ./shared/wm/hyprland/catalog-to-lua.nix { lib = pkgs.lib; };
+  in
+  serializer catalog
+' >"$catalog_lua"
+lua shared/wm/hyprland/tests/binding-loader.lua "$catalog_lua"
+lua shared/wm/hyprland/tests/session-bindings.lua
+shellcheck shared/wm/scripts/keybinds.sh shared/wm/tests/keybinding-catalog
+luac -p \
+  shared/wm/hyprland/binding-loader.lua \
+  shared/wm/caelestia/keybinds.lua \
+  shared/wm/omarchy/bindings.lua \
+  shared/wm/omnixy/bindings.lua
+nixfmt --check \
+  shared/wm/hyprland/keybind-catalog.nix \
+  shared/wm/hyprland/catalog-to-lua.nix \
+  shared/wm/hyprland/binds.nix \
+  shared/wm/hyprland/tests/keybind-catalog.nix \
+  shared/wm/hyprland/tests/catalog-to-lua.nix \
+  shared/wm/caelestia/default.nix \
+  shared/wm/omarchy/default.nix \
+  shared/wm/omnixy/default.nix \
+  shared/wm/scripts/keybinds.nix

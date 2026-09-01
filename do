@@ -1,10 +1,11 @@
 #! /usr/bin/env bash
-#set +x
+set -euo pipefail
 
-LAYER=$1
-WORKFLOW=$2
-SPECIFIER=$3
+LAYER=${1:-}
+WORKFLOW=${2:-}
+SPECIFIER=${3:-}
 ENABLE_HYPRLAND_0=${4:-0}
+MARKER=${MARKER:-}
 
 usage() {
 
@@ -37,14 +38,6 @@ echo_nix_version() {
     nix --version
 }
 
-update_flake() {
-    nix flake update
-}
-
-register_nixos_unstable_channel() {
-    nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-}
-
 home() {
     export NIXPKGS_ALLOW_INSECURE=1
     export NIXPKGS_ALLOW_UNFREE=1
@@ -73,10 +66,6 @@ host() {
 }
 
 echo_nix_version
-
-register_nixos_unstable_channel
-
-update_flake
 
 echo "$LAYER requested"
 case $LAYER in
