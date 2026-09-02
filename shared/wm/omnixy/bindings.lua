@@ -24,6 +24,13 @@ local exec_overrides = {
     ["pypr toggle term"] = function()
         return hl.dsp.exec_cmd([[bash -c "pgrep -f '[k]itty --class kitty-dropterm' >/dev/null || hyprctl dispatch -- exec 'kitty --class kitty-dropterm'; hyprctl dispatch togglespecialworkspace term"]])
     end,
+    -- omarchy freezes the screen with hyprpicker before the region select, so
+    -- the capture sees a still frame; classic's grim+slurp OCRs whatever the
+    -- screen was doing while you dragged.
+    ["ocr-clip"] = function() return hl.dsp.exec_cmd("omarchy-capture-text") end,
+    -- Reads the live binds and understands the Lua dispatchers this session
+    -- registers, so it renders the replayed classic bindings correctly.
+    ["list-keybinds"] = function() return hl.dsp.exec_cmd("omarchy-menu-keybindings") end,
     ["desktop-reminder set"] = function() return hl.dsp.exec_cmd("omarchy-reminder -i") end,
     ["desktop-reminder list"] = function() return hl.dsp.exec_cmd("omarchy-reminder show") end,
     ["desktop-reminder clear"] = function() return hl.dsp.exec_cmd("omarchy-reminder clear") end,

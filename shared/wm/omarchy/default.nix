@@ -37,6 +37,29 @@ let
     '';
 in
 {
+  # Applications the omarchy desktop surface reaches for. Upstream expects
+  # them from Arch packages, which the session cannot install; the two that
+  # the shipped desktop depends on come first, then the optional set whose
+  # menu rows would otherwise be permanently unusable. Anything not listed
+  # here still shows an Install row, which now fails with a message naming
+  # the flake rather than silently doing nothing.
+  home.packages = with pkgs; [
+    # omarchy-launch-nautilus and its default keybind in
+    # default/hypr/bindings/applications.lua; also the target of
+    # omarchy-theme-bg-install.
+    nautilus
+    # The menu's Trigger -> Share section (omarchy-menu-share) and the
+    # window rules in default/hypr/apps/localsend.lua.
+    localsend
+    # Offered by the menu's Install section and covered by upstream's
+    # window rules; without them those rows can never succeed.
+    kdePackages.kdenlive
+    pinta
+    xournalpp
+    zed-editor
+    retroarch
+  ];
+
   xdg.configFile = {
     # Session entry point; the greeter wrapper passes
     # --config ~/.config/hypr/omarchy.lua and exports OMARCHY_PATH.

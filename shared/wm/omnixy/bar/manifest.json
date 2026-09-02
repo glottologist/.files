@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "omnixy.bar",
+  "name": "Omnixy split bar",
+  "version": "1.0.0",
+  "author": "Omnixy",
+  "description": "Two Omarchy bars, top and bottom, matching the classic waybar split",
+  "kinds": [
+    "bar"
+  ],
+  "entryPoints": {
+    "bar": "Bar.qml"
+  }
+}
