@@ -31,6 +31,11 @@
 
     agenix.url = "github:ryantm/agenix";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland.url = "github:hyprwm/Hyprland";
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
@@ -237,6 +242,36 @@
             ./homes/jason
           ];
         };
+
+        # Reduced profile for the Hetzner agent hosts. No Stylix or Caelestia:
+        # only shared/wm consumes them, and it is not imported here.
+        "jason-cloud" = homeManagerConfig {
+          inherit pkgs;
+          extraSpecialArgs = {
+            username = "jason";
+          };
+          modules = [
+            {
+              _module.args = {
+                inherit
+                  certora-prover-flake
+                  nvim-flake
+                  neovim-flake
+                  claude-code-nix
+                  codex-cli-nix
+                  gemini-cli-nix
+                  llm-agents-nix
+                  forgecode
+                  ennio
+                  nix-everywhere
+                  ccstatusline
+                  caelestia-dots
+                  ;
+              };
+            }
+            ./homes/jason-cloud
+          ];
+        };
       };
 
       nixosConfigurations = {
@@ -257,6 +292,34 @@
           modules = [
             stylix.nixosModules.stylix
             ./hosts/bebop/configuration.nix
+          ];
+        };
+
+        # Hetzner Cloud agent desktops. No Stylix: they import none of the
+        # shared/wm modules that consume it.
+        "reliant" = nixosSystem {
+          inherit pkgs;
+          inherit system;
+          specialArgs = {
+            username = "jason";
+            inherit (inputs) ennio;
+          };
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/reliant/configuration.nix
+          ];
+        };
+
+        "defiant" = nixosSystem {
+          inherit pkgs;
+          inherit system;
+          specialArgs = {
+            username = "jason";
+            inherit (inputs) ennio;
+          };
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/defiant/configuration.nix
           ];
         };
       };
