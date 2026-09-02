@@ -106,6 +106,10 @@ in {
             id = syncthingSecrets.MARAUDER_ID;
             addresses = ["tcp://${hosts.marauder}:22000" "dynamic"];
           };
+          "CORVUS" = {
+            id = syncthingSecrets.CORVUS_ID;
+            addresses = ["tcp://${hosts.corvus}:22000" "dynamic"];
+          };
           "RAPTOR" = {id = syncthingSecrets.RAPTOR_ID;};
           "CIRCE" = {
             id = syncthingSecrets.CIRCE_ID;
@@ -120,6 +124,10 @@ in {
           "MARAUDER" = {
             path = "/home/${username}/syncthing/MARAUDER";
             devices = ["MARAUDER"];
+          };
+          "CORVUS" = {
+            path = "/home/${username}/syncthing/CORVUS";
+            devices = ["CORVUS"];
           };
           "RAPTOR" = {
             path = "/home/${username}/syncthing/RAPTOR";
