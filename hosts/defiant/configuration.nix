@@ -17,6 +17,7 @@
     ./services.nix
     ../common/hetzner-disk.nix
     ../common/nix.nix
+    ../common/harmonia-substituter.nix
     ../common/tailscale.nix
     ../common/plasma-desktop.nix
     ../common/xrdp-tailnet.nix

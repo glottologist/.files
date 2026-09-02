@@ -51,14 +51,28 @@ in {
   imports = [
     ../../secrets/accounts.nix
     ../../shared/ai/default.nix
-    ../../shared/development/default.nix
-    ../../shared/fonts/default.nix
-    ../../shared/languages/default.nix
-    ../../shared/network/default.nix
-    ../../shared/security/default.nix
-    ../../shared/storage/default.nix
+    # Git identity and configuration, taken directly rather than through
+    # shared/development, which also carries VS Code, Windsurf, Jupyter,
+    # netlify-cli and a JDK. Those, along with shared/security's 1Password and
+    # Vault and shared/network's TeamViewer, are desktop software for Bebop and
+    # cost several gigabytes each on a machine whose whole disk is 38 GiB. The
+    # command-line tools an agent genuinely needs live in the host's
+    # environment.systemPackages instead.
+    ../../shared/development/git
+    # Not shared/languages/default.nix: it imports some forty language modules,
+    # and the Haskell and LaTeX ones alone took the closure past 62 GB — more
+    # than Defiant's entire disk. The subset below is what an agent host
+    # actually compiles in.
+    ../../shared/languages/nix
+    ../../shared/languages/python
+    ../../shared/languages/javascript
+    ../../shared/languages/typescript
+    ../../shared/languages/rust
+    ../../shared/languages/shell
+    ../../shared/languages/markdown
     ../../shared/terminal/default.nix
   ];
+
 
   xdg = {
     inherit configHome;

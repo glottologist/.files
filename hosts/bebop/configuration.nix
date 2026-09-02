@@ -23,6 +23,7 @@
     ../common/disk.nix
     ../common/keyboards.nix
     ../common/nix.nix
+    ../common/harmonia-substituter.nix
     ../common/stylix.nix
     ../common/tailscale.nix
     ../common/virtualization.nix
