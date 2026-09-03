@@ -131,15 +131,6 @@ ssh -L 8384:localhost:8384 jason@reliant
 curl -s http://localhost:8384/rest/noauth/health
 ```
 
-Bebop is declared as a device here, but the reciprocal half cannot be: Reliant's
-device ID does not exist until Syncthing first runs. Read it and hand it to the
-user for `secrets/syncthing.nix` as `RELIANT_ID`, with a matching folder entry in
-`hosts/bebop/services.nix`:
-
-```bash
-ssh reliant 'sudo -u jason syncthing --home=/home/jason/.config/syncthing --device-id'
-```
-
 ## Agent logins
 
 The agent CLIs arrive with the `jason-cloud` home profile, which is applied

@@ -99,7 +99,16 @@ in
       sidebar
       sysstat
       tpm
-      tmux-menus
+      {
+        plugin = tmux-menus;
+        extraConfig = ''
+          # The plugin caches its generated menus in a directory beside its own
+          # scripts, which under the store is read-only. Initialisation stops
+          # at the failed mkdir and the plugin binds nothing at all, so the
+          # cache has to be off here. Menus are then built on each open.
+          set -g @menus_use_cache no
+        '';
+      }
       {
         plugin = fingers;
         extraConfig = ''

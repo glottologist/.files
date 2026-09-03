@@ -115,6 +115,14 @@ in {
             id = syncthingSecrets.CIRCE_ID;
             addresses = ["tcp://${hosts.circe}:22000" "dynamic"];
           };
+          "DEFIANT" = {
+            id = syncthingSecrets.DEFIANT_ID;
+            addresses = ["tcp://${hosts.defiant}:22000" "dynamic"];
+          };
+          "RELIANT" = {
+            id = syncthingSecrets.RELIANT_ID;
+            addresses = ["tcp://${hosts.reliant}:22000" "dynamic"];
+          };
         };
         folders = {
           "BEBOP" = {
@@ -136,6 +144,14 @@ in {
           "CIRCE" = {
             path = "/home/${username}/syncthing/CIRCE";
             devices = ["CIRCE"];
+          };
+          "DEFIANT" = {
+            path = "/home/${username}/syncthing/DEFIANT";
+            devices = ["DEFIANT"];
+          };
+          "RELIANT" = {
+            path = "/home/${username}/syncthing/RELIANT";
+            devices = ["RELIANT"];
           };
           "circe" = {
             id = "2rhrs-g2dmh";

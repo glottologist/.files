@@ -4,9 +4,6 @@
 # The GUI is loopback-only, unlike Corvus and Marauder, because those wildcard
 # listeners have neither authentication nor TLS and these hosts are on public
 # addresses; reach it with `ssh -L 8384:localhost:8384`.
-#
-# Devices and folders added at runtime are preserved: the reciprocal pairing on
-# Bebop cannot be declared until these hosts have generated their device IDs.
 { config, lib, username, ... }:
 let
   folder = lib.toUpper config.networking.hostName;

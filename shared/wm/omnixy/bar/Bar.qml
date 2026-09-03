@@ -60,9 +60,16 @@ Item {
     return config
   }
 
-  readonly property var topConfig: configFor(root.barConfig, "top")
-  readonly property var bottomSubtree: plainObject(root.barConfig).bottom
-  readonly property var bottomConfig: configFor(root.bottomSubtree, "bottom")
+  // Derived on call rather than bound. The host hands the properties over one
+  // at a time and puts barConfig last, so onBarWidgetRegistryChanged rebuilds
+  // while it is still null. When barConfig then arrives, its change handler
+  // and these derivations hang off the same notify signal and QML orders
+  // neither against the other -- as bindings they still held the null-derived
+  // values inside onBarConfigChanged, which left the top bar on a layout-less
+  // config and never built the bottom bar at all.
+  function topConfig() { return configFor(root.barConfig, "top") }
+  function bottomSubtree() { return plainObject(root.barConfig).bottom }
+  function bottomConfig() { return configFor(root.bottomSubtree(), "bottom") }
 
   // A shell facade for the bottom bar. The bar engine and its widgets reach
   // the shell through this object -- the engine for mutateShellConfig, the
@@ -103,7 +110,7 @@ Item {
 
       // Persisting rewrites shell.json and reloads every bar, so establish
       // there is a real change before asking for one.
-      if (!root.entryDiffers(root.bottomConfig.layout, stripped, next)) return false
+      if (!root.entryDiffers(root.bottomConfig().layout, stripped, next)) return false
 
       mutateShellConfig(function(config) {
         if (!Util.isPlainObject(config.bar.layout))
@@ -173,13 +180,17 @@ Item {
   function rebuild() {
     if (topBar) { topBar.destroy(); topBar = null }
     if (bottomBar) { bottomBar.destroy(); bottomBar = null }
-    if (root.omarchyPath === "" || !root.barWidgetRegistry) return
+    // A bar built before barConfig arrives gets no layout and stays that way:
+    // onBarConfigChanged pushes a fresh config into a live bar instead of
+    // rebuilding it. Wait for the config, and let that handler do the build.
+    if (root.omarchyPath === "" || !root.barWidgetRegistry
+        || !Util.isPlainObject(root.barConfig)) return
 
-    topBar = createBar(root.topConfig, root.shell)
+    topBar = createBar(root.topConfig(), root.shell)
     // No bottom subtree means no second bar, which keeps the plugin usable
     // on a shell.json that has never been seeded with one.
-    if (hasModules(root.bottomConfig.layout))
-      bottomBar = createBar(root.bottomConfig, bottomShell)
+    if (hasModules(root.bottomConfig().layout))
+      bottomBar = createBar(root.bottomConfig(), bottomShell)
   }
 
   onOmarchyPathChanged: rebuild()
@@ -190,14 +201,14 @@ Item {
   // rebuild only when the bottom bar has appeared or disappeared, since the
   // engine handles a config swap itself.
   onBarConfigChanged: {
-    var wantBottom = hasModules(root.bottomConfig.layout)
+    var wantBottom = hasModules(root.bottomConfig().layout)
     if (!topBar || wantBottom !== (bottomBar !== null)) {
       rebuild()
       return
     }
 
-    topBar.barConfig = root.topConfig
-    if (bottomBar) bottomBar.barConfig = root.bottomConfig
+    topBar.barConfig = root.topConfig()
+    if (bottomBar) bottomBar.barConfig = root.bottomConfig()
   }
 
   // Widget IPC reaches whichever bar hosts the widget, so summon and hide
