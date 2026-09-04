@@ -17,21 +17,6 @@ Panel {
   property string focusSection: "login"
   property int fileIndex: 0
   property bool cursorActive: false
-  property int phraseIndex: 0
-
-  readonly property var activePhrases: [
-    "Filing files",
-    "Distributing data",
-    "Shuffling folders",
-    "Boxing bytes",
-    "Sorting stuff",
-    "Syncing secrets",
-    "Packing packets",
-    "Moving memories",
-    "Wrangling revisions",
-    "Cataloging chaos"
-  ]
-  readonly property string heroPhraseText: activePhrases[phraseIndex % activePhrases.length]
   readonly property color foreground: bar ? bar.foreground : Color.foreground
   readonly property color urgent: bar ? bar.urgent : Color.urgent
   readonly property color dim: Qt.darker(foreground, 1.55)
@@ -244,7 +229,7 @@ Panel {
               id: hero
               width: parent.width
               title: "Dropbox"
-              meta: dropbox.active ? root.heroPhraseText : "Syncing paused"
+              meta: dropbox.active ? dropbox.statusText : "Syncing paused"
               foreground: root.foreground
               fontFamily: root.fontFamily
               iconOpacity: dropbox.active ? 1.0 : 0.5
@@ -354,29 +339,6 @@ Panel {
           }
         }
       }
-    }
-  }
-
-  Timer {
-    id: phraseTimer
-    interval: 2800
-    running: root.opened && dropbox.authenticated && dropbox.active
-    repeat: true
-    onTriggered: phraseSwap.restart()
-  }
-
-  SequentialAnimation {
-    id: phraseSwap
-    PropertyAnimation {
-      target: hero; property: "metaOpacity"
-      to: 0.0; duration: 180; easing.type: Easing.OutQuad
-    }
-    ScriptAction {
-      script: root.phraseIndex = (root.phraseIndex + 1) % root.activePhrases.length
-    }
-    PropertyAnimation {
-      target: hero; property: "metaOpacity"
-      to: 1.0; duration: 260; easing.type: Easing.InQuad
     }
   }
 
