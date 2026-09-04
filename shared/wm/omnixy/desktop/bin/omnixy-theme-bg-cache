@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# omnixy:summary=Cache background switcher thumbnails for the current theme
+
+theme_name=$(cat "$HOME/.local/state/omnixy/current/theme.name" 2>/dev/null)
+
+omnixy-menu-images \
+  --cache-only \
+  "$HOME/.local/state/omnixy/current/theme/backgrounds" \
+  "$HOME/.config/omnixy/backgrounds/$theme_name"

@@ -1,14 +1,14 @@
 import QtQuick
 import qs.Commons
 
-// Omnixy's bar option: two Omarchy bars instead of one, reproducing the
+// Omnixy's bar option: two upstream bars instead of one, reproducing the
 // classic waybar split (a top bar for tray and system readouts, a bottom bar
 // for workspaces, window title and status).
 //
 // The shell mounts exactly one object as `shell.bar`, and its bar engine
 // carries a single scalar `position`, so a split cannot be expressed in the
 // stock layout. Rather than patch the vendored engine -- 1800 lines upstream
-// calls Omarchy-owned and rewrites freely between releases -- this plugin
+// calls engine-owned and rewrites freely between releases -- this plugin
 // instantiates that engine twice and hands each copy its own slice of
 // shell.json: the familiar `bar:` subtree drives the top bar, and a new
 // `bar.bottom:` subtree drives the bottom one.
@@ -16,14 +16,14 @@ Item {
   id: root
 
   // Injected by the host shell, exactly as for the built-in bar.
-  property string omarchyPath: ""
+  property string omnixyPath: ""
   property var barWidgetRegistry: null
   property var barConfig: null
   property var shell: null
   property var manifest: null
 
-  readonly property string engineUrl: root.omarchyPath === ""
-    ? "" : "file://" + root.omarchyPath + "/shell/plugins/bar/Bar.qml"
+  readonly property string engineUrl: root.omnixyPath === ""
+    ? "" : "file://" + root.omnixyPath + "/shell/plugins/bar/Bar.qml"
 
   property var topBar: null
   property var bottomBar: null
@@ -156,7 +156,7 @@ Item {
     return false
   }
 
-  // The engine declares omarchyPath, barWidgetRegistry and barConfig as
+  // The engine declares omnixyPath, barWidgetRegistry and barConfig as
   // required properties, so they have to be supplied at construction rather
   // than assigned afterwards; that rules out a Loader.
   function createBar(config, shellTarget) {
@@ -164,17 +164,27 @@ Item {
 
     var component = Qt.createComponent(root.engineUrl)
     if (component.status !== Component.Ready) {
-      console.warn("omnixy.bar: cannot load the Omarchy bar engine:", component.errorString())
+      console.warn("custom.bar: cannot load the Omnixy bar engine:", component.errorString())
       return null
     }
 
-    return component.createObject(root, {
-      omarchyPath: root.omarchyPath,
+    var bar = component.createObject(root, {
+      omnixyPath: root.omnixyPath,
       barWidgetRegistry: root.barWidgetRegistry,
       barConfig: config,
       shell: shellTarget,
       manifest: root.manifest
     })
+    if (!bar) return null
+
+    // createObject marshals its initial properties through QVariant, which
+    // turns the layout's arrays into QVariantLists. The engine's normaliser
+    // rejects those with Array.isArray and falls back to an empty layout, so
+    // the bar it builds from the constructor value has no modules. A plain
+    // assignment keeps the JS object intact; the engine re-applies it and,
+    // finding no inline-settings delta against the empty layout, adopts it.
+    bar.barConfig = config
+    return bar
   }
 
   function rebuild() {
@@ -183,7 +193,7 @@ Item {
     // A bar built before barConfig arrives gets no layout and stays that way:
     // onBarConfigChanged pushes a fresh config into a live bar instead of
     // rebuilding it. Wait for the config, and let that handler do the build.
-    if (root.omarchyPath === "" || !root.barWidgetRegistry
+    if (root.omnixyPath === "" || !root.barWidgetRegistry
         || !Util.isPlainObject(root.barConfig)) return
 
     topBar = createBar(root.topConfig(), root.shell)
@@ -193,7 +203,7 @@ Item {
       bottomBar = createBar(root.bottomConfig(), bottomShell)
   }
 
-  onOmarchyPathChanged: rebuild()
+  onOmnixyPathChanged: rebuild()
   onBarWidgetRegistryChanged: rebuild()
   Component.onCompleted: rebuild()
 
@@ -234,7 +244,7 @@ Item {
     return bottomBar ? bottomBar.panelWidgetIdAt(section, index) : ""
   }
 
-  // `omarchy bar transparent` and the double-click gesture act on both bars,
+  // `omnixy bar transparent` and the double-click gesture act on both bars,
   // so the pair keeps a single appearance.
   function toggleTransparency() {
     if (topBar) topBar.toggleTransparency()

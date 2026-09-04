@@ -87,17 +87,18 @@ address as a substituter and that key to `trusted-public-keys`.
 
 ## Ennio
 
-The node daemon runs as `jason` and listens on `127.0.0.1:9100`. It is reached
-through an SSH tunnel, which is why it needs no firewall rule and carries no
-bearer token — SSH is the authentication boundary.
+`ennio-node` and `grok` are on the system PATH. Ennio on Bebop launches the
+daemon over SSH when it connects, passing a token on stdin; there is no
+persistent unit, because one holding port 9100 would collide with that
+bootstrap and would not share the control plane's token.
 
 ```bash
-systemctl status ennio-node
-ss -ltn | grep 127.0.0.1:9100
+command -v ennio-node grok
+grok --version
 ```
 
-It exits after an idle hour by design; `Restart=always` turns that into a restart
-rather than an outage.
+The daemon binds `127.0.0.1:9100` once launched and needs no firewall rule —
+SSH is the authentication boundary. It exits after an idle hour on its own.
 
 ## Syncthing
 

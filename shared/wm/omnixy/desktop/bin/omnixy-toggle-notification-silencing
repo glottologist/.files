@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# omnixy:summary=Toggle notification do-not-disturb mode
+
+state=$(omnixy-shell notifications toggleDnd 2>/dev/null || echo "")
+omnixy-shell -q omnixy.indicators refresh

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# omnixy:summary=Refresh the SDDM theme from default
+# omnixy:requires-sudo=true
+
+# Reuse the fixed-file publisher so root never resolves an untrusted source or
+# follows a destination symlink while restoring the packaged SDDM theme.
+exec "$OMNIXY_PATH/bin/omnixy-plymouth-set" --refresh-sddm-default

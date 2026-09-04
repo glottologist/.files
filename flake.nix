@@ -47,12 +47,6 @@
       url = "github:caelestia-dots/caelestia";
       flake = false;
     };
-    # Omarchy 4 "Quattro" quickshell desktop, vendored for the omarchy
-    # session; nixified by shared/wm/omarchy/package.nix. Not a flake.
-    omarchy = {
-      url = "github:omacom/omarchy/v4.0.2";
-      flake = false;
-    };
     ennio.url = "github:glottologist/ennio";
     nix-everywhere.url = "github:glottologist/nix-everywhere";
     ccstatusline.url = "github:glottologist/ccstatusline-flake";
@@ -141,9 +135,8 @@
               ;
             colibri = inputs.colibri.packages.${system}.default;
             brickborrow-watch = inputs.brickborrow-watch.packages.${system}.default;
-            omarchy-nixified = final.callPackage ./shared/wm/omarchy/package.nix {
-              omarchy-src = inputs.omarchy;
-            };
+            codexbar = final.callPackage ./shared/wm/waybar/codexbar-cli.nix { };
+            omnixy-desktop = final.callPackage ./shared/wm/omnixy/package.nix { };
             # Sandbox: tests/test_robotstxt.py hits OSError on http://e/somefile.html.
             # pkgs.dosage.doCheck can read false while pytestCheckHook still runs.
             dosage = prev.dosage.overridePythonAttrs (_: {

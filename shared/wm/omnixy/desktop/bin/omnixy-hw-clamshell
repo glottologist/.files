@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# omnixy:summary=Returns true when clamshell mode is active
+# omnixy:hidden=true
+
+# Clamshell = lid closed while driving one or more external monitors.
+omnixy-hw-laptop-closed && omnixy-hw-external-monitors

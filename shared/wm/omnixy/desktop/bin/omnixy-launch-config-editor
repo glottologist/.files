@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# omnixy:summary=Open a config file in the user's editor and surface a toast
+# omnixy:args=<path>
+# omnixy:examples=omnixy launch config-editor ~/.config/hypr/hyprland.lua
+
+path="${1-}"
+
+if [[ -z $path ]]; then
+  echo "Usage: omnixy-launch-config-editor <path>" >&2
+  exit 1
+fi
+
+omnixy-notification-send -u low "Editing config file" "$path"
+exec omnixy-launch-editor "$path"

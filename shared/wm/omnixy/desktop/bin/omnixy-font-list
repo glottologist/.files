@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# omnixy:summary=List available monospace fonts
+# omnixy:examples=omnixy font list | omnixy font set "CaskaydiaMono Nerd Font"
+
+fc-list :spacing=100 -f "%{family[0]}\n" | grep -v -i -E 'emoji|signwriting|omnixy' | sort -u

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# omnixy:summary=Toggle single-window square aspect ratio.
+
+case $(omnixy-hyprland-toggle single-window-aspect-ratio) in
+  on) omnixy-notification-send -g  "Enable single-window square aspect ratio" ;;
+  off) omnixy-notification-send -g  "Disable single-window square aspect ratio" ;;
+esac

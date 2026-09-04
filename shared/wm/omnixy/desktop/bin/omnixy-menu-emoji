@@ -1,0 +1,6 @@
+#!/bin/bash
+# omnixy:summary=Launch emojis
+# omnixy:group=menu
+# omnixy:examples=omnixy menu emoji
+
+omnixy-shell shell toggle omnixy.emojis

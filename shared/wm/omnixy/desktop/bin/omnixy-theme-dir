@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# omnixy:summary=Print the directory holding a theme, preferring a user-installed copy
+# omnixy:args=<theme-name>
+# omnixy:examples=omnixy theme dir tokyo-night
+
+theme="${1:-}"
+
+if [[ -z $theme ]]; then
+  echo "Usage: omnixy-theme-dir <theme-name>" >&2
+  exit 1
+fi
+
+if [[ -d $HOME/.config/omnixy/themes/$theme ]]; then
+  echo "$HOME/.config/omnixy/themes/$theme"
+else
+  echo "$OMNIXY_PATH/themes/$theme"
+fi

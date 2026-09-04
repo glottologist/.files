@@ -1,0 +1,6 @@
+#!/bin/bash
+# omnixy:summary=Launch the clipboard manager
+# omnixy:group=menu
+# omnixy:examples=omnixy menu clipboard
+
+omnixy-shell shell toggle omnixy.clipboard

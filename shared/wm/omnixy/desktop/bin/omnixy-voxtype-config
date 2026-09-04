@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# omnixy:summary=Open Voxtype configuration
+
+set -e
+
+omnixy-launch-floating-terminal-with-presentation "voxtype configure"
+omnixy-restart-shell

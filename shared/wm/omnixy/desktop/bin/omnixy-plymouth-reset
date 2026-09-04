@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# omnixy:summary=Restore the default Omnixy Plymouth boot theme and SDDM login screen
+# omnixy:requires-sudo=true
+
+set -euo pipefail
+
+"$OMNIXY_PATH/bin/omnixy-refresh-plymouth"
+"$OMNIXY_PATH/bin/omnixy-refresh-sddm"

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "omnixy.disk-speedtest",
+  "name": "Disk speed test",
+  "version": "1.0.0",
+  "author": "Omnixy",
+  "description": "Live disk write and read speed dials. Summon with: omnixy-shell shell summon omnixy.disk-speedtest",
+  "kinds": [
+    "panel"
+  ],
+  "entryPoints": {
+    "panel": "Panel.qml"
+  }
+}

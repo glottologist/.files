@@ -1,9 +1,6 @@
 {
   config,
-  lib,
   pkgs,
-  modulesPath,
-  inputs,
   ...
 }: let
   inherit (import ./variables.nix) username;
@@ -16,19 +13,31 @@
     pkgs.writeShellScript "hyprland-${configFile}" ''
       exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/${configFile}"
     '';
-  # The omarchy-based sessions (omarchy itself and omnixy, which iterates on
-  # the same base) need OMARCHY_PATH before Hyprland parses their Lua config,
-  # and the quickshell process and every omarchy-* script inherit the
-  # session PATH.
-  omarchySessionWith = name: configFile:
-    pkgs.writeShellScript "hyprland-${name}-session" ''
-      export OMARCHY_PATH="${pkgs.omarchy-nixified}"
-      export PATH="${pkgs.omarchy-nixified}/bin:${pkgs.omarchy-nixified.runtimePath}:$PATH"
-      exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/${configFile}"
+  # The Omnixy session needs OMNIXY_PATH before Hyprland parses its Lua, and
+  # the quickshell process and every omnixy-* script inherit the PATH. dunst
+  # is Type=dbus on org.freedesktop.Notifications: the first notification
+  # of a session would bus-activate it ahead of the shell's own notification
+  # server, so it is masked for the life of this session and released after.
+  omnixySession =
+    pkgs.writeShellScript "hyprland-omnixy-session" ''
+      export OMNIXY_PATH="${pkgs.omnixy-desktop}"
+      export PATH="${pkgs.omnixy-desktop}/bin:${pkgs.omnixy-desktop.runtimePath}:$PATH"
+      # A runtime mask stops nothing already running (classic → Omnixy in
+      # one user session), so stop first. session.lua starts
+      # omnixy-session.target and nothing else stops it; its PartOf
+      # services would otherwise outlive this session.
+      release() {
+        systemctl --user stop omnixy-session.target 2>/dev/null || true
+        systemctl --user unmask --runtime dunst.service 2>/dev/null || true
+      }
+      trap release EXIT INT TERM
+      systemctl --user stop dunst.service 2>/dev/null || true
+      systemctl --user mask --runtime dunst.service 2>/dev/null || true
+      ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/omnixy.lua"
     '';
   hyprlandSessions =
     pkgs.runCommand "hyprland-sessions" {
-      passthru.providedSessions = ["hyprland-classic" "hyprland-caelestia" "hyprland-omarchy" "hyprland-omnixy"];
+      passthru.providedSessions = ["hyprland-classic" "hyprland-caelestia" "hyprland-omnixy"];
     } ''
       mkdir -p $out/share/wayland-sessions
       cat > $out/share/wayland-sessions/hyprland-classic.desktop <<EOF
@@ -47,20 +56,12 @@
       Exec=${hyprlandWith "hyprland.lua"}
       DesktopNames=Hyprland
       EOF
-      cat > $out/share/wayland-sessions/hyprland-omarchy.desktop <<EOF
-      [Desktop Entry]
-      Type=Application
-      Name=Hyprland (Omarchy)
-      Comment=Hyprland with the Omarchy 4 quickshell desktop
-      Exec=${omarchySessionWith "omarchy" "omarchy.lua"}
-      DesktopNames=Hyprland
-      EOF
       cat > $out/share/wayland-sessions/hyprland-omnixy.desktop <<EOF
       [Desktop Entry]
       Type=Application
       Name=Hyprland (Omnixy)
-      Comment=Hyprland with the Omnixy quickshell desktop, iterating on the Omarchy base
-      Exec=${omarchySessionWith "omnixy" "omnixy.lua"}
+      Comment=Hyprland with the Omnixy quickshell desktop
+      Exec=${omnixySession}
       DesktopNames=Hyprland
       EOF
     '';
@@ -78,6 +79,7 @@
     '';
 in {
   environment.systemPackages = with pkgs; [
+    cura-appimage
     systemdgenie
     systemctl-tui
   ];

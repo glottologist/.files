@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# omnixy:summary=Check if a Hyprland toggle is currently disabled (missing).
+# omnixy:args=<flag-name>
+
+[[ ! -f "$HOME/.local/state/omnixy/toggles/hypr/$1.lua" ]]

@@ -85,17 +85,9 @@ local function assert_addition(result, keys, group, description)
     error("missing addition " .. keys)
 end
 
-local omarchy = run("omarchy", "omarchy-cfg.classic-binds")
-assert(#omarchy.registrations == 1)
-assert(omarchy.registrations[1].options.exec_overrides["list-keybinds"] == nil)
-assert_override(omarchy, "omarchy-menu")
-assert_override(omarchy, "hyprlock")
-assert_override(omarchy, "screenshootin")
-assert_override(omarchy, "pypr toggle term")
-
 local omnixy = run("omnixy", "omnixy-cfg.classic-binds")
 assert(#omnixy.registrations == 1)
-assert(omnixy.registrations[1].options.exec_overrides["list-keybinds"] == nil)
+assert(omnixy.registrations[1].options.exec_overrides["list-keybinds"] ~= nil, "Omnixy overrides the keybinds menu")
 assert_override(omnixy, "desktop-reminder set")
 assert_override(omnixy, "desktop-reminder list")
 assert_override(omnixy, "desktop-reminder clear")
@@ -117,7 +109,7 @@ assert_addition(caelestia, "CTRL + SUPER + Space", "Media", "Play or pause")
 assert_addition(caelestia, "SUPER + Minus", "Windows", "Shrink window width")
 assert_addition(caelestia, "CTRL + SUPER + Backslash", "Windows", "Center window")
 
-for _, profile in ipairs({ "caelestia", "omarchy", "omnixy" }) do
+for _, profile in ipairs({ "caelestia", "omnixy" }) do
     local filename = profile == "caelestia" and "keybinds.lua" or "bindings.lua"
     local content = read_file(root .. profile .. "/" .. filename)
     assert(not content:match("local function split_bind"), profile .. " retains copied parser")

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# omnixy:summary=Ensure default application launchers and mise wrappers are installed.
+
+# Copy .desktop declarations
+mkdir -p ~/.local/share/applications
+cp "$OMNIXY_PATH"/applications/*.desktop ~/.local/share/applications/
+
+if omnixy-cmd-present alacritty; then
+  cp "$OMNIXY_PATH/default/alacritty/Alacritty.desktop" ~/.local/share/applications/
+fi
+
+if [[ -f "$OMNIXY_PATH/install/user/mise.sh" ]]; then
+  bash "$OMNIXY_PATH/install/user/mise.sh"
+fi
+
+update-desktop-database ~/.local/share/applications

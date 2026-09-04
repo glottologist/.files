@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# omnixy:summary=Print the installed Omnixy version
+
+omnixy_path=${OMNIXY_PATH:-/usr/share/omnixy}
+omnixy_path=${omnixy_path%/}
+
+if [[ $omnixy_path != "/usr/share/omnixy" ]]; then
+  hash=$(git -C "$omnixy_path" rev-parse --short HEAD 2>/dev/null || true)
+
+  if [[ -n $hash ]]; then
+    echo "dev ($hash)"
+  else
+    echo "dev"
+  fi
+
+  exit 0
+fi
+
+# The edge channel installs omnixy-dev instead of omnixy, so check both.
+for package in omnixy-dev omnixy; do
+  version=$(pacman -Q "$package" 2>/dev/null | awk '{ print $2 }')
+  [[ -n $version ]] && break
+done
+
+[[ -n $version ]] || exit 1
+
+echo "$version"

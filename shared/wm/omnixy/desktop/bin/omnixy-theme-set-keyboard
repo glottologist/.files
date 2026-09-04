@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# omnixy:summary=Apply the current theme keyboard color to supported keyboards
+# omnixy:hidden=true
+
+omnixy-theme-set-keyboard-asus-rog
+omnixy-theme-set-keyboard-f16

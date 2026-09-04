@@ -1,0 +1,7 @@
+Vendored from https://github.com/omacom/omarchy by shared/wm/omnixy/tools/vendor.sh
+tag     v4.0.0.alpha
+commit  346e69e1cec6c4e8924531874af6ba010a1bc99e
+date    2026-09-04
+scripts 282
+cuts    menu sections install.* update.* remove.*; hooks theme-set-tmux theme-set-vscode theme-set-obsidian theme-set-browser theme-set-claude theme-set-pi theme-set-gnome; themes/*/backgrounds; install/ migrations/ applications/ manual/ docs/ test/
+rename  omarchy->omnixy (paths, scripts, the path variable and plugin property, widget ids, font family); upstream URLs and repository slugs preserved

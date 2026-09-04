@@ -1126,11 +1126,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1788289863,
-        "narHash": "sha256-yz1u3gr9oIXb+8+6XgxI/tguA/XQTphIuC/noKW2Y+E=",
+        "lastModified": 1788437952,
+        "narHash": "sha256-eA3CQO2G0LBowLwIKlDuMZVXTP5PzNUY+YXNVxL1xKY=",
         "owner": "glottologist",
         "repo": "ennio",
-        "rev": "6621a5f100504cc7a8fc6b57b9311ac948a29dce",
+        "rev": "f0cc260dbf769913c59b7557e175b69e006eb6ff",
         "type": "github"
       },
       "original": {
@@ -4054,23 +4054,6 @@
         "type": "github"
       }
     },
-    "omarchy": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788130066,
-        "narHash": "sha256-DtaDI3gyvK7YVnul2vRmNHHGK86Hn64WfbAVeG4888Y=",
-        "owner": "omacom",
-        "repo": "omarchy",
-        "rev": "346e69e1cec6c4e8924531874af6ba010a1bc99e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "omacom",
-        "ref": "v4.0.2",
-        "repo": "omarchy",
-        "type": "github"
-      }
-    },
     "onedark": {
       "flake": false,
       "locked": {
@@ -4309,7 +4292,6 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvf": "nvf",
         "nvim-flake": "nvim-flake",
-        "omarchy": "omarchy",
         "stylix": "stylix",
         "zen-browser": "zen-browser"
       }

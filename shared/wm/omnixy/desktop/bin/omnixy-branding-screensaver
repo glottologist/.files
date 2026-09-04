@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# omnixy:summary=Edit, set, or reset screensaver branding
+# omnixy:group=branding
+# omnixy:name=screensaver
+# omnixy:args=<image|text|reset>
+# omnixy:examples=omnixy branding screensaver image | omnixy branding screensaver text | omnixy branding screensaver reset
+
+set -euo pipefail
+
+case "${1:-}" in
+image)
+  image=$(omnixy-file-select --title "Pick PNG or SVG for screensaver" --extensions "png svg")
+  if omnixy-transcode-ascii "$image" ~/.config/omnixy/branding/screensaver.txt; then
+    omnixy-launch-screensaver force >/dev/null 2>&1
+  fi
+  ;;
+text)
+  omnixy-launch-editor ~/.config/omnixy/branding/screensaver.txt >/dev/null 2>&1 && omnixy-launch-screensaver force >/dev/null 2>&1
+  ;;
+reset)
+  cp "$OMNIXY_PATH/logo.txt" ~/.config/omnixy/branding/screensaver.txt && omnixy-launch-screensaver force >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: omnixy-branding-screensaver <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

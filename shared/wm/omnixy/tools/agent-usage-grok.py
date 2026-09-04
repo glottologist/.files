@@ -1,0 +1,398 @@
+#!/usr/bin/env python3
+"""Usage collector for Grok, in the record contract of the Omnixy agents panel.
+
+Vendored into desktop/bin as omnixy-agent-usage-grok by tools/vendor.sh, next
+to the upstream claude, codex and fireworks collectors, so
+omnixy-agent-usage-update runs it on the same schedule and the panel gains a
+Grok tab. See desktop/shell/plugins/agents/README.md for the contract.
+
+Local stats come from the Grok CLI's home directory:
+
+- sessions/<project>/prompt_history.jsonl: one line per prompt with a
+  timestamp and session id. Prompts, sessions and active days come from here.
+- sessions/<project>/<session>/summary.json: the model a session runs on.
+- logs/unified.jsonl: one shell.turn.inference_done line per model turn with
+  prompt, cached-prompt and completion token counts. This is the only place
+  the CLI records tokens, and it holds only what the current log file covers,
+  so token figures span days rather than the CLI's lifetime.
+
+Limits come from CodexBar's grok provider, which needs a signed-in grok.com
+browser session or a reachable Grok RPC. When it cannot answer, the panel
+shows the local stats and CodexBar's own explanation, the same way the Claude
+collector reports a lapsed sign-in.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import time
+from pathlib import Path
+from typing import Any
+
+AGENT_ID = "grok"
+AGENT_NAME = "Grok"
+CODEXBAR_BIN = os.environ.get("CODEXBAR_BIN") or "@codexbar@"
+CODEXBAR_TIMEOUT_SECONDS = 45
+PROBE_MIN_INTERVAL_SECONDS = 15
+AUTH_HELP = "Sign in to grok.com in the browser, or run `grok login`, so CodexBar can read the rate limits."
+
+
+def grok_home() -> Path:
+  return Path(os.path.expandvars(os.path.expanduser(os.environ.get("GROK_HOME") or "~/.grok")))
+
+
+def cache_root() -> Path:
+  root = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "omnixy" / "agent-usage"
+  root.mkdir(parents=True, exist_ok=True)
+  return root
+
+
+def date_string(value: dt.date) -> str:
+  return value.strftime("%Y-%m-%d")
+
+
+def recent_date_strings() -> list[str]:
+  today = dt.datetime.now().date()
+  return [date_string(today - dt.timedelta(days=offset)) for offset in range(6, -1, -1)]
+
+
+def local_date_from_timestamp(raw: Any) -> str | None:
+  try:
+    parsed = dt.datetime.fromisoformat(str(raw).strip().replace("Z", "+00:00"))
+  except Exception:
+    return None
+  if parsed.tzinfo is not None:
+    parsed = parsed.astimezone()
+  return date_string(parsed.date())
+
+
+def number(value: Any) -> int:
+  try:
+    n = float(value or 0)
+    return round(n) if n == n else 0
+  except Exception:
+    return 0
+
+
+def empty_bucket() -> dict[str, int]:
+  return {
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "cacheCreationInputTokens": 0,
+  }
+
+
+def read_json_lines(path: Path):
+  try:
+    with path.open("r", encoding="utf-8", errors="replace") as handle:
+      for line in handle:
+        line = line.strip()
+        if not line:
+          continue
+        try:
+          yield json.loads(line)
+        except Exception:
+          continue
+  except Exception as exc:
+    print(f"Ignoring unreadable Grok file {path}: {exc}", file=sys.stderr)
+
+
+# ---------------------------------------------------------------- local scan
+
+
+def session_models(sessions_dir: Path) -> dict[str, str]:
+  models: dict[str, str] = {}
+  for summary in sessions_dir.glob("*/*/summary.json"):
+    try:
+      data = json.loads(summary.read_text(encoding="utf-8"))
+    except Exception:
+      continue
+    model = str(data.get("current_model_id") or "")
+    if model:
+      models[summary.parent.name] = model
+  return models
+
+
+def scan_local(home: Path) -> dict[str, Any]:
+  today = date_string(dt.datetime.now().date())
+  recent_dates = recent_date_strings()
+  recent = {day: {"date": day, "messageCount": 0} for day in recent_dates}
+  sessions_dir = home / "sessions"
+
+  sessions: set[str] = set()
+  active_days: set[str] = set()
+  today_sessions: set[str] = set()
+  prompts = 0
+  today_prompts = 0
+
+  for history in sessions_dir.glob("*/prompt_history.jsonl"):
+    for entry in read_json_lines(history):
+      day = local_date_from_timestamp(entry.get("timestamp"))
+      if day is None:
+        continue
+      session = str(entry.get("session_id") or history.parent.name)
+      prompts += 1
+      sessions.add(session)
+      active_days.add(day)
+      if day == today:
+        today_prompts += 1
+        today_sessions.add(session)
+
+  # A session directory without prompt history still counts as a session.
+  for session_dir in sessions_dir.glob("*/*/"):
+    if (session_dir / "summary.json").exists():
+      sessions.add(session_dir.name)
+
+  models = session_models(sessions_dir)
+  usage_by_model: dict[str, dict[str, int]] = {}
+  today_tokens: dict[str, int] = {}
+  today_token_total = 0
+
+  for entry in read_json_lines(home / "logs" / "unified.jsonl"):
+    if entry.get("msg") != "shell.turn.inference_done":
+      continue
+    ctx = entry.get("ctx") if isinstance(entry.get("ctx"), dict) else {}
+    prompt_tokens = number(ctx.get("prompt_tokens"))
+    cached = min(number(ctx.get("cached_prompt_tokens")), prompt_tokens)
+    output = number(ctx.get("completion_tokens"))
+    total = prompt_tokens + output
+    if total <= 0:
+      continue
+    day = local_date_from_timestamp(entry.get("ts"))
+    if day is None:
+      continue
+    model = models.get(str(entry.get("sid") or ""), AGENT_ID)
+
+    bucket = usage_by_model.setdefault(model, empty_bucket())
+    bucket["inputTokens"] += prompt_tokens - cached
+    bucket["cacheReadInputTokens"] += cached
+    bucket["outputTokens"] += output
+    active_days.add(day)
+
+    if day in recent:
+      # recentDays.messageCount is a token total; the panel scales its
+      # weekly chart by it.
+      recent[day]["messageCount"] += total
+    if day == today:
+      today_token_total += total
+      today_tokens[model] = today_tokens.get(model, 0) + total
+
+  return {
+    "todayPrompts": today_prompts,
+    "todaySessions": len(today_sessions),
+    "todayTotalTokens": today_token_total,
+    "todayTokensByModel": today_tokens,
+    "recentDays": [recent[day] for day in recent_dates],
+    "modelUsage": usage_by_model,
+    "totalPrompts": prompts,
+    "totalSessions": len(sessions),
+    "activeDays": len(active_days),
+    "activeDates": sorted(active_days),
+  }
+
+
+# -------------------------------------------------------------------- limits
+
+
+def read_fresh_json(path: Path, max_age_seconds: float) -> dict[str, Any] | None:
+  if max_age_seconds <= 0 or not path.exists():
+    return None
+  try:
+    if time.time() - path.stat().st_mtime <= max_age_seconds:
+      return json.loads(path.read_text(encoding="utf-8"))
+  except Exception:
+    return None
+  return None
+
+
+def write_json(path: Path, payload: dict[str, Any]) -> None:
+  handle_fd, tmp_name = tempfile.mkstemp(dir=path.parent, prefix=path.name + ".", suffix=".tmp")
+  tmp = Path(tmp_name)
+  try:
+    with os.fdopen(handle_fd, "w", encoding="utf-8") as handle:
+      handle.write(json.dumps(payload, separators=(",", ":"), sort_keys=True) + "\n")
+    tmp.chmod(0o644)
+    tmp.replace(path)
+  finally:
+    if tmp.exists():
+      tmp.unlink()
+
+
+def window_label(window: dict[str, Any], fallback: str) -> str:
+  minutes = number(window.get("windowMinutes"))
+  if minutes <= 0:
+    return fallback
+  if minutes % 1440 == 0:
+    days = minutes // 1440
+    return f"Weekly ({days}-day)" if days == 7 else f"{fallback} ({days}-day)"
+  if minutes % 60 == 0:
+    return f"Session ({minutes // 60}-hour)"
+  return f"{fallback} ({minutes}-minute)"
+
+
+def limits_from_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
+  usage = entry.get("usage") if isinstance(entry.get("usage"), dict) else {}
+  limits: list[dict[str, Any]] = []
+
+  def add(window: Any, fallback: str, title: str = "") -> None:
+    if not isinstance(window, dict):
+      return
+    percent = window.get("usedPercent")
+    if percent is None:
+      return
+    try:
+      used = float(percent)
+    except Exception:
+      return
+    # The panel reads percent as a fraction (its alarm fires at 0.9);
+    # CodexBar reports 0-100.
+    limit = {
+      "label": window_label(window, fallback),
+      "percent": round(max(0.0, min(1.0, used / 100.0)), 4),
+      "resetsAt": str(window.get("resetsAt") or ""),
+    }
+    if title:
+      limit["title"] = title
+    limits.append(limit)
+
+  # Grok's one window carries a reset time but no length. The Grok CLI's own
+  # usage screen calls it the weekly limit, so the fallback does too.
+  add(usage.get("primary"), "Weekly")
+  add(usage.get("secondary"), "Weekly")
+  add(usage.get("tertiary"), "Limit")
+  extra = usage.get("extraRateWindows")
+  if isinstance(extra, list):
+    for scoped in extra:
+      if isinstance(scoped, dict):
+        add(scoped.get("window"), "Limit", str(scoped.get("title") or ""))
+  return limits
+
+
+def probe_limits() -> dict[str, Any]:
+  command = [CODEXBAR_BIN, "usage", "--provider", AGENT_ID, "--json", "--no-color"]
+  try:
+    completed = subprocess.run(
+      command, capture_output=True, text=True, timeout=CODEXBAR_TIMEOUT_SECONDS, check=False
+    )
+  except FileNotFoundError:
+    return {"ok": False, "helpText": "CodexBar is not installed, so Grok rate limits cannot be read."}
+  except subprocess.TimeoutExpired:
+    return {"ok": False, "helpText": "CodexBar did not answer in time.", "transport": True}
+
+  entry: Any = None
+  for text in (completed.stdout, completed.stderr):
+    start = text.find("[{")
+    if start == -1:
+      continue
+    try:
+      parsed = json.loads(text[start:])
+    except Exception:
+      continue
+    if isinstance(parsed, list) and parsed and isinstance(parsed[0], dict):
+      entry = parsed[0]
+      break
+  if entry is None:
+    return {"ok": False, "helpText": "CodexBar printed no usage record for Grok."}
+
+  error = entry.get("error")
+  if isinstance(error, dict):
+    message = str(error.get("message") or "CodexBar could not read Grok usage.")
+    return {"ok": False, "helpText": message}
+
+  usage = entry.get("usage") if isinstance(entry.get("usage"), dict) else {}
+  limits = limits_from_entry(entry)
+  if not limits:
+    return {"ok": False, "helpText": "CodexBar returned no rate limits for Grok."}
+  identity = usage.get("identity") if isinstance(usage.get("identity"), dict) else {}
+  tier = str(usage.get("loginMethod") or identity.get("loginMethod") or entry.get("plan") or "")
+  return {"ok": True, "limits": limits, "tierLabel": tier}
+
+
+def limit_window_open(entry: dict[str, Any], now: dt.datetime) -> bool:
+  raw = str(entry.get("resetsAt") or "")
+  if raw == "":
+    return True
+  try:
+    resets_at = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+  except Exception:
+    return True
+  if resets_at.tzinfo is None:
+    resets_at = resets_at.replace(tzinfo=dt.timezone.utc)
+  return resets_at > now
+
+
+def collect_limits(force: bool) -> dict[str, Any]:
+  result = {"limits": [], "usageStatusText": "", "authHelpText": AUTH_HELP, "tierLabel": ""}
+  probe_cache = cache_root() / "grok-limits.json"
+  cached = read_fresh_json(probe_cache, float("inf")) or {}
+  now = dt.datetime.now(dt.timezone.utc)
+  entries = cached.get("limits") if isinstance(cached.get("limits"), list) else []
+  fallback = [entry for entry in entries if isinstance(entry, dict) and limit_window_open(entry, now)]
+  result["tierLabel"] = str(cached.get("tierLabel") or "")
+
+  fetched_at = number(cached.get("fetchedAtMs")) / 1000
+  if fallback and not force and time.time() - fetched_at < PROBE_MIN_INTERVAL_SECONDS:
+    result["limits"] = fallback
+    return result
+
+  probe = probe_limits()
+  if probe["ok"]:
+    result["limits"] = probe["limits"]
+    result["tierLabel"] = probe["tierLabel"]
+    write_json(probe_cache, {
+      "fetchedAtMs": round(time.time() * 1000),
+      "limits": probe["limits"],
+      "tierLabel": probe["tierLabel"],
+    })
+    return result
+
+  if probe.get("transport"):
+    result["retryAdvised"] = True
+  if fallback:
+    result["limits"] = fallback
+  else:
+    result["usageStatusText"] = "Grok limits unavailable"
+    result["authHelpText"] = probe["helpText"]
+  return result
+
+
+# -------------------------------------------------------------------- record
+
+
+def main() -> int:
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--force", action="store_true", help="re-probe limits, ignoring the probe cache")
+  parser.add_argument("--limits-only", action="store_true", help="accepted for parity with the other collectors")
+  args = parser.parse_args()
+
+  stats = scan_local(grok_home())
+  limits = collect_limits(args.force)
+
+  record = {
+    "schemaVersion": 1,
+    "id": AGENT_ID,
+    "name": AGENT_NAME,
+    "updatedAt": dt.datetime.now(dt.timezone.utc).isoformat(),
+    "ready": number(stats.get("totalPrompts")) > 0 or len(limits["limits"]) > 0,
+    "hasLocalStats": True,
+    "tierLabel": limits["tierLabel"],
+    "usageStatusText": limits["usageStatusText"],
+    "authHelpText": limits["authHelpText"],
+    "limits": limits["limits"],
+  }
+  if limits.get("retryAdvised"):
+    record["retryAdvised"] = True
+  record.update(stats)
+  print(json.dumps(record, separators=(",", ":"), sort_keys=True))
+  return 0
+
+
+if __name__ == "__main__":
+  raise SystemExit(main())

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# omnixy:summary=Open the Omnixy background switcher
+# omnixy:group=theme
+# omnixy:name=bg-switcher
+# omnixy:aliases=omnixy background
+
+theme_name=$(cat "$HOME/.local/state/omnixy/current/theme.name" 2>/dev/null)
+current_background=$(readlink -f "$HOME/.local/state/omnixy/current/background" 2>/dev/null)
+
+omnixy-menu-images \
+  --selected "$current_background" \
+  "$HOME/.local/state/omnixy/current/theme/backgrounds" \
+  "$HOME/.config/omnixy/backgrounds/$theme_name"

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# nixpkgs installs the dropbox-cli package's binary as "dropbox"; the shell's
+# Dropbox panel calls the name Arch ships. Forward to whichever is on PATH.
+exec dropbox "$@"

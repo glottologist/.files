@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# omnixy:summary=Cycle to the next media source and transfer playback when the current source is playing
+# omnixy:args=[next|previous]
+# omnixy:examples=omnixy audio source switch | omnixy-audio-source-switch previous
+
+direction="${1:-next}"
+
+case "$direction" in
+  next)
+    omnixy-shell media sourceSwitch
+    ;;
+  previous)
+    omnixy-shell media sourceSwitchPrevious
+    ;;
+  *)
+    echo "Usage: omnixy-audio-source-switch [next|previous]" >&2
+    exit 1
+    ;;
+esac

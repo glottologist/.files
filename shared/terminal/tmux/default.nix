@@ -140,7 +140,6 @@ in
         '';
       }
     ];
-    shortcut = "a";
     terminal = "xterm-256color";
   };
 }

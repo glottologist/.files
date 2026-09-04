@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# omnixy:summary=Launch the default coding agent with a prompt
+# omnixy:args=[--inline] <prompt...>
+# omnixy:examples=omnixy agent prompt "Review this project"
+
+# Prompts live here rather than on `omnixy agent`, where a bare prompt would
+# shadow the subcommands under that group.
+
+set -euo pipefail
+
+inline=()
+if [[ ${1:-} == "--inline" ]]; then
+  inline=(--inline)
+  shift
+fi
+
+if (($# == 0)); then
+  echo "Usage: omnixy agent prompt [--inline] <prompt...>" >&2
+  exit 1
+fi
+
+exec omnixy-agent "${inline[@]}" --prompt "$*"

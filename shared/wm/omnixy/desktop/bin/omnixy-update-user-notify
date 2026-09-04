@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# omnixy:summary=Compatibility wrapper for omnixy-migrate-notify.
+# omnixy:hidden=true
+
+exec omnixy-migrate-notify "$@"

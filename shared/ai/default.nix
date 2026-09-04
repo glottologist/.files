@@ -1030,7 +1030,11 @@ in
       pi-coding-agent
       ccstatusline.packages.${system}.default
       ennio.packages.${system}.ennio
-      ennio.packages.${system}.ennio-node
+      # crane's buildPackage runs cargo test in a sandbox with no git or tmux,
+      # which the node tests require. Those tests already run on the host.
+      (ennio.packages.${system}.ennio-node.overrideAttrs (_: {
+        doCheck = false;
+      }))
       nix-everywhere.packages.${system}.default
       claude-monitor
       opencode

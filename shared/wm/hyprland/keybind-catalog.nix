@@ -76,6 +76,9 @@ let
         "$modifier ALT, ${direction.code}, swapwindow,${direction.dispatch}"
     ) directions;
 
+  # $modifier,L locks the screen, so focus-right keeps its arrow binding only.
+  focusLetterDirections = builtins.filter (direction: direction.letter != "l") directions;
+
   focusBindings =
     builtins.map (
       direction:
@@ -86,7 +89,7 @@ let
       direction:
       binding "Windows" "Focus ${direction.name}"
         "$modifier,${direction.letter},movefocus,${direction.dispatch}"
-    ) directions;
+    ) focusLetterDirections;
 
   switchWorkspaceBindings = builtins.map (
     workspace:
@@ -108,6 +111,7 @@ in
     (binding "Applications" "App launcher" "$modifier,D,exec,rofi-launcher")
     (binding "Applications" "Web search" "$modifier SHIFT,W,exec,web-search")
     (binding "Session" "Logout menu" "$modifier SHIFT,Q,exec,wlogout --css ~/.config/wlogout/main.css")
+    (binding "Session" "Lock" "$modifier,L,exec,hyprlock")
     (binding "Session" "Lock" "$modifier SHIFT,L,exec,hyprlock")
     (binding "Applications" "Change wallpaper" "$modifier ALT,W,exec,wallsetter")
     (binding "Session" "Clear notifications" "$modifier SHIFT,N,exec,swaync-client -rs")

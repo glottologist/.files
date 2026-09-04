@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# omnixy:summary=Wake displays and restore brightness after idle
+# omnixy:group=system
+# omnixy:name=wake
+# omnixy:examples=omnixy system wake
+
+omnixy-brightness-display on
+omnixy-brightness-keyboard restore
+omnixy-hyprland-monitor-clamshell >/dev/null 2>&1 || true

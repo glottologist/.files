@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# omnixy:summary=Toggle the current weather panel
+
+omnixy-shell shell toggle omnixy.weather

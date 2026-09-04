@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "omnixy.dev-gallery",
+  "name": "Dev gallery",
+  "version": "1.0.0",
+  "author": "Omnixy",
+  "description": "Visual reference for omnixy-shell common UI components. Summon with: omnixy-shell shell summon omnixy.dev-gallery '{}' (or run: omnixy dev ui-preview).",
+  "kinds": [
+    "panel"
+  ],
+  "entryPoints": {
+    "panel": "GalleryPanel.qml"
+  }
+}

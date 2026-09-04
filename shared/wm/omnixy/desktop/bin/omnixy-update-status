@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# omnixy:summary=Refresh the shell update status
+# omnixy:hidden=true
+
+set -e
+
+if omnixy-update-available >/dev/null; then
+  omnixy-shell -q omnixy.system-update refresh
+else
+  omnixy-shell -q omnixy.system-update clear
+fi

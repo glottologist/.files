@@ -23,7 +23,6 @@ shellcheck shared/wm/scripts/keybinds.sh shared/wm/tests/keybinding-catalog
 luac -p \
   shared/wm/hyprland/binding-loader.lua \
   shared/wm/caelestia/keybinds.lua \
-  shared/wm/omarchy/bindings.lua \
   shared/wm/omnixy/bindings.lua
 nixfmt --check \
   shared/wm/hyprland/keybind-catalog.nix \
@@ -32,6 +31,5 @@ nixfmt --check \
   shared/wm/hyprland/tests/keybind-catalog.nix \
   shared/wm/hyprland/tests/catalog-to-lua.nix \
   shared/wm/caelestia/default.nix \
-  shared/wm/omarchy/default.nix \
   shared/wm/omnixy/default.nix \
   shared/wm/scripts/keybinds.nix

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# omnixy:summary=Enable, disable, or toggle the touchpad
+# omnixy:args=[on|off|toggle]
+
+exec omnixy-toggle-input-device touchpad "${1:-toggle}"

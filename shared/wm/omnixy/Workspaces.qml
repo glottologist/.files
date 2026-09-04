@@ -4,7 +4,7 @@ import Quickshell.Hyprland
 import qs.Commons
 import qs.Ui
 
-// Workspace switcher for the Omnixy bar, replacing omarchy.workspaces.
+// Workspace switcher for the Omnixy bar, replacing omnixy.workspaces.
 // Upstream's widget seeds ids 1-5 and ignores anything above 10, but the
 // classic keybindings this session replays cover twenty-two workspaces
 // (SUPER+1..9, SUPER+0 for ten, SUPER+F1..F12 for eleven to twenty-two).
@@ -44,14 +44,6 @@ BarWidget {
     return ids
   }
 
-  // Label each workspace with the key that reaches it, so the bar reads as a
-  // map of the bindings rather than a plain count.
-  function workspaceLabel(id) {
-    if (id === 10) return "0"
-    if (id > 10) return "F" + (id - 10)
-    return String(id)
-  }
-
   function focusWorkspace(id) {
     if (!root.bar) return
     root.bar.run("hyprctl dispatch " + Util.shellQuote("hl.dsp.focus({ workspace = \"" + id + "\" })"))
@@ -81,13 +73,13 @@ BarWidget {
         readonly property bool focused: Hyprland.focusedWorkspace !== null && Hyprland.focusedWorkspace.id === modelData
 
         bar: root.bar
-        text: focused ? "󱓻" : root.workspaceLabel(modelData)
+        text: focused ? "󱓻" : String(modelData)
         opacity: occupied || focused ? 1 : 0.5
         horizontalMargin: 6
         verticalPadding: 6
-        // The F-key labels are two glyphs wide, so the fixed slot upstream
-        // uses for single digits would clip them.
-        fixedWidth: root.vertical ? root.barSize : Style.space(modelData > 10 ? 26 : 20)
+        // Workspaces ten and up are two digits wide, so the fixed slot
+        // upstream uses for single digits would clip them.
+        fixedWidth: root.vertical ? root.barSize : Style.space(modelData >= 10 ? 26 : 20)
         fixedHeight: root.barSize
         onPressed: function() { root.focusWorkspace(modelData) }
       }

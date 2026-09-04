@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# omnixy:summary=Reload hyprland configuration (used by the Omnixy theme switching).
+
+hyprctl reload >/dev/null

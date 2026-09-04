@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# omnixy:summary=Check whether a webcam is available
+
+[[ -n $(omnixy-capture-webcam-list) ]]

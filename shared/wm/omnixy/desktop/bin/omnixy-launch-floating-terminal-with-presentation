@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# omnixy:summary=Launch a floating terminal with the Omnixy presentation wrapper
+# omnixy:args=<command>
+
+# Export the current theme's gum styling so gum widgets match the active theme
+# even after a theme switch (the inherited environment is captured at login).
+source omnixy-restart-gum
+
+cmd="$*"
+presentation_script="omnixy-show-logo; $cmd; if (( \$? != 130 )); then omnixy-show-done; fi"
+
+exec setsid uwsm-app -- xdg-terminal-exec --app-id=org.omnixy.terminal --title=Omnixy -e bash -c "$presentation_script"

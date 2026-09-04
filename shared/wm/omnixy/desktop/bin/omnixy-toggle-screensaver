@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# omnixy:summary=Toggle screensaver availability
+
+omnixy-toggle screensaver-off
+
+if omnixy-toggle-enabled screensaver-off; then
+  omnixy-notification-send -g 󱄄 "Screensaver disabled"
+else
+  omnixy-notification-send -g 󱄄 "Screensaver enabled"
+fi

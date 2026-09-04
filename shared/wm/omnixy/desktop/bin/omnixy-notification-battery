@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# omnixy:summary=Show the current battery status notification
+
+omnixy-notification-send -g 󰁹 -u low "$(omnixy-battery-status)"

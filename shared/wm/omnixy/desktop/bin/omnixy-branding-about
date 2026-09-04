@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# omnixy:summary=Edit, set, or reset About branding
+# omnixy:group=branding
+# omnixy:name=about
+# omnixy:args=<image|text|reset>
+# omnixy:examples=omnixy branding about image | omnixy branding about text | omnixy branding about reset
+
+set -euo pipefail
+
+case "${1:-}" in
+image)
+  image=$(omnixy-file-select --title "Pick PNG or SVG for About" --extensions "png svg")
+  if omnixy-transcode-ascii "$image" ~/.config/omnixy/branding/about.txt --width 54 --height 26; then
+    omnixy-launch-about >/dev/null 2>&1
+  fi
+  ;;
+text)
+  omnixy-launch-editor ~/.config/omnixy/branding/about.txt >/dev/null 2>&1 && omnixy-launch-about >/dev/null 2>&1
+  ;;
+reset)
+  cp "$OMNIXY_PATH/icon.txt" ~/.config/omnixy/branding/about.txt && omnixy-launch-about >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: omnixy-branding-about <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

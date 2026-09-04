@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# omnixy:summary=Open the Omnixy Discord community in the Discord app or a browser.
+
+invite="https://discord.gg/tXFUdasqhY"
+
+if omnixy-cmd-present discord; then
+  exec setsid uwsm-app -- discord --url -- "discord://-/invite/${invite##*/}"
+else
+  exec omnixy-launch-webapp "$invite"
+fi
