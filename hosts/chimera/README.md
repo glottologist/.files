@@ -24,31 +24,62 @@ automatic rotation, the NVMe and Thunderbolt initrd modules, and the
 silent. `hardware.nix` adds only what that module leaves out: microcode,
 Bluetooth, thermald, the fingerprint reader and power-profiles-daemon.
 
-## Installation
+## How the machine was installed
 
-Installation **erases the whole of the target disk**. Confirm the device node
-first — `disko.nix` asserts `/dev/nvme0n1`, which is where the Pocket 3's M.2
-drive normally appears, but disko will not ask twice:
+Chimera was **not** bootstrapped from `disko.nix`. It arrived running a stock
+NixOS 26.05 install from the graphical installer, and this configuration was
+switched onto that install in place, keeping the installer's partitions: a 1G
+ESP on `/boot`, an ext4 root filling the 2TB NVMe, and an 8.8G swap partition.
+`filesystem.nix` names all three by UUID, in the way `hosts/bebop` does.
+
+The layout is plaintext. That is the standing cost of the in-place install, and
+it is a real one on a machine this easy to mislay: the OpenAI and Grok keys
+that `homes/jrt` writes into the Nix store are readable by anyone who takes the
+disk out. `disko.nix` is kept beside `filesystem.nix` precisely so that the
+encrypted layout is one reinstall away rather than a piece of work to redo.
+
+### Applying changes
+
+Both layers are applied from the machine itself, or over SSH from a host that
+can build for it:
+
+```bash
+./do host apply chimera
+./do home apply jrt
+```
+
+The `jrt` home configuration needs `NIXPKGS_ALLOW_INSECURE=1` and `--impure`,
+which `./do` already exports; a hand-rolled `nix build` of
+`homeConfigurations.jrt.activationPackage` without them fails on
+`libsoup-2.74.3`.
+
+### Reinstalling onto the encrypted layout
+
+Should the machine ever be rebuilt from bare metal, add
+`inputs.disko.nixosModules.disko` back to Chimera's module list in `flake.nix`
+and import `./disko.nix` in place of `./filesystem.nix`. Installation then
+**erases the whole of the target disk**; confirm the device node first, because
+disko will not ask twice:
 
 ```bash
 lsblk -o NAME,SIZE,MODEL
 ```
 
-The flake reads the committed tree rather than the working copy, so the new
-files must be staged and committed before deploying. Then, from a machine that
-can reach Chimera booted into a NixOS installer or any SSH-reachable Linux:
+Then, from a machine that can reach Chimera booted into a NixOS installer or
+any SSH-reachable Linux:
 
 ```bash
-nix-everywhere bootstrap --target-host root@<chimera-address> --flake .#chimera
+nixos-anywhere --flake .#chimera root@<chimera-address>
 ```
 
-The installer will prompt for the LUKS passphrase that `disko.nix` sets on the
-root container. Choose it carefully: it is the only thing standing between a
-mislaid eight-inch laptop and the API keys that `homes/jrt` writes into the
-store.
+`nix-everywhere bootstrap` wraps the same tool, but its wrapper pipes
+`nixos-anywhere`'s output and attaches no standard input, so the interactive
+LUKS passphrase prompt cannot be answered through it. Run `nixos-anywhere`
+directly, or pass the passphrase with `--disk-encryption-keys` and a
+`passwordFile` in `disko.nix`.
 
-After installation, set the account password — none is declared in the flake,
-deliberately, so that no hash reaches Git or the Nix store:
+The account password is not declared in the flake, deliberately, so that no
+hash reaches Git or the Nix store. Set it after any install:
 
 ```bash
 ssh jrt@<chimera-address>

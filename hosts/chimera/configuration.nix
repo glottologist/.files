@@ -15,7 +15,7 @@
 {
   imports = [
     ./boot.nix
-    ./disko.nix
+    ./filesystem.nix
     ./fonts.nix
     ./hardware.nix
     ./networking.nix

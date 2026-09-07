@@ -335,8 +335,11 @@
           ];
         };
 
-        # GPD Pocket 3. The hardware module is upstream's; disko owns the
-        # encrypted layout.
+        # GPD Pocket 3. The hardware module is upstream's. Disko is absent
+        # because the machine was switched in place over a stock install and
+        # keeps that installer's plaintext layout; hosts/chimera/filesystem.nix
+        # declares it, and hosts/chimera/disko.nix remains as the encrypted
+        # layout a future bare-metal reinstall would take.
         "chimera" = nixosSystem {
           inherit pkgs;
           inherit system;
@@ -344,7 +347,6 @@
             username = "jrt";
           };
           modules = [
-            inputs.disko.nixosModules.disko
             inputs.nixos-hardware.nixosModules.gpd-pocket-3
             stylix.nixosModules.stylix
             ./hosts/chimera/configuration.nix

@@ -84,11 +84,6 @@ in {
     ../../shared/network/default.nix
     ../../shared/security/default.nix
 
-    # The full Kali "large" toolset. Chimera carries it deliberately: it is the
-    # portable machine, and a pentest toolkit is most useful on the laptop that
-    # travels. See agents/2026-09-06-003-feature-kali-large-pentesting-design.md.
-    ../../shared/pentesting/default.nix
-
     # The session and the shell. Only the classic Hyprland profile is taken:
     # shared/wm/default.nix would add Caelestia and Omnixy, both tuned to
     # Bebop's monitor geometry and needing a second round of rotation work for
