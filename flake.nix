@@ -31,6 +31,11 @@
 
     agenix.url = "github:ryantm/agenix";
 
+    # Chimera is a GPD Pocket 3, whose rotated DSI panel, Iris Xe drivers and
+    # audio DSP quirk are all handled upstream by nixos-hardware's
+    # gpd/pocket-3 module.
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -136,6 +141,9 @@
             colibri = inputs.colibri.packages.${system}.default;
             brickborrow-watch = inputs.brickborrow-watch.packages.${system}.default;
             codexbar = final.callPackage ./shared/wm/waybar/codexbar-cli.nix { };
+            # NymVPN is not in nixpkgs; pkgs.nym is the mixnet tooling, which
+            # is a different thing. See shared/network/nym-vpn-core.nix.
+            nym-vpn-core = final.callPackage ./shared/network/nym-vpn-core.nix { };
             omnixy-desktop = final.callPackage ./shared/wm/omnixy/package.nix { };
             # Sandbox: tests/test_robotstxt.py hits OSError on http://e/somefile.html.
             # pkgs.dosage.doCheck can read false while pytestCheckHook still runs.
@@ -150,6 +158,8 @@
           (_: _: {
             zen-browser = inputs.zen-browser.packages.${system}.default;
           })
+          # Kali "large" tools that nixpkgs does not carry, packaged in-repo.
+          (import ./shared/pentesting/packages/overlay.nix)
           (_: prev: {
             pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
               (_: pyprev: {
@@ -158,6 +168,11 @@
                 });
                 commitizen = pyprev.commitizen.overridePythonAttrs (_: {
                   doCheck = false;
+                });
+                # wapiti-arsenic only imports packaging.version; its <26 cap
+                # is conservative and rejects the compatible pinned 26.1.
+                "wapiti-arsenic" = pyprev."wapiti-arsenic".overridePythonAttrs (old: {
+                  pythonRelaxDeps = (old.pythonRelaxDeps or [ ]) ++ [ "packaging" ];
                 });
                 # vLLM dep: upstream pins starlette<1.0.0 but 26.05 ships 1.1.0.
                 # The cap is a conservative upper bound — relax it so the
@@ -236,6 +251,38 @@
           ];
         };
 
+        # Chimera's profile. Stylix is needed because shared/wm/stylix.nix is
+        # imported; Caelestia is not, because only the classic Hyprland
+        # profile is taken.
+        "jrt" = homeManagerConfig {
+          inherit pkgs;
+          extraSpecialArgs = {
+            username = "jrt";
+          };
+          modules = [
+            {
+              _module.args = {
+                inherit
+                  certora-prover-flake
+                  nvim-flake
+                  neovim-flake
+                  claude-code-nix
+                  codex-cli-nix
+                  gemini-cli-nix
+                  llm-agents-nix
+                  forgecode
+                  ennio
+                  nix-everywhere
+                  ccstatusline
+                  caelestia-dots
+                  ;
+              };
+            }
+            stylix.homeModules.stylix
+            ./homes/jrt
+          ];
+        };
+
         # Reduced profile for the Hetzner agent hosts. No Stylix or Caelestia:
         # only shared/wm consumes them, and it is not imported here.
         "jason-cloud" = homeManagerConfig {
@@ -285,6 +332,22 @@
           modules = [
             stylix.nixosModules.stylix
             ./hosts/bebop/configuration.nix
+          ];
+        };
+
+        # GPD Pocket 3. The hardware module is upstream's; disko owns the
+        # encrypted layout.
+        "chimera" = nixosSystem {
+          inherit pkgs;
+          inherit system;
+          specialArgs = {
+            username = "jrt";
+          };
+          modules = [
+            inputs.disko.nixosModules.disko
+            inputs.nixos-hardware.nixosModules.gpd-pocket-3
+            stylix.nixosModules.stylix
+            ./hosts/chimera/configuration.nix
           ];
         };
 

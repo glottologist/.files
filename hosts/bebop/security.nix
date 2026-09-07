@@ -4,9 +4,11 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   security = {
-  rtkit.enable = true;
+    rtkit.enable = true;
+    pam.services.omnixy-lock-password = { };
     polkit = {
       enable = true;
       extraConfig = ''
@@ -21,5 +23,5 @@
         })
       '';
     };
-    };
+  };
 }

@@ -43,7 +43,7 @@
       cat > $out/share/wayland-sessions/hyprland-classic.desktop <<EOF
       [Desktop Entry]
       Type=Application
-      Name=Hyprland (Classic)
+      Name=2. Hyprland (Classic)
       Comment=Hyprland with the waybar, rofi and dunst stack
       Exec=${hyprlandWith "hyprland.conf"}
       DesktopNames=Hyprland
@@ -51,7 +51,7 @@
       cat > $out/share/wayland-sessions/hyprland-caelestia.desktop <<EOF
       [Desktop Entry]
       Type=Application
-      Name=Hyprland (Caelestia)
+      Name=3. Hyprland (Caelestia)
       Comment=Hyprland with the caelestia shell
       Exec=${hyprlandWith "hyprland.lua"}
       DesktopNames=Hyprland
@@ -59,7 +59,7 @@
       cat > $out/share/wayland-sessions/hyprland-omnixy.desktop <<EOF
       [Desktop Entry]
       Type=Application
-      Name=Hyprland (Omnixy)
+      Name=1. Hyprland (Omnixy)
       Comment=Hyprland with the Omnixy quickshell desktop
       Exec=${omnixySession}
       DesktopNames=Hyprland
@@ -179,7 +179,7 @@ in {
         enable = true;
         wayland.enable = true;
       };
-      defaultSession = "hyprland-classic";
+      defaultSession = "hyprland-omnixy";
       sessionPackages = [hyprlandSessions];
     };
     desktopManager.plasma6.enable = true;
@@ -233,9 +233,10 @@ in {
           # F2 opens the session menu: both Hyprland profiles and Plasma.
           # --sessions replaces tuigreet's XDG_DATA_DIRS fallback (the source
           # of the identically-named "Hyprland" entries), so only the named
-          # sessions appear. --cmd makes the classic profile the default
-          # until a session is remembered.
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions} --cmd ${hyprlandWith "hyprland.conf"}";
+          # sessions appear. --cmd makes the Omnixy profile the default
+          # until a session is remembered. tuigreet sorts the menu by the
+          # desktop entry Name, so the Hyprland names carry an order prefix.
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions} --cmd ${omnixySession}";
         };
       };
     };
