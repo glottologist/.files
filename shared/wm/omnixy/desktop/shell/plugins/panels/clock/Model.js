@@ -267,6 +267,261 @@ function stepMonth(year, month, delta) {
   return { year: target.getFullYear(), month: target.getMonth() }
 }
 
+// ---- World clocks. IANA ids persisted on the widget; labels and the
+//      picker list live here so QML does not own the zone table.
+
+var MAX_WORLD_CLOCKS = 8
+
+var WORLD_CLOCK_ZONES = [
+  { id: "UTC", label: "UTC", region: "UTC" },
+  { id: "Pacific/Honolulu", label: "Honolulu", region: "Pacific" },
+  { id: "America/Anchorage", label: "Anchorage", region: "America" },
+  { id: "America/Los_Angeles", label: "Los Angeles", region: "America" },
+  { id: "America/Denver", label: "Denver", region: "America" },
+  { id: "America/Chicago", label: "Chicago", region: "America" },
+  { id: "America/New_York", label: "New York", region: "America" },
+  { id: "America/Toronto", label: "Toronto", region: "America" },
+  { id: "America/Mexico_City", label: "Mexico City", region: "America" },
+  { id: "America/Bogota", label: "Bogota", region: "America" },
+  { id: "America/Lima", label: "Lima", region: "America" },
+  { id: "America/Sao_Paulo", label: "Sao Paulo", region: "America" },
+  { id: "America/Argentina/Buenos_Aires", label: "Buenos Aires", region: "America" },
+  { id: "Atlantic/Reykjavik", label: "Reykjavik", region: "Atlantic" },
+  { id: "Europe/London", label: "London", region: "Europe" },
+  { id: "Europe/Dublin", label: "Dublin", region: "Europe" },
+  { id: "Europe/Lisbon", label: "Lisbon", region: "Europe" },
+  { id: "Europe/Paris", label: "Paris", region: "Europe" },
+  { id: "Europe/Madrid", label: "Madrid", region: "Europe" },
+  { id: "Europe/Berlin", label: "Berlin", region: "Europe" },
+  { id: "Europe/Amsterdam", label: "Amsterdam", region: "Europe" },
+  { id: "Europe/Rome", label: "Rome", region: "Europe" },
+  { id: "Europe/Zurich", label: "Zurich", region: "Europe" },
+  { id: "Europe/Stockholm", label: "Stockholm", region: "Europe" },
+  { id: "Europe/Athens", label: "Athens", region: "Europe" },
+  { id: "Europe/Helsinki", label: "Helsinki", region: "Europe" },
+  { id: "Europe/Bucharest", label: "Bucharest", region: "Europe" },
+  { id: "Europe/Moscow", label: "Moscow", region: "Europe" },
+  { id: "Africa/Cairo", label: "Cairo", region: "Africa" },
+  { id: "Africa/Johannesburg", label: "Johannesburg", region: "Africa" },
+  { id: "Africa/Lagos", label: "Lagos", region: "Africa" },
+  { id: "Africa/Nairobi", label: "Nairobi", region: "Africa" },
+  { id: "Asia/Jerusalem", label: "Jerusalem", region: "Asia" },
+  { id: "Asia/Dubai", label: "Dubai", region: "Asia" },
+  { id: "Asia/Karachi", label: "Karachi", region: "Asia" },
+  { id: "Asia/Kolkata", label: "Kolkata", region: "Asia" },
+  { id: "Asia/Dhaka", label: "Dhaka", region: "Asia" },
+  { id: "Asia/Bangkok", label: "Bangkok", region: "Asia" },
+  { id: "Asia/Singapore", label: "Singapore", region: "Asia" },
+  { id: "Asia/Hong_Kong", label: "Hong Kong", region: "Asia" },
+  { id: "Asia/Shanghai", label: "Shanghai", region: "Asia" },
+  { id: "Asia/Taipei", label: "Taipei", region: "Asia" },
+  { id: "Asia/Seoul", label: "Seoul", region: "Asia" },
+  { id: "Asia/Tokyo", label: "Tokyo", region: "Asia" },
+  { id: "Australia/Perth", label: "Perth", region: "Australia" },
+  { id: "Australia/Adelaide", label: "Adelaide", region: "Australia" },
+  { id: "Australia/Sydney", label: "Sydney", region: "Australia" },
+  { id: "Pacific/Auckland", label: "Auckland", region: "Pacific" },
+  { id: "Pacific/Fiji", label: "Fiji", region: "Pacific" }
+]
+
+var POPULAR_WORLD_CLOCKS = [
+  "America/New_York",
+  "America/Los_Angeles",
+  "Europe/London",
+  "Europe/Paris",
+  "Asia/Dubai",
+  "Asia/Kolkata",
+  "Asia/Singapore",
+  "Asia/Tokyo",
+  "Australia/Sydney",
+  "Pacific/Auckland"
+]
+
+function isTimeZoneId(value) {
+  var text = String(value === undefined || value === null ? "" : value).replace(/^\s+|\s+$/g, "")
+  if (text === "UTC" || text === "GMT") return true
+  return /^[A-Za-z_]+(\/[A-Za-z0-9_+-]+)+$/.test(text)
+}
+
+function parseTimeZones(value) {
+  var raw
+  if (value === undefined || value === null || value === "") raw = []
+  else if (Array.isArray(value)) raw = value
+  else if (typeof value === "object" && isFinite(Number(value.length))) {
+    raw = []
+    for (var i = 0; i < value.length; i++) raw.push(value[i])
+  } else raw = [value]
+
+  var out = []
+  var seen = {}
+  for (var i = 0; i < raw.length; i++) {
+    var entry = raw[i]
+    var id = ""
+    if (entry && typeof entry === "object" && entry.id !== undefined) id = String(entry.id)
+    else id = String(entry === undefined || entry === null ? "" : entry)
+    id = id.replace(/^\s+|\s+$/g, "")
+    if (!isTimeZoneId(id) || seen[id]) continue
+    seen[id] = true
+    out.push(id)
+    if (out.length >= MAX_WORLD_CLOCKS) break
+  }
+  return out
+}
+
+function addTimeZone(list, id) {
+  var current = parseTimeZones(list)
+  var next = String(id === undefined || id === null ? "" : id).replace(/^\s+|\s+$/g, "")
+  if (!isTimeZoneId(next) || current.indexOf(next) !== -1) return current
+  if (current.length >= MAX_WORLD_CLOCKS) return current
+  return current.concat([next])
+}
+
+function removeTimeZone(list, id) {
+  var current = parseTimeZones(list)
+  var target = String(id === undefined || id === null ? "" : id)
+  var out = []
+  for (var i = 0; i < current.length; i++)
+    if (current[i] !== target) out.push(current[i])
+  return out
+}
+
+function timeZoneLabel(id) {
+  var zone = String(id === undefined || id === null ? "" : id)
+  for (var i = 0; i < WORLD_CLOCK_ZONES.length; i++)
+    if (WORLD_CLOCK_ZONES[i].id === zone) return WORLD_CLOCK_ZONES[i].label
+  var parts = zone.split("/")
+  var last = parts[parts.length - 1] || zone
+  return last.replace(/_/g, " ")
+}
+
+function usesHour12(format) {
+  return /ap/i.test(String(format === undefined || format === null ? "" : format))
+}
+
+function zoneEpoch(value) {
+  if (value instanceof Date) return value.getTime()
+  var ms = Number(value)
+  return isFinite(ms) ? ms : 0
+}
+
+function formatInZone(epochMs, timeZone, options) {
+  var ms = zoneEpoch(epochMs)
+  if (ms <= 0 || !isTimeZoneId(timeZone)) return ""
+  if (typeof Intl === "undefined" || !Intl.DateTimeFormat) return ""
+  var opts = {}
+  var given = options || {}
+  for (var key in given) opts[key] = given[key]
+  opts.timeZone = timeZone
+  try {
+    return new Intl.DateTimeFormat("en-GB", opts).format(new Date(ms))
+  } catch (e) {
+    return ""
+  }
+}
+
+function zoneDateKey(epochMs, timeZone) {
+  var ms = zoneEpoch(epochMs)
+  if (ms <= 0) return ""
+  if (typeof Intl === "undefined" || !Intl.DateTimeFormat) return ""
+  var opts = { year: "numeric", month: "2-digit", day: "2-digit" }
+  if (timeZone) {
+    if (!isTimeZoneId(timeZone)) return ""
+    opts.timeZone = timeZone
+  }
+  try {
+    return new Intl.DateTimeFormat("en-CA", opts).format(new Date(ms))
+  } catch (e) {
+    return ""
+  }
+}
+
+function zoneDayOffset(epochMs, timeZone, localTimeZone) {
+  var there = zoneDateKey(epochMs, timeZone)
+  var here = zoneDateKey(epochMs, localTimeZone || "")
+  if (!there || !here) return 0
+  var a = there.split("-")
+  var b = here.split("-")
+  if (a.length !== 3 || b.length !== 3) return 0
+  var da = Date.UTC(Number(a[0]), Number(a[1]) - 1, Number(a[2]))
+  var db = Date.UTC(Number(b[0]), Number(b[1]) - 1, Number(b[2]))
+  if (!isFinite(da) || !isFinite(db)) return 0
+  return Math.round((da - db) / MS_PER_DAY)
+}
+
+function zoneOffsetLabel(epochMs, timeZone) {
+  var formatted = formatInZone(epochMs, timeZone, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+    timeZoneName: "shortOffset"
+  })
+  if (!formatted) return ""
+  var parts = formatted.split(" ")
+  return parts.length > 1 ? parts[parts.length - 1] : ""
+}
+
+function formatTimeInZone(epochMs, timeZone, hour12) {
+  if (hour12)
+    return formatInZone(epochMs, timeZone, { hour: "numeric", minute: "2-digit", hour12: true })
+  return formatInZone(epochMs, timeZone, { hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+}
+
+function worldClockRows(list, epochMs, options) {
+  var ids = parseTimeZones(list)
+  var opts = options || {}
+  var hour12 = opts.hour12 === true
+  var localTimeZone = opts.localTimeZone || ""
+  var rows = []
+  for (var i = 0; i < ids.length; i++) {
+    var id = ids[i]
+    var dayOffset = zoneDayOffset(epochMs, id, localTimeZone)
+    rows.push({
+      id: id,
+      label: timeZoneLabel(id),
+      time: formatTimeInZone(epochMs, id, hour12) || "—",
+      offset: zoneOffsetLabel(epochMs, id),
+      dayOffset: dayOffset,
+      dayOffsetLabel: dayOffset === 0 ? "" : (dayOffset > 0 ? "+" + dayOffset : String(dayOffset))
+    })
+  }
+  return rows
+}
+
+function maxWorldClocks() {
+  return MAX_WORLD_CLOCKS
+}
+
+function matchingTimeZones(query, exclude) {
+  var q = String(query === undefined || query === null ? "" : query).replace(/^\s+|\s+$/g, "").toLowerCase()
+  var skip = parseTimeZones(exclude)
+  var skipped = {}
+  for (var s = 0; s < skip.length; s++) skipped[skip[s]] = true
+
+  var source = []
+  if (q === "") {
+    for (var p = 0; p < POPULAR_WORLD_CLOCKS.length; p++) {
+      var popular = POPULAR_WORLD_CLOCKS[p]
+      if (skipped[popular]) continue
+      source.push({ id: popular, label: timeZoneLabel(popular), region: "" })
+    }
+  } else {
+    for (var i = 0; i < WORLD_CLOCK_ZONES.length; i++) {
+      var zone = WORLD_CLOCK_ZONES[i]
+      if (skipped[zone.id]) continue
+      var hay = (zone.id + " " + zone.label + " " + zone.region).toLowerCase()
+      if (hay.indexOf(q) === -1) continue
+      source.push(zone)
+    }
+    if (isTimeZoneId(query) && !skipped[String(query).replace(/^\s+|\s+$/g, "")] && source.length === 0) {
+      var typed = String(query).replace(/^\s+|\s+$/g, "")
+      source.push({ id: typed, label: timeZoneLabel(typed), region: "" })
+    }
+  }
+
+  var limit = 6
+  return source.length > limit ? source.slice(0, limit) : source
+}
+
 if (typeof module !== "undefined") {
   module.exports = {
     dateKey: dateKey,
@@ -291,6 +546,18 @@ if (typeof module !== "undefined") {
     clockFormats: clockFormats,
     clockFormatRing: clockFormatRing,
     nextClockFormat: nextClockFormat,
-    isoWeekLiteral: isoWeekLiteral
+    isoWeekLiteral: isoWeekLiteral,
+    MAX_WORLD_CLOCKS: MAX_WORLD_CLOCKS,
+    maxWorldClocks: maxWorldClocks,
+    isTimeZoneId: isTimeZoneId,
+    parseTimeZones: parseTimeZones,
+    addTimeZone: addTimeZone,
+    removeTimeZone: removeTimeZone,
+    timeZoneLabel: timeZoneLabel,
+    usesHour12: usesHour12,
+    formatTimeInZone: formatTimeInZone,
+    zoneDayOffset: zoneDayOffset,
+    worldClockRows: worldClockRows,
+    matchingTimeZones: matchingTimeZones
   }
 }

@@ -336,6 +336,7 @@ let
   barLayout = {
     id = "custom.bar";
     position = "top";
+    transparent = false;
     centerAnchor = "";
     layout = {
       left = [ { id = "omnixy.tray"; } ];
@@ -356,6 +357,7 @@ let
     };
     bottom = {
       position = "bottom";
+      transparent = false;
       centerAnchor = "omnixy.active-window";
       layout = {
         left = [

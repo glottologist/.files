@@ -19,8 +19,10 @@ import qs.Commons
 // reach the dismissal surfaces below.
 //
 // API is a subset of Common.PopupCard: anchorItem, owner, bar, open,
-// padding, margin, contentWidth/Height, centerOnBar, default contentItem.
-// Missing on purpose (for now): triggerMode ("hover"), containsMouse.
+// padding, margin, contentWidth/Height, centerOnBar, alignEnd, default
+// contentItem. Missing on purpose (for now): triggerMode ("hover"),
+// containsMouse. alignEnd docks the card to the trailing screen edge
+// (right on a top/bottom bar) instead of centering on the bar or icon.
 //
 // Positioning: full-screen layer-shell with the card placed inside at
 // `cardOrigin`. We use the bar window's height/width for the perpendicular
@@ -46,6 +48,7 @@ PanelWindow {
   property int contentHeight: Style.space(200)
   property var borderSpec: Border.surfaceSpec("popups", "border", Color.popups.border, Math.max(1, Style.space(2)))
   property bool centerOnBar: false
+  property bool alignEnd: false
   property bool open: false
   property int gap: Style.gapsOut  // distance between bar edge and panel
   property bool popoutSwitching: false
@@ -194,7 +197,13 @@ PanelWindow {
   readonly property point cardOrigin: {
     if (!anchorItem || !bar) return Qt.point(margin, margin)
     var x = 0, y = 0
-    if (centerOnBar && (barPos === "top" || barPos === "bottom")) {
+    if (alignEnd && (barPos === "top" || barPos === "bottom")) {
+      x = screenW - contentWidth - margin
+      y = barPos === "bottom" ? screenH - barH - contentHeight - gap : barH + gap
+    } else if (alignEnd) {
+      x = barPos === "left" ? barW + gap : screenW - barW - contentWidth - gap
+      y = screenH - contentHeight - margin
+    } else if (centerOnBar && (barPos === "top" || barPos === "bottom")) {
       x = screenW / 2 - contentWidth / 2
       y = barPos === "bottom" ? screenH - barH - contentHeight - gap : barH + gap
     } else if (centerOnBar) {

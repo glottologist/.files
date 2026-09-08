@@ -189,6 +189,31 @@
       };
       nixosSystem = inputs.nixpkgs.lib.nixosSystem;
       homeManagerConfig = inputs.home-manager.lib.homeManagerConfiguration;
+      jasonCloudHomeArgs = {
+        username = "jason";
+        inherit
+          certora-prover-flake
+          nvim-flake
+          neovim-flake
+          claude-code-nix
+          codex-cli-nix
+          gemini-cli-nix
+          llm-agents-nix
+          forgecode
+          ennio
+          nix-everywhere
+          ccstatusline
+          caelestia-dots
+          ;
+      };
+      jasonCloudHomeModule = {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = jasonCloudHomeArgs;
+          users.jason = import ./homes/jason-cloud;
+        };
+      };
     in
     {
       homeConfigurations = {
@@ -287,30 +312,8 @@
         # only shared/wm consumes them, and it is not imported here.
         "jason-cloud" = homeManagerConfig {
           inherit pkgs;
-          extraSpecialArgs = {
-            username = "jason";
-          };
-          modules = [
-            {
-              _module.args = {
-                inherit
-                  certora-prover-flake
-                  nvim-flake
-                  neovim-flake
-                  claude-code-nix
-                  codex-cli-nix
-                  gemini-cli-nix
-                  llm-agents-nix
-                  forgecode
-                  ennio
-                  nix-everywhere
-                  ccstatusline
-                  caelestia-dots
-                  ;
-              };
-            }
-            ./homes/jason-cloud
-          ];
+          extraSpecialArgs = jasonCloudHomeArgs;
+          modules = [ ./homes/jason-cloud ];
         };
       };
 
@@ -364,6 +367,8 @@
           };
           modules = [
             inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.home-manager
+            jasonCloudHomeModule
             ./hosts/reliant/configuration.nix
           ];
         };
@@ -377,6 +382,8 @@
           };
           modules = [
             inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.home-manager
+            jasonCloudHomeModule
             ./hosts/defiant/configuration.nix
           ];
         };

@@ -18,9 +18,9 @@
 # of an interactive login per host.
 {
   pkgs,
-  lib,
   ...
-}: let
+}:
+let
   inherit (import ./variables.nix) username;
 
   homeDirectory = "/home/${username}";
@@ -32,21 +32,13 @@
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
   ];
-in {
+in
+{
   programs.home-manager = {
     enable = true;
   };
 
   home.enableNixpkgsReleaseCheck = false;
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "electron-12.2.3"
-      "electron-13.6.9"
-      "libgit2-0.27.10"
-    ];
-  };
 
   imports = [
     ../../secrets/accounts.nix
@@ -72,7 +64,6 @@ in {
     ../../shared/languages/markdown
     ../../shared/terminal/default.nix
   ];
-
 
   xdg = {
     inherit configHome;

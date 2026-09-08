@@ -209,11 +209,12 @@ cmd_transparent() {
   [[ -n $transparent ]] || fail "transparent is required"
   (( $# == 1 )) || fail "transparent takes a single value"
   [[ $transparent =~ ^(true|false|toggle)$ ]] || fail "transparent must be true, false, or toggle"
+  # The split bar stores a second flag on bar.bottom; keep the pair in step.
   if [[ $transparent == "toggle" ]]; then
-    commit "$NORMALIZE | .bar.transparent = (.bar.transparent != true)"
+    commit "$NORMALIZE | .bar.transparent = (.bar.transparent != true) | if (.bar.bottom | type) == \"object\" then .bar.bottom.transparent = .bar.transparent else . end"
     echo "Bar transparency toggled"
   else
-    commit "$NORMALIZE | .bar.transparent = \$transparent" --argjson transparent "$transparent"
+    commit "$NORMALIZE | .bar.transparent = \$transparent | if (.bar.bottom | type) == \"object\" then .bar.bottom.transparent = \$transparent else . end" --argjson transparent "$transparent"
     echo "Bar transparency set to $transparent"
   fi
 }

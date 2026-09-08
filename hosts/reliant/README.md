@@ -132,18 +132,17 @@ ssh -L 8384:localhost:8384 jason@reliant
 curl -s http://localhost:8384/rest/noauth/health
 ```
 
-## Agent logins
+## Jason's home environment
 
-The agent CLIs arrive with the `jason-cloud` home profile, which is applied
-separately from the system configuration:
+The `jason-cloud` Home Manager profile is embedded in Reliant's NixOS
+configuration. Follow the guarded procedure in
+[`../common/cloud-agent-deployment.md`](../common/cloud-agent-deployment.md)
+with `host=reliant`; do not run a separate Home Manager activation.
 
-```bash
-ssh jason@reliant
-cd /path/to/.files && ./do home apply jason-cloud
-```
-
-Claude Code authenticates through Max OAuth rather than an API key, so it needs a
-browser and therefore a desktop session. Log in from the Plasma session over RDP:
+The resulting profile supplies Fish aliases, plugins and functions together
+with Ghostty, Kitty, Foot, Atuin, Starship, tmux, Fastfetch and the agent CLIs.
+Claude Code authenticates through Max OAuth rather than an API key, so perform
+its browser-based login from the Plasma session over RDP:
 
 ```bash
 claude login

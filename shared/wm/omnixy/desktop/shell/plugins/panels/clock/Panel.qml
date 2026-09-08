@@ -4,12 +4,10 @@ import qs.Commons
 import qs.Ui
 import "Model.js" as Model
 
-// The clock's calendar popup: a month grid with ISO week numbers, built to
-// sit beside the weather panel — same hero-over-detail composition, same
-// spacing scale, same small-caps labels.
-//
-// The grid is a read-out rather than a picker: today is the only marked
-// day, and the only thing that moves is which month is on screen —
+// The clock's calendar popup: a month grid with ISO week numbers, docked to
+// the trailing screen edge. World clocks are an optional footer on the same
+// card. The grid is a read-out rather than a picker: today is the only
+// marked day, and the only thing that moves is which month is on screen —
 // chevrons, the scroll wheel, and the arrow keys all step it.
 //
 // BarWidget.qml owns the bar label and hands this panel the button to
@@ -72,6 +70,16 @@ Panel {
   readonly property var weekdays: Model.weekdayOrder(weekStart)
   readonly property var weeks: Model.monthGrid(viewYear, viewMonth, weekStart, todayKey)
 
+  readonly property var timeZones: Model.parseTimeZones(setting("timeZones", []))
+  readonly property var worldClocks: Model.worldClockRows(timeZones, clock.date, {
+    hour12: Model.usesHour12(setting("format", "dddd HH:mm"))
+  })
+  readonly property bool canAddTimeZone: timeZones.length < Model.maxWorldClocks()
+  property bool editingTimeZone: false
+  property string timeZoneQuery: ""
+  property int timeZoneSuggestionIndex: 0
+  readonly property var timeZoneSuggestions: Model.matchingTimeZones(timeZoneQuery, timeZones)
+
 
   // Guarded so the widget renders before the bar is injected (the bar-widget
   // contract instantiates it bare).
@@ -102,6 +110,7 @@ Panel {
     // Dismissing the panel mid-edit would otherwise leave the inputs up,
     // waiting behind a closed popup for the next time it opens.
     if (root.editingLife) root.cancelEditingLife()
+    if (root.editingTimeZone) root.cancelAddingTimeZone()
     root.controller.hide()
   }
 
@@ -217,6 +226,63 @@ Panel {
     setWeekStart(Model.toggledWeekStart(root.weekStart))
   }
 
+  function startAddingTimeZone() {
+    if (!root.canAddTimeZone) return
+    root.editingTimeZone = true
+    root.timeZoneQuery = ""
+    root.timeZoneSuggestionIndex = 0
+    Qt.callLater(function() {
+      timeZoneField.text = ""
+      timeZoneField.forceActiveFocus()
+    })
+  }
+
+  function cancelAddingTimeZone() {
+    root.editingTimeZone = false
+    root.timeZoneQuery = ""
+    root.timeZoneSuggestionIndex = 0
+    Qt.callLater(function() { if (keyCatcher) keyCatcher.forceActiveFocus() })
+  }
+
+  function addWorldClock(id) {
+    var next = Model.addTimeZone(root.timeZones, id)
+    if (next.length === root.timeZones.length) return
+    persistSettings({ timeZones: next })
+    cancelAddingTimeZone()
+  }
+
+  function removeWorldClock(id) {
+    var next = Model.removeTimeZone(root.timeZones, id)
+    if (next.length === root.timeZones.length) return
+    persistSettings({ timeZones: next })
+  }
+
+  function commitTimeZoneField() {
+    var pick = root.timeZoneSuggestions[root.timeZoneSuggestionIndex]
+    if (pick) {
+      root.addWorldClock(pick.id)
+      return
+    }
+    if (Model.isTimeZoneId(timeZoneField.text)) root.addWorldClock(timeZoneField.text)
+  }
+
+  function handleTimeZoneKey(event) {
+    if (event.key === Qt.Key_Escape) {
+      root.cancelAddingTimeZone()
+      event.accepted = true
+    } else if (event.key === Qt.Key_Down) {
+      if (root.timeZoneSuggestionIndex < root.timeZoneSuggestions.length - 1)
+        root.timeZoneSuggestionIndex++
+      event.accepted = true
+    } else if (event.key === Qt.Key_Up) {
+      if (root.timeZoneSuggestionIndex > 0) root.timeZoneSuggestionIndex--
+      event.accepted = true
+    } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+      root.commitTimeZoneField()
+      event.accepted = true
+    }
+  }
+
   // English short day names, matching the rest of the interface.
   function weekdayLabel(weekday) {
     return String(labelLocale.dayName(weekday, Locale.ShortFormat)).toUpperCase()
@@ -239,7 +305,7 @@ Panel {
     owner: root.barIdentity
     bar: root.bar
     open: root.opened
-    centerOnBar: true
+    alignEnd: true
     focusTarget: keyCatcher
     contentWidth: panel.fittedContentWidth(Style.space(560))
     contentHeight: panel.fittedContentHeight(calendarColumn.implicitHeight)
@@ -247,7 +313,7 @@ Panel {
     PanelKeyCatcher {
       id: keyCatcher
       anchors.fill: parent
-      blocked: root.editingLife
+      blocked: root.editingLife || root.editingTimeZone
       onMoveRequested: function(dx, dy) {
         if (dx !== 0) root.moveMonth(dx)
         if (dy !== 0) root.moveYear(dy)
@@ -750,6 +816,170 @@ Panel {
                 foreground: root.contentForeground
                 fontFamily: root.contentFontFamily
                 onClicked: root.moveMonth(1)
+              }
+            }
+          }
+
+          Item {
+            width: parent.width
+            height: worldBlock.height
+
+            Column {
+              id: worldBlock
+              anchors.horizontalCenter: parent.horizontalCenter
+              width: gridColumn.width
+              spacing: Style.space(6)
+
+              Item {
+                width: parent.width
+                height: Math.max(worldHeader.implicitHeight, addTimeZoneButton.height)
+
+                Text {
+                  id: worldHeader
+                  anchors.left: parent.left
+                  anchors.verticalCenter: parent.verticalCenter
+                  text: "WORLD CLOCKS"
+                  color: Qt.darker(root.contentForeground, 1.5)
+                  font.family: root.contentFontFamily
+                  font.pixelSize: Style.font.bodySmall
+                  font.letterSpacing: 1
+                }
+
+                PanelActionButton {
+                  id: addTimeZoneButton
+                  anchors.right: parent.right
+                  anchors.rightMargin: -Style.space(8)
+                  anchors.verticalCenter: parent.verticalCenter
+                  iconText: root.editingTimeZone ? "✕" : "+"
+                  tooltipText: root.editingTimeZone ? "Cancel" : (root.canAddTimeZone ? "Add city" : "Eight cities is the limit")
+                  enabled: root.editingTimeZone || root.canAddTimeZone
+                  foreground: root.contentForeground
+                  fontFamily: root.contentFontFamily
+                  onClicked: root.editingTimeZone ? root.cancelAddingTimeZone() : root.startAddingTimeZone()
+                }
+              }
+
+              Repeater {
+                model: root.worldClocks
+
+                Item {
+                  required property var modelData
+                  width: worldBlock.width
+                  height: Style.space(32)
+
+                  Text {
+                    textFormat: Text.PlainText
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: modelData.label
+                    color: root.contentForeground
+                    font.family: root.contentFontFamily
+                    font.pixelSize: Style.font.body
+                  }
+
+                  PanelActionButton {
+                    id: removeClockButton
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    iconText: "✕"
+                    tooltipText: "Remove"
+                    foreground: root.contentForeground
+                    fontFamily: root.contentFontFamily
+                    size: Style.space(22)
+                    onClicked: root.removeWorldClock(modelData.id)
+                  }
+
+                  Text {
+                    id: worldClockTime
+                    textFormat: Text.PlainText
+                    anchors.right: removeClockButton.left
+                    anchors.rightMargin: Style.space(8)
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: modelData.time
+                    color: root.contentForeground
+                    font.family: root.contentFontFamily
+                    font.pixelSize: Style.font.body
+                  }
+
+                  Text {
+                    textFormat: Text.PlainText
+                    visible: modelData.dayOffsetLabel !== ""
+                    anchors.right: worldClockTime.left
+                    anchors.rightMargin: Style.space(8)
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: modelData.dayOffsetLabel
+                    color: Qt.darker(root.contentForeground, 1.5)
+                    font.family: root.contentFontFamily
+                    font.pixelSize: Style.font.caption
+                  }
+                }
+              }
+
+              Column {
+                visible: root.editingTimeZone
+                width: parent.width
+                spacing: Style.space(4)
+
+                TextField {
+                  id: timeZoneField
+                  width: parent.width
+                  placeholderText: "Search city"
+                  foreground: root.contentForeground
+                  font.family: root.contentFontFamily
+                  onTextChanged: {
+                    root.timeZoneQuery = text
+                    root.timeZoneSuggestionIndex = 0
+                  }
+                  Keys.onPressed: function(event) { root.handleTimeZoneKey(event) }
+                }
+
+                Repeater {
+                  model: root.timeZoneSuggestions
+
+                  Rectangle {
+                    required property var modelData
+                    required property int index
+                    width: worldBlock.width
+                    height: Style.space(32)
+                    radius: Style.cornerRadius
+                    color: index === root.timeZoneSuggestionIndex
+                      ? Style.hoverFillFor(root.contentForeground, Color.accent)
+                      : "transparent"
+
+                    Text {
+                      textFormat: Text.PlainText
+                      anchors.left: parent.left
+                      anchors.leftMargin: Style.space(8)
+                      anchors.verticalCenter: parent.verticalCenter
+                      text: modelData.label
+                      color: index === root.timeZoneSuggestionIndex
+                        ? Style.hoverStateColor(root.contentForeground, Color.accent)
+                        : root.contentForeground
+                      font.family: root.contentFontFamily
+                      font.pixelSize: Style.font.body
+                    }
+
+                    Text {
+                      textFormat: Text.PlainText
+                      visible: String(modelData.region || "") !== ""
+                      anchors.right: parent.right
+                      anchors.rightMargin: Style.space(8)
+                      anchors.verticalCenter: parent.verticalCenter
+                      text: modelData.region || ""
+                      color: Qt.darker(root.contentForeground, 1.5)
+                      font.family: root.contentFontFamily
+                      font.pixelSize: Style.font.caption
+                    }
+
+                    MouseArea {
+                      anchors.fill: parent
+                      hoverEnabled: true
+                      cursorShape: Qt.PointingHandCursor
+                      onPositionChanged: root.timeZoneSuggestionIndex = index
+                      onClicked: root.addWorldClock(modelData.id)
+                    }
+                  }
+                }
               }
             }
           }
