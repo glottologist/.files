@@ -40,6 +40,15 @@ in
 
   home.enableNixpkgsReleaseCheck = false;
 
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "electron-12.2.3"
+      "electron-13.6.9"
+      "libgit2-0.27.10"
+    ];
+  };
+
   imports = [
     ../../secrets/accounts.nix
     ../../shared/ai/default.nix
