@@ -119,6 +119,11 @@ chmod +x "$out/bin/dropbox-cli" "$out/bin/omarchy-agent-usage-grok"
 sed -i 's|^rm -rf "\$NEXT_THEME_PATH"$|chmod -R u+w "$NEXT_THEME_PATH" 2>/dev/null \|\| true; rm -rf "$NEXT_THEME_PATH"|' "$out/bin/omarchy-theme-set"
 sed -i 's|^# Generate dynamic configs$|chmod -R u+w "$NEXT_THEME_PATH"|' "$out/bin/omarchy-theme-set"
 sed -i 's|^rm -rf "\$CURRENT_THEME_PATH"$|chmod -R u+w "$CURRENT_THEME_PATH" 2>/dev/null \|\| true; rm -rf "$CURRENT_THEME_PATH"|' "$out/bin/omarchy-theme-set"
+# Omnixy's Agents section. Only the root row is patched in; the rows under
+# it come from the menu extension default.nix writes. The row cannot come
+# from the extension too, because the shell lists root rows in the order the
+# default file spells them and an extension-only row sorts below System.
+sed -i '/^  "system": {/i\  "agents": {"icon":"󰚩","label":"Agents"},' "$out/default/omarchy/omarchy-menu.jsonc"
 # The Codex rate-limit call takes close to four seconds on this network.
 sed -i 's|"account/rateLimits/read", timeout=4)|"account/rateLimits/read", timeout=20)|' "$out/bin/omarchy-agent-usage-codex"
 

@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   fzfConfig = ''
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
   '';
@@ -20,23 +21,23 @@
     set -g theme_newline_cursor yes
     set -g theme_color_scheme catppuccin_latte
   '';
-  fishConfig =
-    ''
-      # Skip shell setup for Claude Code agent subprocesses
-      if set -q CLAUDECODE
-        return
-      end
-      bind \t accept-autosuggestion
-      set fish_greeting
-      fish_vi_key_bindings
-      shellclear --init-shell
-    ''
-    + gpgConfig
-    + fzfConfig
-    + themeConfig;
+  fishConfig = ''
+    # Skip shell setup for Claude Code agent subprocesses
+    if set -q CLAUDECODE
+      return
+    end
+    bind \t accept-autosuggestion
+    set fish_greeting
+    fish_vi_key_bindings
+    shellclear --init-shell
+  ''
+  + gpgConfig
+  + fzfConfig
+  + themeConfig;
 
-  custom = pkgs.callPackage ./plugins.nix {};
-in {
+  custom = pkgs.callPackage ./plugins.nix { };
+in
+{
   home.packages = with pkgs; [
     figlet # Terminal ASCII pictures
   ];
@@ -195,6 +196,7 @@ in {
       ga = "git add";
       gaa = "git add -A";
       gac = "git add -A && git commit -am";
+      gateway = "cd ~/development/irys/gateway";
       gb = "git branch";
       gbr = "git branch -r";
       gc = "git commit -m ";
@@ -390,7 +392,7 @@ in {
       pmrmi = "podman rmi --force (podman images | awk '{print $3}')";
       pres = "cd ~/Documents/presentations";
       pullall = "find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;";
-      qw = "cd ~/development/quireware";
+      quire = "cd ~/development/quireware";
       recr = "cd ~/development/glottologist/recruitment";
       ref = "cd ~/development/reference";
       rf = "rofi -show drun -show-icons";

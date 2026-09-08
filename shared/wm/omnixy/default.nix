@@ -193,6 +193,72 @@ let
     }
   ];
 
+  # Classic's menu opened a terminal on any of seven coding agents; the
+  # upstream menu has no counterpart. Setup -> Default Agent only records a
+  # choice, and it records it for mise, which this host does not install
+  # agents through. The Apps submenu is a scan of desktop entries, so an
+  # agent that ships as a TUI never appears there either. Order follows
+  # classic's list, and the icons are the ones upstream already gives the
+  # same agents under Setup -> Default Agent; Herdr takes the icon its
+  # keybindings row carries.
+  agentCommands = [
+    {
+      command = "default-agent";
+      label = "Default agent";
+      icon = "󰚩";
+    }
+    {
+      command = "herdr";
+      label = "Herdr";
+      icon = "";
+    }
+    {
+      command = "claude";
+      label = "Claude";
+      icon = "󰛄";
+    }
+    {
+      command = "codex";
+      label = "Codex";
+      icon = "";
+      iconFont = "omnixy";
+    }
+    {
+      command = "grok";
+      label = "Grok";
+      icon = "";
+      iconFont = "omnixy";
+    }
+    {
+      command = "crush";
+      label = "Crush";
+      icon = "󰋑";
+    }
+    {
+      command = "opencode";
+      label = "OpenCode";
+      icon = "";
+      iconFont = "omnixy";
+    }
+  ];
+
+  # The rows under the section, reached through omnixy-launch-tui rather than
+  # a bare command: it opens the agent in the session's own terminal under
+  # its own app id, where classic reached $TERMINAL directly. The "agents"
+  # row they hang from is not here but in the vendored default menu (patched
+  # in by tools/vendor.sh), because the shell lists root rows in the order
+  # the default file spells them and a row only this file carried would sort
+  # below System.
+  agentsMenu = map (agent: {
+    id = "agents.${agent.command}";
+    row = {
+      icon = agent.icon;
+      label = agent.label;
+      action = "omnixy-launch-tui ${agent.command}";
+    }
+    // lib.optionalAttrs (agent ? iconFont) { inherit (agent) iconFont; };
+  }) agentCommands;
+
   # Written by hand rather than through builtins.toJSON on one attribute set,
   # which would sort the rows and drop Theme below the nine sets: the shell
   # lists a submenu in the order its keys are parsed.
@@ -200,7 +266,7 @@ let
     {
     ${lib.concatMapStringsSep ",\n" (
       entry: "  ${builtins.toJSON entry.id}: ${builtins.toJSON entry.row}"
-    ) (backgroundMenu ++ bluetoothMenu)}
+    ) (backgroundMenu ++ bluetoothMenu ++ agentsMenu)}
     }
   '';
 

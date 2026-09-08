@@ -22,6 +22,7 @@
   "style": {"icon":"","label":"Style"},
   "setup": {"icon":"","label":"Setup","aliases":["settings"]},
   "about": {"icon":"","label":"About","action":"omnixy-launch-about"},
+  "agents": {"icon":"󰚩","label":"Agents"},
   "system": {"icon":"","label":"System","aliases":["power-menu"]},
 
   // System

@@ -50,6 +50,8 @@ fam=$(fc-scan --format '%{family}' "$out/default/fonts/omnixy/omnixy.ttf")
 # Local patches landed in source.
 grep -q 'chmod -R u+w "$NEXT_THEME_PATH"' "$out/bin/omnixy-theme-set" || fail "theme-set chmod patch missing"
 grep -q 'timeout=20)' "$out/bin/omnixy-agent-usage-codex" || fail "codex timeout patch missing"
+grep -q '^  "agents": .*"label":"Agents"' "$out/default/omnixy/omnixy-menu.jsonc" \
+  || fail "agents menu row missing"
 [ -x "$out/bin/dropbox-cli" ] || fail "dropbox-cli shim missing"
 [ -f "$out/bin/omnixy-agent-usage-grok" ] || fail "grok collector missing"
 
