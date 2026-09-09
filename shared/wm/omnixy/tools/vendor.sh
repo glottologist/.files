@@ -105,7 +105,12 @@ for t in "$src"/themes/*/; do
   n=$(basename "$t"); mkdir -p "$out/themes/$n"
   find "$t" -mindepth 1 -maxdepth 1 ! -name backgrounds -exec cp -r {} "$out/themes/$n/" \;
 done
-cp "$src/LICENSE" "$src/logo.txt" "$src/icon.txt" "$out/"
+cp "$src/LICENSE" "$out/"
+# The ASCII logo behind the screensaver, the About page and omarchy-show-logo
+# is the NixOS mark (fastfetch's builtin "NixOS" logo, plain text), not the
+# upstream word mark, on both the wide and the square slot.
+cp "$here/branding/nixos-logo.txt" "$out/logo.txt"
+cp "$here/branding/nixos-logo.txt" "$out/icon.txt"
 
 # Local additions that are Omnixy's rather than upstream's.
 cp "$here/dropbox-cli" "$out/bin/dropbox-cli"
@@ -127,10 +132,14 @@ sed -i 's|^rm -rf "\$CURRENT_THEME_PATH"$|chmod -R u+w "$CURRENT_THEME_PATH" 2>/
 # from the extension too, because the shell lists root rows in the order the
 # default file spells them and an extension-only row sorts below System.
 sed -i '/^  "system": {/i\  "agents": {"icon":"󰚩","label":"Agents"},' "$out/default/omarchy/omarchy-menu.jsonc"
-# The agents bar shows one mark per agent with its fullest limit window
-# beside it, where upstream shows a single icon (record: agents/2026-09-09-002).
-# The diff is written against upstream text, so it is applied before the rename.
-patch -p1 -d "$out" --no-backup-if-mismatch < "$here/patches/agents-bar-limits.patch"
+# Unified diffs under tools/patches, written against upstream text and so
+# applied before the rename. agents-bar-limits: one mark per agent with its
+# fullest limit window beside it, where upstream shows a single icon (record:
+# agents/2026-09-09-002). menu-nixos-logo: the NixOS logo on the menu button,
+# as on the classic desktop, in place of the upstream logo glyph.
+for p in "$here"/patches/*.patch; do
+  patch -p1 -d "$out" --no-backup-if-mismatch < "$p"
+done
 # The Codex rate-limit call takes close to four seconds on this network.
 sed -i 's|"account/rateLimits/read", timeout=4)|"account/rateLimits/read", timeout=20)|' "$out/bin/omarchy-agent-usage-codex"
 

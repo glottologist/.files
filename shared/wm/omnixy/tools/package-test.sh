@@ -11,6 +11,8 @@ out=$(nix build --no-link --print-out-paths --impure --expr '
 [ -x "$out/bin/omnixy-plymouth-set" ] || fail "plymouth stub missing"
 grep -q "not changed at runtime" "$out/bin/omnixy-plymouth-set" || fail "plymouth is not a stub"
 [ -x "$out/bin/uwsm-app" ] || fail "uwsm-app missing"
+[ -x "$out/bin/ttfx" ] || fail "ttfx shim missing"
+"$out/bin/ttfx" --version 2>&1 | grep -q "TerminalTextEffects" || fail "ttfx shim does not run"
 grep -q "$(nix eval --raw --impure --expr '(import <nixpkgs> {}).hello')/bin/codexbar" "$out/bin/omnixy-agent-usage-grok" || fail "codexbar not substituted"
 grep -q '@codexbar@' "$out/bin/omnixy-agent-usage-grok" && fail "placeholder survived"
 head -1 "$out/bin/omnixy-menu" | grep -q '^#!/nix/store' || fail "shebangs not patched"

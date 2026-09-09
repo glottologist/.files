@@ -671,6 +671,19 @@ in
              "$HOME/.config/omnixy/hooks"
   '';
 
+  # The screensaver animates ~/.config/omnixy/branding/screensaver.txt and the
+  # About page reads about.txt beside it; upstream writes both during first-
+  # boot provisioning, which this profile never runs, so the screensaver had
+  # no text to draw. Seed them once from the package's NixOS mark and leave
+  # them to the omnixy-branding-* commands afterwards.
+  home.activation.omnixySeedBranding = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    branding="$HOME/.config/omnixy/branding"
+    mkdir -p "$branding"
+    [ -e "$branding/screensaver.txt" ] || cp "${shell}/logo.txt" "$branding/screensaver.txt"
+    [ -e "$branding/about.txt" ] || cp "${shell}/icon.txt" "$branding/about.txt"
+    chmod u+w "$branding"/*.txt
+  '';
+
   # One-time carry-over from the directories this profile, under its old name,
   # used until 2026-09-04: the current theme and background, the bar
   # layout the user arranged, the font base-size override, and a warm

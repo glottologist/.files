@@ -28,6 +28,7 @@
   qrencode,
   hyprsunset,
   inotify-tools,
+  terminaltexteffects,
   xdg-terminal-exec,
   pulseaudio,
   wtype,
@@ -178,10 +179,16 @@ stdenvNoCC.mkDerivation {
     [[ "$1" == "--" ]] && shift
     exec "$@"
     EOF
+    # The screensaver runs ttfx, the name the upstream Arch package gives the
+    # TerminalTextEffects CLI; nixpkgs ships it as tte. The screensaver also
+    # watches the process by that name (pgrep -x ttfx), and a shell shim that
+    # exec'd tte would run under the wrapped script's name, so the shim is
+    # the python entry point itself, copied under the expected name.
+    cp ${terminaltexteffects}/bin/.tte-wrapped $out/bin/ttfx
     chmod +x $out/bin/omnixy-nix-pkg-command $out/bin/omnixy-pkg-* \
       $out/bin/omnixy-update-available $out/bin/omnixy-update \
       $out/bin/omnixy-channel-current $out/bin/omnixy-version-channel \
-      $out/bin/omnixy-version-pkgs $out/bin/uwsm-app
+      $out/bin/omnixy-version-pkgs $out/bin/uwsm-app $out/bin/ttfx
 
     substituteInPlace $out/bin/omnixy-agent-usage-grok \
       --replace-fail "@codexbar@" "${codexbar}/bin/codexbar"

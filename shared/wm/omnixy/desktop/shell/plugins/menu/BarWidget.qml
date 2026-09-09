@@ -12,8 +12,9 @@ BarWidget {
     id: button
     anchors.fill: parent
     bar: root.bar
-    text: "\ue900"
-    fontFamily: "omnixy"
+    // The NixOS logo from the bar's Nerd Font, as on the classic desktop's
+    // launcher, in place of the upstream logo glyph from the icon font.
+    text: "\uf313"
     horizontalMargin: 7.5
     onPressed: function(button) {
       if (!root.bar) return

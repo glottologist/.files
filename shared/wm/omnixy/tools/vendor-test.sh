@@ -15,6 +15,9 @@ fail() { echo "FAIL $1"; exit 1; }
 [ -f "$out/LICENSE" ] || fail "LICENSE missing"
 grep -q '^commit ' "$out/UPSTREAM" || fail "UPSTREAM lacks commit"
 [ -f "$out/logo.txt" ] || fail "logo.txt missing"
+here=$(cd "$(dirname "$0")" && pwd)
+cmp -s "$out/logo.txt" "$here/branding/nixos-logo.txt" || fail "logo.txt is not the NixOS mark"
+cmp -s "$out/icon.txt" "$here/branding/nixos-logo.txt" || fail "icon.txt is not the NixOS mark"
 
 # Arch sections are gone from the menu, and nothing under install/ came.
 grep -qE '^  "(install|update|remove)(\.|")' "$out/default/omnixy/omnixy-menu.jsonc" \
@@ -57,6 +60,8 @@ grep -q '^  "agents": .*"label":"Agents"' "$out/default/omnixy/omnixy-menu.jsonc
 [ -f "$out/shell/plugins/agents/assets/grok.svg" ] || fail "grok mark missing"
 grep -q '^  component BarMark: ' "$out/shell/plugins/agents/Panel.qml" || fail "agents bar-limits patch missing"
 grep -q 'ipcTarget: "omnixy.agents"' "$out/shell/plugins/agents/Panel.qml" || fail "agents panel not renamed"
+grep -q 'text: "\\uf313"' "$out/shell/plugins/menu/BarWidget.qml" || fail "menu nixos-logo patch missing"
+grep -q 'fontFamily: "omnixy"' "$out/shell/plugins/menu/BarWidget.qml" && fail "menu button still on the icon font"
 
 # Every script the closure kept can resolve every omnixy-* it names.
 missing=$(grep -rhoE 'omnixy-[a-z0-9-]+' "$out/bin" "$out/shell" "$out/default" "$out/config" \
