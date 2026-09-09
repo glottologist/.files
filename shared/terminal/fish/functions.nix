@@ -19,6 +19,7 @@
   xdg.configFile."fish/functions/issue.fish".source = ./functions/issue.fish;
   xdg.configFile."fish/functions/git_worktree_remove_matching.fish".source = ./functions/git_worktree_remove_matching.fish;
   xdg.configFile."fish/functions/jj_track_bookmark.fish".source = ./functions/jj_track_bookmark.fish;
+  xdg.configFile."fish/functions/pad_mp4.fish".source = ./functions/pad_mp4.fish;
   xdg.configFile."fish/functions/pdf2epub.fish".source = ./functions/pdf2epub.fish;
   xdg.configFile."fish/functions/pr_worktree.fish".source = ./functions/pr_worktree.fish;
   xdg.configFile."fish/functions/rgmatch.fish".source = ./functions/rgmatch.fish;

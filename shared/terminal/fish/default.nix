@@ -395,6 +395,7 @@ in
       pioa = "pi --provider openai --model gpt-5.5";
       pmi = "podman images";
       pmka = "podman kill (podman ps | awk '{print $1}' | grep -v CONTAINER)";
+      pmp4 = "pad_mp4";
       pmps = "podman ps";
       pmpsa = "podman ps -a";
       pmr = "podman run ";

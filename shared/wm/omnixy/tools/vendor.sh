@@ -115,7 +115,11 @@ cp "$here/branding/nixos-logo.txt" "$out/icon.txt"
 # Local additions that are Omnixy's rather than upstream's.
 cp "$here/dropbox-cli" "$out/bin/dropbox-cli"
 cp "$here/agent-usage-grok.py" "$out/bin/omarchy-agent-usage-grok"
-chmod +x "$out/bin/dropbox-cli" "$out/bin/omarchy-agent-usage-grok"
+# The speedtest.net recorder behind the network panel's history section: a
+# user timer runs it, the panel reads what it wrote (record: agents/2026-09-09-003).
+cp "$here/network-speedtest-record" "$out/bin/omarchy-network-speedtest-record"
+chmod +x "$out/bin/dropbox-cli" "$out/bin/omarchy-agent-usage-grok" \
+         "$out/bin/omarchy-network-speedtest-record"
 # The Grok mark for the agents panel (tools/agents-assets/NOTICE for its
 # origin); the panel finds marks by name under assets/.
 cp "$here/agents-assets/grok.svg" "$here/agents-assets/grok-light.svg" "$out/shell/plugins/agents/assets/"
@@ -137,6 +141,9 @@ sed -i '/^  "system": {/i\  "agents": {"icon":"󰚩","label":"Agents"},' "$out/d
 # fullest limit window beside it, where upstream shows a single icon (record:
 # agents/2026-09-09-002). menu-nixos-logo: the NixOS logo on the menu button,
 # as on the classic desktop, in place of the upstream logo glyph.
+# network-speedtest-history: the network panel's SPEEDTEST section, reading
+# the runs omarchy-network-speedtest-record keeps (record:
+# agents/2026-09-09-003).
 for p in "$here"/patches/*.patch; do
   patch -p1 -d "$out" --no-backup-if-mismatch < "$p"
 done

@@ -261,6 +261,107 @@ function formatPingLatency(ms, hasSamples) {
   return value.toFixed(value > 0 && value < 10 ? 1 : 0) + " ms"
 }
 
+// One run per line, newest first, as omnixy-network-speedtest-record
+// --history prints them: epoch, download and upload in megabits, latency,
+// jitter, packet loss, then the server that served the run. A field the run
+// could not measure comes through empty and is carried as -1, which the
+// formatters read as "no figure" rather than as a zero the line never earned.
+function parseSpeedTestHistory(raw) {
+  var rows = []
+  var lines = String(raw || "").split("\n")
+
+  for (var i = 0; i < lines.length; i++) {
+    var fields = lines[i].split("\t")
+    var time = parseFloat(fields[0])
+    var down = parseFloat(fields[1])
+    var up = parseFloat(fields[2])
+
+    // A run without both speeds is not a run; the panel would have nothing to
+    // show for the row.
+    if (!isFinite(time) || time <= 0 || !isFinite(down) || !isFinite(up)) continue
+
+    rows.push({
+      time: time,
+      down: down,
+      up: up,
+      ping: optionalNumber(fields[3]),
+      jitter: optionalNumber(fields[4]),
+      loss: optionalNumber(fields[5]),
+      server: (fields[6] || "").trim()
+    })
+  }
+
+  return rows
+}
+
+function optionalNumber(field) {
+  var value = parseFloat(field)
+  return isFinite(value) && value >= 0 ? value : -1
+}
+
+function latestSpeedTest(history) {
+  var rows = history || []
+  return rows.length > 0 ? rows[0] : null
+}
+
+// The runs behind the newest one, which the section lists under it.
+function speedTestHistoryRows(history, limit) {
+  var rows = history || []
+  var count = Math.max(0, parseInt(limit, 10) || 0)
+  return rows.slice(1, 1 + count)
+}
+
+// The same shape the transfer rows use: one decimal below ten, none above, so
+// a column of speeds lines up whatever the link is doing.
+function formatSpeedTestMbps(mbps) {
+  var value = parseFloat(mbps)
+  if (!isFinite(value) || value < 0) return "--"
+  return value.toFixed(value < 10 ? 1 : 0)
+}
+
+function formatSpeedTestPing(ms) {
+  var value = parseFloat(ms)
+  if (!isFinite(value) || value < 0) return "--"
+  return value.toFixed(value < 10 ? 1 : 0) + " ms"
+}
+
+// Ookla omits packet loss whenever it could not measure it, so an absent
+// figure reads "--" and only a measured zero reads "0%".
+function formatSpeedTestLoss(percent) {
+  var value = parseFloat(percent)
+  if (!isFinite(value) || value < 0) return "--"
+  return Math.round(value) + "%"
+}
+
+// The heading carries the age of the newest run rather than its clock time:
+// what the section has to answer first is whether the reading is still
+// current.
+function formatSpeedTestAge(seconds, nowMs) {
+  var when = parseFloat(seconds)
+  var now = Number(nowMs)
+  if (!isFinite(when) || when <= 0 || !isFinite(now)) return ""
+
+  var age = Math.floor(now / 1000 - when)
+  if (age < 60) return "JUST NOW"
+  if (age < 3600) return Math.floor(age / 60) + "M AGO"
+  if (age < 86400) return Math.floor(age / 3600) + "H AGO"
+  return Math.floor(age / 86400) + "D AGO"
+}
+
+// Local clock time, because the rows are read against the evening the user
+// remembers rather than against an absolute date.
+function formatSpeedTestClock(seconds) {
+  var when = parseFloat(seconds)
+  if (!isFinite(when) || when <= 0) return ""
+
+  var date = new Date(when * 1000)
+  return pad2(date.getHours()) + ":" + pad2(date.getMinutes())
+}
+
+function pad2(value) {
+  return value < 10 ? "0" + value : String(value)
+}
+
 function wifiRow(network) {
   if (!network) return null
   // Primitives only: rows become list-model data, so a WifiNetwork here puts a
@@ -368,6 +469,14 @@ if (typeof module !== "undefined") {
     formatBytes: formatBytes,
     formatRate: formatRate,
     formatPingLatency: formatPingLatency,
+    parseSpeedTestHistory: parseSpeedTestHistory,
+    latestSpeedTest: latestSpeedTest,
+    speedTestHistoryRows: speedTestHistoryRows,
+    formatSpeedTestMbps: formatSpeedTestMbps,
+    formatSpeedTestPing: formatSpeedTestPing,
+    formatSpeedTestLoss: formatSpeedTestLoss,
+    formatSpeedTestAge: formatSpeedTestAge,
+    formatSpeedTestClock: formatSpeedTestClock,
     wifiRow: wifiRow,
     sortWifiRows: sortWifiRows,
     wifiSectionTitle: wifiSectionTitle,

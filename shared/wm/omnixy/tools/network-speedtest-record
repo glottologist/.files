@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# omnixy:summary=Record a speedtest.net result, or print the recorded ones
+# omnixy:group=network
+# omnixy:args=[--history [count]]
+
+# Vendored into desktop/bin as omnixy-network-speedtest-record by
+# tools/vendor.sh. A user timer runs it with no arguments every quarter of an
+# hour; the network panel reads the history it keeps.
+#
+# Deliberately separate from omnixy-network-speedtest, which measures the
+# interface counters live against fast.com for the gauge overlay. This is a
+# scored speedtest.net run: one figure per direction, from the server Ookla
+# picked, with a result URL behind it.
+
+set -euo pipefail
+
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/omnixy"
+history_file="$state_dir/network-speedtest.jsonl"
+# About ten days at a run every quarter of an hour.
+history_limit=1000
+default_count=5
+
+usage() {
+  echo "Usage: omnixy-network-speedtest-record [--history [count]]" >&2
+  exit 2
+}
+
+# One line per run. Bandwidth is bytes per second in Ookla's JSON and megabits
+# in the record, which is the unit the panel and speedtest.net both show.
+# packetLoss is absent whenever the run could not measure it, and stays null
+# rather than becoming a zero the line never earned.
+record_run() {
+  local json record
+
+  if ! command -v speedtest >/dev/null 2>&1; then
+    echo "speedtest (ookla-speedtest) is required" >&2
+    exit 1
+  fi
+
+  if ! json=$(speedtest --accept-license --accept-gdpr --format=json --progress=no 2>&1); then
+    echo "${json:-speedtest failed}" >&2
+    exit 1
+  fi
+
+  if ! record=$(jq -ce '
+        select(.type == "result")
+        | {
+            time: (.timestamp | fromdateiso8601),
+            down: (.download.bandwidth * 8 / 1000000),
+            up: (.upload.bandwidth * 8 / 1000000),
+            ping: .ping.latency,
+            jitter: .ping.jitter,
+            loss: .packetLoss,
+            server: ([.server.name, .server.location] | map(select(. != null and . != "")) | join(", ")),
+            isp: (.isp // ""),
+            url: (.result.url // "")
+          }' <<<"$json" 2>/dev/null); then
+    echo "speedtest returned no usable result" >&2
+    exit 1
+  fi
+
+  mkdir -p "$state_dir"
+  printf '%s\n' "$record" >>"$history_file"
+
+  if (( $(wc -l <"$history_file") > history_limit )); then
+    local trimmed
+    trimmed=$(mktemp "$history_file.XXXXXX")
+    tail -n "$history_limit" "$history_file" >"$trimmed" && mv "$trimmed" "$history_file"
+  fi
+}
+
+# Newest first, one run per line: epoch, down, up, ping, jitter, loss, server.
+# A run with no packet-loss figure leaves that field empty. fromjson? drops a
+# line torn by a crash mid-append instead of failing the whole read.
+print_history() {
+  local count=$1
+
+  [[ $count =~ ^[0-9]+$ ]] && (( count > 0 )) || usage
+  [ -r "$history_file" ] || return 0
+
+  tail -n "$count" "$history_file" | tac |
+    jq -rR 'fromjson? | [.time, .down, .up, .ping, .jitter, .loss, .server] | @tsv'
+}
+
+case "${1:-}" in
+  "")
+    record_run
+    ;;
+  --history)
+    (( $# <= 2 )) || usage
+    print_history "${2:-$default_count}"
+    ;;
+  *)
+    usage
+    ;;
+esac

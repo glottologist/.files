@@ -638,6 +638,53 @@ in
       Install.WantedBy = [ "omnixy-session.target" ];
     };
 
+    # A scored speedtest.net run every quarter of an hour, kept for the
+    # network panel's SPEEDTEST section (record: agents/2026-09-09-003).
+    # Deliberately not PartOf omnixy-session.target: recording wants nothing
+    # from the display, and a history with a hole in it for every hour the
+    # shell was down answers none of the questions it is kept for.
+    services.omnixy-network-speedtest = {
+      Unit = {
+        Description = "Record a speedtest.net result for the Omnixy network panel";
+        # One host only, as shared/alerts/brickborrow-watch.nix is: three
+        # machines measuring the same line would triple the test traffic for
+        # one line's worth of history, and a tethered laptop would record its
+        # hotspot rather than the broadband.
+        ConditionHost = "bebop";
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${shell}/bin/omnixy-network-speedtest-record";
+        # ookla-speedtest is unfree and reaches the recorder here rather than
+        # through the desktop package's runtimePath, which would make the
+        # package itself unfree and stop tools/package-test.sh evaluating.
+        Environment = [
+          "PATH=${shell}/bin:${shell.runtimePath}:${
+            lib.makeBinPath [
+              pkgs.bash
+              pkgs.coreutils
+              pkgs.jq
+              pkgs.ookla-speedtest
+            ]
+          }"
+        ];
+      };
+    };
+
+    timers.omnixy-network-speedtest = {
+      Unit = {
+        Description = "Timer for the Omnixy speedtest.net recording";
+        ConditionHost = "bebop";
+      };
+      Timer = {
+        # Late enough after boot that the link has settled and the desktop has
+        # finished coming up, since the run saturates it for half a minute.
+        OnBootSec = "5min";
+        OnUnitActiveSec = "15min";
+      };
+      Install.WantedBy = [ "timers.target" ];
+    };
+
     timers.omnixy-background-rotate = {
       Unit = {
         Description = "Timer for the Omnixy background rotation";

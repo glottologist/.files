@@ -61,6 +61,11 @@ grep -q '^  "agents": .*"label":"Agents"' "$out/default/omnixy/omnixy-menu.jsonc
 grep -q '^  component BarMark: ' "$out/shell/plugins/agents/Panel.qml" || fail "agents bar-limits patch missing"
 grep -q 'ipcTarget: "omnixy.agents"' "$out/shell/plugins/agents/Panel.qml" || fail "agents panel not renamed"
 grep -q 'text: "\\uf313"' "$out/shell/plugins/menu/BarWidget.qml" || fail "menu nixos-logo patch missing"
+[ -x "$out/bin/omnixy-network-speedtest-record" ] || fail "speedtest recorder missing"
+grep -q 'omnixy-network-speedtest-record' "$out/shell/plugins/panels/network/Panel.qml" \
+  || fail "network speedtest-history patch missing"
+grep -q '^function parseSpeedTestHistory' "$out/shell/plugins/panels/network/Model.js" \
+  || fail "network speedtest model helpers missing"
 grep -q 'fontFamily: "omnixy"' "$out/shell/plugins/menu/BarWidget.qml" && fail "menu button still on the icon font"
 
 # Every script the closure kept can resolve every omnixy-* it names.

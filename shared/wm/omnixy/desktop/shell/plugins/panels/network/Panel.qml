@@ -50,6 +50,16 @@ Panel {
   readonly property int pingHistoryWindow: 24
   readonly property int pingAverageWindow: 5
   readonly property bool hasInternetPing: internetPingSamples.length > 0
+  // Recorded speedtest.net runs, newest first, as written by the user timer
+  // behind omnixy-network-speedtest-record. The panel only ever reads them.
+  // `speedTestNowMs` is what the age beside the heading is measured against,
+  // and is stamped with each read rather than ticking: the section is a
+  // record of what the line did, not a live reading.
+  property var speedTestHistory: []
+  property real speedTestNowMs: 0
+  readonly property int speedTestRowCount: 4
+  readonly property var speedTestLatest: Model.latestSpeedTest(speedTestHistory)
+  readonly property bool hasSpeedTest: !!speedTestLatest
   // Every stat row stays mounted whether or not there is data behind it, so a
   // sample arriving late never reflows the grid. This says whether the numbers
   // are real yet or the row should read "--".
@@ -320,6 +330,7 @@ Panel {
   onOpenedChanged: {
     if (opened) {
       refresh(true)
+      refreshSpeedTestHistory()
       selectedIndex = wifiNetworks.length > 0 ? 0 : -1
       wifiActionFocused = false
       focusSection = wifiNetworks.length > 0 ? "wifi" : "dns"
@@ -567,6 +578,40 @@ Panel {
 
   function formatPacketLoss(percent) {
     return Model.formatPacketLoss(percent, hasInternetPing)
+  }
+
+  function refreshSpeedTestHistory() {
+    if (speedTestHistoryProc.running) return
+    speedTestHistoryProc.running = true
+  }
+
+  function updateSpeedTestHistory(raw) {
+    speedTestHistory = Model.parseSpeedTestHistory(raw)
+    speedTestNowMs = Date.now()
+  }
+
+  function speedTestRows() {
+    return Model.speedTestHistoryRows(speedTestHistory, speedTestRowCount)
+  }
+
+  function speedTestAge() {
+    return Model.formatSpeedTestAge(speedTestLatest ? speedTestLatest.time : 0, speedTestNowMs)
+  }
+
+  function formatSpeedTestMbps(mbps) {
+    return Model.formatSpeedTestMbps(mbps)
+  }
+
+  function formatSpeedTestPing(ms) {
+    return Model.formatSpeedTestPing(ms)
+  }
+
+  function formatSpeedTestLoss(percent) {
+    return Model.formatSpeedTestLoss(percent)
+  }
+
+  function formatSpeedTestClock(seconds) {
+    return Model.formatSpeedTestClock(seconds)
   }
 
   // Prefer a connected device: a machine can expose several NICs of the
@@ -863,6 +908,27 @@ Panel {
       bandProc.command = ["omnixy-network-band"]
       bandProc.running = true
     }
+  }
+
+  Process {
+    id: speedTestHistoryProc
+    command: ["omnixy-network-speedtest-record", "--history", String(root.speedTestRowCount + 1)]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: root.updateSpeedTestHistory(text)
+    }
+  }
+
+  // Far slower than the other polls, and deliberately: a run is recorded every
+  // quarter of an hour, so a minute between reads is already finer than the
+  // data behind them. It exists at all so a panel left open crosses into the
+  // next run without going stale.
+  Timer {
+    id: speedTestHistoryPoll
+    interval: 60000
+    repeat: true
+    running: root.opened
+    onTriggered: root.refreshSpeedTestHistory()
   }
 
   // Action runner for DNS provider changes. Wi-Fi actions use the
@@ -1263,6 +1329,96 @@ Panel {
             text: root.info.gateway || "--"
             copyable: !!root.info.gateway
             tooltipText: "Copy gateway"
+          }
+        }
+      }
+
+      // Recorded speedtest.net runs. The whole section stays out of the panel
+      // until there is a run to show, so a machine whose timer never fires --
+      // every host but the one that records -- sees the panel it always saw.
+      PanelSeparator {
+        visible: root.hasSpeedTest
+        foreground: root.bar.foreground
+      }
+
+      Column {
+        visible: root.hasSpeedTest
+        width: parent.width
+        spacing: Style.space(10)
+
+        // The age rides on the header line, as "Automatic" does below it: it
+        // qualifies every figure in the section rather than any one row.
+        Item {
+          width: parent.width
+          implicitHeight: Math.max(speedTestHeader.implicitHeight, speedTestAgeLabel.implicitHeight)
+
+          PanelSectionHeader {
+            id: speedTestHeader
+            text: "SPEEDTEST"
+            foreground: root.bar.foreground
+            fontFamily: root.bar.fontFamily
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+          }
+
+          PanelSectionHeader {
+            id: speedTestAgeLabel
+            text: root.speedTestAge()
+            foreground: root.bar.foreground
+            fontFamily: root.bar.fontFamily
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+          }
+        }
+
+        GridLayout {
+          width: parent.width
+          columns: 4
+          columnSpacing: Style.space(20)
+          rowSpacing: Style.spacing.labelGap
+
+          InfoLabel { text: "Download" }
+          DetailValue {
+            text: root.hasSpeedTest ? root.formatSpeedTestMbps(root.speedTestLatest.down) + " Mbps" : "--"
+          }
+          InfoLabel { text: "Upload" }
+          DetailValue {
+            text: root.hasSpeedTest ? root.formatSpeedTestMbps(root.speedTestLatest.up) + " Mbps" : "--"
+          }
+
+          InfoLabel { text: "Latency" }
+          DetailValue {
+            text: root.hasSpeedTest ? root.formatSpeedTestPing(root.speedTestLatest.ping) : "--"
+          }
+          InfoLabel { text: "Loss" }
+          DetailValue {
+            text: root.hasSpeedTest ? root.formatSpeedTestLoss(root.speedTestLatest.loss) : "--"
+          }
+        }
+
+        // The runs before the newest one, oldest last. Four of them: enough to
+        // say whether the figure above is the line's normal or a bad quarter
+        // of an hour, without turning the panel into a log.
+        Column {
+          width: parent.width
+          spacing: Style.spacing.labelGap
+
+          Repeater {
+            model: root.speedTestRows()
+
+            // Wrapper takes modelData from the Repeater's delegate context and
+            // passes it down, the same shape as the band pills above.
+            delegate: Item {
+              required property var modelData
+              width: parent.width
+              implicitHeight: speedTestRow.implicitHeight
+
+              SpeedTestRow {
+                id: speedTestRow
+                run: modelData
+                width: parent.width
+              }
+            }
           }
         }
       }
@@ -1950,6 +2106,36 @@ Panel {
       visible: valueMouse.enabled && valueMouse.containsMouse
       text: tooltipText
       fontFamily: root.bar.fontFamily
+    }
+  }
+
+  // One recorded run: when it ran, what it measured, how far away the server
+  // answered. The speeds share a cell so the pair reads as one measurement
+  // rather than two columns to compare across rows.
+  component SpeedTestRow: Item {
+    property var run: null
+
+    implicitHeight: speedTestRunClock.implicitHeight
+
+    InfoLabel {
+      id: speedTestRunClock
+      text: root.formatSpeedTestClock(run ? run.time : 0)
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+    }
+
+    InfoValue {
+      text: run
+        ? root.formatSpeedTestMbps(run.down) + " / " + root.formatSpeedTestMbps(run.up)
+        : ""
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+    }
+
+    InfoLabel {
+      text: run ? root.formatSpeedTestPing(run.ping) : ""
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
     }
   }
 

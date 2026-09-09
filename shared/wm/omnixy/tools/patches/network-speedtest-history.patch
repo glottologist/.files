@@ -1,0 +1,355 @@
+--- a/shell/plugins/panels/network/Model.js
++++ b/shell/plugins/panels/network/Model.js
+@@ -261,6 +261,107 @@
+   return value.toFixed(value > 0 && value < 10 ? 1 : 0) + " ms"
+ }
+ 
++// One run per line, newest first, as omarchy-network-speedtest-record
++// --history prints them: epoch, download and upload in megabits, latency,
++// jitter, packet loss, then the server that served the run. A field the run
++// could not measure comes through empty and is carried as -1, which the
++// formatters read as "no figure" rather than as a zero the line never earned.
++function parseSpeedTestHistory(raw) {
++  var rows = []
++  var lines = String(raw || "").split("\n")
++
++  for (var i = 0; i < lines.length; i++) {
++    var fields = lines[i].split("\t")
++    var time = parseFloat(fields[0])
++    var down = parseFloat(fields[1])
++    var up = parseFloat(fields[2])
++
++    // A run without both speeds is not a run; the panel would have nothing to
++    // show for the row.
++    if (!isFinite(time) || time <= 0 || !isFinite(down) || !isFinite(up)) continue
++
++    rows.push({
++      time: time,
++      down: down,
++      up: up,
++      ping: optionalNumber(fields[3]),
++      jitter: optionalNumber(fields[4]),
++      loss: optionalNumber(fields[5]),
++      server: (fields[6] || "").trim()
++    })
++  }
++
++  return rows
++}
++
++function optionalNumber(field) {
++  var value = parseFloat(field)
++  return isFinite(value) && value >= 0 ? value : -1
++}
++
++function latestSpeedTest(history) {
++  var rows = history || []
++  return rows.length > 0 ? rows[0] : null
++}
++
++// The runs behind the newest one, which the section lists under it.
++function speedTestHistoryRows(history, limit) {
++  var rows = history || []
++  var count = Math.max(0, parseInt(limit, 10) || 0)
++  return rows.slice(1, 1 + count)
++}
++
++// The same shape the transfer rows use: one decimal below ten, none above, so
++// a column of speeds lines up whatever the link is doing.
++function formatSpeedTestMbps(mbps) {
++  var value = parseFloat(mbps)
++  if (!isFinite(value) || value < 0) return "--"
++  return value.toFixed(value < 10 ? 1 : 0)
++}
++
++function formatSpeedTestPing(ms) {
++  var value = parseFloat(ms)
++  if (!isFinite(value) || value < 0) return "--"
++  return value.toFixed(value < 10 ? 1 : 0) + " ms"
++}
++
++// Ookla omits packet loss whenever it could not measure it, so an absent
++// figure reads "--" and only a measured zero reads "0%".
++function formatSpeedTestLoss(percent) {
++  var value = parseFloat(percent)
++  if (!isFinite(value) || value < 0) return "--"
++  return Math.round(value) + "%"
++}
++
++// The heading carries the age of the newest run rather than its clock time:
++// what the section has to answer first is whether the reading is still
++// current.
++function formatSpeedTestAge(seconds, nowMs) {
++  var when = parseFloat(seconds)
++  var now = Number(nowMs)
++  if (!isFinite(when) || when <= 0 || !isFinite(now)) return ""
++
++  var age = Math.floor(now / 1000 - when)
++  if (age < 60) return "JUST NOW"
++  if (age < 3600) return Math.floor(age / 60) + "M AGO"
++  if (age < 86400) return Math.floor(age / 3600) + "H AGO"
++  return Math.floor(age / 86400) + "D AGO"
++}
++
++// Local clock time, because the rows are read against the evening the user
++// remembers rather than against an absolute date.
++function formatSpeedTestClock(seconds) {
++  var when = parseFloat(seconds)
++  if (!isFinite(when) || when <= 0) return ""
++
++  var date = new Date(when * 1000)
++  return pad2(date.getHours()) + ":" + pad2(date.getMinutes())
++}
++
++function pad2(value) {
++  return value < 10 ? "0" + value : String(value)
++}
++
+ function wifiRow(network) {
+   if (!network) return null
+   // Primitives only: rows become list-model data, so a WifiNetwork here puts a
+@@ -368,6 +469,14 @@
+     formatBytes: formatBytes,
+     formatRate: formatRate,
+     formatPingLatency: formatPingLatency,
++    parseSpeedTestHistory: parseSpeedTestHistory,
++    latestSpeedTest: latestSpeedTest,
++    speedTestHistoryRows: speedTestHistoryRows,
++    formatSpeedTestMbps: formatSpeedTestMbps,
++    formatSpeedTestPing: formatSpeedTestPing,
++    formatSpeedTestLoss: formatSpeedTestLoss,
++    formatSpeedTestAge: formatSpeedTestAge,
++    formatSpeedTestClock: formatSpeedTestClock,
+     wifiRow: wifiRow,
+     sortWifiRows: sortWifiRows,
+     wifiSectionTitle: wifiSectionTitle,
+--- a/shell/plugins/panels/network/Panel.qml
++++ b/shell/plugins/panels/network/Panel.qml
+@@ -50,6 +50,16 @@
+   readonly property int pingHistoryWindow: 24
+   readonly property int pingAverageWindow: 5
+   readonly property bool hasInternetPing: internetPingSamples.length > 0
++  // Recorded speedtest.net runs, newest first, as written by the user timer
++  // behind omarchy-network-speedtest-record. The panel only ever reads them.
++  // `speedTestNowMs` is what the age beside the heading is measured against,
++  // and is stamped with each read rather than ticking: the section is a
++  // record of what the line did, not a live reading.
++  property var speedTestHistory: []
++  property real speedTestNowMs: 0
++  readonly property int speedTestRowCount: 4
++  readonly property var speedTestLatest: Model.latestSpeedTest(speedTestHistory)
++  readonly property bool hasSpeedTest: !!speedTestLatest
+   // Every stat row stays mounted whether or not there is data behind it, so a
+   // sample arriving late never reflows the grid. This says whether the numbers
+   // are real yet or the row should read "--".
+@@ -320,6 +330,7 @@
+   onOpenedChanged: {
+     if (opened) {
+       refresh(true)
++      refreshSpeedTestHistory()
+       selectedIndex = wifiNetworks.length > 0 ? 0 : -1
+       wifiActionFocused = false
+       focusSection = wifiNetworks.length > 0 ? "wifi" : "dns"
+@@ -569,6 +580,40 @@
+     return Model.formatPacketLoss(percent, hasInternetPing)
+   }
+ 
++  function refreshSpeedTestHistory() {
++    if (speedTestHistoryProc.running) return
++    speedTestHistoryProc.running = true
++  }
++
++  function updateSpeedTestHistory(raw) {
++    speedTestHistory = Model.parseSpeedTestHistory(raw)
++    speedTestNowMs = Date.now()
++  }
++
++  function speedTestRows() {
++    return Model.speedTestHistoryRows(speedTestHistory, speedTestRowCount)
++  }
++
++  function speedTestAge() {
++    return Model.formatSpeedTestAge(speedTestLatest ? speedTestLatest.time : 0, speedTestNowMs)
++  }
++
++  function formatSpeedTestMbps(mbps) {
++    return Model.formatSpeedTestMbps(mbps)
++  }
++
++  function formatSpeedTestPing(ms) {
++    return Model.formatSpeedTestPing(ms)
++  }
++
++  function formatSpeedTestLoss(percent) {
++    return Model.formatSpeedTestLoss(percent)
++  }
++
++  function formatSpeedTestClock(seconds) {
++    return Model.formatSpeedTestClock(seconds)
++  }
++
+   // Prefer a connected device: a machine can expose several NICs of the
+   // same type (e.g. an idle onboard port alongside the active adapter),
+   // and the first-enumerated one may be carrierless.
+@@ -865,6 +910,27 @@
+     }
+   }
+ 
++  Process {
++    id: speedTestHistoryProc
++    command: ["omarchy-network-speedtest-record", "--history", String(root.speedTestRowCount + 1)]
++    stdout: StdioCollector {
++      waitForEnd: true
++      onStreamFinished: root.updateSpeedTestHistory(text)
++    }
++  }
++
++  // Far slower than the other polls, and deliberately: a run is recorded every
++  // quarter of an hour, so a minute between reads is already finer than the
++  // data behind them. It exists at all so a panel left open crosses into the
++  // next run without going stale.
++  Timer {
++    id: speedTestHistoryPoll
++    interval: 60000
++    repeat: true
++    running: root.opened
++    onTriggered: root.refreshSpeedTestHistory()
++  }
++
+   // Action runner for DNS provider changes. Wi-Fi actions use the
+   // Quickshell.Networking NetworkManager backend directly.
+   Process {
+@@ -1267,6 +1333,96 @@
+         }
+       }
+ 
++      // Recorded speedtest.net runs. The whole section stays out of the panel
++      // until there is a run to show, so a machine whose timer never fires --
++      // every host but the one that records -- sees the panel it always saw.
++      PanelSeparator {
++        visible: root.hasSpeedTest
++        foreground: root.bar.foreground
++      }
++
++      Column {
++        visible: root.hasSpeedTest
++        width: parent.width
++        spacing: Style.space(10)
++
++        // The age rides on the header line, as "Automatic" does below it: it
++        // qualifies every figure in the section rather than any one row.
++        Item {
++          width: parent.width
++          implicitHeight: Math.max(speedTestHeader.implicitHeight, speedTestAgeLabel.implicitHeight)
++
++          PanelSectionHeader {
++            id: speedTestHeader
++            text: "SPEEDTEST"
++            foreground: root.bar.foreground
++            fontFamily: root.bar.fontFamily
++            anchors.left: parent.left
++            anchors.verticalCenter: parent.verticalCenter
++          }
++
++          PanelSectionHeader {
++            id: speedTestAgeLabel
++            text: root.speedTestAge()
++            foreground: root.bar.foreground
++            fontFamily: root.bar.fontFamily
++            anchors.right: parent.right
++            anchors.verticalCenter: parent.verticalCenter
++          }
++        }
++
++        GridLayout {
++          width: parent.width
++          columns: 4
++          columnSpacing: Style.space(20)
++          rowSpacing: Style.spacing.labelGap
++
++          InfoLabel { text: "Download" }
++          DetailValue {
++            text: root.hasSpeedTest ? root.formatSpeedTestMbps(root.speedTestLatest.down) + " Mbps" : "--"
++          }
++          InfoLabel { text: "Upload" }
++          DetailValue {
++            text: root.hasSpeedTest ? root.formatSpeedTestMbps(root.speedTestLatest.up) + " Mbps" : "--"
++          }
++
++          InfoLabel { text: "Latency" }
++          DetailValue {
++            text: root.hasSpeedTest ? root.formatSpeedTestPing(root.speedTestLatest.ping) : "--"
++          }
++          InfoLabel { text: "Loss" }
++          DetailValue {
++            text: root.hasSpeedTest ? root.formatSpeedTestLoss(root.speedTestLatest.loss) : "--"
++          }
++        }
++
++        // The runs before the newest one, oldest last. Four of them: enough to
++        // say whether the figure above is the line's normal or a bad quarter
++        // of an hour, without turning the panel into a log.
++        Column {
++          width: parent.width
++          spacing: Style.spacing.labelGap
++
++          Repeater {
++            model: root.speedTestRows()
++
++            // Wrapper takes modelData from the Repeater's delegate context and
++            // passes it down, the same shape as the band pills above.
++            delegate: Item {
++              required property var modelData
++              width: parent.width
++              implicitHeight: speedTestRow.implicitHeight
++
++              SpeedTestRow {
++                id: speedTestRow
++                run: modelData
++                width: parent.width
++              }
++            }
++          }
++        }
++      }
++
+       // Wi-Fi band selection. Only on Wi-Fi, and only when the network answers
+       // on more than one band -- a single-band AP has nothing to toggle.
+       PanelSeparator {
+@@ -1953,6 +2109,36 @@
+     }
+   }
+ 
++  // One recorded run: when it ran, what it measured, how far away the server
++  // answered. The speeds share a cell so the pair reads as one measurement
++  // rather than two columns to compare across rows.
++  component SpeedTestRow: Item {
++    property var run: null
++
++    implicitHeight: speedTestRunClock.implicitHeight
++
++    InfoLabel {
++      id: speedTestRunClock
++      text: root.formatSpeedTestClock(run ? run.time : 0)
++      anchors.left: parent.left
++      anchors.verticalCenter: parent.verticalCenter
++    }
++
++    InfoValue {
++      text: run
++        ? root.formatSpeedTestMbps(run.down) + " / " + root.formatSpeedTestMbps(run.up)
++        : ""
++      anchors.horizontalCenter: parent.horizontalCenter
++      anchors.verticalCenter: parent.verticalCenter
++    }
++
++    InfoLabel {
++      text: run ? root.formatSpeedTestPing(run.ping) : ""
++      anchors.right: parent.right
++      anchors.verticalCenter: parent.verticalCenter
++    }
++  }
++
+   component InfoLabel: Text {
+     textFormat: Text.PlainText
+     color: root.bar.foreground
