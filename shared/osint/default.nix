@@ -1,6 +1,8 @@
 {
   config,
+  lib,
   pkgs,
+  options,
   ...
 }: let
   # ---------------------------------------------------------------------------
@@ -485,8 +487,9 @@
       esac
     '';
   };
-in {
-  home.packages = with pkgs; [
+  isHomeManager = options ? home && options.home ? packages;
+  isNixOS = options ? environment && options.environment ? systemPackages;
+  packages = with pkgs; [
     # - spiderfoot          # Automated OSINT platform (200+ modules)
     netcat                  # Network Swiss Army knife
     tcpdump                 # Command-line packet analyzer
@@ -534,14 +537,11 @@ in {
     wpscan                  # WordPress security scanner with vuln database
   ];
 
-  # ---------------------------------------------------------------------------
-  # Credentials → environment
-  # ---------------------------------------------------------------------------
   # Each key is loaded from secrets/osint/<name>.txt at evaluation time. An
   # empty file resolves to an empty string, so tools that need a key fail
   # cleanly at invocation rather than at rebuild. Encrypt the source files
   # before committing them to a tracked branch.
-  home.sessionVariables = {
+  sessionVariables = {
     HIBP_API_KEY = readKey "hibp-api-key.txt";
     SHODAN_API_KEY = readKey "shodan-api-key.txt";
     CENSYS_API_ID = readKey "censys-api-id.txt";
@@ -552,4 +552,14 @@ in {
     DEHASHED_EMAIL = readKey "dehashed-email.txt";
     DEHASHED_API_KEY = readKey "dehashed-api-key.txt";
   };
-}
+in
+  lib.mkMerge [
+    (lib.optionalAttrs isHomeManager {
+      home.packages = packages;
+      home.sessionVariables = sessionVariables;
+    })
+    (lib.optionalAttrs (isNixOS && !isHomeManager) {
+      environment.systemPackages = packages;
+      environment.sessionVariables = sessionVariables;
+    })
+  ]

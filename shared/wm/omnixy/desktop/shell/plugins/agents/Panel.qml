@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
 import qs.Commons
@@ -38,13 +39,9 @@ Panel {
 
   readonly property var limits: limitWindows(provider)
   readonly property var models: modelRows(provider)
-  readonly property var headline: bindingWindow(provider)
   readonly property var balance: provider ? (provider.balance || null) : null
-  // A prepaid account runs low the way a subscription window fills up: the
-  // last 10% of the funded credits lights the same alarm.
-  readonly property bool balanceAlarming: !!balance && balance.funded > 0
-    && balance.remaining / balance.funded <= 0.1
-  readonly property bool alarming: (!!headline && headline.percent >= 0.9) || balanceAlarming
+  readonly property bool balanceAlarming: balanceLow(balance)
+  readonly property string barGlyph: "󱚣"
 
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)) }
   function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
@@ -136,6 +133,70 @@ Panel {
     if (!w || w.resetAt === "") return -1
     var ms = new Date(w.resetAt).getTime()
     return isFinite(ms) ? ms - root.nowMs : -1
+  }
+
+  // A prepaid account runs low the way a subscription window fills up: the
+  // last 10% of the funded credits lights the same alarm.
+  function balanceLow(b) {
+    return !!b && b.funded > 0 && b.remaining / b.funded <= 0.1
+  }
+
+  function providerAlarming(p) {
+    var w = bindingWindow(p)
+    return (!!w && w.percent >= 0.9) || balanceLow(p ? p.balance : null)
+  }
+
+  // ------------------------------------------------------------------- bar
+  //
+  // With the panel closed the bar carries one mark per agent and, beside it,
+  // the number that decides how much room is left: the fullest window, or the
+  // credit remaining on a prepaid account. An agent that reports neither shows
+  // its mark alone.
+
+  function percentText(w) {
+    return Math.round(w.percent * 100) + "%"
+  }
+
+  function providerBarText(p) {
+    var w = bindingWindow(p)
+    if (w) return percentText(w)
+    var b = p ? p.balance : null
+    return b ? formatMoney(b.remaining, b.currency) : ""
+  }
+
+  // The bar tooltip names the reset as a clock time rather than a countdown:
+  // nowMs only ticks while the panel is open, and a countdown read off a
+  // stale clock would be wrong by however long the panel has been shut.
+  function resetClockText(w) {
+    if (!w || w.resetAt === "") return ""
+    var at = new Date(w.resetAt)
+    if (isNaN(at.getTime())) return ""
+    var today = at.toDateString() === new Date().toDateString()
+    return "resets " + Qt.formatDateTime(at, today ? "HH:mm" : "ddd HH:mm")
+  }
+
+  function providerTooltip(p) {
+    if (!p) return ""
+    var parts = [p.providerName]
+    var windows = limitWindows(p)
+    for (var i = 0; i < windows.length; i++) parts.push(windows[i].title + " " + percentText(windows[i]))
+    if (p.balance) parts.push(formatMoney(p.balance.remaining, p.balance.currency) + " left")
+    var reset = resetClockText(bindingWindow(p))
+    if (reset !== "") parts.push(reset)
+    if (windows.length === 0 && !p.balance && String(p.usageStatusText || "") !== "")
+      parts.push(p.usageStatusText)
+    return parts.join(" \u00b7 ")
+  }
+
+  // Clicking a mark opens the panel on that agent; clicking the mark of the
+  // agent already showing closes it.
+  function togglePanelFor(index) {
+    if (opened && providerIndex === index) {
+      close()
+      return
+    }
+    selectProvider(index)
+    if (!opened) open()
   }
 
   function formatDuration(ms) {
@@ -298,8 +359,8 @@ Panel {
   // is invisible, so the icon appears the moment the first scan finds usage and
   // stays away entirely on a machine that has never run either CLI.
   visible: providers.length > 0
-  implicitWidth: button.implicitWidth
-  implicitHeight: button.implicitHeight
+  implicitWidth: marks.implicitWidth
+  implicitHeight: marks.implicitHeight
 
   onProviderIndexChanged: if (panelFlick) panelFlick.contentY = 0
   onOpenedChanged: if (opened) {
@@ -335,22 +396,71 @@ Panel {
     function next(): string { root.selectProvider(root.providerIndex + 1); return "ok" }
   }
 
-  BarIconButton {
-    id: button
-    anchors.fill: parent
-    bar: root.bar
-    text: "󱚣"
-    active: root.alarming
-    onPressed: function(buttonCode) {
-      if (buttonCode === Qt.RightButton) root.launchAgent()
-      else if (buttonCode === Qt.MiddleButton) root.selectProvider(root.providerIndex + 1)
-      else root.toggle()
+  Grid {
+    id: marks
+    anchors.centerIn: parent
+    columns: root.vertical ? 1 : Math.max(1, root.providers.length)
+    spacing: 0
+
+    Repeater {
+      model: root.providers
+
+      WidgetButton {
+        id: mark
+        required property var modelData
+        required property int index
+        readonly property string valueText: root.providerBarText(modelData)
+        readonly property color inkColor: active ? activeColor : foreground
+
+        bar: root.bar
+        labelVisible: false
+        hasVisualContent: true
+        active: root.providerAlarming(modelData)
+        tooltipText: root.providerTooltip(modelData)
+        horizontalMargin: 6
+        fixedWidth: root.vertical ? -1 : markContent.implicitWidth + scaledHorizontalMargin * 2
+        fixedHeight: root.vertical ? markContent.implicitHeight + scaledVerticalPadding * 2 : -1
+        onPressed: function(buttonCode) {
+          if (buttonCode === Qt.RightButton) root.launchAgent()
+          else if (buttonCode === Qt.MiddleButton) root.selectProvider(root.providerIndex + 1)
+          else root.togglePanelFor(mark.index)
+        }
+
+        Grid {
+          id: markContent
+          anchors.centerIn: parent
+          columns: root.vertical ? 1 : 2
+          spacing: Style.space(4)
+          horizontalItemAlignment: Grid.AlignHCenter
+          verticalItemAlignment: Grid.AlignVCenter
+
+          BarMark {
+            provider: mark.modelData
+            color: mark.inkColor
+          }
+
+          Text {
+            textFormat: Text.PlainText
+            visible: mark.valueText !== ""
+            text: mark.valueText
+            color: mark.inkColor
+            font.family: mark.fontFamily
+            font.pixelSize: Style.font.bodySmall
+            renderType: Text.NativeRendering
+
+            Behavior on color {
+              enabled: !root.bar || root.bar.foregroundAnimationEnabled
+              ColorAnimation { duration: 160 }
+            }
+          }
+        }
+      }
     }
   }
 
   KeyboardPanel {
     id: panel
-    anchorItem: button
+    anchorItem: marks
     owner: root
     bar: root.bar
     open: root.opened
@@ -437,7 +547,7 @@ Panel {
                   textFormat: Text.PlainText
                   anchors.centerIn: parent
                   visible: heroMarkImage.status !== Image.Ready
-                  text: button.text
+                  text: root.barGlyph
                   color: root.foreground
                   font.family: root.fontFamily
                   font.pixelSize: Style.font.display
@@ -697,6 +807,54 @@ Panel {
           }
         }
       }
+    }
+  }
+
+  // An agent's mark for the bar: the hero's asset walk, tinted to the bar
+  // foreground so a white or brand-colour file reads on any theme. Without
+  // a file the module's glyph stands in, as it does in the hero.
+  component BarMark: Item {
+    id: barMark
+    property var provider: null
+    property color color: root.foreground
+    property var candidates: root.iconCandidatesForProvider(provider, root.bar ? root.bar.background : Color.background)
+    property string candidatesKey: candidates.join("\n")
+    property int candidateIndex: 0
+    onCandidatesKeyChanged: candidateIndex = 0
+
+    implicitWidth: Style.bar.iconCanvas
+    implicitHeight: Style.bar.iconCanvas
+
+    Image {
+      id: barMarkImage
+      anchors.fill: parent
+      source: barMark.candidateIndex < barMark.candidates.length ? barMark.candidates[barMark.candidateIndex] : ""
+      sourceSize.width: Style.bar.iconCanvas * 2
+      sourceSize.height: Style.bar.iconCanvas * 2
+      fillMode: Image.PreserveAspectFit
+      // Kept as a hidden layer so the effect can sample it as a texture.
+      visible: false
+      layer.enabled: true
+      onStatusChanged: if (status === Image.Error && barMark.candidateIndex < barMark.candidates.length)
+        Qt.callLater(function() { barMark.candidateIndex++ })
+    }
+
+    MultiEffect {
+      anchors.fill: barMarkImage
+      source: barMarkImage
+      visible: barMarkImage.status === Image.Ready
+      colorization: 1.0
+      colorizationColor: barMark.color
+    }
+
+    Text {
+      textFormat: Text.PlainText
+      anchors.centerIn: parent
+      visible: barMarkImage.status !== Image.Ready
+      text: root.barGlyph
+      color: barMark.color
+      font.family: root.fontFamily
+      font.pixelSize: Style.bar.iconFont
     }
   }
 

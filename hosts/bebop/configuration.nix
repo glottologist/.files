@@ -27,6 +27,10 @@
     ../common/stylix.nix
     ../common/tailscale.nix
     ../common/virtualization.nix
+    # Same modules homes/glottologist imports. Dual-purpose: on NixOS they
+    # land in environment.systemPackages (and dumpcap via programs.wireshark).
+    ../../shared/osint/default.nix
+    ../../shared/pentesting/default.nix
   ];
   system = {
     stateVersion = "26.05";

@@ -7,7 +7,7 @@
 # against a newer upstream is how changes are taken from Omarchy: the
 # closure, the cuts, the rename and the local patches are all recomputed,
 # and UPSTREAM records what was vendored. Needs: bash, coreutils, findutils,
-# grep, sed, jq, git (for the commit hash) and python3 with fontTools.
+# grep, sed, jq, patch, git (for the commit hash) and python3 with fontTools.
 set -euo pipefail
 
 src=$(realpath "${1:?upstream checkout}")
@@ -111,6 +111,9 @@ cp "$src/LICENSE" "$src/logo.txt" "$src/icon.txt" "$out/"
 cp "$here/dropbox-cli" "$out/bin/dropbox-cli"
 cp "$here/agent-usage-grok.py" "$out/bin/omarchy-agent-usage-grok"
 chmod +x "$out/bin/dropbox-cli" "$out/bin/omarchy-agent-usage-grok"
+# The Grok mark for the agents panel (tools/agents-assets/NOTICE for its
+# origin); the panel finds marks by name under assets/.
+cp "$here/agents-assets/grok.svg" "$here/agents-assets/grok-light.svg" "$out/shell/plugins/agents/assets/"
 
 # --- 4. Local patches, applied before the rename so they read as upstream -
 #
@@ -124,6 +127,10 @@ sed -i 's|^rm -rf "\$CURRENT_THEME_PATH"$|chmod -R u+w "$CURRENT_THEME_PATH" 2>/
 # from the extension too, because the shell lists root rows in the order the
 # default file spells them and an extension-only row sorts below System.
 sed -i '/^  "system": {/i\  "agents": {"icon":"󰚩","label":"Agents"},' "$out/default/omarchy/omarchy-menu.jsonc"
+# The agents bar shows one mark per agent with its fullest limit window
+# beside it, where upstream shows a single icon (record: agents/2026-09-09-002).
+# The diff is written against upstream text, so it is applied before the rename.
+patch -p1 -d "$out" --no-backup-if-mismatch < "$here/patches/agents-bar-limits.patch"
 # The Codex rate-limit call takes close to four seconds on this network.
 sed -i 's|"account/rateLimits/read", timeout=4)|"account/rateLimits/read", timeout=20)|' "$out/bin/omarchy-agent-usage-codex"
 

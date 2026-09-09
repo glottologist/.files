@@ -54,6 +54,9 @@ grep -q '^  "agents": .*"label":"Agents"' "$out/default/omnixy/omnixy-menu.jsonc
   || fail "agents menu row missing"
 [ -x "$out/bin/dropbox-cli" ] || fail "dropbox-cli shim missing"
 [ -f "$out/bin/omnixy-agent-usage-grok" ] || fail "grok collector missing"
+[ -f "$out/shell/plugins/agents/assets/grok.svg" ] || fail "grok mark missing"
+grep -q '^  component BarMark: ' "$out/shell/plugins/agents/Panel.qml" || fail "agents bar-limits patch missing"
+grep -q 'ipcTarget: "omnixy.agents"' "$out/shell/plugins/agents/Panel.qml" || fail "agents panel not renamed"
 
 # Every script the closure kept can resolve every omnixy-* it names.
 missing=$(grep -rhoE 'omnixy-[a-z0-9-]+' "$out/bin" "$out/shell" "$out/default" "$out/config" \
