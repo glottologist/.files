@@ -34,12 +34,6 @@ let
   ];
 in
 {
-  # ennio-node is already in environment.systemPackages via
-  # hosts/common/ennio-node.nix. Installing it again from home compiles the
-  # Rust workspace on a 3.7 GiB guest and fills the disk.
-  # LM Studio is a desktop GUI and does not fit a 33 GiB guest.
-  _module.args.installEnnio = false;
-  _module.args.installLmstudio = false;
 
   programs.home-manager = {
     enable = true;

@@ -198,7 +198,10 @@ in
       eo = "eval (opam env)";
       eop = "eval (opam env)";
       exe = "cd ~/development/exercism";
+      fcc = "forge config set model claude_code claude-opus-4-7 && forge";
+      fcp = "forge";
       files = "cd ~/development/glottologist/.files";
+      foi = "forge config set model codex gpt-5-codex && forge";
       fs = "flameshot gui";
       ga = "git add";
       gaa = "git add -A";

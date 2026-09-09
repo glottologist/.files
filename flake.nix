@@ -20,6 +20,12 @@
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
     gemini-cli-nix.url = "github:sadjow/gemini-cli-nix";
     llm-agents-nix.url = "github:numtide/llm-agents.nix";
+    # Forge's own nixpkgs (March 2026) still fetches crates from
+    # crates.io/api, which returns 403. 26.05 uses static.crates.io.
+    forgecode = {
+      url = "github:tailcallhq/forgecode/7261cdb5e039218a371ea8dd376b55ac2e22e109";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -83,6 +89,7 @@
       codex-cli-nix,
       gemini-cli-nix,
       llm-agents-nix,
+      forgecode,
       ennio,
       nix-everywhere,
       ccstatusline,
@@ -206,11 +213,15 @@
                   codex-cli-nix
                   gemini-cli-nix
                   llm-agents-nix
+                  forgecode
                   ennio
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
                   ;
+                installForge = true;
+                installEnnio = true;
+                installLmstudio = true;
               };
             }
             stylix.homeModules.stylix
@@ -234,11 +245,15 @@
                   codex-cli-nix
                   gemini-cli-nix
                   llm-agents-nix
+                  forgecode
                   ennio
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
                   ;
+                installForge = true;
+                installEnnio = true;
+                installLmstudio = true;
               };
             }
             stylix.homeModules.stylix
@@ -266,11 +281,15 @@
                   codex-cli-nix
                   gemini-cli-nix
                   llm-agents-nix
+                  forgecode
                   ennio
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
                   ;
+                installForge = true;
+                installEnnio = true;
+                installLmstudio = true;
               };
             }
             stylix.homeModules.stylix
@@ -296,11 +315,15 @@
                   codex-cli-nix
                   gemini-cli-nix
                   llm-agents-nix
+                  forgecode
                   ennio
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
                   ;
+                installForge = false;
+                installEnnio = false;
+                installLmstudio = false;
               };
             }
             ./homes/jason-cloud

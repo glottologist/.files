@@ -62,7 +62,14 @@ host() {
     if [ "$WORKFLOW" = "apply" ]; then
         echo "$MARKER"
         echo "Applying nixos configuration"
-        sudo nixos-rebuild switch --impure --flake .
+        # Activate the toplevel just built above rather than
+        # `nixos-rebuild switch`. The latter re-evaluates the whole flake as
+        # root, whose eval cache is cold; on a memory-constrained guest that
+        # second evaluation exhausts RAM and the evaluator dies with SIGSEGV.
+        # Setting the system profile and running switch-to-configuration
+        # reuses the existing build and performs no evaluation.
+        sudo nix-env -p /nix/var/nix/profiles/system --set ./result
+        sudo ./result/bin/switch-to-configuration switch
         echo "$MARKER"
     fi
 }
