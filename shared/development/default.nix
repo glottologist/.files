@@ -1,12 +1,15 @@
 {
-  config,
-  lib,
   pkgs,
-  nvim-flake,
   neovim-flake,
-  stdenv,
   ...
-}: {
+}:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  neovimPkgs = neovim-flake.legacyPackages.${system};
+  neovimDeveloper =
+    (neovim-flake.overlays.default neovimPkgs (neovimPkgs // { inherit system; })).neovim-developer;
+in
+{
   imports = [
     ./git/default.nix
     ./jj/default.nix
@@ -23,23 +26,21 @@
     helix # A post-modern modal text editor
     jupyter # The Jupyter HTML notebook is a web-based notebook environment for interactive computing
     (vimPlugins.LazyVim.overrideAttrs (old: {
-      installPhase =
-        old.installPhase
-        + ''
-          rm -f $out/LICENSE
-        '';
+      installPhase = old.installPhase + ''
+        rm -f $out/LICENSE
+      '';
     }))
-    leetcode-cli #A command-line tool for LeetCode
-    leetgo #A command-line tool for LeetCode
+    leetcode-cli # A command-line tool for LeetCode
+    leetgo # A command-line tool for LeetCode
     logkeys # A GNU/Linux keylogger that works!
     netlify-cli # CLI to manage netlify deployments
     newman # A command line runner for Postman
-    neovim-flake.packages.${pkgs.stdenv.hostPlatform.system}.developer
-    opencommit #AI-powered commit message generator
+    neovimDeveloper
+    opencommit # AI-powered commit message generator
     poedit # Cross-platform gettext catalogs (.po files) editor
     remarshal # Convert between TOML, YAML and JSON
     rpi-imager # Raspberry Pi Imaging Utility
-    screenkey #A screencast tool to display your keys inspired by Screenflick
+    screenkey # A screencast tool to display your keys inspired by Screenflick
     silver-searcher # Ack like searcher focused on code
     universal-ctags # A maintained ctags implementation
     usbutils # USb Utlities

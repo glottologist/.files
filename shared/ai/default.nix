@@ -20,6 +20,25 @@
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
+  # Preserve the upstream derivation while bypassing its deprecated Darwin platform lookup.
+  nixEverywhereNixpkgs = builtins.toFile "nixpkgs-with-modern-stdenv.nix" ''
+    args:
+    let
+      pkgs = import ${nix-everywhere.inputs.nixpkgs} args;
+    in
+    pkgs
+    // {
+      stdenv = pkgs.stdenv // {
+        isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+      };
+    }
+  '';
+  nixEverywherePackage =
+    ((import "${nix-everywhere}/flake.nix").outputs {
+      self = nix-everywhere;
+      nixpkgs = nixEverywhereNixpkgs;
+      inherit (nix-everywhere.inputs) flake-utils rust-overlay nixos-generators;
+    }).packages.${system}.default;
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (
     builtins.readFile ../../secrets/anthropic-api-key.txt
   );
@@ -1044,7 +1063,7 @@ in
         codex-cli-nix.packages.${system}.default
         pi-coding-agent
         ccstatusline.packages.${system}.default
-        nix-everywhere.packages.${system}.default
+        nixEverywherePackage
         claude-monitor
         opencode
         headroom
