@@ -46,7 +46,9 @@ home() {
     if [ "$WORKFLOW" = "apply" ]; then
         echo "$MARKER"
         echo "Applying home configuration"
-        result/activate
+        # Standalone activate refuses to clobber unmanaged files unless
+        # this is set; the old file is renamed to *.$HOME_MANAGER_BACKUP_EXT.
+        HOME_MANAGER_BACKUP_EXT=bak result/activate
         echo "$MARKER"
     fi
 }

@@ -5,10 +5,14 @@
   claude-code-nix,
   codex-cli-nix,
   llm-agents-nix,
-  forgecode,
   ccstatusline,
   ennio,
   nix-everywhere,
+  # Worker hosts already put ennio-node on the system profile. Building the
+  # CLI from source there fills a 38–76 GiB disk.
+  installEnnio ? true,
+  # LM Studio is a desktop GUI; it does not belong on a 33 GiB agent guest.
+  installLmstudio ? true,
   ...
 }:
 let
@@ -52,7 +56,7 @@ let
 
   # Skills shared across all agents live under secrets/ai/shared/skills/<name>/.
   # Each directory is installed into every agent skills root (Claude, Codex, Grok,
-  # Forge, Pi) plus ~/.agents/skills and ~/.claude/skills.
+  # Pi) plus ~/.agents/skills and ~/.claude/skills.
   #
   # Install as a directory-level symlink (same as mkSkillFiles), not recursive
   # file-level links. Codex only advertises skills whose top-level entry under
@@ -414,236 +418,6 @@ let
   }
   // mkSharedSkills "${dir}/skills";
 
-  mkForgeFiles = dir: {
-    "${dir}/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
-    "${dir}/.mcp.json".text = builtins.readFile (s + "/mcp.json");
-    # COMMANDS (converted to Forge `name`/`description` front-matter, `{{parameters}}` body)
-    "${dir}/commands/audit.md".text = builtins.readFile (f + "/commands/audit.md");
-    "${dir}/commands/benchmark.md".text = builtins.readFile (f + "/commands/benchmark.md");
-    "${dir}/commands/document.md".text = builtins.readFile (f + "/commands/document.md");
-    "${dir}/commands/explain.md".text = builtins.readFile (f + "/commands/explain.md");
-    "${dir}/commands/fix.md".text = builtins.readFile (f + "/commands/fix.md");
-    "${dir}/commands/investigate.md".text = builtins.readFile (f + "/commands/investigate.md");
-    "${dir}/commands/pr_desc.md".text = builtins.readFile (f + "/commands/pr_desc.md");
-    "${dir}/commands/refactor.md".text = builtins.readFile (f + "/commands/refactor.md");
-    "${dir}/commands/review.md".text = builtins.readFile (f + "/commands/review.md");
-    "${dir}/commands/analyze.md".text = builtins.readFile (f + "/commands/analyze.md");
-    "${dir}/commands/plan.md".text = builtins.readFile (f + "/commands/plan.md");
-    "${dir}/commands/handoff.md".text = builtins.readFile (f + "/commands/handoff.md");
-    "${dir}/commands/carryon.md".text = builtins.readFile (f + "/commands/carryon.md");
-    "${dir}/commands/external-audit.md".text = builtins.readFile (f + "/commands/external-audit.md");
-    "${dir}/commands/issue.md".text = builtins.readFile (f + "/commands/issue.md");
-    "${dir}/commands/analyse_tests.md".text = builtins.readFile (f + "/commands/analyse_tests.md");
-    "${dir}/commands/analyse_perf.md".text = builtins.readFile (f + "/commands/analyse_perf.md");
-    "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
-      f + "/commands/analyse_bench_fuzz.md"
-    );
-    "${dir}/commands/weekly_report.md".text = builtins.readFile (f + "/commands/weekly_report.md");
-    "${dir}/commands/implement.md".text = builtins.readFile (f + "/commands/implement.md");
-    "${dir}/commands/extract_context.md".text = builtins.readFile (f + "/commands/extract_context.md");
-    # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
-    "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
-      f + "/agents/benchmark-specialist.md"
-    );
-    "${dir}/agents/code-explainer.md".text = builtins.readFile (f + "/agents/code-explainer.md");
-    "${dir}/agents/code-reviewer.md".text = builtins.readFile (f + "/agents/code-reviewer.md");
-    "${dir}/agents/code-reviewer-strict.md".text = builtins.readFile (
-      f + "/agents/code-reviewer-strict.md"
-    );
-    "${dir}/agents/documentation-generator.md".text = builtins.readFile (
-      f + "/agents/documentation-generator.md"
-    );
-    "${dir}/agents/issue-fixer.md".text = builtins.readFile (f + "/agents/issue-fixer.md");
-    "${dir}/agents/security-auditor.md".text = builtins.readFile (f + "/agents/security-auditor.md");
-    "${dir}/agents/super-analyzer.md".text = builtins.readFile (f + "/agents/super-analyzer.md");
-    "${dir}/agents/planner.md".text = builtins.readFile (f + "/agents/planner.md");
-    "${dir}/agents/build-error-resolver.md".text = builtins.readFile (
-      f + "/agents/build-error-resolver.md"
-    );
-    "${dir}/agents/investigator.md".text = builtins.readFile (f + "/agents/investigator.md");
-    "${dir}/agents/test-analyzer.md".text = builtins.readFile (f + "/agents/test-analyzer.md");
-    "${dir}/agents/external-auditor.md".text = builtins.readFile (f + "/agents/external-auditor.md");
-    # SKILLS (Forge SKILL.md format is identical to Claude's, so reuse the same source files)
-    "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/SKILL.md"
-    );
-    # SKILL REFERENCE FILES (shared principles + per-language deep-dives)
-    "${dir}/skills/coding-skills/shared/COMMON.md".text = builtins.readFile (
-      s + "/skills/coding-skills/shared/COMMON.md"
-    );
-    "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (
-      s + "/skills/coding-skills/shared/references/security-basics.md"
-    );
-    "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/references/advanced-types.md"
-    );
-    "${dir}/skills/coding-skills/rust/references/arithmetic-safety.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/references/arithmetic-safety.md"
-    );
-    "${dir}/skills/coding-skills/rust/references/async.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/references/async.md"
-    );
-    "${dir}/skills/coding-skills/rust/references/ffi.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/references/ffi.md"
-    );
-    "${dir}/skills/coding-skills/rust/references/macros.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/references/macros.md"
-    );
-    "${dir}/skills/coding-skills/rust/references/performance.md".text = builtins.readFile (
-      s + "/skills/coding-skills/rust/references/performance.md"
-    );
-    "${dir}/skills/coding-skills/go/references/concurrency.md".text = builtins.readFile (
-      s + "/skills/coding-skills/go/references/concurrency.md"
-    );
-    "${dir}/skills/coding-skills/go/references/performance.md".text = builtins.readFile (
-      s + "/skills/coding-skills/go/references/performance.md"
-    );
-    "${dir}/skills/coding-skills/haskell/references/advanced-patterns.md".text = builtins.readFile (
-      s + "/skills/coding-skills/haskell/references/advanced-patterns.md"
-    );
-    "${dir}/skills/coding-skills/nix/references/derivations.md".text = builtins.readFile (
-      s + "/skills/coding-skills/nix/references/derivations.md"
-    );
-    "${dir}/skills/coding-skills/ocaml/references/concurrency.md".text = builtins.readFile (
-      s + "/skills/coding-skills/ocaml/references/concurrency.md"
-    );
-    "${dir}/skills/coding-skills/ocaml/references/modules.md".text = builtins.readFile (
-      s + "/skills/coding-skills/ocaml/references/modules.md"
-    );
-    "${dir}/skills/coding-skills/python/references/advanced-patterns.md".text = builtins.readFile (
-      s + "/skills/coding-skills/python/references/advanced-patterns.md"
-    );
-    "${dir}/skills/coding-skills/scala/references/functional.md".text = builtins.readFile (
-      s + "/skills/coding-skills/scala/references/functional.md"
-    );
-    "${dir}/skills/coding-skills/scala/references/type-system.md".text = builtins.readFile (
-      s + "/skills/coding-skills/scala/references/type-system.md"
-    );
-    "${dir}/skills/coding-skills/typescript/references/effect.md".text = builtins.readFile (
-      s + "/skills/coding-skills/typescript/references/effect.md"
-    );
-    "${dir}/skills/coding-skills/typescript/references/ffi.md".text = builtins.readFile (
-      s + "/skills/coding-skills/typescript/references/ffi.md"
-    );
-    "${dir}/skills/coding-skills/typescript/references/refactoring.md".text = builtins.readFile (
-      s + "/skills/coding-skills/typescript/references/refactoring.md"
-    );
-    "${dir}/skills/coding-skills/typescript/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/typescript/SKILL.md"
-    );
-    "${dir}/skills/coding-skills/python/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/python/SKILL.md"
-    );
-    "${dir}/skills/coding-skills/haskell/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/haskell/SKILL.md"
-    );
-    "${dir}/skills/coding-skills/ocaml/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/ocaml/SKILL.md"
-    );
-    "${dir}/skills/coding-skills/go/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/go/SKILL.md"
-    );
-    "${dir}/skills/coding-skills/scala/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/scala/SKILL.md"
-    );
-    "${dir}/skills/coding-skills/nix/SKILL.md".text = builtins.readFile (
-      s + "/skills/coding-skills/nix/SKILL.md"
-    );
-    "${dir}/skills/superplan/SKILL.md".text = builtins.readFile (s + "/skills/superplan/SKILL.md");
-    "${dir}/skills/superplan/references/modes.md".text = builtins.readFile (
-      s + "/skills/superplan/references/modes.md"
-    );
-    "${dir}/skills/superplan/references/examples.md".text = builtins.readFile (
-      s + "/skills/superplan/references/examples.md"
-    );
-    "${dir}/skills/superplan/references/codex-review.md".text = builtins.readFile (
-      s + "/skills/superplan/references/codex-review.md"
-    );
-    "${dir}/skills/superplan/scripts/codex-review.sh" = {
-      text = builtins.readFile (s + "/skills/superplan/scripts/codex-review.sh");
-      executable = true;
-    };
-    "${dir}/skills/superplan/scripts/check-clarity-scores.py" = {
-      source = s + "/skills/superplan/scripts/check-clarity-scores.py";
-      executable = true;
-    };
-    "${dir}/skills/review-strict/SKILL.md".text = builtins.readFile (
-      s + "/skills/review-strict/SKILL.md"
-    );
-    "${dir}/skills/review-strict/references/report-template.md".text = builtins.readFile (
-      s + "/skills/review-strict/references/report-template.md"
-    );
-    "${dir}/skills/review-strict/references/review-checklists.md".text = builtins.readFile (
-      s + "/skills/review-strict/references/review-checklists.md"
-    );
-    "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (
-      s + "/skills/review-strict/references/rust-strict.md"
-    );
-    "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (
-      s + "/skills/algorithmic-art/SKILL.md"
-    );
-    "${dir}/skills/algorithmic-art/LICENSE.txt".text = builtins.readFile (
-      s + "/skills/algorithmic-art/LICENSE.txt"
-    );
-    "${dir}/skills/algorithmic-art/templates/generator_template.js".text = builtins.readFile (
-      s + "/skills/algorithmic-art/templates/generator_template.js"
-    );
-    "${dir}/skills/algorithmic-art/templates/viewer.html".text = builtins.readFile (
-      s + "/skills/algorithmic-art/templates/viewer.html"
-    );
-    "${dir}/skills/conflict-resolver/SKILL.md".text = builtins.readFile (
-      s + "/skills/conflict-resolver/SKILL.md"
-    );
-    "${dir}/skills/conflict-resolver/evals/evals.json".text = builtins.readFile (
-      s + "/skills/conflict-resolver/evals/evals.json"
-    );
-    "${dir}/skills/conflict-resolver/scripts/detect.sh" = {
-      source = s + "/skills/conflict-resolver/scripts/detect.sh";
-      executable = true;
-    };
-    "${dir}/skills/conflict-resolver/scripts/resolve.sh" = {
-      source = s + "/skills/conflict-resolver/scripts/resolve.sh";
-      executable = true;
-    };
-    "${dir}/skills/conflict-resolver/scripts/resolve-all.sh" = {
-      source = s + "/skills/conflict-resolver/scripts/resolve-all.sh";
-      executable = true;
-    };
-    "${dir}/skills/conflict-resolver/scripts/show-conflict.sh" = {
-      source = s + "/skills/conflict-resolver/scripts/show-conflict.sh";
-      executable = true;
-    };
-    "${dir}/skills/skill-creator/SKILL.md".text = builtins.readFile (
-      s + "/skills/skill-creator/SKILL.md"
-    );
-    "${dir}/skills/skill-creator/LICENSE.txt".text = builtins.readFile (
-      s + "/skills/skill-creator/LICENSE.txt"
-    );
-    "${dir}/skills/skill-creator/agents/analyzer.md".text = builtins.readFile (
-      s + "/skills/skill-creator/agents/analyzer.md"
-    );
-    "${dir}/skills/skill-creator/agents/comparator.md".text = builtins.readFile (
-      s + "/skills/skill-creator/agents/comparator.md"
-    );
-    "${dir}/skills/skill-creator/agents/grader.md".text = builtins.readFile (
-      s + "/skills/skill-creator/agents/grader.md"
-    );
-    "${dir}/skills/skill-creator/references/schemas.md".text = builtins.readFile (
-      s + "/skills/skill-creator/references/schemas.md"
-    );
-    "${dir}/skills/superplan/references/writing-style.md".text = builtins.readFile (
-      s + "/skills/superplan/references/writing-style.md"
-    );
-    "${dir}/skills/review-strict/references/writing-style.md".text = builtins.readFile (
-      s + "/skills/review-strict/references/writing-style.md"
-    );
-    "${dir}/skills/review-strict/scripts/reviewers.sh" = {
-      source = s + "/skills/review-strict/scripts/reviewers.sh";
-      executable = true;
-    };
-  }
-  // mkSharedSkills "${dir}/skills";
-
   mkPiFiles = dir: {
     # Pi reads AGENTS.md/CLAUDE.md as context; reuse the shared prompt.
     "${dir}/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
@@ -730,7 +504,7 @@ let
       source = piExamples + "/subagent";
       recursive = true;
     };
-    # SKILLS — pi follows the Agent Skills standard, identical to Claude/forge.
+    # SKILLS — pi follows the Agent Skills standard, identical to Claude.
     "${dir}/skills/coding-skills/rust/SKILL.md".text = builtins.readFile (
       s + "/skills/coding-skills/rust/SKILL.md"
     );
@@ -924,7 +698,6 @@ let
   }
   // mkSharedSkills "${dir}/skills";
 
-  forgeFiles = mkForgeFiles ".forge";
   piFiles = mkPiFiles ".pi/agent";
   codexFiles =
     (import ../../secrets/ai/codex {
@@ -994,7 +767,7 @@ in
 
         $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.codex/skills" "''${codex_names[@]}" "''${shared_names[@]}"
         $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.grok/skills" "''${grok_names[@]}" "''${shared_names[@]}"
-        for root in .agents/skills .claude/skills .claude-personal/skills .claude-work/skills .forge/skills .pi/agent/skills; do
+        for root in .agents/skills .claude/skills .claude-personal/skills .claude-work/skills .pi/agent/skills; do
           $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/$root" "''${shared_names[@]}"
         done
       '';
@@ -1020,40 +793,41 @@ in
       '';
     };
 
-    packages = with pkgs; [
-      lmstudio
-      llm
-      gorilla-cli
-      claude-code-nix.packages.${system}.default
-      codex-cli-nix.packages.${system}.default
-      forgecode.packages.${system}.default
-      pi-coding-agent
-      ccstatusline.packages.${system}.default
-      ennio.packages.${system}.ennio
-      # crane's buildPackage runs cargo test in a sandbox with no git or tmux,
-      # which the node tests require. Those tests already run on the host.
-      (ennio.packages.${system}.ennio-node.overrideAttrs (_: {
-        doCheck = false;
-      }))
-      nix-everywhere.packages.${system}.default
-      claude-monitor
-      opencode
-      headroom
-      grok-build
-      kimi-code
-      llm-agents-nix.packages.${system}.coderabbit-cli
-      llm-agents-nix.packages.${system}.dsh
-      llm-agents-nix.packages.${system}.herdr
-      llm-agents-nix.packages.${system}.crush
-      llm-agents-nix.packages.${system}.copilot-cli
-      llm-agents-nix.packages.${system}.antigravity-cli
-      llm-agents-nix.packages.${system}.voxtype
-      llm-agents-nix.packages.${system}.chatgpt
-      (lib.lowPrio sox)
-    ];
+    packages =
+      (with pkgs; [
+        llm
+        gorilla-cli
+        claude-code-nix.packages.${system}.default
+        codex-cli-nix.packages.${system}.default
+        pi-coding-agent
+        ccstatusline.packages.${system}.default
+        nix-everywhere.packages.${system}.default
+        claude-monitor
+        opencode
+        headroom
+        grok-build
+        kimi-code
+        llm-agents-nix.packages.${system}.coderabbit-cli
+        llm-agents-nix.packages.${system}.dsh
+        llm-agents-nix.packages.${system}.herdr
+        llm-agents-nix.packages.${system}.crush
+        llm-agents-nix.packages.${system}.copilot-cli
+        llm-agents-nix.packages.${system}.antigravity-cli
+        llm-agents-nix.packages.${system}.voxtype
+        llm-agents-nix.packages.${system}.chatgpt
+        (lib.lowPrio sox)
+      ])
+      ++ lib.optionals installEnnio [
+        ennio.packages.${system}.ennio
+        # crane's buildPackage runs cargo test in a sandbox with no git or tmux,
+        # which the node tests require. Those tests already run on the host.
+        (ennio.packages.${system}.ennio-node.overrideAttrs (_: {
+          doCheck = false;
+        }))
+      ]
+      ++ lib.optionals installLmstudio [ pkgs.lmstudio ];
     file =
       claudeFiles
-      // forgeFiles
       // piFiles
       // codexFiles
       // grokFiles

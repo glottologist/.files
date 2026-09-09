@@ -33,5 +33,8 @@
     htop
     tmux
     kdePackages.kate
+    # Agent CLIs live on the system profile, not jason-cloud (that home
+    # is disk-capped). Fish already has the dv* aliases.
+    devbox
   ];
 }

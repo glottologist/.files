@@ -1,6 +1,14 @@
 {pkgs, ...}: let
   buildTmuxPlugin = pkgs.tmuxPlugins.mkTmuxPlugin;
 in {
+  # Upstream shebang is `#!/bin/bash`. NixOS guests have no /bin/bash, so
+  # tmux run-shell exits 126. Point the scripts at store bash.
+  net-speed = pkgs.tmuxPlugins.net-speed.overrideAttrs (_: {
+    postFixup = ''
+      patchShebangs $out
+    '';
+  });
+
   # mkTmuxPlugin defaults the run-shell entry point to `<pluginName>.tmux`
   # with hyphens turned into underscores. Upstream's entry point is the bare
   # `tpm` script, so without this tmux was sourcing a tpm.tmux that has never

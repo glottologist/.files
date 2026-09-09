@@ -34,6 +34,13 @@ let
   ];
 in
 {
+  # ennio-node is already in environment.systemPackages via
+  # hosts/common/ennio-node.nix. Installing it again from home compiles the
+  # Rust workspace on a 3.7 GiB guest and fills the disk.
+  # LM Studio is a desktop GUI and does not fit a 33 GiB guest.
+  _module.args.installEnnio = false;
+  _module.args.installLmstudio = false;
+
   programs.home-manager = {
     enable = true;
   };
@@ -60,18 +67,18 @@ in
     # command-line tools an agent genuinely needs live in the host's
     # environment.systemPackages instead.
     ../../shared/development/git
-    # Not shared/languages/default.nix: it imports some forty language modules,
-    # and the Haskell and LaTeX ones alone took the closure past 62 GB — more
-    # than Defiant's entire disk. The subset below is what an agent host
-    # actually compiles in.
-    ../../shared/languages/nix
-    ../../shared/languages/python
-    ../../shared/languages/javascript
-    ../../shared/languages/typescript
-    ../../shared/languages/rust
+    # Not shared/languages/default.nix and not rust/python/js/nix: those
+    # toolchains (nix-index, nixos-generators, rustup, node, bun) do not
+    # fit a 33 GiB disk next to Plasma. Agents compile in nix shells;
+    # nix-tree and nom are already on the system profile.
+    # Not shared/terminal/default.nix: it pulls kitty, ghostty, foot and
+    # screenshot GUIs. Plasma already ships Konsole.
     ../../shared/languages/shell
     ../../shared/languages/markdown
-    ../../shared/terminal/default.nix
+    ../../shared/terminal/fish
+    ../../shared/terminal/starship
+    ../../shared/terminal/tmux
+    ../../shared/terminal/fastfetch
   ];
 
   xdg = {

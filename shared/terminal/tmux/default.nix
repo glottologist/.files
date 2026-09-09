@@ -118,6 +118,9 @@ in
       {
         plugin = tmux-which-key;
         extraConfig = ''
+          # Plugin copies config into its store path unless XDG is on, which
+          # fails read-only and returns 1 during home-manager reloadTmux.
+          set -g @tmux-which-key-xdg-enable 1
           set -g @tmux-which-key-key 'k'
         '';
       }

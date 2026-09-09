@@ -1650,27 +1650,6 @@
         "type": "github"
       }
     },
-    "forgecode": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1778048738,
-        "narHash": "sha256-j1+k8XqJbXQacqSf7fV8uoh9iBIRPBFJuAGl374oAAc=",
-        "owner": "tailcallhq",
-        "repo": "forgecode",
-        "rev": "7261cdb5e039218a371ea8dd376b55ac2e22e109",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tailcallhq",
-        "repo": "forgecode",
-        "rev": "7261cdb5e039218a371ea8dd376b55ac2e22e109",
-        "type": "github"
-      }
-    },
     "foundry": {
       "inputs": {
         "flake-utils": "flake-utils_6",
@@ -4296,7 +4275,6 @@
         "colibri": "colibri",
         "disko": "disko",
         "ennio": "ennio",
-        "forgecode": "forgecode",
         "foundry": "foundry",
         "gemini-cli-nix": "gemini-cli-nix",
         "home-manager": "home-manager_2",

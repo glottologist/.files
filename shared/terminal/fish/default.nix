@@ -10,9 +10,11 @@ let
   '';
 
   gpgConfig = ''
-    export GPG_TTY="$(tty)"
-    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-    gpgconf --launch gpg-agent
+    if command -q gpgconf
+      set -gx GPG_TTY (tty)
+      set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
+    end
   '';
 
   themeConfig = ''
@@ -22,6 +24,11 @@ let
     set -g theme_color_scheme catppuccin_latte
   '';
   fishConfig = ''
+    # rsync/scp/ssh remote commands must see a silent shell. fish sources
+    # config.fish for non-interactive sessions too.
+    if not status is-interactive
+      return
+    end
     # Skip shell setup for Claude Code agent subprocesses
     if set -q CLAUDECODE
       return
@@ -29,7 +36,9 @@ let
     bind \t accept-autosuggestion
     set fish_greeting
     fish_vi_key_bindings
-    shellclear --init-shell
+    if command -q shellclear
+      shellclear --init-shell
+    end
   ''
   + gpgConfig
   + fzfConfig
@@ -40,6 +49,7 @@ in
 {
   home.packages = with pkgs; [
     figlet # Terminal ASCII pictures
+    grc # Colourizer; the fish plugin errors without this binary
   ];
   imports = [
     ./functions.nix
@@ -92,7 +102,7 @@ in
         return
       end
       if test -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-         bass source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+         fenv source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
       end
       any-nix-shell fish --info-right | source
     '';
@@ -188,10 +198,7 @@ in
       eo = "eval (opam env)";
       eop = "eval (opam env)";
       exe = "cd ~/development/exercism";
-      fcc = "forge config set model claude_code claude-opus-4-7 && forge";
-      fcp = "forge";
       files = "cd ~/development/glottologist/.files";
-      foi = "forge config set model codex gpt-5-codex && forge";
       fs = "flameshot gui";
       ga = "git add";
       gaa = "git add -A";

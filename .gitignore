@@ -2,4 +2,5 @@ result
 __pycache__/
 /agents/
 /.claude/
+.claude/worktrees/
 /secrets/headscale_preauth.txt
