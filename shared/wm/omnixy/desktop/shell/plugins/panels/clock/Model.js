@@ -404,82 +404,104 @@ function zoneEpoch(value) {
   return isFinite(ms) ? ms : 0
 }
 
-function formatInZone(epochMs, timeZone, options) {
+// ---- Zone arithmetic. The QML engine ships no Intl, so a zone id alone
+//      says nothing about the wall clock there: the tz database has to be
+//      read out of process. zoneOffsetCommand asks the system for each
+//      zone's current UTC offset, parseZoneOffsets turns the reply into
+//      minutes, and everything below is arithmetic on those minutes. The
+//      panel re-reads them on every minute tick, so a zone crossing into
+//      or out of daylight saving corrects itself within the minute.
+function zoneOffsetCommand(list) {
+  var ids = parseTimeZones(list)
+  if (ids.length === 0) return []
+  var script = 'for zone in "$@"; do printf "%s %s\\n" "$zone" "$(TZ="$zone" date +%z)"; done'
+  return ["bash", "-c", script, "bash"].concat(ids)
+}
+
+function parseZoneOffsets(text) {
+  var lines = String(text === undefined || text === null ? "" : text).split("\n")
+  var offsets = {}
+  for (var i = 0; i < lines.length; i++) {
+    var parts = lines[i].replace(/^\s+|\s+$/g, "").split(/\s+/)
+    if (parts.length !== 2) continue
+    var match = /^([+-])(\d{2})(\d{2})$/.exec(parts[1])
+    if (!match || !isTimeZoneId(parts[0])) continue
+    var minutes = Number(match[2]) * 60 + Number(match[3])
+    offsets[parts[0]] = match[1] === "-" ? -minutes : minutes
+  }
+  return offsets
+}
+
+// null rather than 0 for an offset that has not arrived yet: an unknown
+// offset must read as unknown, not as UTC.
+function offsetMinutes(value) {
+  return typeof value === "number" && isFinite(value) ? value : null
+}
+
+function zoneOffsetMinutes(offsets, id) {
+  return offsetMinutes((offsets || {})[id])
+}
+
+// The local zone is the one the engine does know, through the Date itself.
+function localOffsetMinutes(epochMs) {
+  return -new Date(zoneEpoch(epochMs)).getTimezoneOffset()
+}
+
+function padTwo(value) {
+  return (value < 10 ? "0" : "") + value
+}
+
+function formatTimeAtOffset(epochMs, zoneMinutes, hour12) {
   var ms = zoneEpoch(epochMs)
-  if (ms <= 0 || !isTimeZoneId(timeZone)) return ""
-  if (typeof Intl === "undefined" || !Intl.DateTimeFormat) return ""
-  var opts = {}
-  var given = options || {}
-  for (var key in given) opts[key] = given[key]
-  opts.timeZone = timeZone
-  try {
-    return new Intl.DateTimeFormat("en-GB", opts).format(new Date(ms))
-  } catch (e) {
-    return ""
-  }
+  var minutes = offsetMinutes(zoneMinutes)
+  if (ms <= 0 || minutes === null) return ""
+  var shifted = new Date(ms + minutes * 60000)
+  var hour = shifted.getUTCHours()
+  var minute = shifted.getUTCMinutes()
+  if (!hour12) return padTwo(hour) + ":" + padTwo(minute)
+  var twelve = hour % 12
+  // AM/PM in the same case as the bar's own AP format token, so a 12-hour
+  // label and the clocks under it read alike.
+  return (twelve === 0 ? 12 : twelve) + ":" + padTwo(minute) + " " + (hour < 12 ? "AM" : "PM")
 }
 
-function zoneDateKey(epochMs, timeZone) {
+function offsetLabel(zoneMinutes) {
+  var minutes = offsetMinutes(zoneMinutes)
+  if (minutes === null) return ""
+  if (minutes === 0) return "GMT"
+  var abs = Math.abs(minutes)
+  var rest = abs % 60
+  return "GMT" + (minutes < 0 ? "-" : "+") + Math.floor(abs / 60) + (rest === 0 ? "" : ":" + padTwo(rest))
+}
+
+// Whole days between the date at that offset and the date here, so a clock
+// can say it is already tomorrow without carrying a second date string.
+function zoneDayOffset(epochMs, zoneMinutes, localMinutes) {
   var ms = zoneEpoch(epochMs)
-  if (ms <= 0) return ""
-  if (typeof Intl === "undefined" || !Intl.DateTimeFormat) return ""
-  var opts = { year: "numeric", month: "2-digit", day: "2-digit" }
-  if (timeZone) {
-    if (!isTimeZoneId(timeZone)) return ""
-    opts.timeZone = timeZone
-  }
-  try {
-    return new Intl.DateTimeFormat("en-CA", opts).format(new Date(ms))
-  } catch (e) {
-    return ""
-  }
-}
-
-function zoneDayOffset(epochMs, timeZone, localTimeZone) {
-  var there = zoneDateKey(epochMs, timeZone)
-  var here = zoneDateKey(epochMs, localTimeZone || "")
-  if (!there || !here) return 0
-  var a = there.split("-")
-  var b = here.split("-")
-  if (a.length !== 3 || b.length !== 3) return 0
-  var da = Date.UTC(Number(a[0]), Number(a[1]) - 1, Number(a[2]))
-  var db = Date.UTC(Number(b[0]), Number(b[1]) - 1, Number(b[2]))
-  if (!isFinite(da) || !isFinite(db)) return 0
-  return Math.round((da - db) / MS_PER_DAY)
-}
-
-function zoneOffsetLabel(epochMs, timeZone) {
-  var formatted = formatInZone(epochMs, timeZone, {
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-    timeZoneName: "shortOffset"
-  })
-  if (!formatted) return ""
-  var parts = formatted.split(" ")
-  return parts.length > 1 ? parts[parts.length - 1] : ""
-}
-
-function formatTimeInZone(epochMs, timeZone, hour12) {
-  if (hour12)
-    return formatInZone(epochMs, timeZone, { hour: "numeric", minute: "2-digit", hour12: true })
-  return formatInZone(epochMs, timeZone, { hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+  var there = offsetMinutes(zoneMinutes)
+  if (ms <= 0 || there === null) return 0
+  var here = offsetMinutes(localMinutes)
+  if (here === null) here = localOffsetMinutes(ms)
+  return Math.floor((ms + there * 60000) / MS_PER_DAY) - Math.floor((ms + here * 60000) / MS_PER_DAY)
 }
 
 function worldClockRows(list, epochMs, options) {
   var ids = parseTimeZones(list)
   var opts = options || {}
   var hour12 = opts.hour12 === true
-  var localTimeZone = opts.localTimeZone || ""
+  var offsets = opts.offsets || {}
+  var here = offsetMinutes(opts.localOffsetMinutes)
+  if (here === null) here = localOffsetMinutes(epochMs)
   var rows = []
   for (var i = 0; i < ids.length; i++) {
     var id = ids[i]
-    var dayOffset = zoneDayOffset(epochMs, id, localTimeZone)
+    var minutes = zoneOffsetMinutes(offsets, id)
+    var dayOffset = zoneDayOffset(epochMs, minutes, here)
     rows.push({
       id: id,
       label: timeZoneLabel(id),
-      time: formatTimeInZone(epochMs, id, hour12) || "—",
-      offset: zoneOffsetLabel(epochMs, id),
+      time: formatTimeAtOffset(epochMs, minutes, hour12) || "—",
+      offset: offsetLabel(minutes),
       dayOffset: dayOffset,
       dayOffsetLabel: dayOffset === 0 ? "" : (dayOffset > 0 ? "+" + dayOffset : String(dayOffset))
     })
@@ -555,7 +577,10 @@ if (typeof module !== "undefined") {
     removeTimeZone: removeTimeZone,
     timeZoneLabel: timeZoneLabel,
     usesHour12: usesHour12,
-    formatTimeInZone: formatTimeInZone,
+    zoneOffsetCommand: zoneOffsetCommand,
+    parseZoneOffsets: parseZoneOffsets,
+    formatTimeAtOffset: formatTimeAtOffset,
+    offsetLabel: offsetLabel,
     zoneDayOffset: zoneDayOffset,
     worldClockRows: worldClockRows,
     matchingTimeZones: matchingTimeZones

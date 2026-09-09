@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import qs.Commons
 import qs.Ui
 import "Model.js" as Model
@@ -71,8 +72,13 @@ Panel {
   readonly property var weeks: Model.monthGrid(viewYear, viewMonth, weekStart, todayKey)
 
   readonly property var timeZones: Model.parseTimeZones(setting("timeZones", []))
+  // Zone offsets come from the system tz database rather than the engine:
+  // see the note above Model.zoneOffsetCommand. Until the first read lands
+  // a row shows its city with no time rather than a wrong one.
+  property var zoneOffsets: ({})
   readonly property var worldClocks: Model.worldClockRows(timeZones, clock.date, {
-    hour12: Model.usesHour12(setting("format", "dddd HH:mm"))
+    hour12: Model.usesHour12(setting("format", "dddd HH:mm")),
+    offsets: zoneOffsets
   })
   readonly property bool canAddTimeZone: timeZones.length < Model.maxWorldClocks()
   property bool editingTimeZone: false
@@ -135,6 +141,7 @@ Panel {
   function refresh() {
     root.today = new Date()
     root.goToToday()
+    root.refreshZoneOffsets()
   }
 
   function goToToday() {
@@ -257,6 +264,22 @@ Panel {
     persistSettings({ timeZones: next })
   }
 
+  // Re-read on the minute rather than caching an offset for the session, so
+  // a zone that starts or ends daylight saving corrects itself. A read that
+  // is still in flight is left to finish: the next tick asks again.
+  function refreshZoneOffsets() {
+    var command = Model.zoneOffsetCommand(root.timeZones)
+    if (command.length === 0) {
+      root.zoneOffsets = ({})
+      return
+    }
+    if (zoneOffsetProc.running) return
+    zoneOffsetProc.command = command
+    zoneOffsetProc.running = true
+  }
+
+  onTimeZonesChanged: root.refreshZoneOffsets()
+
   function commitTimeZoneField() {
     var pick = root.timeZoneSuggestions[root.timeZoneSuggestionIndex]
     if (pick) {
@@ -288,10 +311,24 @@ Panel {
     return String(labelLocale.dayName(weekday, Locale.ShortFormat)).toUpperCase()
   }
 
+  Process {
+    id: zoneOffsetProc
+    running: false
+    command: []
+    stdout: StdioCollector {
+      id: zoneOffsetStdout
+      waitForEnd: true
+    }
+    onExited: function(exitCode) {
+      if (exitCode === 0) root.zoneOffsets = Model.parseZoneOffsets(zoneOffsetStdout.text)
+    }
+  }
+
   SystemClock {
     id: clock
     precision: SystemClock.Minutes
     onDateChanged: {
+      root.refreshZoneOffsets()
       if (Model.keyForDate(clock.date) === String(root.todayKey)) return
       var followToday = root.viewingCurrentMonth
       root.today = clock.date

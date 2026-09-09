@@ -36,15 +36,36 @@ assert.strictEqual(Model.timeZoneLabel("Pacific/Port_Moresby"), "Port Moresby")
 assert.strictEqual(Model.usesHour12("dddd HH:mm"), false)
 assert.strictEqual(Model.usesHour12("h:mm AP"), true)
 
-assert.strictEqual(Model.formatTimeInZone(epoch, "America/New_York", false), "09:07")
-assert.strictEqual(Model.formatTimeInZone(epoch, "Asia/Tokyo", false), "22:07")
-assert.strictEqual(Model.zoneDayOffset(nextDay, "Asia/Tokyo", "Europe/London"), 1)
-assert.strictEqual(Model.zoneDayOffset(nextDay, "America/New_York", "Europe/London"), 0)
+assert.deepStrictEqual(Model.zoneOffsetCommand([]), [])
+const command = Model.zoneOffsetCommand(["America/New_York", "Asia/Tokyo"])
+assert.strictEqual(command[0], "bash")
+assert.deepStrictEqual(command.slice(3), ["bash", "America/New_York", "Asia/Tokyo"])
+assert.deepStrictEqual(
+  Model.parseZoneOffsets("America/New_York -0400\nAsia/Tokyo +0900\nAsia/Kathmandu +0545\nnope +0100\nUTC junk\n"),
+  { "America/New_York": -240, "Asia/Tokyo": 540, "Asia/Kathmandu": 345 }
+)
 
-const rows = Model.worldClockRows(["America/New_York", "Asia/Tokyo"], nextDay, { localTimeZone: "Europe/London" })
+assert.strictEqual(Model.formatTimeAtOffset(epoch, -240, false), "09:07")
+assert.strictEqual(Model.formatTimeAtOffset(epoch, 540, false), "22:07")
+assert.strictEqual(Model.formatTimeAtOffset(epoch, 540, true), "10:07 PM")
+assert.strictEqual(Model.formatTimeAtOffset(epoch, -780, true), "12:07 AM")
+assert.strictEqual(Model.formatTimeAtOffset(epoch, null, false), "")
+assert.strictEqual(Model.offsetLabel(0), "GMT")
+assert.strictEqual(Model.offsetLabel(-240), "GMT-4")
+assert.strictEqual(Model.offsetLabel(345), "GMT+5:45")
+assert.strictEqual(Model.offsetLabel(null), "")
+assert.strictEqual(Model.zoneDayOffset(nextDay, 540, 60), 1)
+assert.strictEqual(Model.zoneDayOffset(nextDay, -240, 60), 0)
+assert.strictEqual(Model.zoneDayOffset(nextDay, null, 60), 0)
+
+const offsets = { "America/New_York": -240, "Asia/Tokyo": 540 }
+const rows = Model.worldClockRows(["America/New_York", "Asia/Tokyo"], nextDay, { offsets, localOffsetMinutes: 60 })
 assert.strictEqual(rows[0].label, "New York")
+assert.strictEqual(rows[0].time, "12:00")
+assert.strictEqual(rows[0].offset, "GMT-4")
 assert.strictEqual(rows[1].dayOffset, 1)
 assert.strictEqual(rows[1].dayOffsetLabel, "+1")
+assert.strictEqual(Model.worldClockRows(["Asia/Tokyo"], nextDay, {})[0].time, "\u2014")
 
 const popular = Model.matchingTimeZones("", ["America/New_York"])
 assert.ok(popular.every((z) => z.id !== "America/New_York"))
