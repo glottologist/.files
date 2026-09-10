@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "omnixy.source-control",
+  "name": "Source control",
+  "version": "1.0.0",
+  "author": "Omnixy",
+  "license": "MIT",
+  "description": "Pull requests opened and merged in the last day, grouped by repository, yours and everyone else's.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Source control",
+    "description": "Pull requests opened and merged in the last day, with a link to each.",
+    "category": "Development",
+    "allowMultiple": false,
+    "defaultSection": "center"
+  }
+}

@@ -118,8 +118,13 @@ cp "$here/agent-usage-grok.py" "$out/bin/omarchy-agent-usage-grok"
 # The speedtest.net recorder behind the network panel's history section: a
 # user timer runs it, the panel reads what it wrote (record: agents/2026-09-09-003).
 cp "$here/network-speedtest-record" "$out/bin/omarchy-network-speedtest-record"
+# The pull-request recorder and the source-control panel that reads it: a
+# user timer runs the recorder, the panel is a first-party bar widget the
+# registry finds by its manifest (record: agents/2026-09-10-003).
+cp "$here/source-control-record" "$out/bin/omarchy-source-control-record"
+cp -r "$here/source-control" "$out/shell/plugins/panels/source-control"
 chmod +x "$out/bin/dropbox-cli" "$out/bin/omarchy-agent-usage-grok" \
-         "$out/bin/omarchy-network-speedtest-record"
+         "$out/bin/omarchy-network-speedtest-record" "$out/bin/omarchy-source-control-record"
 # The Grok mark for the agents panel (tools/agents-assets/NOTICE for its
 # origin); the panel finds marks by name under assets/.
 cp "$here/agents-assets/grok.svg" "$here/agents-assets/grok-light.svg" "$out/shell/plugins/agents/assets/"

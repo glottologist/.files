@@ -66,6 +66,11 @@ grep -q 'omnixy-network-speedtest-record' "$out/shell/plugins/panels/network/Pan
   || fail "network speedtest-history patch missing"
 grep -q '^function parseSpeedTestHistory' "$out/shell/plugins/panels/network/Model.js" \
   || fail "network speedtest model helpers missing"
+[ -x "$out/bin/omnixy-source-control-record" ] || fail "source-control recorder missing"
+grep -q '"id": "omnixy.source-control"' "$out/shell/plugins/panels/source-control/manifest.json" \
+  || fail "source-control panel manifest missing"
+grep -q 'omnixy-source-control-record' "$out/shell/plugins/panels/source-control/Panel.qml" \
+  || fail "source-control panel does not name the recorder"
 grep -q 'fontFamily: "omnixy"' "$out/shell/plugins/menu/BarWidget.qml" && fail "menu button still on the icon font"
 
 # Every script the closure kept can resolve every omnixy-* it names.

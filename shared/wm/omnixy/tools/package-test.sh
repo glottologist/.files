@@ -18,6 +18,10 @@ grep -q "not changed at runtime" "$out/bin/omnixy-plymouth-set" || fail "plymout
   && fail "speedtest recorder reports something with no history"
 XDG_STATE_HOME=$(mktemp -d) "$out/bin/omnixy-network-speedtest-record" --nonsense 2>/dev/null \
   && fail "speedtest recorder accepts an unknown argument"
+[ -x "$out/bin/omnixy-source-control-record" ] || fail "source-control recorder missing"
+"$out/bin/omnixy-source-control-record" --nonsense 2>/dev/null \
+  && fail "source-control recorder accepts an argument"
+[ -f "$out/shell/plugins/panels/source-control/Panel.qml" ] || fail "source-control panel missing"
 grep -q "$(nix eval --raw --impure --expr '(import <nixpkgs> {}).hello')/bin/codexbar" "$out/bin/omnixy-agent-usage-grok" || fail "codexbar not substituted"
 grep -q '@codexbar@' "$out/bin/omnixy-agent-usage-grok" && fail "placeholder survived"
 head -1 "$out/bin/omnixy-menu" | grep -q '^#!/nix/store' || fail "shebangs not patched"

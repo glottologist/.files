@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# omnixy:summary=Record the pull requests opened and merged in the last day
+# omnixy:group=development
+# omnixy:args=
+
+# Vendored into desktop/bin as omnixy-source-control-record by
+# tools/vendor.sh. A user timer runs it every five minutes; the source-control
+# panel watches the file it writes and never queries GitHub itself.
+#
+# The window is the last twenty-four hours. A pull request is "opened" when it
+# was created inside the window and "merged" when it was merged inside it; one
+# created earlier and merged today is merged only, one created today and still
+# open is opened only, and one that did both carries both flags. The split into
+# the user's own and everyone else's happens here rather than in the query: a
+# negated author qualifier returned nothing from `gh search prs`.
+#
+# The repositories searched are those owned by the login and by every
+# organisation it belongs to, which is the closest thing to "the repositories
+# the user works in" the token can answer without configuration.
+
+set -euo pipefail
+
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/omnixy"
+state_file="$state_dir/source-control.json"
+window_hours=24
+# Well above a day's traffic across the owners; the search API caps a query at
+# a thousand results anyway.
+search_limit=200
+fields=number,title,state,url,createdAt,closedAt,isDraft,author,repository
+
+usage() {
+  echo "Usage: omnixy-source-control-record" >&2
+  exit 2
+}
+
+(( $# == 0 )) || usage
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "gh is required" >&2
+  exit 1
+fi
+
+login=$(gh api user --jq .login)
+owners=$(gh api user/orgs --paginate --jq '.[].login' | paste -sd, -)
+owners="$login${owners:+,$owners}"
+
+now=$(date -u +%s)
+since=$(( now - window_hours * 3600 ))
+since_iso=$(date -u -d "@$since" +%Y-%m-%dT%H:%M:%SZ)
+
+created=$(gh search prs --owner="$owners" --created=">=$since_iso" --limit "$search_limit" --json "$fields")
+merged=$(gh search prs --owner="$owners" --merged-at=">=$since_iso" --limit "$search_limit" --json "$fields")
+
+# closedAt is null for an open pull request and, from some API paths, the zero
+# date; both mean "not closed". Times are epoch seconds so the panel can
+# measure ages without parsing dates.
+record=$(jq -cn \
+  --arg login "$login" \
+  --arg owners "$owners" \
+  --argjson since "$since" \
+  --argjson now "$now" \
+  --argjson created "$created" \
+  --argjson merged "$merged" '
+  def epoch: if . == null or . == "" or startswith("0001") then null else fromdateiso8601 end;
+  ($created + $merged)
+  | map({
+      repo: .repository.nameWithOwner,
+      number: .number,
+      title: .title,
+      url: .url,
+      author: .author.login,
+      state: .state,
+      draft: (.isDraft == true),
+      created: (.createdAt | epoch),
+      closed: (.closedAt | epoch)
+    })
+  | unique_by(.url)
+  | map(. + {
+      opened: (.created != null and .created >= $since),
+      merged: (.state == "merged" and .closed != null and .closed >= $since)
+    })
+  | map(select(.opened or .merged))
+  | sort_by(-(if .merged then .closed else .created end))
+  | {
+      time: $now,
+      since: $since,
+      login: $login,
+      owners: ($owners | split(",")),
+      mine: map(select(.author == $login)),
+      others: map(select(.author != $login))
+    }')
+
+# One rename, so the panel's file watch sees a whole file and never a torn one.
+mkdir -p "$state_dir"
+tmp=$(mktemp "$state_file.XXXXXX")
+printf '%s\n' "$record" >"$tmp"
+mv "$tmp" "$state_file"

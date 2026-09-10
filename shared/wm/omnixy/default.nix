@@ -345,6 +345,9 @@ let
         # Classic's custom/codexbar; the upstream widget covers the same
         # per-model AI usage and more.
         { id = "omnixy.agents"; }
+        # Pull requests opened and merged in the last day (record:
+        # agents/2026-09-10-003).
+        { id = "omnixy.source-control"; }
       ];
       right = [
         { id = "omnixy.keyboard-layout"; }
@@ -685,6 +688,48 @@ in
       Install.WantedBy = [ "timers.target" ];
     };
 
+    # The pull requests opened and merged in the last day, for the
+    # source-control panel (record: agents/2026-09-10-003). Every host with a
+    # gh login records: two search requests every five minutes is nothing
+    # against the search API's thirty a minute, and a host that never logged
+    # in is skipped by the path condition rather than failing on the timer.
+    # Not PartOf omnixy-session.target for the same reason the speedtest is
+    # not: the record is worth keeping whether or not the shell is up.
+    services.omnixy-source-control = {
+      Unit = {
+        Description = "Record the pull requests opened and merged in the last day";
+        ConditionPathExists = "%h/.config/gh/hosts.yml";
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${shell}/bin/omnixy-source-control-record";
+        # gh reaches the recorder here rather than through the desktop's
+        # runtimePath: only the recorder needs it.
+        Environment = [
+          "PATH=${shell}/bin:${shell.runtimePath}:${
+            lib.makeBinPath [
+              pkgs.bash
+              pkgs.coreutils
+              pkgs.jq
+              pkgs.gh
+            ]
+          }"
+        ];
+      };
+    };
+
+    timers.omnixy-source-control = {
+      Unit = {
+        Description = "Timer for the Omnixy pull-request recording";
+        ConditionPathExists = "%h/.config/gh/hosts.yml";
+      };
+      Timer = {
+        OnBootSec = "2min";
+        OnUnitActiveSec = "5min";
+      };
+      Install.WantedBy = [ "timers.target" ];
+    };
+
     timers.omnixy-background-rotate = {
       Unit = {
         Description = "Timer for the Omnixy background rotation";
@@ -786,6 +831,22 @@ in
       "$jq" "''${args[@]}" "$apply" "${shell}/config/omnixy/shell.json" >"$cfg"
     elif ! "$jq" -e 'has("bar") and (.bar | has("bottom"))' "$cfg" >/dev/null; then
       "$jq" "''${args[@]}" "$apply" "$cfg" >"$cfg.omnixy" && mv "$cfg.omnixy" "$cfg"
+    fi
+  '';
+
+  # The source-control widget joins an existing layout once. The migration
+  # above is gated on bar.bottom and so leaves a converted shell.json alone;
+  # this appends the widget to the top bar's centre cluster when no section of
+  # either bar names it, and never touches a layout that does -- a user who
+  # dragged it elsewhere, or removed it, keeps that.
+  home.activation.omnixySourceControlWidget = lib.hm.dag.entryAfter [ "omnixyBarLayout" ] ''
+    cfg="$HOME/.config/omnixy/shell.json"
+    jq=${pkgs.jq}/bin/jq
+    if [ -e "$cfg" ] && ! "$jq" -e '
+        [.bar.layout, .bar.bottom.layout | .. | objects | select(.id == "omnixy.source-control")]
+        | length > 0' "$cfg" >/dev/null; then
+      "$jq" '.bar.layout.center = ((.bar.layout.center // []) + [{ id: "omnixy.source-control" }])' \
+        "$cfg" >"$cfg.omnixy" && mv "$cfg.omnixy" "$cfg"
     fi
   '';
 }
