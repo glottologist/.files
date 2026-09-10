@@ -26,6 +26,7 @@
     ../common/harmonia-substituter.nix
     ../common/stylix.nix
     ../common/tailscale.nix
+    ../common/veracrypt.nix
     ../common/virtualization.nix
     # Same modules homes/glottologist imports. Dual-purpose: on NixOS they
     # land in environment.systemPackages (and dumpcap via programs.wireshark).

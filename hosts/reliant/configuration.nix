@@ -15,6 +15,7 @@
     ../common/hetzner-disk.nix
     ../common/nix.nix
     ../common/tailscale.nix
+    ../common/veracrypt.nix
     ../common/plasma-desktop.nix
     ../common/xrdp-tailnet.nix
     ../common/ennio-node.nix

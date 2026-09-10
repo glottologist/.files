@@ -28,6 +28,7 @@
     ../common/nym-vpn.nix
     ../common/stylix.nix
     ../common/tailscale.nix
+    ../common/veracrypt.nix
   ];
 
   system.stateVersion = "26.05";

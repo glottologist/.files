@@ -19,6 +19,7 @@
     ../common/nix.nix
     ../common/harmonia-substituter.nix
     ../common/tailscale.nix
+    ../common/veracrypt.nix
     ../common/plasma-desktop.nix
     ../common/xrdp-tailnet.nix
     ../common/ennio-node.nix
