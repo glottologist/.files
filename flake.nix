@@ -137,6 +137,7 @@
         overlays = [
           (final: prev: {
             inherit (pkgs-unstable)
+              meshcore-cli
               ollama
               ollama-cuda
               ollama-rocm
@@ -150,6 +151,7 @@
             # is a different thing. See shared/network/nym-vpn-core.nix.
             nym-vpn-core = final.callPackage ./shared/network/nym-vpn-core.nix { };
             omnixy-desktop = final.callPackage ./shared/wm/omnixy/package.nix { };
+            gtk-meshtastic-client = final.callPackage ./shared/communication/gtk-meshtastic-client.nix { };
             # Sandbox: tests/test_robotstxt.py hits OSError on http://e/somefile.html.
             # pkgs.dosage.doCheck can read false while pytestCheckHook still runs.
             dosage = prev.dosage.overridePythonAttrs (_: {

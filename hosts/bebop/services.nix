@@ -80,6 +80,8 @@
 in {
   environment.systemPackages = with pkgs; [
     cura-appimage
+    gtk-meshtastic-client
+    meshcore-cli
     systemdgenie
     systemctl-tui
   ];

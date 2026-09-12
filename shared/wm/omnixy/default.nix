@@ -15,6 +15,13 @@ let
   # classic and caelestia profiles are adopted one by one on top of it. The
   # decision record lives in agents/ alongside the scaffold notes.
   shell = pkgs.omnixy-desktop;
+  meshtasticEnabled = username == "glottologist";
+  meshcoreLauncher = pkgs.writeShellScript "omnixy-meshcore" ''
+    ${pkgs.meshcore-cli}/bin/meshcli -S
+    status=$?
+    read -r -p "Press Enter to close MeshCore… "
+    exit "$status"
+  '';
 
   classicCatalog = import ../hyprland/keybind-catalog.nix { inherit username; };
   catalogToLua = import ../hyprland/catalog-to-lua.nix { inherit lib; };
@@ -349,7 +356,7 @@ let
         # agents/2026-09-10-003).
         { id = "omnixy.source-control"; }
       ];
-      right = [
+      right = lib.optional meshtasticEnabled { id = "custom.meshtastic"; } ++ [
         { id = "omnixy.keyboard-layout"; }
         { id = "omnixy.weather"; }
         { id = "omnixy.monitor"; }
@@ -389,6 +396,22 @@ let
 in
 {
   xdg.configFile = {
+    # Keep the plugin path and ID stable so existing bar placement is preserved.
+    "omnixy/plugins/meshtastic/manifest.json" = lib.mkIf meshtasticEnabled {
+      source = ./tools/meshtastic/manifest.json;
+    };
+    "omnixy/plugins/meshtastic/Panel.qml" = lib.mkIf meshtasticEnabled {
+      text =
+        builtins.replaceStrings
+          [ "@client@" "@meshcore@" "@terminal@" ]
+          [
+            "${pkgs.gtk-meshtastic-client}/bin/gtk-meshtastic-client"
+            "${meshcoreLauncher}"
+            "${pkgs.xdg-terminal-exec}/bin/xdg-terminal-exec"
+          ]
+          (builtins.readFile ./tools/meshtastic/Panel.qml);
+    };
+
     # Session entry point; the greeter wrapper passes
     # --config ~/.config/hypr/omnixy.lua and exports OMNIXY_PATH.
     "hypr/omnixy.lua".text = ''
@@ -529,7 +552,13 @@ in
     "omnixy-cfg/classic-binds.lua".text = catalogToLua classicCatalog;
   };
 
-  home.packages = [ backgroundSetSwitcher ];
+  home.packages = [
+    backgroundSetSwitcher
+  ]
+  ++ lib.optionals meshtasticEnabled [
+    pkgs.gtk-meshtastic-client
+    pkgs.meshcore-cli
+  ];
 
   # Every rotating wallpaper set, which is what the picker rows and the
   # rotation timer read. Classic's ~/Pictures/Wallpapers (the one set named in
@@ -849,4 +878,22 @@ in
         "$cfg" >"$cfg.omnixy" && mv "$cfg.omnixy" "$cfg"
     fi
   '';
+
+  home.activation.omnixyMeshtasticWidget = lib.mkIf meshtasticEnabled (
+    lib.hm.dag.entryAfter [ "omnixySourceControlWidget" ] ''
+      cfg="$HOME/.config/omnixy/shell.json"
+      state="''${XDG_STATE_HOME:-$HOME/.local/state}/omnixy"
+      marker="$state/meshtastic-widget-v1"
+      if [ -f "$cfg" ] && [ ! -e "$marker" ]; then
+        ${pkgs.jq}/bin/jq '
+          if ([.bar.layout, .bar.bottom.layout | .. | objects
+              | select(.id == "custom.meshtastic")] | length) == 0
+          then .bar.layout.right = ([{ id: "custom.meshtastic" }] + (.bar.layout.right // []))
+          else . end' "$cfg" >"$cfg.meshtastic"
+        mv "$cfg.meshtastic" "$cfg"
+        mkdir -p "$state"
+        touch "$marker"
+      fi
+    ''
+  );
 }
