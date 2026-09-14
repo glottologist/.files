@@ -77,6 +77,7 @@ let
     ) sources;
 
   # Skills shared across all agents live under secrets/ai/shared/skills/<name>/.
+  # Rust uses its existing coding-skills source so all reviewers share one policy.
   # Each directory is installed into every agent skills root (Claude, Codex, Grok,
   # Forge, Pi) plus ~/.agents/skills and ~/.claude/skills.
   #
@@ -84,16 +85,18 @@ let
   # file-level links. Codex only advertises skills whose top-level entry under
   # ~/.codex/skills is a directory symlink; recursive real dirs are invisible.
   sharedSkillsDir = ../../secrets/ai/shared/skills;
-  sharedSkillNames = builtins.attrNames (
-    lib.filterAttrs (_: type: type == "directory") (builtins.readDir sharedSkillsDir)
-  );
+  sharedSkillNames =
+    (builtins.attrNames (
+      lib.filterAttrs (_: type: type == "directory") (builtins.readDir sharedSkillsDir)
+    ))
+    ++ [ "rust" ];
   mkSharedSkills =
     skillsRoot:
     lib.listToAttrs (
       map (name: {
         name = "${skillsRoot}/${name}";
         value = {
-          source = sharedSkillsDir + "/${name}";
+          source = if name == "rust" then s + "/skills/coding-skills/rust" else sharedSkillsDir + "/${name}";
         };
       }) sharedSkillNames
     );
@@ -196,6 +199,9 @@ let
       );
       "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (
         s + "/skills/coding-skills/shared/references/security-basics.md"
+      );
+      "${dir}/skills/coding-skills/rust/references/architecture.md".text = builtins.readFile (
+        s + "/skills/coding-skills/rust/references/architecture.md"
       );
       "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (
         s + "/skills/coding-skills/rust/references/advanced-types.md"
@@ -505,6 +511,9 @@ let
       "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (
         s + "/skills/coding-skills/shared/references/security-basics.md"
       );
+      "${dir}/skills/coding-skills/rust/references/architecture.md".text = builtins.readFile (
+        s + "/skills/coding-skills/rust/references/architecture.md"
+      );
       "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (
         s + "/skills/coding-skills/rust/references/advanced-types.md"
       );
@@ -774,6 +783,9 @@ let
       "${dir}/skills/coding-skills/shared/references/security-basics.md".text = builtins.readFile (
         s + "/skills/coding-skills/shared/references/security-basics.md"
       );
+      "${dir}/skills/coding-skills/rust/references/architecture.md".text = builtins.readFile (
+        s + "/skills/coding-skills/rust/references/architecture.md"
+      );
       "${dir}/skills/coding-skills/rust/references/advanced-types.md".text = builtins.readFile (
         s + "/skills/coding-skills/rust/references/advanced-types.md"
       );
@@ -964,11 +976,20 @@ let
       inherit lib mkSkillFiles;
     })
     // mkSharedSkills ".codex/skills";
-  grokFiles =
+  # Grok profiles mirror the Claude personal/work split: each GROK_HOME gets
+  # the same skills and rules, the fish functions gkp/gkw select the profile.
+  grokProfiles = [
+    ".grok"
+    ".grok-personal"
+    ".grok-work"
+  ];
+  mkGrokFiles =
+    dir:
     (import ../../secrets/ai/grok {
-      inherit mkSkillFiles;
+      inherit mkSkillFiles dir;
     })
-    // mkSharedSkills ".grok/skills";
+    // mkSharedSkills "${dir}/skills";
+  grokFiles = lib.foldl lib.recursiveUpdate { } (map mkGrokFiles grokProfiles);
   # agentskills.io standard user path (Codex also scans ~/.agents/skills).
   # Default Claude Code path (~/.claude/skills) in addition to personal/work profiles.
   agentsSkillsFiles = mkSharedSkills ".agents/skills" // mkSharedSkills ".claude/skills";
@@ -1028,7 +1049,9 @@ in
         })
 
         $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.codex/skills" "''${codex_names[@]}" "''${shared_names[@]}"
-        $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.grok/skills" "''${grok_names[@]}" "''${shared_names[@]}"
+        for root in ${lib.escapeShellArgs grokProfiles}; do
+          $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/$root/skills" "''${grok_names[@]}" "''${shared_names[@]}"
+        done
         for root in .agents/skills .claude/skills .claude-personal/skills .claude-work/skills ${lib.optionalString installForge ".forge/skills "}.pi/agent/skills; do
           $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/$root" "''${shared_names[@]}"
         done
