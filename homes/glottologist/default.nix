@@ -17,6 +17,7 @@
 
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
+    qpdf
   ];
 in {
   programs.home-manager = {
@@ -75,6 +76,7 @@ in {
   xdg = {
     inherit configHome;
     enable = true;
+    configFile."fish/functions/pdf_unlock.fish".source = ../../shared/terminal/fish/functions/pdf_unlock.fish;
   };
 
   home = {
