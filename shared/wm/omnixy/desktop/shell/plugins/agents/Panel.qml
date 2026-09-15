@@ -129,6 +129,28 @@ Panel {
     return best
   }
 
+  // The bar carries the long game instead: a session window empties again in
+  // hours, so the number worth watching from across the room is the weekly
+  // one. A title is already settled ("Weekly", "Monthly", "Fable Weekly"), so
+  // the suffix names the window without reparsing the label.
+  function windowIsBarWorthy(w) {
+    var title = String(w ? w.title : "")
+    return /(?:Weekly|Monthly)$/.test(title)
+  }
+
+  // The fullest weekly window, since a model-scoped one can run ahead of the
+  // account-wide allowance. An agent that reports no weekly window at all
+  // falls back to whatever is binding it.
+  function barWindow(p) {
+    var windows = limitWindows(p)
+    var best = null
+    for (var i = 0; i < windows.length; i++) {
+      if (!windowIsBarWorthy(windows[i])) continue
+      if (!best || windows[i].percent > best.percent) best = windows[i]
+    }
+    return best || bindingWindow(p)
+  }
+
   function resetMsFor(w) {
     if (!w || w.resetAt === "") return -1
     var ms = new Date(w.resetAt).getTime()
@@ -149,16 +171,17 @@ Panel {
   // ------------------------------------------------------------------- bar
   //
   // With the panel closed the bar carries one mark per agent and, beside it,
-  // the number that decides how much room is left: the fullest window, or the
+  // the number worth watching across a week: the fullest weekly window, or the
   // credit remaining on a prepaid account. An agent that reports neither shows
-  // its mark alone.
+  // its mark alone. The mark still lights up for whichever window is binding,
+  // so a full session window is not lost by showing the weekly number.
 
   function percentText(w) {
     return Math.round(w.percent * 100) + "%"
   }
 
   function providerBarText(p) {
-    var w = bindingWindow(p)
+    var w = barWindow(p)
     if (w) return percentText(w)
     var b = p ? p.balance : null
     return b ? formatMoney(b.remaining, b.currency) : ""
@@ -181,7 +204,7 @@ Panel {
     var windows = limitWindows(p)
     for (var i = 0; i < windows.length; i++) parts.push(windows[i].title + " " + percentText(windows[i]))
     if (p.balance) parts.push(formatMoney(p.balance.remaining, p.balance.currency) + " left")
-    var reset = resetClockText(bindingWindow(p))
+    var reset = resetClockText(barWindow(p))
     if (reset !== "") parts.push(reset)
     if (windows.length === 0 && !p.balance && String(p.usageStatusText || "") !== "")
       parts.push(p.usageStatusText)

@@ -24,6 +24,7 @@ function pdf2epub --description "Convert PDF to EPUB without modifying the origi
                     echo "is given, it is the output directory."
                     echo "Scanned PDFs, whose OCR text is invisible, are converted through"
                     echo "pdftohtml -hidden; the images are dropped and the text kept."
+                    echo "PDF headers and footers are kept to avoid Calibre auto-detection crashes."
                     echo "Use --force to overwrite an existing EPUB."
                     return 0
                 case -f --force
@@ -189,7 +190,8 @@ function __pdf2epub_convert_one --argument-names pdf epub force
         rm -rf $work
     else
         echo "[INFO] Converting $pdf -> $epub"
-        ebook-convert $pdf $epub --enable-heuristics --epub-version 3
+        # Calibre 9.13 header detection can index past the last page of short PDFs.
+        ebook-convert $pdf $epub --enable-heuristics --epub-version 3 --pdf-header-skip 0 --pdf-footer-skip 0
         set convert_status $status
     end
 
