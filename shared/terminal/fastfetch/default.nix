@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   programs.fastfetch = {
     enable = true;
@@ -26,7 +27,7 @@
         "break"
         {
           type = "os";
-          key = "Nixos 24.11";
+          key = "NixOS ${lib.trivial.release}";
           keyColor = "31";
         }
         {
