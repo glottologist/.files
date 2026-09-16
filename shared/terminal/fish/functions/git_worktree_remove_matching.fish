@@ -1,9 +1,14 @@
 function git_worktree_remove_matching
     # Usage:
-    #   git_worktree_remove_matching <substring> [--regex|-r] [--dry-run|-n] [--yes|-y] [--no-force] [--prune] [--prune-only]
+    #   git_worktree_remove_matching <pattern> [--regex|-r] [--dry-run|-n] [--yes|-y] [--force|-f] [--no-force] [--prune] [--prune-only]
     #
-    # Removes every worktree whose path contains <substring>. Pass --regex to treat
-    # the pattern as a regular expression instead of a literal.
+    # Removes every worktree whose path contains <pattern>. The pattern may use
+    # `*` wildcards (fish's `string match` knows no other); the match is
+    # unanchored, so `jason/*cors` and `*upload*` both work. Pass --regex to
+    # treat the pattern as a regular expression instead.
+    #
+    # Quote wildcards: fish expands an unquoted `*upload*` against the current
+    # directory before this function runs and aborts when nothing matches.
     #
     # Notes:
     #   - Removal uses --force by default; pass --no-force to let git refuse dirty trees.
@@ -25,6 +30,8 @@ function git_worktree_remove_matching
                     set dry_run 1
                 case --yes -y
                     set assume_yes 1
+                case --force -f
+                    set use_force 1
                 case --no-force
                     set use_force 0
                 case --prune
@@ -36,7 +43,7 @@ function git_worktree_remove_matching
                     set use_regex 1
                 case '*'
                     echo "Unknown option: $arg" >&2
-                    echo "Usage: git_worktree_remove_matching <substring> [--regex|-r] [--dry-run|-n] [--yes|-y] [--no-force] [--prune] [--prune-only]" >&2
+                    echo "Usage: git_worktree_remove_matching <pattern> [--regex|-r] [--dry-run|-n] [--yes|-y] [--force|-f] [--no-force] [--prune] [--prune-only]" >&2
                     return 1
             end
         else if test -z "$pattern"
@@ -67,7 +74,7 @@ function git_worktree_remove_matching
     end
 
     if test -z "$pattern"
-        echo "Usage: git_worktree_remove_matching <substring> [--regex|-r] [--dry-run|-n] [--yes|-y] [--no-force] [--prune] [--prune-only]" >&2
+        echo "Usage: git_worktree_remove_matching <pattern> [--regex|-r] [--dry-run|-n] [--yes|-y] [--force|-f] [--no-force] [--prune] [--prune-only]" >&2
         return 1
     end
 

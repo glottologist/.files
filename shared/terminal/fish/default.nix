@@ -258,7 +258,7 @@ in
       gwlk = "git worktree lock";
       gwm = "git worktree move";
       gwp = "git worktree prune";
-      gwr = "git worktree remove";
+      gwr = "git_worktree_remove_matching";
       gwpr = "pr_worktree";
       gwrf = "git_worktree_remove_matching";
       gwrm = "git_worktree_remove_matching";
