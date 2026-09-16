@@ -9,9 +9,6 @@
     discord # All-in-one cross-platform voice and text chat for gamers
     localsend # LAN file sharing (Omarchy Share)
     himalaya
-    kbfs
-    keybase
-    keybase-gui
     neomutt
     signal-desktop # signam messenger
     slack-term # Slack client for your term
@@ -26,8 +23,4 @@
       };
     })
   ];
-  services = {
-  kbfs.enable = true;
-    keybase.enable = true; # Keybase is a key directory that maps social media identities to encryption keys in a publicly auditable manner.
-  };
 }
