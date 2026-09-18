@@ -1045,6 +1045,7 @@ in
             "review-strict"
             "superplan"
             "teach"
+            "weekly-report"
           ]
         })
 
