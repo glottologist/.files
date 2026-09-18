@@ -41,6 +41,7 @@ in {
   qt.platformTheme = "gtk2";
 
   imports = [
+    ./keybase.nix
     ../../secrets/accounts.nix
     ../../shared/ai/default.nix
     ../../shared/alerts/default.nix
