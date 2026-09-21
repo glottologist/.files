@@ -35,10 +35,14 @@ in
   };
 
   # Plain DNS to Quad9 (DoT off — opportunistic DoT stalled dig/musl on this link).
+  # IPv4 only, and no local DNSSEC validation: on IPv6-enabled guest wifi the
+  # v6 path to Quad9 dropped ~1.4 KB signed answers, resolved then degraded that
+  # server to no-DO, and with allow-downgrade every .com lookup SERVFAILed for
+  # half an hour (2026-09-21, twice). Quad9 validates upstream, so nothing is lost.
   services.resolved = {
     enable = true;
     settings.Resolve = {
-      DNSSEC = "allow-downgrade";
+      DNSSEC = "false";
       Domains = [ "~." ];
       FallbackDNS = [
         "9.9.9.9"
@@ -48,8 +52,6 @@ in
       DNS = [
         "9.9.9.9"
         "149.112.112.112"
-        "2620:fe::fe"
-        "2620:fe::9"
       ];
     };
   };

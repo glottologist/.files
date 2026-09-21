@@ -49,11 +49,14 @@ in
   };
 
   # Plain DNS to Quad9, matching Bebop: opportunistic DoT stalled dig and musl
-  # on that link, and there is no reason to expect this one to differ.
+  # on that link, and there is no reason to expect this one to differ. IPv4
+  # only with local DNSSEC validation off, again matching Bebop, where the v6
+  # path to Quad9 on guest wifi dropped large signed answers and resolved's
+  # allow-downgrade turned that into a SERVFAIL for every .com (2026-09-21).
   services.resolved = {
     enable = true;
     settings.Resolve = {
-      DNSSEC = "allow-downgrade";
+      DNSSEC = "false";
       Domains = [ "~." ];
       FallbackDNS = [
         "9.9.9.9"
@@ -63,8 +66,6 @@ in
       DNS = [
         "9.9.9.9"
         "149.112.112.112"
-        "2620:fe::fe"
-        "2620:fe::9"
       ];
     };
   };
