@@ -21,6 +21,12 @@ function parseStatus(raw) {
     var parsed = JSON.parse(text)
     if (!parsed || typeof parsed !== "object") return defaultStatus()
     parsed.files = Array.isArray(parsed.files) ? parsed.files : []
+    parsed.excluded = Array.isArray(parsed.excluded) ? parsed.excluded : []
+    parsed.bandwidth = normaliseBandwidth(parsed.bandwidth)
+    parsed.lanSync = parsed.lanSync !== false
+    parsed.lanSyncRecorded = parsed.lanSyncRecorded === true
+    parsed.autostart = normaliseAutostart(parsed.autostart)
+    parsed.rootPath = String(parsed.rootPath || parsed.accountPath || "")
     return parsed
   } catch (e) {
     var failed = defaultStatus()
@@ -43,8 +49,122 @@ function defaultStatus() {
     quotaBytes: 0,
     usagePercent: 0,
     quotaKnown: false,
-    files: []
+    files: [],
+    rootPath: "",
+    excluded: [],
+    bandwidth: normaliseBandwidth(null),
+    lanSync: true,
+    lanSyncRecorded: false,
+    autostart: normaliseAutostart(null)
   }
+}
+
+var UPLOAD_MODES = ["unlimited", "auto", "manual"]
+
+function normaliseBandwidth(raw) {
+  var value = raw && typeof raw === "object" ? raw : {}
+  var download = String(value.downloadMode || "unlimited")
+  var upload = String(value.uploadMode || "unlimited")
+  return {
+    known: value.known === true,
+    downloadMode: download === "manual" ? "manual" : "unlimited",
+    uploadMode: UPLOAD_MODES.indexOf(upload) >= 0 ? upload : "unlimited",
+    downloadLimit: positiveInt(value.downloadLimit),
+    uploadLimit: positiveInt(value.uploadLimit)
+  }
+}
+
+function normaliseAutostart(raw) {
+  var value = raw && typeof raw === "object" ? raw : {}
+  return {
+    managed: value.managed === "systemd" ? "systemd" : "desktop",
+    enabled: value.enabled === true
+  }
+}
+
+function positiveInt(value) {
+  var n = parseInt(String(value === undefined || value === null ? "0" : value), 10)
+  return isFinite(n) && n > 0 ? n : 0
+}
+
+// Human label for one direction of the throttle: "Unlimited", "Auto" or the
+// manual rate.
+function bandwidthLabel(mode, limitKb) {
+  if (mode === "manual") return formatRate(limitKb)
+  if (mode === "auto") return "Auto"
+  return "Unlimited"
+}
+
+function formatRate(limitKb) {
+  var kb = positiveInt(limitKb)
+  if (kb === 0) return "Unlimited"
+  if (kb >= 1000) {
+    var mb = kb / 1000
+    return (mb >= 10 ? Math.round(mb) : mb.toFixed(1).replace(/\.0$/, "")) + " MB/s"
+  }
+  return kb + " KB/s"
+}
+
+// Arguments for `dropbox-cli throttle DOWNLOAD UPLOAD`. A manual mode with no
+// usable rate falls back to unlimited rather than sending 0, which the CLI
+// would reject.
+function throttleArgs(bandwidth) {
+  var b = normaliseBandwidth(bandwidth)
+  var down = b.downloadMode === "manual" && b.downloadLimit > 0 ? String(b.downloadLimit) : "unlimited"
+  var up = b.uploadMode === "manual" ? (b.uploadLimit > 0 ? String(b.uploadLimit) : "unlimited") : b.uploadMode
+  return [down, up]
+}
+
+function nextUploadMode(mode) {
+  var index = UPLOAD_MODES.indexOf(String(mode || "unlimited"))
+  return UPLOAD_MODES[(index < 0 ? 0 : index + 1) % UPLOAD_MODES.length]
+}
+
+function parseFolders(raw) {
+  var text = String(raw || "").trim()
+  var failed = { ok: false, path: "", rootPath: "", folders: [], error: "Failed to read Dropbox folders" }
+  if (text === "") return failed
+  try {
+    var parsed = JSON.parse(text)
+    if (!parsed || typeof parsed !== "object") return failed
+    if (parsed.ok !== true) return { ok: false, path: "", rootPath: "", folders: [], error: String(parsed.error || failed.error) }
+    return {
+      ok: true,
+      path: String(parsed.path || ""),
+      rootPath: String(parsed.rootPath || ""),
+      folders: Array.isArray(parsed.folders) ? parsed.folders : [],
+      error: ""
+    }
+  } catch (e) {
+    return failed
+  }
+}
+
+// The browser's breadcrumb: "/" at the Dropbox root, else the path inside it.
+function relativeFolder(path, rootPath) {
+  var p = String(path || "")
+  var root = String(rootPath || "")
+  if (root === "" || p === root) return "/"
+  if (p.indexOf(root + "/") === 0) return p.substring(root.length)
+  return p
+}
+
+function parentPath(path, rootPath) {
+  var p = String(path || "")
+  var root = String(rootPath || "")
+  if (p === root || p === "") return root
+  var index = p.lastIndexOf("/")
+  if (index <= 0) return root
+  var parent = p.substring(0, index)
+  return parent.length < root.length ? root : parent
+}
+
+function folderMeta(folder) {
+  if (!folder) return ""
+  if (folder.excluded) return "Not synced"
+  var inside = positiveInt(folder.excludedInside)
+  if (inside > 0) return "Synced · " + inside + " excluded inside"
+  return "Synced"
 }
 
 function fileExtension(name) {
@@ -132,6 +252,16 @@ if (typeof module !== "undefined") {
     formatPercent: formatPercent,
     usageText: usageText,
     relativeTime: relativeTime,
-    fileMeta: fileMeta
+    fileMeta: fileMeta,
+    normaliseBandwidth: normaliseBandwidth,
+    normaliseAutostart: normaliseAutostart,
+    bandwidthLabel: bandwidthLabel,
+    formatRate: formatRate,
+    throttleArgs: throttleArgs,
+    nextUploadMode: nextUploadMode,
+    parseFolders: parseFolders,
+    relativeFolder: relativeFolder,
+    parentPath: parentPath,
+    folderMeta: folderMeta
   }
 }

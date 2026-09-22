@@ -31,6 +31,21 @@ Item {
   property string actionStatus: ""
   property string lastError: ""
 
+  // Settings read back from the daemon on every refresh (see status.py).
+  property string rootPath: ""
+  property var excluded: []
+  property var bandwidth: Model.normaliseBandwidth(null)
+  property bool lanSync: true
+  property bool lanSyncRecorded: false
+  property var autostart: Model.normaliseAutostart(null)
+
+  // Selective-sync browser: the folder being shown and its entries.
+  property string browsePath: ""
+  property var browseFolders: []
+  property string browseError: ""
+  readonly property bool browsing: foldersProcess.running
+  readonly property bool settingsBusy: settingsProcess.running
+
   readonly property int refreshIntervalSec: intSetting("refreshIntervalSec", 60, 10, 3600)
   readonly property bool busy: statusProcess.running || loginProcess.running || controlProcess.running
   readonly property string helperPath: (omnixyPath || "") + "/shell/plugins/panels/dropbox/status.py"
@@ -42,6 +57,11 @@ Item {
   property bool _loginUrlOpened: false
   property string _controlOutput: ""
   property string _controlError: ""
+  property string _foldersOutput: ""
+  property string _foldersError: ""
+  property string _settingsOutput: ""
+  property string _settingsError: ""
+  property bool _settingsReloadFolders: false
 
   function setting(name, fallback) {
     var value = settings ? settings[name] : undefined
@@ -84,7 +104,99 @@ Item {
     usagePercent = Number(parsed.usagePercent || 0)
     quotaKnown = parsed.quotaKnown === true
     files = parsed.files || []
+    rootPath = parsed.rootPath
+    excluded = parsed.excluded
+    bandwidth = parsed.bandwidth
+    lanSync = parsed.lanSync
+    lanSyncRecorded = parsed.lanSyncRecorded
+    autostart = parsed.autostart
+    if (browsePath === "" && rootPath !== "") browsePath = rootPath
     lastError = ""
+  }
+
+  function browse(path) {
+    if (foldersProcess.running || helperPath === "/shell/plugins/panels/dropbox/status.py") return
+    var target = String(path || browsePath || rootPath)
+    if (target === "") return
+    browsePath = target
+    _foldersOutput = ""
+    _foldersError = ""
+    foldersProcess.command = ["python3", helperPath, "folders", target]
+    foldersProcess.running = true
+  }
+
+  function browseUp() {
+    browse(Model.parentPath(browsePath, rootPath))
+  }
+
+  function browseInto(folder) {
+    if (!folder || !folder.path || folder.excluded) return
+    browse(String(folder.path))
+  }
+
+  function applyFolders(raw) {
+    var parsed = Model.parseFolders(raw)
+    if (!parsed.ok) {
+      browseError = parsed.error
+      return
+    }
+    browseError = ""
+    browsePath = parsed.path
+    browseFolders = parsed.folders
+  }
+
+  function setFolderSynced(folder, synced) {
+    if (!folder || !folder.path) return
+    var name = String(folder.name || folder.path)
+    runSettings(["dropbox-cli", "exclude", synced ? "remove" : "add", String(folder.path)],
+                (synced ? "Syncing " : "Excluding ") + name + "…", true)
+  }
+
+  function setBandwidth(patch) {
+    var next = {
+      known: true,
+      downloadMode: bandwidth.downloadMode,
+      uploadMode: bandwidth.uploadMode,
+      downloadLimit: bandwidth.downloadLimit,
+      uploadLimit: bandwidth.uploadLimit
+    }
+    for (var key in patch) next[key] = patch[key]
+    next = Model.normaliseBandwidth(next)
+    var args = Model.throttleArgs(next)
+    if (!runSettings(["dropbox-cli", "throttle", args[0], args[1]], "Setting bandwidth…", false)) return
+    bandwidth = next
+  }
+
+  function setLanSync(enabled) {
+    if (!runSettings(["python3", helperPath, "lansync", enabled ? "y" : "n"], enabled ? "Enabling LAN sync…" : "Disabling LAN sync…", false)) return
+    lanSync = enabled
+    lanSyncRecorded = true
+  }
+
+  function setAutostart(enabled) {
+    if (autostart.managed !== "desktop") return
+    if (!runSettings(["dropbox-cli", "autostart", enabled ? "y" : "n"], enabled ? "Enabling autostart…" : "Disabling autostart…", false)) return
+    autostart = { managed: "desktop", enabled: enabled }
+  }
+
+  // dropbox-cli exits 0 even when the daemon refuses, so the result is judged
+  // on its text: "isn't running", "isn't responding", "Couldn't …" and the
+  // helper's {"ok": false} all count as failure.
+  function settingsFailed(exitCode, output) {
+    if (exitCode !== 0) return true
+    var text = String(output || "")
+    return /isn't|Couldn't|Could not|"ok":\s*false/.test(text)
+  }
+
+  function runSettings(command, label, reloadFolders) {
+    if (!installed || settingsProcess.running) return false
+    _settingsOutput = ""
+    _settingsError = ""
+    _settingsReloadFolders = reloadFolders
+    actionStatus = label
+    settingsProcess.command = command
+    settingsProcess.running = true
+    return true
   }
 
   function elideStatus(text) {
@@ -271,6 +383,44 @@ Item {
       }
       settleTimer.ticks = 0
       settleTimer.restart()
+      delayedRefresh.restart()
+    }
+  }
+
+  Process {
+    id: foldersProcess
+    running: false
+    command: []
+    stdout: StdioCollector { id: foldersStdout; waitForEnd: true; onStreamFinished: root._foldersOutput = text }
+    stderr: StdioCollector { id: foldersStderr; waitForEnd: true; onStreamFinished: root._foldersError = text }
+    onExited: function(exitCode) {
+      var stdout = String(foldersStdout.text || root._foldersOutput || "")
+      var stderr = String(foldersStderr.text || root._foldersError || "")
+      if (exitCode === 0) root.applyFolders(stdout)
+      else root.browseError = root.elideStatus(stderr || stdout || "Could not read Dropbox folders")
+    }
+  }
+
+  Process {
+    // One settings write at a time: exclude add/remove, throttle, lansync,
+    // autostart. Excluding can take a while because dropboxd resyncs, so the
+    // action status stays up until the command returns.
+    id: settingsProcess
+    running: false
+    command: []
+    stdout: StdioCollector { id: settingsStdout; waitForEnd: true; onStreamFinished: root._settingsOutput = text }
+    stderr: StdioCollector { id: settingsStderr; waitForEnd: true; onStreamFinished: root._settingsError = text }
+    onExited: function(exitCode) {
+      var stdout = String(settingsStdout.text || root._settingsOutput || "")
+      var stderr = String(settingsStderr.text || root._settingsError || "")
+      if (root.settingsFailed(exitCode, stdout + "\n" + stderr)) {
+        root.lastError = root.elideStatus(stderr || stdout || "Dropbox settings command failed")
+        root.actionStatus = root.lastError
+      } else {
+        root.lastError = ""
+        root.actionStatus = ""
+      }
+      if (root._settingsReloadFolders) root.browse(root.browsePath)
       delayedRefresh.restart()
     }
   }
