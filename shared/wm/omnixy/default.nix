@@ -346,7 +346,12 @@ let
     transparent = false;
     centerAnchor = "";
     layout = {
-      left = [ { id = "omnixy.tray"; } ];
+      left = [
+        # Transport for Spotify and every other MPRIS player, over the
+        # Goodvibes radio library (record: agents/2026-09-24-001).
+        { id = "omnixy.media-radio"; }
+        { id = "omnixy.tray"; }
+      ];
       center = [
         systemstatsModule
         # Classic's custom/codexbar; the upstream widget covers the same
@@ -759,6 +764,28 @@ in
       Install.WantedBy = [ "timers.target" ];
     };
 
+    # Goodvibes as a headless radio daemon behind the media-radio panel
+    # (record: agents/2026-09-24-001). Two deliberate choices are worth
+    # recording. The unit is not wanted by any target, so nothing starts it at
+    # login: the panel starts it the first time somebody asks for radio, and a
+    # session that never does pays nothing. And the daemon lives here rather
+    # than under the shell, because a theme change restarts quickshell and a
+    # player owned by the shell would go silent with it.
+    services.omnixy-radio = {
+      Unit = {
+        Description = "Goodvibes internet radio for the Omnixy media panel";
+        PartOf = [ "omnixy-session.target" ];
+        After = [ "omnixy-session.target" ];
+      };
+      Service = {
+        # --without-ui leaves the GTK window closed; the panel is the interface,
+        # and Goodvibes still answers on the session bus without it.
+        ExecStart = "${pkgs.goodvibes}/bin/goodvibes --without-ui";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+    };
+
     timers.omnixy-background-rotate = {
       Unit = {
         Description = "Timer for the Omnixy background rotation";
@@ -875,6 +902,20 @@ in
         [.bar.layout, .bar.bottom.layout | .. | objects | select(.id == "omnixy.source-control")]
         | length > 0' "$cfg" >/dev/null; then
       "$jq" '.bar.layout.center = ((.bar.layout.center // []) + [{ id: "omnixy.source-control" }])' \
+        "$cfg" >"$cfg.omnixy" && mv "$cfg.omnixy" "$cfg"
+    fi
+  '';
+
+  # The media-radio widget joins an existing layout once, at the leading edge
+  # of the top bar. A user who moved it or threw it away keeps that decision:
+  # the insert only runs when no section of either bar names it.
+  home.activation.omnixyMediaRadioWidget = lib.hm.dag.entryAfter [ "omnixySourceControlWidget" ] ''
+    cfg="$HOME/.config/omnixy/shell.json"
+    jq=${pkgs.jq}/bin/jq
+    if [ -e "$cfg" ] && ! "$jq" -e '
+        [.bar.layout, .bar.bottom.layout | .. | objects | select(.id == "omnixy.media-radio")]
+        | length > 0' "$cfg" >/dev/null; then
+      "$jq" '.bar.layout.left = ([{ id: "omnixy.media-radio" }] + (.bar.layout.left // []))' \
         "$cfg" >"$cfg.omnixy" && mv "$cfg.omnixy" "$cfg"
     fi
   '';

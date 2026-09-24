@@ -71,6 +71,10 @@ grep -q '"id": "omnixy.source-control"' "$out/shell/plugins/panels/source-contro
   || fail "source-control panel manifest missing"
 grep -q 'omnixy-source-control-record' "$out/shell/plugins/panels/source-control/Panel.qml" \
   || fail "source-control panel does not name the recorder"
+grep -q '"id": "omnixy.media-radio"' "$out/shell/plugins/panels/media-radio/manifest.json" \
+  || fail "media-radio panel manifest missing"
+grep -q 'io.gitlab.Goodvibes' "$out/shell/plugins/panels/media-radio/Model.js" \
+  || fail "media-radio model does not name the Goodvibes bus service"
 grep -q 'fontFamily: "omnixy"' "$out/shell/plugins/menu/BarWidget.qml" && fail "menu button still on the icon font"
 
 # Every script the closure kept can resolve every omnixy-* it names.

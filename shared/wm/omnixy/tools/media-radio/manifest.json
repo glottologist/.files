@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "omnixy.media-radio",
+  "name": "Media and radio",
+  "version": "1.0.0",
+  "author": "Omnixy",
+  "license": "MIT",
+  "description": "Now playing and transport for every MPRIS player, Spotify included, over a library of internet radio stations played through Goodvibes.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Media and radio",
+    "description": "Control Spotify and any other MPRIS player, and play internet radio stations.",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "left",
+    "defaults": {
+      "maxTitleChars": 28
+    },
+    "schema": [
+      {
+        "key": "maxTitleChars",
+        "type": "integer",
+        "label": "Track title width in the bar (characters)",
+        "min": 0,
+        "max": 80,
+        "step": 2,
+        "defaultValue": 28
+      }
+    ]
+  }
+}

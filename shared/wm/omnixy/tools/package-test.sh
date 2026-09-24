@@ -22,6 +22,8 @@ XDG_STATE_HOME=$(mktemp -d) "$out/bin/omnixy-network-speedtest-record" --nonsens
 "$out/bin/omnixy-source-control-record" --nonsense 2>/dev/null \
   && fail "source-control recorder accepts an argument"
 [ -f "$out/shell/plugins/panels/source-control/Panel.qml" ] || fail "source-control panel missing"
+[ -f "$out/shell/plugins/panels/media-radio/Panel.qml" ] || fail "media-radio panel missing"
+[ -f "$out/shell/plugins/panels/media-radio/Service.qml" ] || fail "media-radio service missing"
 grep -q "$(nix eval --raw --impure --expr '(import <nixpkgs> {}).hello')/bin/codexbar" "$out/bin/omnixy-agent-usage-grok" || fail "codexbar not substituted"
 grep -q '@codexbar@' "$out/bin/omnixy-agent-usage-grok" && fail "placeholder survived"
 head -1 "$out/bin/omnixy-menu" | grep -q '^#!/nix/store' || fail "shebangs not patched"
