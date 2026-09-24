@@ -18,6 +18,7 @@
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
     qpdf
+    stripe-cli # Stripe API, webhook forwarding and event triggers from the terminal
   ];
 in {
   programs.home-manager = {
