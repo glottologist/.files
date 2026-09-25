@@ -637,6 +637,16 @@ Panel {
     Quickshell.execDetached(["omnixy-bluetooth-power", adapter.enabled ? "off" : "on"])
   }
 
+  // Pairing, trusting and renaming live in blueman-manager; this panel only
+  // covers the day-to-day connect and disconnect. Launched the way the menu
+  // and the launcher launch it, through uwsm-app, so the window lands in
+  // app-graphical.slice instead of inheriting the compositor unit. The panel
+  // closes behind it — blueman floats over exactly where it was drawn.
+  function openSettings() {
+    Util.execDetached("uwsm-app -- gtk-launch blueman-manager.desktop")
+    close()
+  }
+
   IpcHandler {
     target: "omnixy.bluetooth"
 
@@ -683,6 +693,7 @@ Panel {
       onDeleteRequested: if (root.cursorActive) root.deleteSelected()
       onTextKey: function(t) {
         if (t === "b" || t === "B") root.toggleBluetooth()
+        else if (t === "s" || t === "S") root.openSettings()
       }
 
       Column {
@@ -693,7 +704,7 @@ Panel {
         // ---------- Hero: Bluetooth icon · status ----------
         Item {
           width: parent.width
-          implicitHeight: Math.max(heroIcon.implicitHeight, heroLabels.implicitHeight, powerSwitch.implicitHeight)
+          implicitHeight: Math.max(heroIcon.implicitHeight, heroLabels.implicitHeight, heroControls.implicitHeight)
 
           // Status only — the switch owns toggling, mouse and keyboard alike.
           Text {
@@ -708,23 +719,39 @@ Panel {
             opacity: root.adapter && root.adapter.enabled ? 1.0 : 0.5
           }
 
-          // Compact on/off switch on the trailing edge of the hero, and the
-          // header's only cursor target.
-          ToggleSwitch {
-            id: powerSwitch
-            visible: !!root.adapter
-            checked: !!root.adapter && root.adapter.enabled
-            hasCursor: root.headerHasCursor
-            foreground: root.bar.foreground
+          // Settings cog and on/off switch on the trailing edge of the hero.
+          // The switch stays the header's only cursor target; the cog is
+          // reached by its own key, as it is on the Dropbox hero.
+          Row {
+            id: heroControls
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            onHovered: function(on) { if (on) root.setHeaderCursor() }
-            onToggled: root.toggleBluetooth()
+            spacing: Style.space(10)
 
-            PanelToolTip {
-              visible: powerSwitch.containsMouse
-              text: root.toggleHint
+            PanelActionButton {
+              iconText: "󰒓"
+              tooltipText: "Bluetooth settings (s)"
+              foreground: root.bar.foreground
               fontFamily: root.bar.fontFamily
+              anchors.verticalCenter: parent.verticalCenter
+              onClicked: root.openSettings()
+            }
+
+            ToggleSwitch {
+              id: powerSwitch
+              visible: !!root.adapter
+              checked: !!root.adapter && root.adapter.enabled
+              hasCursor: root.headerHasCursor
+              foreground: root.bar.foreground
+              anchors.verticalCenter: parent.verticalCenter
+              onHovered: function(on) { if (on) root.setHeaderCursor() }
+              onToggled: root.toggleBluetooth()
+
+              PanelToolTip {
+                visible: powerSwitch.containsMouse
+                text: root.toggleHint
+                fontFamily: root.bar.fontFamily
+              }
             }
           }
 
@@ -733,7 +760,7 @@ Panel {
             anchors.left: heroIcon.right
             anchors.leftMargin: Style.space(14)
             anchors.right: parent.right
-            anchors.rightMargin: powerSwitch.visible ? powerSwitch.width + Style.space(12) : 0
+            anchors.rightMargin: heroControls.width + Style.space(12)
             anchors.verticalCenter: parent.verticalCenter
             spacing: Style.space(2)
 
