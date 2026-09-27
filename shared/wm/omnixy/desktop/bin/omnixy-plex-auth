@@ -1,0 +1,186 @@
+#!/usr/bin/env python3
+"""Link this desktop to a Plex account for the Omnixy media panel.
+
+The exchange is Plex's PIN link flow, which never handles a password: we ask
+plex.tv for a four-character code, the user enters it at https://plex.tv/link,
+and the token then arrives by polling. What we write is
+~/.config/omnixy/plex.json, mode 0600, holding the server the panel should
+talk to and the token it should talk with.
+
+  omnixy-plex-auth                     link, then choose a server automatically
+  omnixy-plex-auth --server URL        link, and use that server
+
+The client identifier is generated once and kept in the same file, because
+plex.tv ties the token to it and a fresh identifier would mean a fresh link.
+"""
+
+import argparse
+import json
+import os
+import stat
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+import uuid
+
+PLEX_TV = "https://plex.tv/api/v2"
+PRODUCT = "Omnixy"
+DEVICE = "Omnixy media panel"
+VERSION = "1.0"
+POLL_SECONDS = 2
+POLL_LIMIT = 150  # five minutes, which is the life of a PIN
+
+
+def config_path() -> str:
+    base = os.environ.get("XDG_CONFIG_HOME") or os.path.join(os.path.expanduser("~"), ".config")
+    return os.path.join(base, "omnixy", "plex.json")
+
+
+def read_config() -> dict:
+    try:
+        with open(config_path(), encoding="utf-8") as handle:
+            data = json.load(handle)
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def write_config(config: dict) -> None:
+    path = config_path()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(config, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+    os.chmod(path, stat.S_IRUSR | stat.S_IWUSR)
+
+
+def request(method: str, url: str, client_id: str, token: str = "", timeout: int = 10):
+    headers = {
+        "Accept": "application/json",
+        "X-Plex-Client-Identifier": client_id,
+        "X-Plex-Product": PRODUCT,
+        "X-Plex-Device-Name": DEVICE,
+        "X-Plex-Version": VERSION,
+    }
+    if token:
+        headers["X-Plex-Token"] = token
+    req = urllib.request.Request(url, method=method, headers=headers)
+    with urllib.request.urlopen(req, timeout=timeout) as response:
+        body = response.read().decode("utf-8", "replace")
+    return json.loads(body) if body.strip() else {}
+
+
+def create_pin(client_id: str) -> dict:
+    return request("POST", PLEX_TV + "/pins?strong=true", client_id)
+
+
+def poll_pin(client_id: str, pin_id) -> str:
+    """Wait for the user to enter the code, returning the auth token."""
+    for _ in range(POLL_LIMIT):
+        time.sleep(POLL_SECONDS)
+        try:
+            pin = request("GET", "{}/pins/{}".format(PLEX_TV, pin_id), client_id)
+        except urllib.error.URLError as error:
+            print("plex.tv did not answer: {}".format(error), file=sys.stderr)
+            continue
+        token = str(pin.get("authToken") or "")
+        if token:
+            return token
+    return ""
+
+
+def server_candidates(client_id: str, token: str) -> list:
+    """Every connection of every server the account can reach, local first."""
+    url = PLEX_TV + "/resources?" + urllib.parse.urlencode(
+        {"includeHttps": 1, "includeRelay": 1}
+    )
+    try:
+        resources = request("GET", url, client_id, token)
+    except (urllib.error.URLError, ValueError) as error:
+        print("Could not list your Plex servers: {}".format(error), file=sys.stderr)
+        return []
+
+    candidates = []
+    for resource in resources if isinstance(resources, list) else []:
+        if "server" not in str(resource.get("provides") or ""):
+            continue
+        name = str(resource.get("name") or "Plex")
+        for connection in resource.get("connections") or []:
+            uri = str(connection.get("uri") or "")
+            if not uri:
+                continue
+            candidates.append({
+                "name": name,
+                "uri": uri,
+                "local": bool(connection.get("local")),
+                "relay": bool(connection.get("relay")),
+            })
+    # A server on the same network beats one reached over the internet, and a
+    # direct connection beats a Plex relay, which is rate-limited.
+    candidates.sort(key=lambda c: (not c["local"], c["relay"]))
+    return candidates
+
+
+def reachable(uri: str, client_id: str, token: str) -> bool:
+    try:
+        request("GET", uri.rstrip("/") + "/identity", client_id, token, timeout=4)
+        return True
+    except (urllib.error.URLError, ValueError, TimeoutError):
+        return False
+
+
+def choose_server(client_id: str, token: str) -> str:
+    for candidate in server_candidates(client_id, token):
+        print("Trying {} at {}".format(candidate["name"], candidate["uri"]))
+        if reachable(candidate["uri"], client_id, token):
+            return candidate["uri"]
+    return ""
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Link this desktop to Plex for the Omnixy media panel.")
+    parser.add_argument("--server", default="", help="the server URL to use, rather than discovering one")
+    args = parser.parse_args()
+
+    config = read_config()
+    client_id = str(config.get("clientId") or "") or str(uuid.uuid4())
+
+    try:
+        pin = create_pin(client_id)
+    except (urllib.error.URLError, ValueError) as error:
+        print("Could not ask plex.tv for a code: {}".format(error), file=sys.stderr)
+        return 1
+
+    code = str(pin.get("code") or "")
+    pin_id = pin.get("id")
+    if not code or pin_id is None:
+        print("plex.tv answered without a code.", file=sys.stderr)
+        return 1
+
+    print("Open https://plex.tv/link and enter the code: {}".format(code))
+    print("Waiting for you to enter it…")
+    token = poll_pin(client_id, pin_id)
+    if not token:
+        print("The code expired before it was entered. Run this again.", file=sys.stderr)
+        return 1
+
+    server = args.server.strip().rstrip("/")
+    if server:
+        if not reachable(server, client_id, token):
+            print("Linked, but {} did not answer. Saving it anyway.".format(server), file=sys.stderr)
+    else:
+        server = choose_server(client_id, token)
+        if not server:
+            print("Linked, but no server answered. Run this again with --server URL.", file=sys.stderr)
+            return 1
+
+    config.update({"clientId": client_id, "server": server, "token": token})
+    write_config(config)
+    print("Linked to {}. The media panel's Plex source is ready.".format(server))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

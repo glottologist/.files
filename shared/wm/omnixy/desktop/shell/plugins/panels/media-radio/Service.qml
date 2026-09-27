@@ -18,11 +18,6 @@ Item {
   property bool running: false
   property var stations: []
   property var results: []
-  property string query: ""
-  // "library" lists what Goodvibes holds, "results" what the radio browser
-  // last answered. The query box drives both, so the mode says which list the
-  // rows are built from.
-  property string mode: "library"
   property bool searching: false
   property string searchError: ""
   property string listError: ""
@@ -122,22 +117,12 @@ Item {
     daemonProc.running = true
   }
 
-  function setQuery(text) {
-    query = String(text || "")
-    // Editing the box takes the panel back to the library, where the same text
-    // filters what is already saved; the online search is a deliberate step
-    // past that, taken from the row at the bottom of the list.
-    if (mode === "results") {
-      mode = "library"
-      results = []
-      searchError = ""
-    }
-  }
-
-  function search() {
+  // The query box and the mode it drives belong to the panel, which shares
+  // them across the three sources; the radio only needs to be told what to
+  // look for and to be able to forget what it found.
+  function search(query) {
     var wanted = String(query || "").trim()
     if (!wanted || searchProc.running) return
-    mode = "results"
     results = []
     searchError = ""
     searching = true
@@ -145,9 +130,7 @@ Item {
     searchProc.running = true
   }
 
-  function clearSearch() {
-    query = ""
-    mode = "library"
+  function clearResults() {
     results = []
     searchError = ""
   }

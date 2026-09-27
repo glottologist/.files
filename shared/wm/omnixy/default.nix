@@ -15,6 +15,13 @@ let
   # classic and caelestia profiles are adopted one by one on top of it. The
   # decision record lives in agents/ alongside the scaffold notes.
   shell = pkgs.omnixy-desktop;
+
+  # The Plex source of the media panel plays through mpv rather than through a
+  # Plex client, because mpv takes commands from another process; mpv-mpris is
+  # what lets the shell's media service see what it is playing (record:
+  # agents/2026-09-27-001).
+  plexPlayer = pkgs.mpv.override { scripts = [ pkgs.mpvScripts.mpris ]; };
+
   meshtasticEnabled = username == "glottologist";
   meshcoreLauncher = pkgs.writeShellScript "omnixy-meshcore" ''
     ${pkgs.meshcore-cli}/bin/meshcli -S
@@ -781,6 +788,53 @@ in
         # --without-ui leaves the GTK window closed; the panel is the interface,
         # and Goodvibes still answers on the session bus without it.
         ExecStart = "${pkgs.goodvibes}/bin/goodvibes --without-ui";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+    };
+
+    # spotify-player as a headless Spotify daemon behind the same panel
+    # (record: agents/2026-09-27-001). It follows the radio unit in being
+    # wanted by no target: the panel starts it the first time somebody asks
+    # Spotify for something. Streaming is librespot's, so the account must be
+    # Premium, and the credentials come from a one-off `spotify_player
+    # authenticate` in a terminal, cached under ~/.cache/spotify-player.
+    services.omnixy-spotify = {
+      Unit = {
+        Description = "Headless Spotify playback for the Omnixy media panel";
+        PartOf = [ "omnixy-session.target" ];
+        After = [ "omnixy-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.spotify-player}/bin/spotify_player --daemon";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+    };
+
+    # mpv, idle and headless, as the Plex player. The panel reads the library
+    # over HTTP and loads what was chosen down the IPC socket named here;
+    # --no-config keeps a personal mpv.conf, written for watching films, out
+    # of a daemon that only ever plays audio.
+    services.omnixy-plex = {
+      Unit = {
+        Description = "Plex music playback for the Omnixy media panel";
+        PartOf = [ "omnixy-session.target" ];
+        After = [ "omnixy-session.target" ];
+      };
+      Service = {
+        ExecStart = lib.concatStringsSep " " [
+          "${plexPlayer}/bin/mpv"
+          "--idle=yes"
+          "--no-config"
+          "--no-video"
+          "--no-terminal"
+          "--gapless-audio=yes"
+          "--input-ipc-server=%t/omnixy-plex.sock"
+        ];
+        # A crash leaves the socket file behind, where it would refuse every
+        # connection until the next start replaced it.
+        ExecStopPost = "-${pkgs.coreutils}/bin/rm -f %t/omnixy-plex.sock";
         Restart = "on-failure";
         RestartSec = 2;
       };

@@ -123,13 +123,18 @@ cp "$here/network-speedtest-record" "$out/bin/omarchy-network-speedtest-record"
 # registry finds by its manifest (record: agents/2026-09-10-003).
 cp "$here/source-control-record" "$out/bin/omarchy-source-control-record"
 cp -r "$here/source-control" "$out/shell/plugins/panels/source-control"
-# Transport for every MPRIS player and a Goodvibes-backed internet radio
-# library in one widget (record: agents/2026-09-24-001). It needs no recorder:
-# the station library lives in Goodvibes and reaches the panel over the session
-# bus, and now-playing comes from the shell's own MPRIS service.
+# Transport for every MPRIS player and three libraries to play from --
+# Goodvibes radio, the Spotify catalogue and the Plex music library -- in one
+# widget (records: agents/2026-09-24-001, agents/2026-09-27-001). It needs no
+# recorder: each library is read live, and now-playing comes from the shell's
+# own MPRIS service, because all three daemons publish MPRIS.
 cp -r "$here/media-radio" "$out/shell/plugins/panels/media-radio"
+# The Plex link flow behind that panel's Plex source: it writes the token and
+# the server URL the panel reads from ~/.config/omnixy/plex.json.
+cp "$here/plex-auth" "$out/bin/omarchy-plex-auth"
 chmod +x "$out/bin/dropbox-cli" "$out/bin/omarchy-agent-usage-grok" \
-         "$out/bin/omarchy-network-speedtest-record" "$out/bin/omarchy-source-control-record"
+         "$out/bin/omarchy-network-speedtest-record" "$out/bin/omarchy-source-control-record" \
+         "$out/bin/omarchy-plex-auth"
 # The Grok mark for the agents panel (tools/agents-assets/NOTICE for its
 # origin); the panel finds marks by name under assets/.
 cp "$here/agents-assets/grok.svg" "$here/agents-assets/grok-light.svg" "$out/shell/plugins/agents/assets/"

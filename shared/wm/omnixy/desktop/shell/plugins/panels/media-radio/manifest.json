@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Omnixy",
   "license": "MIT",
-  "description": "Now playing and transport for every MPRIS player, Spotify included, over a library of internet radio stations played through Goodvibes.",
+  "description": "Now playing and transport for every MPRIS player, over three libraries to play from: internet radio through Goodvibes, the Spotify catalogue through spotify-player, and the Plex music library through mpv.",
   "kinds": [
     "bar-widget"
   ],
@@ -14,7 +14,7 @@
   },
   "barWidget": {
     "displayName": "Media and radio",
-    "description": "Control Spotify and any other MPRIS player, and play internet radio stations.",
+    "description": "Control any MPRIS player, and play internet radio, Spotify and Plex music.",
     "category": "Media",
     "allowMultiple": false,
     "defaultSection": "left",

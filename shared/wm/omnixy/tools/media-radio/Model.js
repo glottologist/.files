@@ -16,6 +16,25 @@ var MPRIS_NAME = "org.mpris.MediaPlayer2.Goodvibes"
 var SEARCH_ENDPOINT = "https://de1.api.radio-browser.info/json/stations/search"
 var SEARCH_LIMIT = 25
 
+// The three things the panel can play. Radio came first and still owns the
+// file's older half; Spotify and Plex were added on 2026-09-27 (record:
+// agents/2026-09-27-001) and each follows the same shape -- a daemon under a
+// user unit, an MPRIS name the shell's media service picks up on its own, and
+// a library this file knows how to query.
+var SOURCES = ["radio", "spotify", "plex"]
+
+var SPOTIFY_UNIT = "omnixy-spotify.service"
+var SPOTIFY_MPRIS = "org.mpris.MediaPlayer2.spotify_player"
+var SPOTIFY_TRACK_LIMIT = 8
+var SPOTIFY_CONTEXT_LIMIT = 4
+
+var PLEX_UNIT = "omnixy-plex.service"
+var PLEX_MPRIS = "org.mpris.MediaPlayer2.mpv"
+var PLEX_CONFIG = "/.config/omnixy/plex.json"
+var PLEX_SOCKET = "/omnixy-plex.sock"
+var PLEX_LIMIT = 20
+var PLEX_AUTH_HINT = "Not linked to Plex yet. Run omnixy-plex-auth in a terminal."
+
 // --- Commands -------------------------------------------------------------
 
 // NameHasOwner answers without activating the name. That distinction matters:
@@ -56,14 +75,31 @@ function removeCommand(name) {
           "Remove", "s", String(name || "")]
 }
 
-function startDaemonCommand() {
-  return ["systemctl", "--user", "start", UNIT]
+function startUnitCommand(unit) {
+  return ["systemctl", "--user", "start", String(unit || "")]
 }
 
 // Stopping the unit stops playback with it, which is what the power control in
 // the panel header means.
+function stopUnitCommand(unit) {
+  return ["systemctl", "--user", "stop", String(unit || "")]
+}
+
+function startDaemonCommand() {
+  return startUnitCommand(UNIT)
+}
+
 function stopDaemonCommand() {
-  return ["systemctl", "--user", "stop", UNIT]
+  return stopUnitCommand(UNIT)
+}
+
+// Goodvibes and spotify-player are judged up or down by whether they hold
+// their MPRIS name, which costs nothing to ask and activates nothing. The
+// Plex daemon is asked differently, by connecting to its socket: see
+// mpvReadyCommand below.
+function namePresentCommand(name) {
+  return ["busctl", "--user", "--json=short", "call", "org.freedesktop.DBus",
+          "/org/freedesktop/DBus", "org.freedesktop.DBus", "NameHasOwner", "s", String(name || "")]
 }
 
 function searchCommand(query) {
@@ -76,6 +112,113 @@ function searchUrl(query) {
     + "?limit=" + SEARCH_LIMIT
     + "&hidebroken=true&order=votes&reverse=true&name="
     + encodeURIComponent(String(query || "").trim())
+}
+
+// --- Spotify commands -----------------------------------------------------
+
+// spotify-player's CLI reaches a running instance over a UDP socket, and if it
+// finds none it quietly starts a client of its own -- which authenticates, and
+// so opens a browser window at Spotify's authorisation page. Every command
+// below is therefore only ever run once the daemon is known to hold its MPRIS
+// name, exactly as the Goodvibes calls are gated on NameHasOwner.
+function spotifySearchCommand(query) {
+  return ["spotify_player", "search", String(query || "").trim()]
+}
+
+function spotifyTrackCommand(id) {
+  return ["spotify_player", "playback", "start", "track", "--id", String(id || "")]
+}
+
+// A context is an album, a playlist or an artist; the kind is a positional
+// argument and the identifier the bare base62 one that search returns.
+function spotifyContextCommand(kind, id) {
+  return ["spotify_player", "playback", "start", "context", String(kind || ""), "--id", String(id || "")]
+}
+
+function spotifyLikedCommand() {
+  return ["spotify_player", "playback", "start", "liked"]
+}
+
+// --- Plex commands --------------------------------------------------------
+
+function plexConfigPath(home) {
+  return String(home || "") + PLEX_CONFIG
+}
+
+function plexSocketPath(runtimeDir) {
+  return String(runtimeDir || "") + PLEX_SOCKET
+}
+
+function plexUrl(server, path) {
+  return String(server || "").replace(/\/+$/, "") + String(path || "")
+}
+
+function plexGetCommand(server, token, path) {
+  return ["curl", "-fsS", "--max-time", "8",
+          "-H", "Accept: application/json",
+          "-H", "X-Plex-Token: " + String(token || ""),
+          plexUrl(server, path)]
+}
+
+function plexSectionsCommand(server, token) {
+  return plexGetCommand(server, token, "/library/sections")
+}
+
+// What the list shows before anything has been typed. Plex orders this newest
+// first, so it needs no sort of ours.
+function plexRecentCommand(server, token, sectionKey) {
+  return plexGetCommand(server, token,
+    "/library/sections/" + encodeURIComponent(String(sectionKey || "")) +
+    "/recentlyAdded?X-Plex-Container-Start=0&X-Plex-Container-Size=" + PLEX_LIMIT)
+}
+
+function plexSearchCommand(server, token, query) {
+  return plexGetCommand(server, token,
+    "/hubs/search?limit=" + PLEX_LIMIT + "&query=" + encodeURIComponent(String(query || "").trim()))
+}
+
+// One track answers with its own metadata; an album or an artist answers with
+// every track beneath it, which is the queue the panel then loads.
+function plexItemCommand(server, token, ratingKey, deep) {
+  var path = "/library/metadata/" + encodeURIComponent(String(ratingKey || ""))
+  return plexGetCommand(server, token, deep ? path + "/allLeaves" : path)
+}
+
+// Plex serves the original file at the part's key, so mpv reads the embedded
+// tags itself and MPRIS carries a real title, artist and album without the
+// panel injecting any metadata.
+function plexStreamUrl(server, token, partKey) {
+  return plexUrl(server, partKey) + "?X-Plex-Token=" + encodeURIComponent(String(token || ""))
+}
+
+// --- mpv control ----------------------------------------------------------
+
+// MPRIS can start a track but not queue one -- mpv-mpris maps OpenUri to a
+// bare loadfile, which replaces the playlist -- so playback goes down mpv's
+// own IPC socket, where append-play exists.
+function mpvCommand(socketPath) {
+  return ["socat", "-t", "1", "-", "UNIX-CONNECT:" + String(socketPath || "")]
+}
+
+function mpvLoadPayload(urls, append) {
+  var list = Array.isArray(urls) ? urls : []
+  var lines = []
+  for (var i = 0; i < list.length; i++) {
+    var replace = !append && i === 0
+    lines.push(JSON.stringify({ command: ["loadfile", String(list[i]), replace ? "replace" : "append-play"] }))
+  }
+  return lines.length ? lines.join("\n") + "\n" : ""
+}
+
+function mpvStopPayload() {
+  return JSON.stringify({ command: ["stop"] }) + "\n"
+}
+
+// mpv opens the socket a moment after systemd reports the unit active, so
+// readiness is a connection that succeeds rather than a unit that exists.
+// Connecting with nothing to send costs mpv one accepted client.
+function mpvReadyCommand(socketPath) {
+  return ["socat", "-u", "OPEN:/dev/null", "UNIX-CONNECT:" + String(socketPath || "")]
 }
 
 // --- Replies --------------------------------------------------------------
@@ -156,6 +299,239 @@ function searchMeta(row) {
   return parts.join(" · ")
 }
 
+// --- Spotify replies ------------------------------------------------------
+
+function parseJson(raw) {
+  try {
+    return JSON.parse(String(raw || ""))
+  } catch (error) {
+    return null
+  }
+}
+
+function spotifyList(value) {
+  return Array.isArray(value) ? value : []
+}
+
+function spotifyArtistNames(artists) {
+  var list = spotifyList(artists)
+  var names = []
+  for (var i = 0; i < list.length; i++) {
+    var name = String((list[i] || {}).name || "").trim()
+    if (name) names.push(name)
+  }
+  return names.join(", ")
+}
+
+// spotify-player prints its SearchResults structure whole. Every identifier in
+// it is an rspotify newtype over a string, so each id arrives as the bare
+// base62 one the playback commands ask for rather than as a spotify: URI.
+function parseSpotifySearch(raw) {
+  var doc = parseJson(raw) || {}
+  var results = { tracks: [], albums: [], playlists: [], artists: [] }
+
+  var tracks = spotifyList(doc.tracks)
+  for (var t = 0; t < tracks.length && results.tracks.length < SPOTIFY_TRACK_LIMIT; t++) {
+    var track = tracks[t] || {}
+    if (!track.id || !track.name) continue
+    var album = track.album ? String(track.album.name || "").trim() : ""
+    results.tracks.push({
+      id: String(track.id),
+      kind: "spotifyTrack",
+      name: String(track.name),
+      meta: joinMeta([spotifyArtistNames(track.artists), album])
+    })
+  }
+
+  var albums = spotifyList(doc.albums)
+  for (var a = 0; a < albums.length && results.albums.length < SPOTIFY_CONTEXT_LIMIT; a++) {
+    var record = albums[a] || {}
+    if (!record.id || !record.name) continue
+    results.albums.push({
+      id: String(record.id),
+      kind: "spotifyAlbum",
+      name: String(record.name),
+      meta: joinMeta([spotifyArtistNames(record.artists), String(record.release_date || "").slice(0, 4)])
+    })
+  }
+
+  var playlists = spotifyList(doc.playlists)
+  for (var p = 0; p < playlists.length && results.playlists.length < SPOTIFY_CONTEXT_LIMIT; p++) {
+    var playlist = playlists[p] || {}
+    if (!playlist.id || !playlist.name) continue
+    // The owner is a (display name, user id) pair.
+    var owner = Array.isArray(playlist.owner) ? String(playlist.owner[0] || "").trim() : ""
+    results.playlists.push({
+      id: String(playlist.id),
+      kind: "spotifyPlaylist",
+      name: String(playlist.name),
+      meta: owner ? "by " + owner : ""
+    })
+  }
+
+  var artists = spotifyList(doc.artists)
+  for (var r = 0; r < artists.length && results.artists.length < SPOTIFY_CONTEXT_LIMIT; r++) {
+    var artist = artists[r] || {}
+    if (!artist.id || !artist.name) continue
+    results.artists.push({ id: String(artist.id), kind: "spotifyArtist", name: String(artist.name), meta: "" })
+  }
+
+  return results
+}
+
+function spotifyResultCount(results) {
+  var view = results || {}
+  return spotifyList(view.tracks).length + spotifyList(view.albums).length
+       + spotifyList(view.playlists).length + spotifyList(view.artists).length
+}
+
+// --- Plex replies ---------------------------------------------------------
+
+function joinMeta(parts) {
+  var list = Array.isArray(parts) ? parts : []
+  var kept = []
+  for (var i = 0; i < list.length; i++) {
+    var part = String(list[i] || "").trim()
+    if (part) kept.push(part)
+  }
+  return kept.join(" · ")
+}
+
+function plexContainer(raw) {
+  var doc = parseJson(raw)
+  return doc && doc.MediaContainer ? doc.MediaContainer : null
+}
+
+function plexEntries(container) {
+  var view = container || {}
+  var metadata = Array.isArray(view.Metadata) ? view.Metadata : []
+  var directory = Array.isArray(view.Directory) ? view.Directory : []
+  return metadata.concat(directory)
+}
+
+function parsePlexConfig(raw) {
+  var doc = parseJson(raw) || {}
+  return {
+    server: String(doc.server || "").trim(),
+    token: String(doc.token || "").trim()
+  }
+}
+
+// A Plex server holds libraries of several kinds; the music ones are those
+// whose directory type is "artist".
+function parsePlexSections(raw) {
+  var entries = plexEntries(plexContainer(raw))
+  var sections = []
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i] || {}
+    if (String(entry.type || "") !== "artist") continue
+    var key = String(entry.key || "").trim()
+    if (!key) continue
+    sections.push({ key: key, title: String(entry.title || "Music") })
+  }
+  return sections
+}
+
+function plexAlbumRow(entry) {
+  return {
+    ratingKey: String(entry.ratingKey || ""),
+    kind: "plexAlbum",
+    name: String(entry.title || ""),
+    meta: joinMeta([String(entry.parentTitle || ""), String(entry.year || "")])
+  }
+}
+
+function plexTrackRow(entry) {
+  return {
+    ratingKey: String(entry.ratingKey || ""),
+    kind: "plexTrack",
+    name: String(entry.title || ""),
+    meta: joinMeta([String(entry.grandparentTitle || ""), String(entry.parentTitle || "")])
+  }
+}
+
+function plexArtistRow(entry) {
+  return {
+    ratingKey: String(entry.ratingKey || ""),
+    kind: "plexArtist",
+    name: String(entry.title || ""),
+    meta: ""
+  }
+}
+
+function parsePlexAlbums(raw) {
+  var entries = plexEntries(plexContainer(raw))
+  var albums = []
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i] || {}
+    if (String(entry.type || "") !== "album" || !entry.ratingKey) continue
+    albums.push(plexAlbumRow(entry))
+  }
+  return albums
+}
+
+// The search hubs cover every library on the server, films and photographs
+// included; only the three music types are kept, and each of them is playable.
+function parsePlexSearch(raw) {
+  var container = plexContainer(raw) || {}
+  var hubs = Array.isArray(container.Hub) ? container.Hub : []
+  var results = { tracks: [], albums: [], artists: [] }
+
+  for (var h = 0; h < hubs.length; h++) {
+    var hub = hubs[h] || {}
+    var type = String(hub.type || "")
+    var entries = plexEntries(hub)
+    for (var i = 0; i < entries.length; i++) {
+      var entry = entries[i] || {}
+      if (!entry.ratingKey) continue
+      if (type === "track") results.tracks.push(plexTrackRow(entry))
+      else if (type === "album") results.albums.push(plexAlbumRow(entry))
+      else if (type === "artist") results.artists.push(plexArtistRow(entry))
+    }
+  }
+  return results
+}
+
+function plexResultCount(results) {
+  var view = results || {}
+  return (Array.isArray(view.tracks) ? view.tracks.length : 0)
+       + (Array.isArray(view.albums) ? view.albums.length : 0)
+       + (Array.isArray(view.artists) ? view.artists.length : 0)
+}
+
+// Whatever was asked for -- one track, or every track beneath an album or an
+// artist -- comes back as the same list of metadata, each with the parts that
+// hold the audio. A track with no part is skipped rather than queued as a
+// URL that would fail to open.
+function firstPartKey(entry) {
+  var media = Array.isArray((entry || {}).Media) ? entry.Media : []
+  for (var m = 0; m < media.length; m++) {
+    var parts = Array.isArray((media[m] || {}).Part) ? media[m].Part : []
+    for (var p = 0; p < parts.length; p++) {
+      var key = String((parts[p] || {}).key || "").trim()
+      if (key) return key
+    }
+  }
+  return ""
+}
+
+function parsePlexParts(raw) {
+  var entries = plexEntries(plexContainer(raw))
+  var keys = []
+  for (var i = 0; i < entries.length; i++) {
+    var key = firstPartKey(entries[i])
+    if (key) keys.push(key)
+  }
+  return keys
+}
+
+function plexStreamUrls(raw, server, token) {
+  var keys = parsePlexParts(raw)
+  var urls = []
+  for (var i = 0; i < keys.length; i++) urls.push(plexStreamUrl(server, token, keys[i]))
+  return urls
+}
+
 // busctl reports a refused call as "Call failed: <reason>", and Goodvibes'
 // reasons are already written for a reader ("... is neither a known station or
 // a valid uri"), so the prefix is all that needs removing.
@@ -206,8 +582,18 @@ function isPlayingStation(station, playingStation) {
 }
 
 // One flat row list drives both the repeater and the keyboard cursor, so the
-// two can never disagree about what the nth row is.
+// two can never disagree about what the nth row is. The selected source
+// decides which list that is; the hero and the transport row above it are
+// fed by MPRIS and so belong to no source in particular.
 function panelRows(state) {
+  var view = state || {}
+  var source = String(view.source || "radio")
+  if (source === "spotify") return spotifyRows(view)
+  if (source === "plex") return plexRows(view)
+  return radioRows(view)
+}
+
+function radioRows(state) {
   var view = state || {}
   var query = String(view.query || "").trim()
   var stations = Array.isArray(view.stations) ? view.stations : []
@@ -252,9 +638,131 @@ function panelRows(state) {
   return rows
 }
 
+// A section of playable rows, or nothing at all when the search found none of
+// that kind. Spotify and Plex both answer in these groups.
+function appendGroup(rows, title, items, playingTitle) {
+  var list = Array.isArray(items) ? items : []
+  if (list.length === 0) return
+  rows.push({ kind: "section", title: title, count: list.length })
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    rows.push({
+      kind: item.kind,
+      item: item,
+      playing: isPlayingItem(item, playingTitle)
+    })
+  }
+}
+
+function spotifyRows(state) {
+  var view = state || {}
+  var spotify = view.spotify || {}
+  var query = String(view.query || "").trim()
+  var rows = []
+
+  if (!spotify.running) {
+    rows.push({ kind: "section", title: "SPOTIFY" })
+    rows.push({
+      kind: "start",
+      source: "spotify",
+      text: spotify.starting ? "Starting the Spotify player…" : "Start the Spotify player"
+    })
+    // Without cached credentials the daemon starts and then fails to play, so
+    // the panel says where the one-off sign-in happens before it is needed.
+    rows.push({ kind: "empty", text: "First time: run spotify_player authenticate in a terminal." })
+    return rows
+  }
+
+  // A failed search or a refused play is reported on the panel's error line,
+  // above the list, so it is not repeated as a row here.
+  if (spotify.searching) {
+    rows.push({ kind: "section", title: "SPOTIFY" })
+    rows.push({ kind: "empty", text: "Searching Spotify…" })
+  } else if (view.mode === "results") {
+    var results = spotify.results || {}
+    if (spotifyResultCount(results) === 0) {
+      rows.push({ kind: "section", title: "SEARCH RESULTS", count: 0 })
+      rows.push({ kind: "empty", text: "Spotify knows nothing by that name." })
+    } else {
+      appendGroup(rows, "TRACKS", results.tracks, view.playingTitle)
+      appendGroup(rows, "ALBUMS", results.albums, view.playingTitle)
+      appendGroup(rows, "PLAYLISTS", results.playlists, view.playingTitle)
+      appendGroup(rows, "ARTISTS", results.artists, view.playingTitle)
+    }
+  } else {
+    rows.push({ kind: "section", title: "SPOTIFY" })
+    rows.push({ kind: "spotifyLiked", text: "Play your liked songs" })
+    rows.push({ kind: "empty", text: "Type to search Spotify." })
+  }
+
+  if (query) rows.push({ kind: "search", source: "spotify", text: "Search Spotify for “" + query + "”" })
+  return rows
+}
+
+function plexRows(state) {
+  var view = state || {}
+  var plex = view.plex || {}
+  var query = String(view.query || "").trim()
+  var rows = []
+
+  if (!plex.configured) {
+    rows.push({ kind: "section", title: "PLEX" })
+    rows.push({ kind: "empty", text: PLEX_AUTH_HINT })
+    return rows
+  }
+
+  if (plex.loading) {
+    rows.push({ kind: "section", title: "PLEX" })
+    rows.push({ kind: "empty", text: "Asking Plex…" })
+  } else if (view.mode === "results") {
+    var results = plex.results || {}
+    if (plexResultCount(results) === 0) {
+      rows.push({ kind: "section", title: "SEARCH RESULTS", count: 0 })
+      rows.push({ kind: "empty", text: "Nothing in the library matches that." })
+    } else {
+      appendGroup(rows, "TRACKS", results.tracks, view.playingTitle)
+      appendGroup(rows, "ALBUMS", results.albums, view.playingTitle)
+      appendGroup(rows, "ARTISTS", results.artists, view.playingTitle)
+    }
+  } else {
+    var recent = Array.isArray(plex.recent) ? plex.recent : []
+    if (recent.length === 0) {
+      rows.push({ kind: "section", title: "RECENTLY ADDED", count: 0 })
+      rows.push({ kind: "empty", text: "Nothing recent in the music library." })
+    } else {
+      appendGroup(rows, "RECENTLY ADDED", recent, view.playingTitle)
+    }
+  }
+
+  if (query) rows.push({ kind: "search", source: "plex", text: "Search Plex for “" + query + "”" })
+  return rows
+}
+
+var CURSOR_KINDS = ["station", "result", "search", "start", "spotifyLiked",
+                    "spotifyTrack", "spotifyAlbum", "spotifyPlaylist", "spotifyArtist",
+                    "plexTrack", "plexAlbum", "plexArtist"]
+
 function isCursorRow(row) {
   if (!row) return false
-  return row.kind === "station" || row.kind === "result" || row.kind === "search" || row.kind === "start"
+  return CURSOR_KINDS.indexOf(String(row.kind || "")) !== -1
+}
+
+// A queue is the one secondary action the new sources have: a Plex row can be
+// added to what mpv is already playing rather than replacing it.
+function isQueueRow(row) {
+  if (!row) return false
+  var kind = String(row.kind || "")
+  return kind === "plexTrack" || kind === "plexAlbum" || kind === "plexArtist"
+}
+
+// The shell's media service reports the track of whichever player is live, so
+// a row is marked as playing when its own name is that track. Albums and
+// artists seldom match, which is right: what plays is a track.
+function isPlayingItem(item, playingTitle) {
+  if (!item) return false
+  var current = normalise(playingTitle)
+  if (!current) return false
+  return normalise(item.name) === current
 }
 
 function stepCursor(rows, index, delta) {
@@ -332,11 +840,80 @@ function suggestedName(station) {
   return station && station.name ? String(station.name).trim() : ""
 }
 
+function sourceLabel(source) {
+  if (source === "spotify") return "Spotify"
+  if (source === "plex") return "Plex"
+  return "Radio"
+}
+
+function stepSource(source, delta) {
+  var index = SOURCES.indexOf(String(source || "radio"))
+  if (index === -1) index = 0
+  var next = (index + delta) % SOURCES.length
+  if (next < 0) next += SOURCES.length
+  return SOURCES[next]
+}
+
+function searchPlaceholder(source) {
+  if (source === "spotify") return "Search Spotify for a track, album or playlist"
+  if (source === "plex") return "Search the Plex music library"
+  return "Filter stations, or search the radio browser"
+}
+
+function powerTooltip(source, running) {
+  var name = source === "spotify" ? "Spotify player"
+           : source === "plex" ? "Plex player"
+           : "radio player"
+  return (running ? "Stop the " : "Start the ") + name
+}
+
 if (typeof module !== "undefined") {
   module.exports = {
     SERVICE: SERVICE,
     UNIT: UNIT,
     MPRIS_NAME: MPRIS_NAME,
+    SOURCES: SOURCES,
+    SPOTIFY_UNIT: SPOTIFY_UNIT,
+    SPOTIFY_MPRIS: SPOTIFY_MPRIS,
+    PLEX_UNIT: PLEX_UNIT,
+    PLEX_MPRIS: PLEX_MPRIS,
+    PLEX_AUTH_HINT: PLEX_AUTH_HINT,
+    startUnitCommand: startUnitCommand,
+    stopUnitCommand: stopUnitCommand,
+    namePresentCommand: namePresentCommand,
+    spotifySearchCommand: spotifySearchCommand,
+    spotifyTrackCommand: spotifyTrackCommand,
+    spotifyContextCommand: spotifyContextCommand,
+    spotifyLikedCommand: spotifyLikedCommand,
+    parseSpotifySearch: parseSpotifySearch,
+    spotifyResultCount: spotifyResultCount,
+    plexConfigPath: plexConfigPath,
+    plexSocketPath: plexSocketPath,
+    plexUrl: plexUrl,
+    plexGetCommand: plexGetCommand,
+    plexSectionsCommand: plexSectionsCommand,
+    plexRecentCommand: plexRecentCommand,
+    plexSearchCommand: plexSearchCommand,
+    plexItemCommand: plexItemCommand,
+    plexStreamUrl: plexStreamUrl,
+    plexStreamUrls: plexStreamUrls,
+    parsePlexConfig: parsePlexConfig,
+    parsePlexSections: parsePlexSections,
+    parsePlexAlbums: parsePlexAlbums,
+    parsePlexSearch: parsePlexSearch,
+    parsePlexParts: parsePlexParts,
+    plexResultCount: plexResultCount,
+    mpvCommand: mpvCommand,
+    mpvLoadPayload: mpvLoadPayload,
+    mpvStopPayload: mpvStopPayload,
+    mpvReadyCommand: mpvReadyCommand,
+    isQueueRow: isQueueRow,
+    isPlayingItem: isPlayingItem,
+    sourceLabel: sourceLabel,
+    stepSource: stepSource,
+    searchPlaceholder: searchPlaceholder,
+    powerTooltip: powerTooltip,
+    joinMeta: joinMeta,
     probeCommand: probeCommand,
     listCommand: listCommand,
     playCommand: playCommand,

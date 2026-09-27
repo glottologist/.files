@@ -24,10 +24,17 @@ XDG_STATE_HOME=$(mktemp -d) "$out/bin/omnixy-network-speedtest-record" --nonsens
 [ -f "$out/shell/plugins/panels/source-control/Panel.qml" ] || fail "source-control panel missing"
 [ -f "$out/shell/plugins/panels/media-radio/Panel.qml" ] || fail "media-radio panel missing"
 [ -f "$out/shell/plugins/panels/media-radio/Service.qml" ] || fail "media-radio service missing"
+[ -f "$out/shell/plugins/panels/media-radio/Spotify.qml" ] || fail "media-radio Spotify source missing"
+[ -f "$out/shell/plugins/panels/media-radio/Plex.qml" ] || fail "media-radio Plex source missing"
+[ -x "$out/bin/omnixy-plex-auth" ] || fail "plex link tool missing"
+"$out/bin/omnixy-plex-auth" --help | grep -q -- "--server" || fail "plex link tool does not run"
 grep -q "$(nix eval --raw --impure --expr '(import <nixpkgs> {}).hello')/bin/codexbar" "$out/bin/omnixy-agent-usage-grok" || fail "codexbar not substituted"
 grep -q '@codexbar@' "$out/bin/omnixy-agent-usage-grok" && fail "placeholder survived"
 head -1 "$out/bin/omnixy-menu" | grep -q '^#!/nix/store' || fail "shebangs not patched"
 [ -f "$out/config/omnixy/shell.json" ] || fail "shell.json missing"
 [ -f "$out/default/omnixy/omnixy-menu.jsonc" ] || fail "menu missing"
-nix eval --impure --expr 'let pkgs = import <nixpkgs> {}; in (pkgs.callPackage ./shared/wm/omnixy/package.nix { codexbar = pkgs.hello; }).runtimePath' --raw | grep -q vips || fail "runtimePath lacks vips"
+runtime=$(nix eval --impure --expr 'let pkgs = import <nixpkgs> {}; in (pkgs.callPackage ./shared/wm/omnixy/package.nix { codexbar = pkgs.hello; }).runtimePath' --raw)
+grep -q vips <<<"$runtime" || fail "runtimePath lacks vips"
+grep -q socat <<<"$runtime" || fail "runtimePath lacks socat, which carries mpv's IPC"
+grep -q spotify-player <<<"$runtime" || fail "runtimePath lacks spotify-player"
 echo PASS

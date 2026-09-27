@@ -163,6 +163,159 @@ assert.strictEqual(Model.hostOf("not a url"), "not a url")
 assert.strictEqual(Model.stationMeta(stations[1], true), "Playing")
 assert.strictEqual(Model.stationMeta(stations[1], false), "stream.radiofrance.fr")
 assert.strictEqual(Model.suggestedName({ name: "  X  " }), "X")
+
+// --- Sources --------------------------------------------------------------
+
+assert.deepStrictEqual(Model.SOURCES, ["radio", "spotify", "plex"])
+assert.strictEqual(Model.stepSource("radio", 1), "spotify")
+assert.strictEqual(Model.stepSource("plex", 1), "radio", "the sources wrap round")
+assert.strictEqual(Model.stepSource("radio", -1), "plex")
+assert.strictEqual(Model.stepSource("nonsense", 1), "spotify", "an unknown source starts from the first")
+assert.strictEqual(Model.sourceLabel("plex"), "Plex")
+assert.strictEqual(Model.powerTooltip("spotify", true), "Stop the Spotify player")
+assert.strictEqual(Model.powerTooltip("radio", false), "Start the radio player")
+
+assert.deepStrictEqual(Model.startUnitCommand("x.service"), ["systemctl", "--user", "start", "x.service"])
+assert.deepStrictEqual(Model.stopUnitCommand("x.service"), ["systemctl", "--user", "stop", "x.service"])
+const namePresent = Model.namePresentCommand(Model.SPOTIFY_MPRIS)
+assert.strictEqual(namePresent[4], "org.freedesktop.DBus", "readiness is asked of the broker, not of the player")
+assert.strictEqual(namePresent[namePresent.length - 1], "org.mpris.MediaPlayer2.spotify_player")
+
+// --- Spotify --------------------------------------------------------------
+
+assert.deepStrictEqual(Model.spotifySearchCommand("  boards of canada  "),
+  ["spotify_player", "search", "boards of canada"])
+assert.deepStrictEqual(Model.spotifyTrackCommand("4uLU6hMCjMI75M1A2tKUQC").slice(-4),
+  ["start", "track", "--id", "4uLU6hMCjMI75M1A2tKUQC"])
+assert.deepStrictEqual(Model.spotifyContextCommand("album", "1A2GTWGtFfWp7KSQTwWOyo").slice(-4),
+  ["context", "album", "--id", "1A2GTWGtFfWp7KSQTwWOyo"])
+assert.deepStrictEqual(Model.spotifyLikedCommand().slice(-1), ["liked"])
+
+const spotifyReply = JSON.stringify({
+  tracks: [
+    { id: "t1", name: "Roygbiv", artists: [{ id: "a1", name: "Boards of Canada" }], album: { id: "b1", name: "Music Has the Right to Children" } },
+    { id: "t2", name: "Olson", artists: [], album: null },
+    { name: "no id" }
+  ],
+  albums: [{ id: "b1", name: "Geogaddi", artists: [{ id: "a1", name: "Boards of Canada" }], release_date: "2002-02-18" }],
+  playlists: [{ id: "p1", name: "Evening", owner: ["Jason", "u1"] }],
+  artists: [{ id: "a1", name: "Boards of Canada" }],
+  shows: [],
+  episodes: []
+})
+const spotify = Model.parseSpotifySearch(spotifyReply)
+assert.strictEqual(spotify.tracks.length, 2, "a track without an id is dropped")
+assert.strictEqual(spotify.tracks[0].meta, "Boards of Canada · Music Has the Right to Children")
+assert.strictEqual(spotify.tracks[1].meta, "", "a track with neither artist nor album has no second line")
+assert.strictEqual(spotify.albums[0].meta, "Boards of Canada · 2002", "the release date shows as a year")
+assert.strictEqual(spotify.playlists[0].meta, "by Jason")
+assert.strictEqual(Model.spotifyResultCount(spotify), 5)
+assert.strictEqual(Model.spotifyResultCount(Model.parseSpotifySearch("not json")), 0)
+
+// --- Plex -----------------------------------------------------------------
+
+assert.deepStrictEqual(Model.parsePlexConfig('{"server":"http://corvus.hs:32400","token":"abc"}'),
+  { server: "http://corvus.hs:32400", token: "abc" })
+assert.deepStrictEqual(Model.parsePlexConfig(""), { server: "", token: "" })
+
+const plexGet = Model.plexGetCommand("http://corvus.hs:32400/", "tok", "/identity")
+assert.strictEqual(plexGet[plexGet.length - 1], "http://corvus.hs:32400/identity", "a trailing slash is not doubled")
+assert.ok(plexGet.indexOf("X-Plex-Token: tok") !== -1)
+const plexUrlOf = function(command) { return command[command.length - 1] }
+assert.match(plexUrlOf(Model.plexSearchCommand("http://s", "tok", " Aphex Twin ")), /query=Aphex%20Twin$/)
+assert.match(plexUrlOf(Model.plexRecentCommand("http://s", "tok", "3")), /\/library\/sections\/3\/recentlyAdded\?/)
+assert.match(plexUrlOf(Model.plexItemCommand("http://s", "tok", "941", true)), /\/library\/metadata\/941\/allLeaves$/)
+assert.match(plexUrlOf(Model.plexItemCommand("http://s", "tok", "941", false)), /\/library\/metadata\/941$/)
+assert.strictEqual(Model.plexStreamUrl("http://s", "t o k", "/library/parts/1/2/file.flac"),
+  "http://s/library/parts/1/2/file.flac?X-Plex-Token=t%20o%20k")
+
+const sectionsReply = JSON.stringify({ MediaContainer: { Directory: [
+  { key: "1", type: "movie", title: "Films" },
+  { key: "3", type: "artist", title: "Music" }
+] } })
+assert.deepStrictEqual(Model.parsePlexSections(sectionsReply), [{ key: "3", title: "Music" }])
+assert.deepStrictEqual(Model.parsePlexSections("not json"), [])
+
+const recentReply = JSON.stringify({ MediaContainer: { Metadata: [
+  { ratingKey: "9", type: "album", title: "Geogaddi", parentTitle: "Boards of Canada", year: 2002 },
+  { ratingKey: "10", type: "track", title: "Not an album" }
+] } })
+const recent = Model.parsePlexAlbums(recentReply)
+assert.strictEqual(recent.length, 1, "only albums belong in the recently-added list")
+assert.deepStrictEqual(recent[0], { ratingKey: "9", kind: "plexAlbum", name: "Geogaddi", meta: "Boards of Canada · 2002" })
+
+const hubsReply = JSON.stringify({ MediaContainer: { Hub: [
+  { type: "track", Metadata: [{ ratingKey: "41", title: "Sunshine Recorder", grandparentTitle: "Boards of Canada", parentTitle: "Geogaddi" }] },
+  { type: "album", Metadata: [{ ratingKey: "9", title: "Geogaddi", parentTitle: "Boards of Canada", year: 2002 }] },
+  { type: "artist", Directory: [{ ratingKey: "3", title: "Boards of Canada" }] },
+  { type: "movie", Metadata: [{ ratingKey: "77", title: "Not music" }] }
+] } })
+const plexResults = Model.parsePlexSearch(hubsReply)
+assert.strictEqual(Model.plexResultCount(plexResults), 3, "the film hub is dropped")
+assert.strictEqual(plexResults.tracks[0].meta, "Boards of Canada · Geogaddi")
+assert.strictEqual(plexResults.artists[0].kind, "plexArtist", "artists arrive as a Directory, not as Metadata")
+
+const leavesReply = JSON.stringify({ MediaContainer: { Metadata: [
+  { ratingKey: "41", Media: [{ Part: [{ key: "/library/parts/1/2/one.flac" }] }] },
+  { ratingKey: "42", Media: [{ Part: [{ key: "" }, { key: "/library/parts/3/4/two.flac" }] }] },
+  { ratingKey: "43", Media: [] }
+] } })
+assert.deepStrictEqual(Model.parsePlexParts(leavesReply),
+  ["/library/parts/1/2/one.flac", "/library/parts/3/4/two.flac"], "a track with no part is skipped")
+const urls = Model.plexStreamUrls(leavesReply, "http://s", "tok")
+assert.strictEqual(urls[0], "http://s/library/parts/1/2/one.flac?X-Plex-Token=tok")
+
+// --- mpv ------------------------------------------------------------------
+
+assert.deepStrictEqual(Model.mpvCommand("/run/user/1000/omnixy-plex.sock").slice(-1),
+  ["UNIX-CONNECT:/run/user/1000/omnixy-plex.sock"])
+const load = Model.mpvLoadPayload(["a", "b"], false).trim().split("\n")
+assert.deepStrictEqual(JSON.parse(load[0]).command, ["loadfile", "a", "replace"], "the first track replaces the playlist")
+assert.deepStrictEqual(JSON.parse(load[1]).command, ["loadfile", "b", "append-play"], "the rest queue behind it")
+const queued = Model.mpvLoadPayload(["a"], true).trim().split("\n")
+assert.deepStrictEqual(JSON.parse(queued[0]).command, ["loadfile", "a", "append-play"], "a queued track never replaces")
+assert.strictEqual(Model.mpvLoadPayload([], false), "")
+assert.deepStrictEqual(JSON.parse(Model.mpvStopPayload()).command, ["stop"])
+assert.ok(Model.mpvReadyCommand("/s").indexOf("UNIX-CONNECT:/s") !== -1)
+
+// --- Rows for the new sources ---------------------------------------------
+
+const spotifyDown = Model.panelRows({ source: "spotify", query: "", mode: "library", spotify: { running: false } })
+assert.strictEqual(spotifyDown[1].kind, "start", "a stopped Spotify daemon offers to start")
+assert.strictEqual(spotifyDown[1].source, "spotify")
+assert.ok(spotifyDown[2].text.indexOf("authenticate") !== -1, "the one-off sign-in is named before it is needed")
+
+const spotifyIdle = Model.panelRows({ source: "spotify", query: "", mode: "library", spotify: { running: true } })
+assert.strictEqual(spotifyIdle[1].kind, "spotifyLiked")
+
+const spotifyFound = Model.panelRows({
+  source: "spotify", query: "boards", mode: "results", playingTitle: "Roygbiv",
+  spotify: { running: true, results: spotify }
+})
+const spotifyKinds = spotifyFound.map(function(row) { return row.kind })
+assert.ok(spotifyKinds.indexOf("spotifyTrack") !== -1)
+assert.ok(spotifyKinds.indexOf("spotifyPlaylist") !== -1)
+assert.strictEqual(spotifyFound[spotifyFound.length - 1].kind, "search", "a typed query can always be sent on")
+const playingRow = spotifyFound.filter(function(row) { return row.kind === "spotifyTrack" && row.playing })
+assert.strictEqual(playingRow.length, 1, "the track MPRIS reports is marked as playing")
+
+const plexUnlinked = Model.panelRows({ source: "plex", query: "", mode: "library", plex: { configured: false } })
+assert.strictEqual(plexUnlinked[1].text, Model.PLEX_AUTH_HINT)
+assert.strictEqual(Model.stepCursor(plexUnlinked, -1, 1), -1, "nothing on the unlinked page is selectable")
+
+const plexRecent = Model.panelRows({
+  source: "plex", query: "", mode: "library",
+  plex: { configured: true, running: true, recent: recent }
+})
+assert.strictEqual(plexRecent[0].title, "RECENTLY ADDED")
+assert.strictEqual(plexRecent[1].kind, "plexAlbum")
+assert.strictEqual(Model.isQueueRow(plexRecent[1]), true, "a Plex row can be queued rather than played")
+assert.strictEqual(Model.isQueueRow({ kind: "spotifyTrack" }), false)
+assert.strictEqual(Model.isCursorRow({ kind: "plexAlbum" }), true)
+
+// The radio rows are reached by default, so the older half keeps working
+// without the panel having to name its source.
+assert.strictEqual(Model.panelRows({ running: false, stations: [] })[1].kind, "start")
 EOF
 
 [ $? -eq 0 ] || fail "media-radio model assertions"

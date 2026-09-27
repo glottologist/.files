@@ -7,14 +7,18 @@ import qs.Commons
 import qs.Ui
 import "Model.js" as Model
 
-// One widget for both halves of "what is playing": the transport at the top
-// drives whichever MPRIS player the shell has settled on -- Spotify, a browser
-// tab, Goodvibes itself -- and the list below it is the internet-radio library
-// Goodvibes keeps, with the radio-browser database a keystroke away.
+// One widget for everything "what is playing" means here. The transport at the
+// top drives whichever MPRIS player the shell has settled on, and the list
+// below it belongs to whichever of the three sources is selected: the
+// internet-radio library Goodvibes keeps, the Spotify catalogue through a
+// headless spotify-player daemon, or the music library on the Plex server,
+// played by an mpv daemon (record: agents/2026-09-27-001).
 //
 // Nothing here duplicates the shell's own media service. The hero and the
 // transport buttons call into omnixy.media, which already knows how to pick
-// the right player out of several and how to show an OSD for the action.
+// the right player out of several and how to show an OSD for the action --
+// and because all three daemons publish MPRIS, that service needed no change
+// at all to gain two more sources.
 Panel {
   id: root
   moduleName: "omnixy.media-radio"
@@ -39,6 +43,13 @@ Panel {
 
   readonly property string icon: "󰐹"
   readonly property string towerIcon: "󰐻"
+  readonly property string spotifyIcon: "󰕆"
+  readonly property string plexIcon: "󰮛"
+  readonly property string albumIcon: "󰀥"
+  readonly property string artistIcon: "󰠃"
+  readonly property string playlistIcon: "󰲹"
+  readonly property string likedIcon: "󰋑"
+  readonly property string queueIcon: "󰳞"
   readonly property string playIcon: "󰐊"
   readonly property string pauseIcon: "󰏤"
   readonly property string nextIcon: "󰒭"
@@ -53,17 +64,46 @@ Panel {
   property int cursorRow: -1
   property bool cursorActive: false
 
+  // The selected source owns the search box, the list and the power control;
+  // the query survives a switch, so "and what does Plex have by that name?"
+  // is one keystroke rather than a retype.
+  property string source: "radio"
+  property string query: ""
+  // "library" lists what the source holds -- saved stations, recently added
+  // albums -- and "results" what a search last answered.
+  property string mode: "library"
+
+  readonly property var currentService: source === "spotify" ? spotify : (source === "plex" ? plex : radio)
+  readonly property bool sourceRunning: source === "spotify" ? spotify.running : (source === "plex" ? plex.running : radio.running)
+  readonly property bool sourceBusy: source === "spotify" ? spotify.busy : (source === "plex" ? plex.busy : radio.busy)
+  readonly property string sourceError: source === "spotify" ? spotify.error : (source === "plex" ? plex.error : radio.lastError)
+
   readonly property var rows: Model.panelRows({
+    source: root.source,
+    query: root.query,
+    mode: root.mode,
+    playingTitle: root.trackTitle,
     running: radio.running,
     starting: radio.busy && !radio.running,
     stations: radio.stations,
     results: radio.results,
-    query: radio.query,
-    mode: radio.mode,
     searching: radio.searching,
     searchError: radio.searchError,
     listError: radio.listError,
-    playingStation: radio.playing ? radio.playingStation : ""
+    playingStation: radio.playing ? radio.playingStation : "",
+    spotify: {
+      running: spotify.running,
+      starting: spotify.busy && !spotify.running,
+      searching: spotify.searching,
+      results: spotify.results
+    },
+    plex: {
+      configured: plex.configured,
+      running: plex.running,
+      loading: plex.loading,
+      recent: plex.recent,
+      results: plex.results
+    }
   })
 
   function ensureCursor() {
@@ -73,11 +113,59 @@ Panel {
 
   function moveCursor(dx, dy) {
     cursorActive = true
-    if (dy === 0) return
+    // Sideways walks the sources, which is what the chips above the list do
+    // with the mouse.
+    if (dy === 0) {
+      if (dx !== 0) setSource(Model.stepSource(source, dx > 0 ? 1 : -1))
+      return
+    }
     var next = Model.stepCursor(rows, cursorRow, dy)
     if (next === -1) return
     cursorRow = next
     scrollCursorIntoView()
+  }
+
+  function setSource(next) {
+    if (next === source || Model.SOURCES.indexOf(next) === -1) return
+    source = next
+    mode = "library"
+    cursorRow = -1
+    cursorActive = false
+    if (panelFlick) panelFlick.contentY = 0
+    refreshSource()
+  }
+
+  function refreshSource() {
+    currentService.refresh()
+  }
+
+  function setQuery(text) {
+    query = String(text || "")
+    // Editing the box takes the panel back to the library, where the same text
+    // filters what is already there; a search is a deliberate step past that,
+    // taken from the row at the bottom of the list or with Enter.
+    if (mode === "results") {
+      mode = "library"
+      currentService.clearResults()
+    }
+  }
+
+  function runSearch() {
+    var wanted = query.trim()
+    if (!wanted) return
+    mode = "results"
+    currentService.search(wanted)
+  }
+
+  function clearSearch() {
+    query = ""
+    mode = "library"
+    currentService.clearResults()
+  }
+
+  function togglePower() {
+    if (sourceRunning) currentService.stopDaemon()
+    else currentService.startDaemon()
   }
 
   function setCursor(index) {
@@ -96,19 +184,27 @@ Panel {
 
   function activateRow(row) {
     if (!row) return
-    if (row.kind === "station") radio.play(row.station.name)
-    else if (row.kind === "result") radio.play(row.station.uri)
-    else if (row.kind === "search") radio.search()
-    else if (row.kind === "start" && !radio.busy) radio.startDaemon()
+    var kind = String(row.kind || "")
+    if (kind === "station") radio.play(row.station.name)
+    else if (kind === "result") radio.play(row.station.uri)
+    else if (kind === "search") runSearch()
+    else if (kind === "start") { if (!sourceBusy) currentService.startDaemon() }
+    else if (kind === "spotifyLiked") spotify.playLiked()
+    else if (kind === "spotifyTrack") spotify.playTrack(row.item.id)
+    else if (kind === "spotifyAlbum") spotify.playContext("album", row.item.id)
+    else if (kind === "spotifyPlaylist") spotify.playContext("playlist", row.item.id)
+    else if (kind === "spotifyArtist") spotify.playContext("artist", row.item.id)
+    else if (kind === "plexTrack" || kind === "plexAlbum" || kind === "plexArtist") plex.play(row.item, false)
   }
 
-  // The destructive-looking key on a row: a saved station is forgotten, a
-  // search result is saved. Both are the row's one secondary action, so they
-  // share the key and the trailing button.
+  // The row's one secondary action, which the trailing button and the delete
+  // key share: a saved station is forgotten, a search result is saved, and a
+  // Plex row joins the queue instead of replacing it.
   function secondaryForRow(row) {
     if (!row) return
     if (row.kind === "station") radio.removeStation(row.station.name)
     else if (row.kind === "result" && !row.known) radio.addStation(row.station.uri, Model.suggestedName(row.station))
+    else if (Model.isQueueRow(row)) plex.queue(row.item)
   }
 
   function focusSearch() {
@@ -156,13 +252,21 @@ Panel {
     cursorActive = false
     cursorRow = -1
     if (panelFlick) panelFlick.contentY = 0
-    radio.refresh()
+    refreshSource()
     Qt.callLater(function() { keyCatcher.forceActiveFocus() })
   }
   onCursorRowChanged: scrollCursorIntoView()
 
   Service {
     id: radio
+  }
+
+  Spotify {
+    id: spotify
+  }
+
+  Plex {
+    id: plex
   }
 
   IpcHandler {
@@ -172,7 +276,7 @@ Panel {
     function show(): void { root.open() }
     function hide(): void { root.close() }
     function toggle(): void { root.toggle() }
-    function refresh(): string { radio.refresh(); return "ok" }
+    function refresh(): string { root.refreshSource(); return "ok" }
     function play(station: string): string { radio.play(station); return "ok" }
     function stop(): string { radio.stop(); return "ok" }
   }
@@ -186,7 +290,7 @@ Panel {
     foreground: root.hasMedia ? root.barForeground : Qt.darker(root.barForeground, 1.55)
     onPressed: function(buttonCode) {
       if (buttonCode === Qt.MiddleButton) root.transport("playPause")
-      else if (buttonCode === Qt.RightButton) radio.refresh()
+      else if (buttonCode === Qt.RightButton) root.refreshSource()
       else root.toggle()
     }
     onWheelMoved: function(delta) {
@@ -209,13 +313,15 @@ Panel {
       anchors.fill: parent
       blocked: searchField.activeFocus
       onMoveRequested: function(dx, dy) {
-        if (!root.cursorActive) { root.cursorActive = true; root.ensureCursor(); return }
+        // Sideways switches source whether or not the cursor has woken up;
+        // only a vertical move has to place the cursor first.
+        if (dy !== 0 && !root.cursorActive) { root.cursorActive = true; root.ensureCursor(); return }
         root.moveCursor(dx, dy)
       }
       onActivateRequested: if (root.cursorActive) root.activateCursor()
       onDeleteRequested: if (root.cursorActive) root.secondaryForRow(root.rowAt(root.cursorRow))
       onCloseRequested: {
-        if (radio.mode === "results" || radio.query !== "") radio.clearSearch()
+        if (root.mode === "results" || root.query !== "") root.clearSearch()
         else root.close()
       }
       onTabRequested: function(direction) { root.switchPanel(direction) }
@@ -323,9 +429,9 @@ Panel {
 
           Text {
             textFormat: Text.PlainText
-            visible: radio.lastError !== ""
+            visible: root.sourceError !== ""
             width: parent.width
-            text: radio.lastError
+            text: root.sourceError
             color: root.urgent
             font.family: root.fontFamily
             font.pixelSize: Style.font.bodySmall
@@ -333,6 +439,20 @@ Panel {
           }
 
           PanelSeparator { foreground: root.foreground }
+
+          ButtonGroup {
+            anchors.horizontalCenter: parent.horizontalCenter
+            focusable: false
+            foreground: root.foreground
+            fontFamily: root.fontFamily
+            value: root.source
+            options: [
+              { value: "radio", label: "Radio", icon: root.towerIcon, tooltip: "Internet radio" },
+              { value: "spotify", label: "Spotify", icon: root.spotifyIcon, tooltip: "Spotify" },
+              { value: "plex", label: "Plex", icon: root.plexIcon, tooltip: "The Plex music library" }
+            ]
+            onChanged: function(value) { root.setSource(value) }
+          }
 
           Row {
             width: parent.width
@@ -343,21 +463,21 @@ Panel {
               width: parent.width - clearButton.width - powerButton.width - Style.space(12)
               anchors.verticalCenter: parent.verticalCenter
               foreground: root.foreground
-              placeholderText: "Filter stations, or search the radio browser"
-              text: radio.query
-              onTextEdited: radio.setQuery(text)
+              placeholderText: Model.searchPlaceholder(root.source)
+              text: root.query
+              onTextEdited: root.setQuery(text)
 
               Connections {
-                target: radio
+                target: root
                 function onQueryChanged() {
-                  if (searchField.text !== radio.query) searchField.text = radio.query
+                  if (searchField.text !== root.query) searchField.text = root.query
                 }
               }
               Keys.onDownPressed: root.leaveSearch()
               Keys.onEscapePressed: root.leaveSearch()
               onAccepted: {
-                if (radio.query.trim() === "") return
-                radio.search()
+                if (root.query.trim() === "") return
+                root.runSearch()
                 root.leaveSearch()
               }
             }
@@ -368,9 +488,9 @@ Panel {
               iconText: "󰅖"
               tooltipText: "Clear"
               foreground: root.foreground
-              visible: radio.query !== "" || radio.mode === "results"
+              visible: root.query !== "" || root.mode === "results"
               onClicked: {
-                radio.clearSearch()
+                root.clearSearch()
                 root.leaveSearch()
               }
             }
@@ -379,11 +499,11 @@ Panel {
               id: powerButton
               anchors.verticalCenter: parent.verticalCenter
               iconText: root.powerIcon
-              tooltipText: radio.running ? "Stop the radio player" : "Start the radio player"
-              foreground: radio.running ? root.foreground : root.dim
-              hoverColor: radio.running ? root.urgent : root.foreground
-              enabled: !radio.busy
-              onClicked: radio.running ? radio.stopDaemon() : radio.startDaemon()
+              tooltipText: Model.powerTooltip(root.source, root.sourceRunning)
+              foreground: root.sourceRunning ? root.foreground : root.dim
+              hoverColor: root.sourceRunning ? root.urgent : root.foreground
+              enabled: !root.sourceBusy
+              onClicked: root.togglePower()
             }
           }
 
@@ -476,25 +596,37 @@ Panel {
     }
   }
 
-  // One row type covers a saved station, a search result and the two standalone
-  // actions: they differ only in the glyph, the second line and what the
-  // trailing button does.
+  // One row type covers every playable thing and the two standalone actions:
+  // a saved station, a radio-browser result, a Spotify or Plex item, the row
+  // that starts a daemon and the row that runs a search. They differ only in
+  // the glyph, the second line and what the trailing button does.
   component ActionRow: CursorSurface {
     id: actionRow
     property var row: ({})
     property int rowIndex: -1
     readonly property string kind: row ? String(row.kind || "") : ""
     readonly property var station: row && row.station ? row.station : null
+    readonly property var item: row && row.item ? row.item : null
     readonly property bool isStation: kind === "station"
     readonly property bool isResult: kind === "result"
-    readonly property bool playingHere: isStation && row.playing === true
+    readonly property bool playingHere: row ? row.playing === true : false
 
     readonly property string glyph: isStation || isResult ? root.towerIcon
-                                  : (kind === "search" ? root.searchIcon : root.powerIcon)
-    readonly property string primary: station ? station.name : String(row.text || "")
+                                  : kind === "spotifyTrack" || kind === "plexTrack" ? root.musicIcon
+                                  : kind === "spotifyAlbum" || kind === "plexAlbum" ? root.albumIcon
+                                  : kind === "spotifyArtist" || kind === "plexArtist" ? root.artistIcon
+                                  : kind === "spotifyPlaylist" ? root.playlistIcon
+                                  : kind === "spotifyLiked" ? root.likedIcon
+                                  : kind === "search" ? root.searchIcon
+                                  : root.powerIcon
+    readonly property string primary: station ? station.name : (item ? item.name : String(row.text || ""))
     readonly property string secondary: isStation ? Model.stationMeta(station, playingHere)
-                                      : (isResult ? (station.meta || Model.hostOf(station.uri)) : "")
-    readonly property string secondaryGlyph: isStation ? root.removeIcon : (isResult && !row.known ? root.addIcon : "")
+                                      : isResult ? (station.meta || Model.hostOf(station.uri))
+                                      : (item ? String(item.meta || "") : "")
+    readonly property string secondaryGlyph: isStation ? root.removeIcon
+                                           : isResult && !row.known ? root.addIcon
+                                           : Model.isQueueRow(row) ? root.queueIcon
+                                           : ""
 
     hasCursor: root.cursorActive && root.cursorRow === rowIndex
     current: playingHere
@@ -568,10 +700,12 @@ Panel {
       PanelActionButton {
         visible: actionRow.secondaryGlyph !== ""
         iconText: actionRow.secondaryGlyph
-        tooltipText: actionRow.isStation ? "Remove from the library" : "Save to the library"
+        tooltipText: actionRow.isStation ? "Remove from the library"
+                   : actionRow.isResult ? "Save to the library"
+                   : "Add to the queue"
         foreground: root.foreground
         hoverColor: actionRow.isStation ? root.urgent : root.foreground
-        enabled: !radio.busy
+        enabled: !root.sourceBusy
         Layout.alignment: Qt.AlignVCenter
         onClicked: root.secondaryForRow(actionRow.row)
       }

@@ -37,6 +37,8 @@
   ddcutil,
   libxkbcommon,
   vips,
+  socat,
+  spotify-player,
   codexbar,
 }:
 let
@@ -219,6 +221,10 @@ stdenvNoCC.mkDerivation {
     libxkbcommon
     # vipsthumbnail, for every row of the image pickers.
     vips
+    # The media panel's Plex source drives mpv down its IPC socket, which
+    # socat carries, and searches and plays Spotify through spotify_player.
+    socat
+    spotify-player
   ];
 
   meta = {
