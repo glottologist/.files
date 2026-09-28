@@ -73,7 +73,7 @@ def request(method: str, url: str, client_id: str, token: str = "", timeout: int
 
 
 def create_pin(client_id: str) -> dict:
-    return request("POST", PLEX_TV + "/pins?strong=true", client_id)
+    return request("POST", PLEX_TV + "/pins", client_id)
 
 
 def poll_pin(client_id: str, pin_id) -> str:
