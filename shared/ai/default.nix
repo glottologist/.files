@@ -39,6 +39,17 @@ let
       nixpkgs = nixEverywhereNixpkgs;
       inherit (nix-everywhere.inputs) flake-utils rust-overlay nixos-generators;
     }).packages.${system}.default;
+  # codex 0.158 starts a background app-server daemon, which it will only do
+  # from a vendored package layout: a codex-package.json manifest beside
+  # bin/codex, codex-path/rg and codex-resources/. The upstream flake installs
+  # the bare release binary, so every invocation dies with "this CLI has no
+  # complete local package". --no-daemon is codex's own supported fallback and
+  # is a global flag, so it holds for subcommands too.
+  codexCli = (codex-cli-nix.packages.${system}.default).overrideAttrs (old: {
+    postInstall = (old.postInstall or "") + ''
+      wrapProgram $out/bin/codex --add-flags --no-daemon
+    '';
+  });
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (
     builtins.readFile ../../secrets/anthropic-api-key.txt
   );
@@ -1084,7 +1095,7 @@ in
         llm
         gorilla-cli
         claude-code-nix.packages.${system}.default
-        codex-cli-nix.packages.${system}.default
+        codexCli
         pi-coding-agent
         ccstatusline.packages.${system}.default
         nixEverywherePackage
