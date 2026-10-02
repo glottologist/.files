@@ -4,10 +4,8 @@ Hardware: GPD Pocket 3, Intel Core i7-1195G7 (Tiger Lake), Iris Xe graphics,
 an 8″ 1200×1920 OLED on `DSI-1` mounted rotated ninety degrees, NVMe storage.
 Firmware: UEFI, so the bootloader is `systemd-boot`.
 
-Chimera is a machine for four things and no others: writing, AI and agents,
-reaching the other machines over SSH and the tailnet, and NymVPN. It is not a
-portable Bebop, and the absences in `configuration.nix` and `homes/jrt` are
-deliberate rather than pending.
+Chimera supports writing, AI and agents, remote access over SSH and the tailnet,
+NymVPN, and pentesting and OSINT with the shared security toolsets used by Bebop.
 
 The home user is `jrt`, and the profile lives in `homes/jrt` rather than reusing
 `homes/jason`, which carries a workstation's breadth this machine has no room
@@ -126,6 +124,26 @@ login needs a browser and therefore a desktop session:
 ```bash
 claude login
 codex login
+```
+
+## Pentesting and OSINT
+
+The host imports `shared/pentesting` and `shared/osint`, installing their full
+configured toolsets system-wide. These include network and web testing,
+password auditing, wireless testing, reverse engineering, forensics, hardware
+tools, and OSINT. Package selection and compatibility exclusions stay in the
+shared modules, so Chimera receives the same tools as Bebop.
+
+The pentesting module enables Wireshark's capture wrapper. `jrt` belongs to
+`wireshark` for packet capture and `dialout` for serial devices. Log out and
+back in after applying the host configuration to pick up the new groups.
+OSINT API credentials use the existing `secrets/osint` files through the shared
+module.
+
+Apply the toolsets on Chimera from this checkout:
+
+```bash
+./do host apply chimera
 ```
 
 ## Headscale enrolment

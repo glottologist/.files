@@ -1,20 +1,5 @@
-# The jrt profile for Chimera, the GPD Pocket 3.
-#
-# Chimera exists to do four things — writing, AI and agents, reaching other
-# machines over SSH and the tailnet, and running NymVPN — and this profile is
-# scoped to exactly those. It is emphatically not homes/jason, which carries a
-# workstation's breadth: blockchain toolchains, trading terminals, comics,
-# media, pentesting, virtualisation, databases and forty language modules. None
-# of that serves an eight-inch machine chosen for being carried.
-#
-# The reasoning follows homes/jason-cloud: import a shared module where it is
-# already scoped to one of the four capabilities, and take the narrower path
-# where the module would drag a workstation along behind it.
-#
-# The API keys are exported as they are in the other profiles. Their content
-# reaches the world-readable Nix store, which is the standing trade-off in this
-# repository for unattended agent authentication; on a portable machine the
-# disk encryption in hosts/chimera/disko.nix is what carries the weight.
+# Desktop profile for Chimera, the GPD Pocket 3. Pentesting and OSINT tools
+# are installed system-wide through hosts/chimera/configuration.nix.
 {
   pkgs,
   lib,

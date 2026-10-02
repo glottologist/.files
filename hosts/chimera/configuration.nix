@@ -1,10 +1,4 @@
-# Chimera — GPD Pocket 3, an eight-inch convertible for writing, agents and
-# reaching the other machines.
-#
-# The import list is the whole design in miniature. What is present serves one
-# of the four capabilities the machine exists for; what is absent — the
-# blockchain, comics, trading, virtualisation and device modules that Bebop
-# carries — does not.
+# Chimera — GPD Pocket 3 for writing, agents, remote access and security testing.
 #
 # hosts/common/ai.nix is deliberately not imported. It runs Ollama and a
 # llama.cpp server over models measured in tens of gigabytes, which belong on
@@ -29,6 +23,8 @@
     ../common/stylix.nix
     ../common/tailscale.nix
     ../common/veracrypt.nix
+    ../../shared/osint/default.nix
+    ../../shared/pentesting/default.nix
   ];
 
   system.stateVersion = "26.05";

@@ -157,6 +157,42 @@
             dosage = prev.dosage.overridePythonAttrs (_: {
               doCheck = false;
             });
+            # GParted escalates through pkexec, which keeps only DISPLAY, so
+            # root always lands on XWayland, where Hyprland shows its menus as
+            # empty slivers. The non-root half of the launcher passes the
+            # session's Wayland socket name as the first argument; the root
+            # half turns it into an absolute path under the caller's runtime
+            # directory and selects GDK's Wayland backend. The stock polkit
+            # action still matches, since pkexec runs the same script path.
+            gparted = prev.gparted.overrideAttrs (old: {
+              postPatch =
+                (old.postPatch or "")
+                + ''
+                  substituteInPlace gparted.in \
+                    --replace-fail 'BASE_CMD="@libexecdir@/gpartedbin $*"' ${prev.lib.escapeShellArg ''
+                      if test "x`id -u`" = "x0" && test -n "$PKEXEC_UID"; then
+                      	case "$1" in
+                      	--wayland-display=*)
+                      		WAYLAND_DISPLAY="''${1#--wayland-display=}"
+                      		shift
+                      		case "$WAYLAND_DISPLAY" in
+                      		/*) ;;
+                      		*) WAYLAND_DISPLAY="/run/user/$PKEXEC_UID/$WAYLAND_DISPLAY" ;;
+                      		esac
+                      		GDK_BACKEND=wayland
+                      		export WAYLAND_DISPLAY GDK_BACKEND
+                      		;;
+                      	esac
+                      fi
+                      BASE_CMD="@libexecdir@/gpartedbin $*"''} \
+                    --replace-fail "@gksuprog@ '@bindir@/gparted' \"\$@\"" ${prev.lib.escapeShellArg ''
+                      if test -n "$WAYLAND_DISPLAY"; then
+                      		@gksuprog@ '@bindir@/gparted' "--wayland-display=$WAYLAND_DISPLAY" "$@"
+                      	else
+                      		@gksuprog@ '@bindir@/gparted' "$@"
+                      	fi''}
+                '';
+            });
             # Sandbox: test_invalid_command argparse quotes choice names on 3.13.
             commitizen = prev.commitizen.overridePythonAttrs (_: {
               doCheck = false;

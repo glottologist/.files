@@ -9,10 +9,34 @@
   # polkit action itself and points the menu entry at pkexec instead.
   #
   # pkexec matches exec.path against the realpath of the program, so both
-  # sides name the store path of the binary rather than a profile symlink.
-  # Under pkexec the imager rebuilds XDG_RUNTIME_DIR and WAYLAND_DISPLAY
-  # from PKEXEC_UID, so the window still reaches the user's session.
-  rpiImager = "${pkgs.rpi-imager}/bin/rpi-imager";
+  # sides name the store path of the root launcher rather than a profile
+  # symlink.
+  #
+  # pkexec clears the environment, which leaves Qt looking for an X display
+  # that is not there. The user-side wrapper hands its WAYLAND_DISPLAY over
+  # as the first argument, and the root launcher turns it into an absolute
+  # socket path under the caller's runtime directory, so Qt never has to
+  # trust a runtime directory root does not own.
+  #
+  # The menu launches through gtk-launch, which exits as soon as it has
+  # spawned the entry, and pkexec refuses to run once its parent has gone.
+  # The wrapper deliberately does not exec pkexec, so it stays alive as
+  # that parent.
+  rpiImagerRoot = pkgs.writeShellScript "rpi-imager-root" ''
+    display="$1"
+    shift
+    case "$display" in
+      "") echo "rpi-imager-root: no WAYLAND_DISPLAY passed" >&2; exit 1 ;;
+      /*) ;;
+      *) display="/run/user/$PKEXEC_UID/$display" ;;
+    esac
+    export WAYLAND_DISPLAY="$display"
+    export QT_QPA_PLATFORM=wayland
+    exec ${pkgs.rpi-imager}/bin/rpi-imager "$@"
+  '';
+  rpiImagerPkexec = pkgs.writeShellScript "rpi-imager-pkexec" ''
+    /run/wrappers/bin/pkexec ${rpiImagerRoot} "$WAYLAND_DISPLAY" "$@"
+  '';
   rpi-imager-elevated = pkgs.symlinkJoin {
     name = "rpi-imager-elevated-${pkgs.rpi-imager.version}";
     paths = [pkgs.rpi-imager];
@@ -20,7 +44,7 @@
       desktop=share/applications/com.raspberrypi.rpi-imager.desktop
       rm $out/$desktop
       substitute ${pkgs.rpi-imager}/$desktop $out/$desktop \
-        --replace-fail "Exec=rpi-imager %u" "Exec=/run/wrappers/bin/pkexec ${rpiImager} %u"
+        --replace-fail "Exec=rpi-imager %u" "Exec=${rpiImagerPkexec} %u"
 
       mkdir -p $out/share/polkit-1/actions
       cat > $out/share/polkit-1/actions/com.raspberrypi.rpi-imager.pkexec.policy <<EOF
@@ -37,7 +61,7 @@
             <allow_inactive>auth_admin</allow_inactive>
             <allow_active>auth_admin_keep</allow_active>
           </defaults>
-          <annotate key="org.freedesktop.policykit.exec.path">${rpiImager}</annotate>
+          <annotate key="org.freedesktop.policykit.exec.path">${rpiImagerRoot}</annotate>
           <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
         </action>
       </policyconfig>

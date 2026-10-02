@@ -21,6 +21,8 @@ in
       "video"
       "input"
       "plugdev"
+      "wireshark"
+      "dialout"
     ];
     openssh.authorizedKeys.keys = authorizedKeys;
   };
