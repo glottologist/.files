@@ -682,6 +682,26 @@ in
       Install.WantedBy = [ "omnixy-session.target" ];
     };
 
+    # The password prompt for polkit, which pkexec launchers such as the
+    # Raspberry Pi Imager menu entry need. Classic starts hyprpolkitagent
+    # from exec-once; its packaged unit hangs off graphical-session.target
+    # and is not enabled, so nothing here would raise it. Restart rather
+    # than ConditionEnvironment, for the same early-start reason as dpms.
+    services.omnixy-polkit-agent = {
+      Unit = {
+        Description = "Polkit authentication agent for the Omnixy session";
+        PartOf = [ "omnixy-session.target" ];
+        After = [ "omnixy-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+        Slice = "session.slice";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "omnixy-session.target" ];
+    };
+
     # A scored speedtest.net run every quarter of an hour, kept for the
     # network panel's SPEEDTEST section (record: agents/2026-09-09-003).
     # Deliberately not PartOf omnixy-session.target: recording wants nothing

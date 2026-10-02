@@ -39,7 +39,6 @@ in
     opencommit # AI-powered commit message generator
     poedit # Cross-platform gettext catalogs (.po files) editor
     remarshal # Convert between TOML, YAML and JSON
-    rpi-imager # Raspberry Pi Imaging Utility
     screenkey # A screencast tool to display your keys inspired by Screenflick
     silver-searcher # Ack like searcher focused on code
     universal-ctags # A maintained ctags implementation
