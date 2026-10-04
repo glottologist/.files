@@ -57,6 +57,7 @@ in {
     ../../shared/development/default.nix
     ../../shared/disk/default.nix
     ../../shared/documentation/default.nix
+    ../../shared/embedded/default.nix
     ../../shared/fonts/default.nix
     ../../shared/keyboards/default.nix
     ../../shared/languages/default.nix

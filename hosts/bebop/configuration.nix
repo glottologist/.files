@@ -21,6 +21,7 @@
     ../common/development.nix
     ../common/devices.nix
     ../common/disk.nix
+    ../common/embedded.nix
     ../common/keyboards.nix
     ../common/nix.nix
     ../common/harmonia-substituter.nix
