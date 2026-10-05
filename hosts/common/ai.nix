@@ -9,12 +9,9 @@
     package = pkgs.ollama-rocm;
     host = "127.0.0.1";
     port = 11434;
-    # deepseek-v4-flash:cloud is a cloud passthrough (284B MoE / 13B active, 1M
-    # context) and requires `ollama signin`; no local weights download.
     # qwen3.8:27b is local weights: 16.8 GB of model plus a 931 MB vision
     # projector, pulled on every host importing this file.
     loadModels = [
-      "deepseek-v4-flash:cloud"
       "qwen3.8:27b"
     ];
   };
