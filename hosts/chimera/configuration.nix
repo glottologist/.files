@@ -23,8 +23,8 @@
     ../common/stylix.nix
     ../common/tailscale.nix
     ../common/veracrypt.nix
-    ../../shared/osint/default.nix
-    ../../shared/pentesting/default.nix
+    # ../../shared/osint/default.nix
+    # ../../shared/pentesting/default.nix
   ];
 
   system.stateVersion = "26.05";
