@@ -6,8 +6,9 @@
 # Option "Rotate" "right".
 #
 # Hyprland's transform is 1 for ninety degrees and 3 for two hundred and
-# seventy. If the desktop comes up inverted on first login, the fix is one
-# digit; try it live before editing this file:
+# seventy. Transform 1 brought the desktop up upside down, so the panel takes
+# 3. The Omnixy session reads the same line, so both Hyprland profiles turn
+# together. To try a value live before editing this file:
 #
 #   hyprctl keyword monitor DSI-1,1200x1920@60,0x0,1.5,transform,3
 #
@@ -18,7 +19,7 @@
   wallpapers = "bing";
 
   # Hyprland Settings
-  extraMonitorSettings = "monitor=DSI-1,1200x1920@60,0x0,1.5,transform,1";
+  extraMonitorSettings = "monitor=DSI-1,1200x1920@60,0x0,1.5,transform,3";
 
   # Waybar Settings
   clock24h = true;

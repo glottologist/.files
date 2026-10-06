@@ -33,8 +33,9 @@ let
   classicCatalog = import ../hyprland/keybind-catalog.nix { inherit username; };
   catalogToLua = import ../hyprland/catalog-to-lua.nix { inherit lib; };
 
-  # hyprlang "monitor=output,mode,position,scale" lines from variables.nix
-  # translated to hl.monitor calls.
+  # hyprlang "monitor=output,mode,position,scale[,transform,N]" lines from
+  # variables.nix translated to hl.monitor calls. Chimera's rotated panel is
+  # the line that carries a transform.
   monitorLines = builtins.filter (line: lib.hasPrefix "monitor=" line) (
     lib.splitString "\n" extraMonitorSettings
   );
@@ -42,13 +43,16 @@ let
     line:
     let
       parts = lib.splitString "," (lib.removePrefix "monitor=" line);
+      transform = lib.optionalString (
+        builtins.length parts >= 6 && builtins.elemAt parts 4 == "transform"
+      ) "\n    transform = ${builtins.elemAt parts 5},";
     in
     lib.optionalString (builtins.length parts >= 4) ''
       hl.monitor({
           output   = "${builtins.elemAt parts 0}",
           mode     = "${builtins.elemAt parts 1}",
           position = "${builtins.elemAt parts 2}",
-          scale    = ${builtins.elemAt parts 3},
+          scale    = ${builtins.elemAt parts 3},${transform}
       })
     '';
 

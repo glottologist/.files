@@ -84,30 +84,28 @@ ssh jrt@<chimera-address>
 passwd
 ```
 
-## The two sessions
+## The three sessions
 
-`tuigreet` presents both; F2 opens the menu, and the choice is remembered.
+`tuigreet` presents all three; F2 opens the menu, and the choice is remembered.
 
-**Plasma (default).** Plasma's Wayland session handles the rotation, the
-fractional scaling and the touchscreen from System Settings without being told,
-which is what one wants on an eight-inch convertible and on first boot.
+**Hyprland (Omnixy, default).** The Omnixy quickshell desktop that Bebop runs.
+Its session wrapper in `services.nix` matches Bebop's, and its rotation comes
+from the same monitor line as the classic profile.
 
-**Hyprland (Classic).** The waybar, rofi and dunst stack, with rotation coming
-from the monitor line in `homes/jrt/variables.nix`. Hyprland's transform is `1`
-for ninety degrees and `3` for two hundred and seventy; the correct value for
-this panel should be confirmed on the hardware rather than trusted from a
-configuration file. Try it live before editing anything:
+**Hyprland (Classic).** The waybar, rofi and dunst stack. Rotation comes from
+the monitor line in `homes/jrt/variables.nix`. Hyprland's transform is `1` for
+ninety degrees and `3` for two hundred and seventy; `1` brought the desktop up
+upside down, so the line carries `3`. Try a value live before editing anything:
 
 ```bash
 hyprctl keyword monitor DSI-1,1200x1920@60,0x0,1.5,transform,3
 ```
 
-If `3` is right, change the digit in `homes/jrt/variables.nix` and re-apply the
-home configuration.
+**Plasma.** Plasma's Wayland session handles the rotation, the fractional
+scaling and the touchscreen from System Settings without being told, which is
+what one wants when the machine is used as a tablet.
 
-Caelestia and Omnixy are absent by design: both are tuned to Bebop's monitor
-geometry, and porting them to a rotated portrait panel would be a second piece
-of work for no gain here.
+Caelestia is absent by design: it is tuned to Bebop and adds nothing here.
 
 ## The home profile
 

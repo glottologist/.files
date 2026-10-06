@@ -1,15 +1,13 @@
-# The greeter offers two sessions and Plasma is the default.
+# The greeter offers three sessions and Omnixy is the default.
 #
-# That choice is about the hardware rather than about taste. The Pocket 3's
-# panel is a 1200x1920 OLED at roughly 283 DPI, mounted rotated, with a
-# touchscreen and an accelerometer; Plasma's Wayland session handles rotation,
-# fractional scaling and touch input without being told, which is exactly what
-# one wants on first boot and when the machine is used as a tablet. The
-# Hyprland classic profile sits alongside it for keyboard-driven work, and its
-# rotation comes from the monitor line in homes/jrt/variables.nix.
+# The Pocket 3's panel is a 1200x1920 OLED at roughly 283 DPI, mounted
+# rotated, with a touchscreen and an accelerometer. Both Hyprland profiles,
+# Omnixy and classic, take their rotation from the monitor line in
+# homes/jrt/variables.nix. Plasma's Wayland session stays on the menu because
+# it handles rotation, fractional scaling and touch input without being told,
+# which is what one wants when the machine is used as a tablet.
 #
-# Caelestia and Omnixy are deliberately absent: both are tuned to Bebop's
-# monitor geometry and would need their own rotation work for no gain here.
+# Caelestia is deliberately absent: it is tuned to Bebop and adds nothing here.
 {
   config,
   pkgs,
@@ -22,10 +20,40 @@ let
     exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/hyprland.conf"
   '';
 
+  # The Omnixy session needs OMNIXY_PATH before Hyprland parses its Lua, and
+  # the quickshell process and every omnixy-* script inherit the PATH. dunst
+  # is Type=dbus on org.freedesktop.Notifications: the first notification
+  # of a session would bus-activate it ahead of the shell's own notification
+  # server, so it is masked for the life of this session and released after.
+  # This is the same wrapper as Bebop's in hosts/bebop/services.nix.
+  omnixySession = pkgs.writeShellScript "hyprland-omnixy-session" ''
+    export OMNIXY_PATH="${pkgs.omnixy-desktop}"
+    export PATH="${pkgs.omnixy-desktop}/bin:${pkgs.omnixy-desktop.runtimePath}:$PATH"
+    release() {
+      systemctl --user stop omnixy-session.target 2>/dev/null || true
+      systemctl --user unmask --runtime dunst.service 2>/dev/null || true
+    }
+    trap release EXIT INT TERM
+    systemctl --user stop dunst.service 2>/dev/null || true
+    systemctl --user mask --runtime dunst.service 2>/dev/null || true
+    ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/omnixy.lua"
+  '';
+
   hyprlandSessions = pkgs.runCommand "hyprland-sessions" {
-    passthru.providedSessions = [ "hyprland-classic" ];
+    passthru.providedSessions = [
+      "hyprland-classic"
+      "hyprland-omnixy"
+    ];
   } ''
     mkdir -p $out/share/wayland-sessions
+    cat > $out/share/wayland-sessions/hyprland-omnixy.desktop <<EOF
+    [Desktop Entry]
+    Type=Application
+    Name=Hyprland (Omnixy)
+    Comment=Hyprland with the Omnixy quickshell desktop
+    Exec=${omnixySession}
+    DesktopNames=Hyprland
+    EOF
     cat > $out/share/wayland-sessions/hyprland-classic.desktop <<EOF
     [Desktop Entry]
     Type=Application
@@ -56,9 +84,9 @@ in
       enable = true;
       settings.default_session = {
         user = "${username}";
-        # F2 opens the session menu. --cmd names Plasma as the default until a
+        # F2 opens the session menu. --cmd names Omnixy as the default until a
         # session has been remembered.
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions} --cmd startplasma-wayland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --sessions ${greeterSessions} --cmd ${omnixySession}";
       };
     };
 

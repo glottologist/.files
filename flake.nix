@@ -301,8 +301,8 @@
         };
 
         # Chimera's profile. Stylix is needed because shared/wm/stylix.nix is
-        # imported; Caelestia is not, because only the classic Hyprland
-        # profile is taken.
+        # imported; Caelestia is not, because only the classic and Omnixy
+        # Hyprland profiles are taken.
         "jrt" = homeManagerConfig {
           inherit pkgs;
           extraSpecialArgs = {

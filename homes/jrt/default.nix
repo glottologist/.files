@@ -69,11 +69,12 @@ in {
     ../../shared/network/default.nix
     ../../shared/security/default.nix
 
-    # The session and the shell. Only the classic Hyprland profile is taken:
-    # shared/wm/default.nix would add Caelestia and Omnixy, both tuned to
-    # Bebop's monitor geometry and needing a second round of rotation work for
-    # no gain on this panel. Plasma comes from the system layer.
+    # The session and the shell. The classic and Omnixy Hyprland profiles are
+    # taken; both read the rotated monitor line from variables.nix. Caelestia
+    # stays out, which is why shared/wm/default.nix is not imported whole.
+    # Plasma comes from the system layer.
     ../../shared/wm/classic/default.nix
+    ../../shared/wm/omnixy/default.nix
     ../../shared/wm/stylix.nix
     ../../shared/desktop/default.nix
     ../../shared/terminal/default.nix
