@@ -174,6 +174,7 @@ let
       "${dir}/references/unsafe-audit.md".text = builtins.readFile (s + "/references/unsafe-audit.md");
       "${dir}/references/conductor.md".text = builtins.readFile (s + "/references/conductor.md");
       "${dir}/references/writing-style.md".text = builtins.readFile (s + "/references/writing-style.md");
+      "${dir}/references/deep-modules.md".text = builtins.readFile (s + "/references/deep-modules.md");
       # SCRIPTS
       "${dir}/scripts/run_clippy.sh" = {
         source = s + "/scripts/run_clippy.sh";
@@ -318,6 +319,9 @@ let
       );
       "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (
         s + "/skills/review-strict/references/rust-strict.md"
+      );
+      "${dir}/skills/review-strict/references/deep-modules.md".text = builtins.readFile (
+        s + "/skills/review-strict/references/deep-modules.md"
       );
       "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (
         s + "/skills/algorithmic-art/SKILL.md"
@@ -630,6 +634,9 @@ let
       "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (
         s + "/skills/review-strict/references/rust-strict.md"
       );
+      "${dir}/skills/review-strict/references/deep-modules.md".text = builtins.readFile (
+        s + "/skills/review-strict/references/deep-modules.md"
+      );
       "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (
         s + "/skills/algorithmic-art/SKILL.md"
       );
@@ -901,6 +908,9 @@ let
       );
       "${dir}/skills/review-strict/references/rust-strict.md".text = builtins.readFile (
         s + "/skills/review-strict/references/rust-strict.md"
+      );
+      "${dir}/skills/review-strict/references/deep-modules.md".text = builtins.readFile (
+        s + "/skills/review-strict/references/deep-modules.md"
       );
       "${dir}/skills/algorithmic-art/SKILL.md".text = builtins.readFile (
         s + "/skills/algorithmic-art/SKILL.md"
