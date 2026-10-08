@@ -84,11 +84,16 @@ in
     fi
   '';
 
+  # Continuum autosaves through a hook it prepends to status-right when it
+  # loads. extraConfig lands after the plugins, so the theme's status-right
+  # replaced the hook and nothing ever autosaved. Order 600 sits after the
+  # Home Manager header (mkBefore) and before the plugin block (default).
+  xdg.configFile."tmux/tmux.conf".text = lib.mkOrder 600 tmuxConf;
+
   programs.tmux = {
     enable = true;
     aggressiveResize = true;
     baseIndex = 1;
-    extraConfig = tmuxConf;
     escapeTime = 0;
     keyMode = "vi";
     plugins = with plugins; [
