@@ -84,6 +84,37 @@ in
     fi
   '';
 
+  # Starts a detached server once the desktop is up so continuum restores the
+  # last save without anyone opening a terminal, and saves again on the way
+  # down. Starting at graphical-session.target rather than default.target
+  # gives the restored panes WAYLAND_DISPLAY. The user manager lacks the
+  # shell's TMUX_TMPDIR, without which the server would listen on a socket
+  # under /tmp that no terminal looks for. A restart on switch would kill
+  # every session, so changes wait for the next login. The unit cannot be
+  # called tmux.service: with @continuum-boot off, continuum runs
+  # `systemctl --user disable tmux.service` on every load, which unlinks it.
+  systemd.user.services.tmux-server = {
+    Unit = {
+      Description = "tmux server with continuum restore";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+      X-RestartIfChanged = false;
+    };
+    Service = {
+      Type = "forking";
+      Environment = [
+        "TMUX_TMPDIR=%t"
+        "PATH=/run/wrappers/bin:%h/.nix-profile/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin"
+      ];
+      ExecStart = "${pkgs.tmux}/bin/tmux new-session -d";
+      ExecStop = [
+        "${plugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh quiet"
+        "${pkgs.tmux}/bin/tmux kill-server"
+      ];
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
   # Continuum autosaves through a hook it prepends to status-right when it
   # loads. extraConfig lands after the plugins, so the theme's status-right
   # replaced the hook and nothing ever autosaved. Order 600 sits after the
