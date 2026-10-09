@@ -11,7 +11,7 @@ BarWidget {
   id: root
   moduleName: "omnixy.tray"
 
-  property bool expanded: false
+  property bool expanded: true
   property bool managePopupOpen: false
   property bool trayMenuOpen: false
   property var activeTrayItem: null
@@ -237,8 +237,7 @@ BarWidget {
       implicitWidth: pinnedWidth + drawerBlockWidth
       implicitHeight: root.barSize
 
-      // Mask out the empty area the collapsed drawer reserves for its slide-in,
-      // so hovering it doesn't trigger expand and clicks pass through.
+      // Let clicks pass through the space reserved beside the collapsed drawer.
       containmentMask: QtObject {
         function contains(point: point): bool {
           if (point.y < 0 || point.y > horizontalTrayRoot.height) return false
@@ -259,19 +258,16 @@ BarWidget {
         height: root.barSize
         visible: root.allItems.length > 0
 
-        HoverHandler {
-          onHoveredChanged: root.expanded = hovered
-        }
-
         BarIconButton {
           id: expandIcon
           bar: root.bar
           width: implicitWidth
           height: implicitHeight
           x: root.drawerExtent - root.revealExtent
-          text: "\uf053"
+          text: root.expanded ? "\uf054" : "\uf053"
           onPressed: function(button) {
-            if (button === Qt.RightButton) root.managePopupOpen = !root.managePopupOpen
+            if (button === Qt.LeftButton) root.expanded = !root.expanded
+            else if (button === Qt.RightButton) root.managePopupOpen = !root.managePopupOpen
           }
         }
 
@@ -341,20 +337,17 @@ BarWidget {
         height: verticalTrayRoot.drawerBlockHeight
         visible: root.allItems.length > 0
 
-        HoverHandler {
-          onHoveredChanged: root.expanded = hovered
-        }
-
         BarIconButton {
           id: expandIcon
           bar: root.bar
           width: implicitWidth
           height: implicitHeight
           y: root.drawerExtent - root.revealExtent
-          text: "\uf053"
+          text: root.expanded ? "\uf054" : "\uf053"
           textRotation: 90
           onPressed: function(button) {
-            if (button === Qt.RightButton) root.managePopupOpen = !root.managePopupOpen
+            if (button === Qt.LeftButton) root.expanded = !root.expanded
+            else if (button === Qt.RightButton) root.managePopupOpen = !root.managePopupOpen
           }
         }
 
