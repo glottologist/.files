@@ -161,13 +161,6 @@ in
         '';
       }
       {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '2' # minutes
-        '';
-      }
-      {
         plugin = resurrect;
         extraConfig = ''
           set -g @resurrect-strategy-vim 'session'
@@ -176,6 +169,13 @@ in
           set -g @resurrect-save 'S'
           set -g @resurrect-restore 'R'
           set -g @resurrect-dir '~/.config/tmux/resurrect'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '2' # minutes
         '';
       }
     ];
