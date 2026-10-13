@@ -37,41 +37,33 @@ var PLEX_AUTH_HINT = "Not linked to Plex yet. Run omnixy-plex-auth in a terminal
 
 // --- Commands -------------------------------------------------------------
 
-// NameHasOwner answers without activating the name. That distinction matters:
-// installing Goodvibes also installs its D-Bus service file, so a bare call to
-// io.gitlab.Goodvibes would start the daemon with its GTK window attached.
-// Every read below is gated on this probe, and the daemon is only ever started
-// through its systemd unit, which passes --without-ui.
-function probeCommand() {
-  return ["busctl", "--user", "--json=short", "call", "org.freedesktop.DBus",
-          "/org/freedesktop/DBus", "org.freedesktop.DBus", "NameHasOwner", "s", SERVICE]
-}
-
+// Reading the library also proves the native interface is ready. Never let
+// these calls activate Goodvibes: D-Bus activation opens its GTK window.
 function listCommand() {
-  return ["busctl", "--user", "--json=short", "call", SERVICE, OBJECT,
+  return ["busctl", "--user", "--auto-start=no", "--json=short", "call", SERVICE, OBJECT,
           SERVICE + ".Stations", "List"]
 }
 
 // Goodvibes resolves the argument as a station name first and as a stream URI
 // second, so a search result can be played without being saved.
 function playCommand(target) {
-  return ["busctl", "--user", "call", SERVICE, OBJECT, SERVICE + ".Player",
+  return ["busctl", "--user", "--auto-start=no", "call", SERVICE, OBJECT, SERVICE + ".Player",
           "Play", "s", String(target || "")]
 }
 
 function stopCommand() {
-  return ["busctl", "--user", "call", SERVICE, OBJECT, SERVICE + ".Player", "Stop"]
+  return ["busctl", "--user", "--auto-start=no", "call", SERVICE, OBJECT, SERVICE + ".Player", "Stop"]
 }
 
 // Add takes the uri, the name, and a position given as a keyword and an anchor
 // station. An empty keyword appends.
 function addCommand(uri, name) {
-  return ["busctl", "--user", "call", SERVICE, OBJECT, SERVICE + ".Stations",
+  return ["busctl", "--user", "--auto-start=no", "call", SERVICE, OBJECT, SERVICE + ".Stations",
           "Add", "ssss", String(uri || ""), String(name || ""), "", ""]
 }
 
 function removeCommand(name) {
-  return ["busctl", "--user", "call", SERVICE, OBJECT, SERVICE + ".Stations",
+  return ["busctl", "--user", "--auto-start=no", "call", SERVICE, OBJECT, SERVICE + ".Stations",
           "Remove", "s", String(name || "")]
 }
 
@@ -93,10 +85,7 @@ function stopDaemonCommand() {
   return stopUnitCommand(UNIT)
 }
 
-// Goodvibes and spotify-player are judged up or down by whether they hold
-// their MPRIS name, which costs nothing to ask and activates nothing. The
-// Plex daemon is asked differently, by connecting to its socket: see
-// mpvReadyCommand below.
+// Spotify readiness uses its MPRIS name; Plex uses its socket.
 function namePresentCommand(name) {
   return ["busctl", "--user", "--json=short", "call", "org.freedesktop.DBus",
           "/org/freedesktop/DBus", "org.freedesktop.DBus", "NameHasOwner", "s", String(name || "")]
@@ -120,7 +109,7 @@ function searchUrl(query) {
 // finds none it quietly starts a client of its own -- which authenticates, and
 // so opens a browser window at Spotify's authorisation page. Every command
 // below is therefore only ever run once the daemon is known to hold its MPRIS
-// name, exactly as the Goodvibes calls are gated on NameHasOwner.
+// name. Radio commands instead wait for the native station interface.
 function spotifySearchCommand(query) {
   return ["spotify_player", "search", String(query || "").trim()]
 }
@@ -914,7 +903,6 @@ if (typeof module !== "undefined") {
     searchPlaceholder: searchPlaceholder,
     powerTooltip: powerTooltip,
     joinMeta: joinMeta,
-    probeCommand: probeCommand,
     listCommand: listCommand,
     playCommand: playCommand,
     stopCommand: stopCommand,

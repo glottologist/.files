@@ -23,7 +23,8 @@ Item {
   property string listError: ""
   property string lastError: ""
 
-  readonly property bool busy: actionProc.running || daemonProc.running || listProc.running
+  readonly property bool starting: (daemonProc.running && !_stoppingDaemon) || settle.running || settleProbe.running
+  readonly property bool busy: starting || actionProc.running || daemonProc.running || listProc.running
   readonly property var players: Mpris.players ? Mpris.players.values : []
   readonly property var radioPlayer: findRadioPlayer()
   readonly property bool playing: !!(radioPlayer && radioPlayer.isPlaying)
@@ -32,9 +33,7 @@ Item {
   readonly property string playingStation: radioPlayer ? String(radioPlayer.trackArtist || "") : ""
   readonly property string playingTitle: radioPlayer ? String(radioPlayer.trackTitle || "") : ""
 
-  // Runs once the daemon is known to hold the bus name, starting it first if
-  // it does not. Only one action is ever outstanding, which is all a panel
-  // driven by clicks needs.
+  // Keep one action queued until the native station interface is ready.
   property var _afterStart: null
   // The same Process serves both directions of the unit, so it has to say
   // which one it is running: a stop must not then wait for a bus name that is
@@ -50,8 +49,8 @@ Item {
   }
 
   function probe() {
-    if (probeProc.running) return
-    probeProc.command = Model.probeCommand()
+    if (probeProc.running || starting || daemonProc.running) return
+    probeProc.command = Model.listCommand()
     probeProc.running = true
   }
 
@@ -67,11 +66,12 @@ Item {
   }
 
   function withDaemon(action) {
+    if (starting || daemonProc.running) return
     if (running) {
-      action()
+      if (action) action()
       return
     }
-    if (daemonProc.running) return
+    lastError = ""
     _afterStart = action
     _stoppingDaemon = false
     daemonProc.command = Model.startDaemonCommand()
@@ -104,7 +104,7 @@ Item {
   }
 
   function startDaemon() {
-    withDaemon(function() { root.refresh() })
+    withDaemon(null)
   }
 
   function stopDaemon() {
@@ -141,12 +141,13 @@ Item {
     command: []
     stdout: StdioCollector { id: probeOut; waitForEnd: true }
     onExited: function(exitCode) {
-      root.running = exitCode === 0 && Model.parseRunning(probeOut.text)
+      root.running = exitCode === 0
       if (!root.running) {
         root.stations = []
         return
       }
-      root.list()
+      root.listError = ""
+      root.stations = Model.parseStations(probeOut.text)
     }
   }
 
@@ -204,8 +205,7 @@ Item {
         return
       }
 
-      // systemctl returns as soon as the unit is active, which is before
-      // Goodvibes has claimed its bus name; settle waits that out.
+      // Goodvibes claims its bus name before registering its native interfaces.
       settle.pendingAction = next
       settle.attempts = 0
       settle.restart()
@@ -228,7 +228,7 @@ Item {
     }
   }
 
-  // Polls the bus name after a start, then runs whatever was waiting on it.
+  // Wait for a successful library read before sending the queued action.
   Timer {
     id: settle
     property var pendingAction: null
@@ -236,7 +236,7 @@ Item {
     interval: 150
     repeat: false
     onTriggered: {
-      settleProbe.command = Model.probeCommand()
+      settleProbe.command = Model.listCommand()
       settleProbe.running = true
     }
   }
@@ -247,10 +247,11 @@ Item {
     command: []
     stdout: StdioCollector { id: settleOut; waitForEnd: true }
     onExited: function(exitCode) {
-      root.running = exitCode === 0 && Model.parseRunning(settleOut.text)
+      if (root._stoppingDaemon) return
+      root.running = exitCode === 0
       if (!root.running) {
         settle.attempts = settle.attempts + 1
-        if (settle.attempts < 20) {
+        if (settle.attempts < 100) {
           settle.restart()
           return
         }
@@ -260,7 +261,9 @@ Item {
       }
       var action = settle.pendingAction
       settle.pendingAction = null
-      root.list()
+      root.listError = ""
+      root.lastError = ""
+      root.stations = Model.parseStations(settleOut.text)
       if (action) action()
     }
   }

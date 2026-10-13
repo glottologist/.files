@@ -33,7 +33,13 @@
     nixos-icons
     line-awesome
     iso-flags
-    tela-circle-icon-theme # 🎯 Perfect rounded icons for Catppuccin Latte
+    (tela-circle-icon-theme.overrideAttrs (old: {
+      # The 2026-07-07 release has two aliases pointing at missing icons.
+      postPatch = (old.postPatch or "") + ''
+        ln -sfn ../mimetypes/application-x-addon-symbolic.svg links/symbolic/apps/xsi-addon-symbolic.svg
+        ln -sfn preferences-system-search.svg links/scalable/apps/org.xfce.appfinder.svg
+      '';
+    }))
     tela-icon-theme # Square version of Tela
     unidings
     whitesur-icon-theme # macOS-inspired

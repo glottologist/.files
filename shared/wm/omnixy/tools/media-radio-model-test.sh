@@ -11,14 +11,12 @@ const Model = require(process.argv[2])
 
 // --- Commands -------------------------------------------------------------
 
-// The probe must ask the bus broker, never the Goodvibes name itself: calling
-// the name would activate it, and activation starts the GTK window.
-const probe = Model.probeCommand()
-assert.strictEqual(probe[4], "org.freedesktop.DBus")
-assert.strictEqual(probe[probe.length - 2], "s")
-assert.strictEqual(probe[probe.length - 1], "io.gitlab.Goodvibes")
-assert.ok(probe.indexOf("NameHasOwner") !== -1)
-assert.ok(probe.indexOf("--json=short") !== -1)
+// A stopped or disappearing daemon must never be activated with its GTK UI.
+for (const command of [Model.listCommand(), Model.playCommand("FIP Jazz"),
+                       Model.stopCommand(), Model.addCommand("https://x/y", "Y"),
+                       Model.removeCommand("Y")]) {
+  assert.ok(command.includes("--auto-start=no"), "radio calls must not activate Goodvibes")
+}
 
 assert.deepStrictEqual(Model.listCommand().slice(-2), ["io.gitlab.Goodvibes.Stations", "List"])
 assert.deepStrictEqual(Model.playCommand("FIP Jazz").slice(-3), ["Play", "s", "FIP Jazz"])
