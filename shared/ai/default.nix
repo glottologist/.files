@@ -143,8 +143,6 @@ let
       "${dir}/commands/implement.md".text = builtins.readFile (s + "/commands/implement.md");
       "${dir}/commands/extract_context.md".text = builtins.readFile (s + "/commands/extract_context.md");
       "${dir}/commands/osint.md".text = builtins.readFile (s + "/commands/osint.md");
-      "${dir}/commands/sort_books.md".text = builtins.readFile (s + "/commands/sort_books.md");
-      "${dir}/commands/sort_comics.md".text = builtins.readFile (s + "/commands/sort_comics.md");
       # SUB-AGENTS
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         s + "/agents/benchmark-specialist.md"
