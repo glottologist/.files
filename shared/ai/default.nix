@@ -134,6 +134,7 @@ let
       "${dir}/commands/carryon.md".text = builtins.readFile (s + "/commands/carryon.md");
       "${dir}/commands/external-audit.md".text = builtins.readFile (s + "/commands/external-audit.md");
       "${dir}/commands/issue.md".text = builtins.readFile (s + "/commands/issue.md");
+      "${dir}/commands/burn-issues.md".text = builtins.readFile (s + "/commands/burn-issues.md");
       "${dir}/commands/analyse_tests.md".text = builtins.readFile (s + "/commands/analyse_tests.md");
       "${dir}/commands/analyse_perf.md".text = builtins.readFile (s + "/commands/analyse_perf.md");
       "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
@@ -485,6 +486,7 @@ let
       "${dir}/commands/carryon.md".text = builtins.readFile (f + "/commands/carryon.md");
       "${dir}/commands/external-audit.md".text = builtins.readFile (f + "/commands/external-audit.md");
       "${dir}/commands/issue.md".text = builtins.readFile (f + "/commands/issue.md");
+      "${dir}/commands/burn-issues.md".text = builtins.readFile (f + "/commands/burn-issues.md");
       "${dir}/commands/analyse_tests.md".text = builtins.readFile (f + "/commands/analyse_tests.md");
       "${dir}/commands/analyse_perf.md".text = builtins.readFile (f + "/commands/analyse_perf.md");
       "${dir}/commands/analyse_bench_fuzz.md".text = builtins.readFile (
@@ -725,6 +727,7 @@ let
       "${dir}/prompts/carryon.md".text = piSupport.mkPrompt (f + "/commands/carryon.md");
       "${dir}/prompts/external-audit.md".text = piSupport.mkPrompt (f + "/commands/external-audit.md");
       "${dir}/prompts/issue.md".text = piSupport.mkPrompt (f + "/commands/issue.md");
+      "${dir}/prompts/burn-issues.md".text = piSupport.mkPrompt (f + "/commands/burn-issues.md");
       "${dir}/prompts/analyse_tests.md".text = piSupport.mkPrompt (f + "/commands/analyse_tests.md");
       "${dir}/prompts/analyse_perf.md".text = piSupport.mkPrompt (f + "/commands/analyse_perf.md");
       "${dir}/prompts/analyse_bench_fuzz.md".text = piSupport.mkPrompt (
