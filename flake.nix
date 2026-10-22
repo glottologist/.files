@@ -256,6 +256,7 @@
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
+                  caelestia-shell
                   ;
                 installForge = true;
                 installEnnio = true;
@@ -288,6 +289,7 @@
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
+                  caelestia-shell
                   ;
                 installForge = true;
                 installEnnio = true;
@@ -324,6 +326,7 @@
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
+                  caelestia-shell
                   ;
                 installForge = true;
                 installEnnio = true;
@@ -358,6 +361,7 @@
                   nix-everywhere
                   ccstatusline
                   caelestia-dots
+                  caelestia-shell
                   ;
                 installForge = false;
                 installEnnio = false;

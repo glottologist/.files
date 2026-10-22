@@ -4,9 +4,25 @@
   lib,
   username,
   caelestia-dots,
+  caelestia-shell,
   ...
 }:
 let
+  system = pkgs.stdenv.hostPlatform.system;
+  # Upstream sets SETUPTOOLS_SCM_PRETEND_VERSION as a bare attribute. With
+  # __structuredAttrs that is not exported, and it cannot also live in env.
+  # hatch-vcs falls through to VCS_VERSIONING_PRETEND_VERSION, which env does export.
+  caelestiaCli =
+    caelestia-shell.inputs.caelestia-cli.packages.${system}.default.overrideAttrs
+      (old: {
+        env = (old.env or { }) // {
+          VCS_VERSIONING_PRETEND_VERSION = "1";
+        };
+      });
+  caelestiaShell = caelestia-shell.packages.${system}.caelestia-shell.override {
+    withCli = true;
+    caelestia-cli = caelestiaCli;
+  };
   inherit (import ../../../homes/${username}/variables.nix)
     browser
     terminal
@@ -47,7 +63,9 @@ in
 {
   programs.caelestia = {
     enable = true;
+    package = caelestiaShell;
     cli.enable = true;
+    cli.package = caelestiaCli;
     # The session wrapper launches Hyprland directly, so
     # graphical-session.target never activates and the unit would sit idle;
     # execs.lua starts the shell with `caelestia shell -d` as upstream intends.
