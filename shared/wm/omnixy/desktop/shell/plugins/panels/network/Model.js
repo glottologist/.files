@@ -362,6 +362,50 @@ function pad2(value) {
   return value < 10 ? "0" + value : String(value)
 }
 
+var vpnStateLabels = {
+  connected: "Connected",
+  connecting: "Connecting…",
+  disconnecting: "Disconnecting…",
+  disconnected: "Not connected",
+  error: "Blocked"
+}
+
+// One row per installed provider, as omnixy-network-vpn prints it:
+// id, display name, state, location.
+function parseVpnStatus(raw) {
+  var rows = []
+  var lines = String(raw || "").split(/\r?\n/)
+
+  for (var i = 0; i < lines.length; i++) {
+    var parts = lines[i].split("\t")
+    if (parts.length < 4 || !parts[0] || !parts[1]) continue
+    rows.push({
+      id: parts[0],
+      name: parts[1],
+      state: vpnStateLabels.hasOwnProperty(parts[2]) ? parts[2] : "disconnected",
+      location: parts[3]
+    })
+  }
+  return rows
+}
+
+function vpnStatusText(row) {
+  if (!row) return ""
+  var label = vpnStateLabels[row.state] || vpnStateLabels.disconnected
+  if (row.state === "disconnected" || !row.location) return label
+  return label + " · " + row.location
+}
+
+// Mullvad's error state is its firewall blocking traffic, which a disconnect
+// lifts, so it counts as on alongside a live or pending tunnel.
+function vpnIsActive(state) {
+  return state === "connected" || state === "connecting" || state === "error"
+}
+
+function vpnToggleAction(state) {
+  return vpnIsActive(state) ? "disconnect" : "connect"
+}
+
 function wifiRow(network) {
   if (!network) return null
   // Primitives only: rows become list-model data, so a WifiNetwork here puts a
@@ -477,6 +521,10 @@ if (typeof module !== "undefined") {
     formatSpeedTestLoss: formatSpeedTestLoss,
     formatSpeedTestAge: formatSpeedTestAge,
     formatSpeedTestClock: formatSpeedTestClock,
+    parseVpnStatus: parseVpnStatus,
+    vpnStatusText: vpnStatusText,
+    vpnIsActive: vpnIsActive,
+    vpnToggleAction: vpnToggleAction,
     wifiRow: wifiRow,
     sortWifiRows: sortWifiRows,
     wifiSectionTitle: wifiSectionTitle,

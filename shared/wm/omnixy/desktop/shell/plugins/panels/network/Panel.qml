@@ -129,9 +129,9 @@ Panel {
   property bool cursorActive: false
 
   // Keyboard focus zone for the panel. j/k crosses row boundaries:
-  // header actions ⇄ band ⇄ DNS row ⇄ Wi-Fi networks. h/l move
+  // header actions ⇄ band ⇄ DNS row ⇄ VPN rows ⇄ Wi-Fi networks. h/l move
   // within header actions, band pills, or DNS providers.
-  property string focusSection: "dns"  // "header" | "band" | "dns" | "wifi"
+  property string focusSection: "dns"  // "header" | "band" | "dns" | "vpn" | "wifi"
   property int headerIndex: 0
   readonly property bool canDisconnect: !!connectedWifiNetwork
   readonly property bool headerHasDisconnect: false
@@ -178,8 +178,26 @@ Panel {
   // The band section has up to two cursor rows: the Automatic switch on the
   // header line, then the pills. Same shape as wifiActionFocused.
   property bool bandAutoFocused: true
+  // VPN tunnels from `omnixy-network-vpn`, one row per installed provider.
+  // `pendingVpn` names the provider whose toggle is in flight, and the failure
+  // pair holds a refused toggle's message until vpnFailureTimer clears it.
+  property var vpnRows: []
+  property string pendingVpn: ""
+  property string pendingVpnAction: ""
+  property string vpnFailureId: ""
+  property string vpnFailure: ""
+  property int vpnIndex: 0
+  readonly property bool hasVpn: vpnRows.length > 0
 
   onHeaderActionCountChanged: clampHeaderIndex()
+
+  onVpnRowsChanged: {
+    if (vpnIndex > vpnRows.length - 1) vpnIndex = Math.max(0, vpnRows.length - 1)
+  }
+
+  onHasVpnChanged: {
+    if (!hasVpn && focusSection === "vpn") focusSection = "dns"
+  }
 
   // Availability shifts as scans land, so the option list can shrink out from
   // under the cursor. Clamp the index and evacuate the section before it
@@ -490,6 +508,7 @@ Panel {
       bandProc.command = ["omnixy-network-band"]
       bandProc.running = true
     }
+    refreshVpn()
     // A closed panel has no nearby-network list to fill, and bare refresh()
     // reaches here from action completion, timeouts and construction.
     if (opened && wifiDevice) {
@@ -725,6 +744,43 @@ Panel {
     root.close()
   }
 
+  function refreshVpn() {
+    if (!vpnProc.running) vpnProc.running = true
+  }
+
+  // Polls land every couple of seconds with the same answer, and a fresh array
+  // would rebuild every row under the cursor each time.
+  function updateVpn(raw) {
+    var next = Model.parseVpnStatus(raw)
+    if (JSON.stringify(next) !== JSON.stringify(vpnRows)) vpnRows = next
+  }
+
+  function selectVpnRow(index) {
+    cursorActive = true
+    focusSection = "vpn"
+    vpnIndex = index
+  }
+
+  function activateVpn() {
+    if (vpnIndex < 0 || vpnIndex >= vpnRows.length) return
+    toggleVpn(vpnRows[vpnIndex])
+  }
+
+  // Proton has no command-line connect, so its connect opens the app; the
+  // panel steps aside for it, as it does for the custom DNS prompt.
+  function toggleVpn(row) {
+    if (!row || vpnActionProc.running) return
+
+    var action = Model.vpnToggleAction(row.state)
+    pendingVpn = row.id
+    pendingVpnAction = action
+    vpnFailureId = ""
+    vpnFailure = ""
+    vpnActionProc.command = ["omnixy-network-vpn", row.id, action]
+    vpnActionProc.running = true
+    if (row.id === "proton" && action === "connect") root.close()
+  }
+
   function requiresCredentials(security) {
     return Model.requiresCredentials(security, WifiSecurityType.Open, WifiSecurityType.Owe)
   }
@@ -931,6 +987,51 @@ Panel {
     onTriggered: root.refreshSpeedTestHistory()
   }
 
+  Process {
+    id: vpnProc
+    command: ["omnixy-network-vpn"]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: root.updateVpn(text)
+    }
+  }
+
+  // Tunnels pass through connecting and disconnecting for a second or two, so
+  // this runs as fast as the details poll to show each step as it happens.
+  Timer {
+    id: vpnPoll
+    interval: 1500
+    repeat: true
+    running: root.opened
+    onTriggered: root.refreshVpn()
+  }
+
+  // Both commands return as soon as the request is made; the tunnel's progress
+  // arrives through vpnPoll.
+  Process {
+    id: vpnActionProc
+    onExited: function(exitCode) {
+      if (exitCode !== 0) {
+        root.vpnFailureId = root.pendingVpn
+        root.vpnFailure = root.pendingVpnAction === "connect" ? "Could not connect" : "Could not disconnect"
+        vpnFailureTimer.restart()
+      }
+      root.pendingVpn = ""
+      root.pendingVpnAction = ""
+      root.refreshVpn()
+    }
+  }
+
+  Timer {
+    id: vpnFailureTimer
+    interval: 4000
+    repeat: false
+    onTriggered: {
+      root.vpnFailureId = ""
+      root.vpnFailure = ""
+    }
+  }
+
   // Action runner for DNS provider changes. Wi-Fi actions use the
   // Quickshell.Networking NetworkManager backend directly.
   Process {
@@ -1096,7 +1197,7 @@ Panel {
           } else if (root.focusSection === "dns") {
             // k from DNS moves up into the band section when it's on screen,
             // then the disconnect button; otherwise stays put. j drops into the
-            // wifi list if there's anywhere to land.
+            // VPN rows, or the wifi list, if there's anywhere to land.
             if (dy < 0) {
               if (root.canSelectBand) {
                 root.focusSection = "band"
@@ -1105,15 +1206,33 @@ Panel {
                 root.focusSection = "header"
                 root.headerIndex = 0
               }
+            } else if (root.hasVpn) {
+              root.focusSection = "vpn"
+              root.vpnIndex = 0
+            } else if (root.wifiNetworks.length > 0) {
+              root.focusSection = "wifi"
+              if (root.selectedIndex < 0) root.selectedIndex = 0
+            }
+          } else if (root.focusSection === "vpn") {
+            if (dy < 0) {
+              if (root.vpnIndex > 0) root.vpnIndex--
+              else root.focusSection = "dns"
+            } else if (root.vpnIndex < root.vpnRows.length - 1) {
+              root.vpnIndex++
             } else if (root.wifiNetworks.length > 0) {
               root.focusSection = "wifi"
               if (root.selectedIndex < 0) root.selectedIndex = 0
             }
           } else {  // wifi
-            // k from the top row escapes back up to the DNS row rather than
+            // k from the top row escapes back up to the row above rather than
             // wrapping around to the bottom of the list.
             if (dy < 0 && root.selectedIndex <= 0) {
-              root.focusSection = "dns"
+              if (root.hasVpn) {
+                root.focusSection = "vpn"
+                root.vpnIndex = root.vpnRows.length - 1
+              } else {
+                root.focusSection = "dns"
+              }
               root.wifiActionFocused = false
             }
             else root.selectByDelta(dy)
@@ -1131,6 +1250,7 @@ Panel {
           if (root.focusSection === "header") root.activateHeader()
           else if (root.focusSection === "band") root.activateBand()
           else if (root.focusSection === "dns") root.activateDns()
+          else if (root.focusSection === "vpn") root.activateVpn()
           else root.activateSelected()
         }
       }
@@ -1611,6 +1731,50 @@ Panel {
         }
       }
 
+      // VPN tunnels. Out of the panel entirely on a machine with no provider
+      // installed.
+      PanelSeparator {
+        visible: root.hasVpn
+        foreground: root.bar.foreground
+      }
+
+      Column {
+        visible: root.hasVpn
+        width: parent.width
+        spacing: Style.space(10)
+
+        PanelSectionHeader {
+          text: "VPN"
+          foreground: root.bar.foreground
+          fontFamily: root.bar.fontFamily
+        }
+
+        Column {
+          width: parent.width
+          spacing: Style.space(4)
+
+          // Wrapper takes modelData/index from the Repeater's delegate context
+          // and passes them down, the same shape as the band pills above.
+          Repeater {
+            model: root.vpnRows
+
+            delegate: Item {
+              required property var modelData
+              required property int index
+              width: parent.width
+              height: vpnRow.implicitHeight
+
+              VpnRow {
+                id: vpnRow
+                vpn: modelData
+                slot: index
+                width: parent.width
+              }
+            }
+          }
+        }
+      }
+
 
       // Wi-Fi networks (only if a Wi-Fi station is available).
       PanelSeparator {
@@ -1742,6 +1906,100 @@ Panel {
       root.cursorActive = true
       root.focusSection = "dns"
       root.dnsIndex = pill.index
+    }
+  }
+
+  // One VPN provider: its name over the tunnel's state, and a switch that
+  // connects or disconnects it. A click anywhere on the row does the same, as
+  // it does on a Wi-Fi row.
+  component VpnRow: CursorSurface {
+    id: vpnRow
+    required property var vpn
+    required property int slot
+
+    readonly property bool isBusy: root.pendingVpn !== "" && root.pendingVpn === (vpn ? vpn.id : "")
+    readonly property bool isFailed: root.vpnFailureId !== "" && root.vpnFailureId === (vpn ? vpn.id : "")
+    readonly property string statusText: isFailed ? root.vpnFailure : Model.vpnStatusText(vpn)
+
+    hasCursor: root.cursorActive && root.focusSection === "vpn" && root.vpnIndex === slot
+    current: !!vpn && vpn.state === "connected"
+    foreground: root.bar.foreground
+    fill: root.hoverFill
+    currentFill: root.selectedFill
+    implicitHeight: vpnBody.implicitHeight
+
+    MouseArea {
+      anchors.fill: parent
+      hoverEnabled: true
+      acceptedButtons: Qt.LeftButton
+      cursorShape: Qt.PointingHandCursor
+      enabled: root.pendingVpn === ""
+      onContainsMouseChanged: if (containsMouse) root.selectVpnRow(vpnRow.slot)
+      onClicked: root.toggleVpn(vpnRow.vpn)
+    }
+
+    Item {
+      id: vpnBody
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      anchors.leftMargin: Style.space(10)
+      anchors.rightMargin: Style.space(10)
+      implicitHeight: Math.max(vpnIcon.implicitHeight, vpnInfo.implicitHeight, vpnSwitch.implicitHeight) + Style.spacing.rowPaddingX
+
+      Text {
+        id: vpnIcon
+        textFormat: Text.PlainText
+        text: "󰖂"
+        color: vpnRow.current ? root.bar.foreground : Qt.darker(root.bar.foreground, 1.5)
+        font.family: root.bar.fontFamily
+        font.pixelSize: Style.font.title
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+      }
+
+      // The row carries the cursor, so the switch keeps its ring off rather
+      // than drawing a second highlight inside the first.
+      ToggleSwitch {
+        id: vpnSwitch
+        cursorRing: false
+        checked: Model.vpnIsActive(vpnRow.vpn ? vpnRow.vpn.state : "")
+        busy: vpnRow.isBusy
+        foreground: root.bar.foreground
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        onHovered: function(isHovered) { if (isHovered) root.selectVpnRow(vpnRow.slot) }
+        onToggled: root.toggleVpn(vpnRow.vpn)
+      }
+
+      Column {
+        id: vpnInfo
+        spacing: Style.space(1)
+        anchors.left: vpnIcon.right
+        anchors.leftMargin: Style.space(10)
+        anchors.right: vpnSwitch.left
+        anchors.rightMargin: Style.space(8)
+        anchors.verticalCenter: parent.verticalCenter
+
+        Text {
+          textFormat: Text.PlainText
+          text: vpnRow.vpn ? vpnRow.vpn.name : ""
+          color: root.bar.foreground
+          font.family: root.bar.fontFamily
+          font.pixelSize: Style.font.body
+          elide: Text.ElideRight
+          width: parent.width
+        }
+        Text {
+          textFormat: Text.PlainText
+          text: vpnRow.statusText
+          color: vpnRow.isFailed ? root.bar.urgent : Qt.darker(root.bar.foreground, vpnRow.current ? 1.0 : 1.5)
+          font.family: root.bar.fontFamily
+          font.pixelSize: Style.font.caption
+          elide: Text.ElideRight
+          width: parent.width
+        }
+      }
     }
   }
 

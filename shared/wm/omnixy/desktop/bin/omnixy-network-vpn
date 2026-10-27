@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# omnixy:summary=Show or toggle the Mullvad and Proton VPN tunnels
+# omnixy:group=network
+# omnixy:args=[mullvad|proton connect|disconnect]
+# omnixy:examples=omnixy network vpn | omnixy network vpn mullvad connect | omnixy network vpn proton disconnect
+
+set -euo pipefail
+
+# Proton brings every protocol up as a NetworkManager connection on this
+# device, named "ProtonVPN <server>". Its app has no command-line connect, so
+# connecting opens the app; disconnecting downs the connection, which the app
+# reads as an ordinary disconnect rather than a drop to reconnect from.
+PROTON_DEVICE=proton0
+
+# LC_ALL=C because nmcli translates state words; `-e no` so values come back
+# unescaped. Same reasoning as omnixy-network-band.
+nm_get() {
+  LC_ALL=C nmcli -e no -g "$@" 2>/dev/null
+}
+
+# A daemon that does not answer is reported as disconnected: the panel can
+# still offer connect, and the attempt will say what is wrong.
+mullvad_status() {
+  command -v mullvad >/dev/null || return 0
+
+  local json
+  if ! json=$(mullvad status --json 2>/dev/null); then
+    printf 'mullvad\tMullvad\tdisconnected\t\n'
+    return 0
+  fi
+
+  jq -r '
+    (.details.location // {}) as $loc
+    | ([$loc.city, $loc.country] | map(select(. != null and . != "")) | join(", ")) as $place
+    | ([$place, ($loc.hostname // "")] | map(select(. != "")) | join(" · ")) as $where
+    | ["mullvad", "Mullvad", (.state // "disconnected"), $where] | @tsv
+  ' <<<"$json"
+}
+
+proton_status() {
+  command -v protonvpn-app >/dev/null || return 0
+
+  local state code name
+  state=$(nm_get GENERAL.STATE device show "$PROTON_DEVICE" || true)
+  name=$(nm_get GENERAL.CONNECTION device show "$PROTON_DEVICE" || true)
+  code=${state%% *}
+
+  # NetworkManager device states: 40-90 are the activation steps, 100 is
+  # activated and 110 is deactivating. A missing device reads as disconnected.
+  if [[ $code == 100 ]]; then
+    state=connected
+  elif [[ $code =~ ^[0-9]+$ ]] && ((code >= 40 && code < 100)); then
+    state=connecting
+  elif [[ $code == 110 ]]; then
+    state=disconnecting
+  else
+    state=disconnected
+    name=""
+  fi
+
+  printf 'proton\tProton VPN\t%s\t%s\n' "$state" "${name#ProtonVPN }"
+}
+
+proton_disconnect() {
+  local uuid
+  uuid=$(nm_get GENERAL.CON-UUID device show "$PROTON_DEVICE" || true)
+  [[ -n $uuid ]] || exit 0
+  nmcli connection down uuid "$uuid" >/dev/null
+}
+
+usage() {
+  echo "Usage: omnixy-network-vpn [mullvad|proton connect|disconnect]" >&2
+}
+
+if (($# == 0)); then
+  mullvad_status
+  proton_status
+  exit 0
+fi
+
+if (($# != 2)); then
+  usage
+  exit 1
+fi
+
+case "$1 $2" in
+  "mullvad connect" | "mullvad disconnect")
+    mullvad "$2" >/dev/null
+    ;;
+  "proton connect")
+    setsid -f protonvpn-app >/dev/null 2>&1 </dev/null
+    ;;
+  "proton disconnect")
+    proton_disconnect
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac
