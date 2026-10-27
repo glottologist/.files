@@ -9,9 +9,12 @@
 
   # Both Hyprland configurations live in ~/.config/hypr; Hyprland prefers
   # hyprland.lua when run bare, so each session names its file explicitly.
+  # --config resolves symlinks at startup and retains store paths that Home
+  # Manager can replace; HYPRLAND_CONFIG preserves the stable filename.
   hyprlandWith = configFile:
     pkgs.writeShellScript "hyprland-${configFile}" ''
-      exec ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/${configFile}"
+      export HYPRLAND_CONFIG="$HOME/.config/hypr/${configFile}"
+      exec ${config.programs.hyprland.package}/bin/Hyprland
     '';
   # The Omnixy session needs OMNIXY_PATH before Hyprland parses its Lua, and
   # the quickshell process and every omnixy-* script inherit the PATH. dunst
@@ -33,7 +36,8 @@
       trap release EXIT INT TERM
       systemctl --user stop dunst.service 2>/dev/null || true
       systemctl --user mask --runtime dunst.service 2>/dev/null || true
-      ${config.programs.hyprland.package}/bin/Hyprland --config "$HOME/.config/hypr/omnixy.lua"
+      export HYPRLAND_CONFIG="$HOME/.config/hypr/omnixy.lua"
+      ${config.programs.hyprland.package}/bin/Hyprland
     '';
   hyprlandSessions =
     pkgs.runCommand "hyprland-sessions" {
