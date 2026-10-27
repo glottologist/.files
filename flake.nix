@@ -101,6 +101,7 @@
         inherit system;
         config = {
           allowUnfree = true;
+          android_sdk.accept_license = true;
           permittedInsecurePackages = [
             "electron-12.2.3"
             "electron-13.6.9"
@@ -120,6 +121,7 @@
         inherit system;
         config = {
           allowUnfree = true;
+          android_sdk.accept_license = true;
           permittedInsecurePackages = [
             "electron-12.2.3"
             "electron-13.6.9"

@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   inherit (import ./variables.nix) username;
   # Detect current session
 
@@ -13,14 +14,17 @@
 
   grok_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/grok-api-key.txt);
 
-  openrouter_api_key = pkgs.lib.removeSuffix "\n" (builtins.readFile ../../secrets/openrouter-api-key.txt);
+  openrouter_api_key = pkgs.lib.removeSuffix "\n" (
+    builtins.readFile ../../secrets/openrouter-api-key.txt
+  );
 
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
     qpdf
     stripe-cli # Stripe API, webhook forwarding and event triggers from the terminal
   ];
-in {
+in
+{
   programs.home-manager = {
     enable = true;
   };
@@ -31,7 +35,7 @@ in {
     tray = {
       Unit = {
         Description = "Home Manager System Tray";
-        Requires = ["graphical-session-pre.target"];
+        Requires = [ "graphical-session-pre.target" ];
       };
     };
     hyprland-session.Unit.Wants = [
@@ -46,6 +50,7 @@ in {
     ../../secrets/accounts.nix
     ../../shared/ai/default.nix
     ../../shared/alerts/default.nix
+    ../../shared/android/default.nix
     ../../shared/blockchain/default.nix
     ../../shared/browsers/default.nix
     ../../shared/cloud/default.nix
@@ -79,7 +84,8 @@ in {
   xdg = {
     inherit configHome;
     enable = true;
-    configFile."fish/functions/pdf_unlock.fish".source = ../../shared/terminal/fish/functions/pdf_unlock.fish;
+    configFile."fish/functions/pdf_unlock.fish".source =
+      ../../shared/terminal/fish/functions/pdf_unlock.fish;
   };
 
   home = {
