@@ -67,6 +67,10 @@ let
   '';
   piManagedSettings = pkgs.writeText "pi-managed-settings.json" (
     builtins.toJSON {
+      # Pi stores the startup model as a provider plus an id. The id is the
+      # ollama tag, colon included.
+      defaultProvider = "ollama";
+      defaultModel = "qwen3.8:27b";
       # An allowlist: pi offers only the models matching these patterns, so a
       # provider in models.json stays invisible until it is named here.
       enabledModels = [

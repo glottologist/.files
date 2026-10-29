@@ -18,6 +18,9 @@ let
     builtins.readFile ../../secrets/openrouter-api-key.txt
   );
 
+  # Bebop only. shared/browsers is also imported by the jason and jrt homes.
+  orivon = pkgs.callPackage ../../shared/browsers/orivon.nix { };
+
   defaultPkgs = with pkgs; [
     any-nix-shell # fish support for nix shell
     qpdf
@@ -91,7 +94,7 @@ in
   home = {
     inherit username homeDirectory;
 
-    packages = defaultPkgs;
+    packages = defaultPkgs ++ [ orivon ];
 
     sessionPath = [
       "$HOME/.local/bin"
