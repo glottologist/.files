@@ -10,9 +10,12 @@
     host = "127.0.0.1";
     port = 11434;
     # qwen3.8:27b is local weights: 16.8 GB of model plus a 931 MB vision
-    # projector, pulled on every host importing this file.
+    # projector. kimi-k3.1-pro:cloud is an Ollama Cloud manifest only (2.8T
+    # parameters, no local weights); pull registers the tag. Only bebop
+    # imports this file.
     loadModels = [
       "qwen3.8:27b"
+      "kimi-k3.1-pro:cloud"
     ];
   };
   # Ollama serves 4096 tokens unless told otherwise, which is too small to be

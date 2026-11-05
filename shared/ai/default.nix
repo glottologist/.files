@@ -53,6 +53,13 @@ let
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (
     builtins.readFile ../../secrets/anthropic-api-key.txt
   );
+  # Absent until secrets/ollama-api-key.txt exists. Pi reads $OLLAMA_API_KEY
+  # at request time, so an empty value leaves local models working.
+  ollamaApiKeyFile = ../../secrets/ollama-api-key.txt;
+  ollama_api_key =
+    if builtins.pathExists ollamaApiKeyFile
+    then lib.removeSuffix "\n" (builtins.readFile ollamaApiKeyFile)
+    else "";
   s = ../../secrets/ai/claude;
   f = ../../secrets/ai/forge;
   piSupport = import ../../secrets/ai/pi { inherit lib; };
@@ -78,6 +85,8 @@ let
         "anthropic/claude-opus-4-7:high"
         "llamacpp/minimax-m2.7:high"
         "ollama/qwen3.8:27b"
+      ] ++ lib.optionals (ollama_api_key != "") [
+        "ollama-cloud/kimi-k3.1-pro"
       ];
     }
   );
@@ -1048,6 +1057,9 @@ let
 in
 {
   home = {
+    sessionVariables = lib.optionalAttrs (ollama_api_key != "") {
+      OLLAMA_API_KEY = ollama_api_key;
+    };
     activation = {
       # Remove recursive real skill dirs so home-manager can create directory
       # symlinks (Codex only loads skills whose top-level entry is a symlink).
@@ -1241,6 +1253,10 @@ in
             # ollama parses its thinking server-side, hence `reasoning`.
             # contextWindow tracks OLLAMA_CONTEXT_LENGTH on the unit, not the
             # model's native 262144.
+            #
+            # Cloud models are a second provider. The local server ignores the
+            # client API key and wants `ollama signin`; https://ollama.com/v1
+            # wants OLLAMA_API_KEY. The cloud id has no :cloud suffix.
             ollama = {
               baseUrl = "http://127.0.0.1:11434/v1";
               api = "openai-completions";
@@ -1255,6 +1271,30 @@ in
                     "image"
                   ];
                   contextWindow = 65536;
+                }
+              ];
+            };
+            "ollama-cloud" = {
+              baseUrl = "https://ollama.com/v1";
+              api = "openai-completions";
+              apiKey = "$OLLAMA_API_KEY";
+              models = [
+                {
+                  id = "kimi-k3.1-pro";
+                  name = "Kimi K3.1 Pro (Ollama Cloud)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  # Published 1M window. Prices are USD per million tokens.
+                  contextWindow = 1000000;
+                  cost = {
+                    input = 2.0;
+                    output = 10.0;
+                    cacheRead = 0.2;
+                    cacheWrite = 0.0;
+                  };
                 }
               ];
             };
