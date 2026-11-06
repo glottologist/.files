@@ -52,7 +52,37 @@
 
   settings = (import ./settings.nix).user;
 
-  code = pkgs.vscode;
+  # 1.144 ships rg at @vscode/ripgrep-universal/bin/linux-<arch>/rg (unpacked).
+  # nixpkgs still `rm`s @vscode/ripgrep/bin/rg, which is no longer in the
+  # tarball, so patchPhase fails. Keep the nixpkgs ripgrep swap, at the
+  # path the resolver actually uses, and at the legacy path extensions look up.
+  code = pkgs.vscode.overrideAttrs (old: let
+    rgArch =
+      if pkgs.stdenv.hostPlatform.isx86_64 then
+        "x64"
+      else if pkgs.stdenv.hostPlatform.isAarch64 then
+        "arm64"
+      else
+        throw "vscode ripgrep override does not know ${pkgs.stdenv.hostPlatform.system}";
+    legacy = "resources/app/node_modules/@vscode/ripgrep/bin/rg";
+    universalDir = "resources/app/node_modules/@vscode/ripgrep-universal/bin/linux-${rgArch}";
+    unpacked = "resources/app/node_modules.asar.unpacked/@vscode/ripgrep-universal/bin/linux-${rgArch}/rg";
+    from = ''
+      rm ${legacy}
+      ln -s ${pkgs.ripgrep}/bin/rg ${legacy}'';
+    to = ''
+      mkdir -p ${universalDir} "$(dirname ${legacy})" "$(dirname ${unpacked})"
+      ln -sfn ${pkgs.ripgrep}/bin/rg ${universalDir}/rg
+      ln -sfn ${pkgs.ripgrep}/bin/rg ${legacy}
+      ln -sfn ${pkgs.ripgrep}/bin/rg ${unpacked}'';
+    patched = builtins.replaceStrings [ from ] [ to ] old.postPatch;
+  in {
+    postPatch =
+      if patched == old.postPatch then
+        throw "vscode postPatch no longer removes ${legacy}; drop the override in shared/development/vscode/default.nix"
+      else
+        patched;
+  });
 
   overridePackage =
     (pkgs.vscode-with-extensions.override {

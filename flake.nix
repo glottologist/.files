@@ -139,6 +139,9 @@
         overlays = [
           (final: prev: {
             inherit (pkgs-unstable)
+              # release-26.05 throws on `brave` (2026-11-03): no committer
+              # left to land security updates. Unstable still builds it.
+              brave
               meshcore-cli
               ollama
               ollama-cuda

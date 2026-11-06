@@ -53,13 +53,21 @@ let
   anthropic_api_key = pkgs.lib.removeSuffix "\n" (
     builtins.readFile ../../secrets/anthropic-api-key.txt
   );
-  # Absent until secrets/ollama-api-key.txt exists. Pi reads $OLLAMA_API_KEY
-  # at request time, so an empty value leaves local models working.
+  # Absent until secrets/ollama-api-key.txt exists. The session variable is
+  # for other tools. An empty value leaves the local Ollama provider working.
   ollamaApiKeyFile = ../../secrets/ollama-api-key.txt;
   ollama_api_key =
     if builtins.pathExists ollamaApiKeyFile
     then lib.removeSuffix "\n" (builtins.readFile ollamaApiKeyFile)
     else "";
+  # Pi treats an unset $OLLAMA_API_KEY as "provider not logged in" and hides
+  # every model on it. `!cat` reads the checkout file when the request is sent.
+  # A Nix path string becomes a store copy under flake eval, so this is a
+  # literal. Other homes must not receive this path.
+  ollamaCloudApiKey =
+    if config.home.username == "glottologist" && builtins.pathExists ollamaApiKeyFile
+    then "!cat /home/glottologist/development/glottologist/.files/secrets/ollama-api-key.txt"
+    else "$OLLAMA_API_KEY";
   s = ../../secrets/ai/claude;
   f = ../../secrets/ai/forge;
   piSupport = import ../../secrets/ai/pi { inherit lib; };
@@ -86,7 +94,10 @@ let
         "llamacpp/minimax-m2.7:high"
         "ollama/qwen3.8:27b"
       ] ++ lib.optionals (ollama_api_key != "") [
+        # https://ollama.com/v1 ids. No :cloud suffix. The local tags 401:
+        # the daemon ignores the client bearer and has no key of its own.
         "ollama-cloud/kimi-k3.1-pro"
+        "ollama-cloud/glm-5.3"
       ];
     }
   );
@@ -1254,9 +1265,8 @@ in
             # contextWindow tracks OLLAMA_CONTEXT_LENGTH on the unit, not the
             # model's native 262144.
             #
-            # Cloud models are a second provider. The local server ignores the
-            # client API key and wants `ollama signin`; https://ollama.com/v1
-            # wants OLLAMA_API_KEY. The cloud id has no :cloud suffix.
+            # Cloud models are the ollama-cloud provider below. The local daemon
+            # ignores the client bearer, so a :cloud tag from this provider 401s.
             ollama = {
               baseUrl = "http://127.0.0.1:11434/v1";
               api = "openai-completions";
@@ -1274,10 +1284,16 @@ in
                 }
               ];
             };
+            # Pi treats OPENROUTER_API_KEY as a login and lists the whole
+            # catalog. This home still exports that key for other tools.
+            # Point Pi at a variable that is never set so the catalog stays hidden.
+            openrouter = {
+              apiKey = "$PI_OPENROUTER_DISABLED";
+            };
             "ollama-cloud" = {
               baseUrl = "https://ollama.com/v1";
               api = "openai-completions";
-              apiKey = "$OLLAMA_API_KEY";
+              apiKey = ollamaCloudApiKey;
               models = [
                 {
                   id = "kimi-k3.1-pro";
@@ -1293,6 +1309,22 @@ in
                     input = 2.0;
                     output = 10.0;
                     cacheRead = 0.2;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "glm-5.3";
+                  name = "GLM-5.3 (Ollama Cloud)";
+                  reasoning = true;
+                  # Library tag is text-only: tools, thinking, cloud. No vision.
+                  input = [ "text" ];
+                  # Published 1M window. Prices are USD per million tokens.
+                  # Ollama lists input, cached read, and output; no cache-write price.
+                  contextWindow = 1000000;
+                  cost = {
+                    input = 1.40;
+                    output = 4.40;
+                    cacheRead = 0.26;
                     cacheWrite = 0.0;
                   };
                 }
