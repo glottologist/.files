@@ -168,6 +168,7 @@ let
       "${dir}/commands/implement.md".text = builtins.readFile (s + "/commands/implement.md");
       "${dir}/commands/extract_context.md".text = builtins.readFile (s + "/commands/extract_context.md");
       "${dir}/commands/osint.md".text = builtins.readFile (s + "/commands/osint.md");
+      "${dir}/commands/multi-audit.md".text = builtins.readFile (s + "/commands/multi-audit.md");
       # SUB-AGENTS
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         s + "/agents/benchmark-specialist.md"
@@ -521,6 +522,7 @@ let
       "${dir}/commands/extract_context.md".text = builtins.readFile (f + "/commands/extract_context.md");
       "${dir}/commands/sort_books.md".text = builtins.readFile (f + "/commands/sort_books.md");
       "${dir}/commands/sort_comics.md".text = builtins.readFile (f + "/commands/sort_comics.md");
+      "${dir}/commands/multi-audit.md".text = builtins.readFile (f + "/commands/multi-audit.md");
       # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         f + "/agents/benchmark-specialist.md"
@@ -762,6 +764,7 @@ let
       "${dir}/prompts/extract_context.md".text = piSupport.mkPrompt (f + "/commands/extract_context.md");
       "${dir}/prompts/sort_books.md".text = piSupport.mkPrompt (f + "/commands/sort_books.md");
       "${dir}/prompts/sort_comics.md".text = piSupport.mkPrompt (f + "/commands/sort_comics.md");
+      "${dir}/prompts/multi-audit.md".text = piSupport.mkPrompt (f + "/commands/multi-audit.md");
       # These agents are deliberately read-only; bash permits inspection, not fixes.
       "${dir}/agents/planner.md".text = piSupport.mkAgent {
         source = f + "/agents/planner.md";
