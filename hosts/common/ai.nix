@@ -12,11 +12,12 @@
     # qwen3.8:27b is local weights: 16.8 GB of model plus a 931 MB vision
     # projector. The :cloud tags are Ollama Cloud manifests only (no local
     # weights); pull registers the tag. kimi-k3.1-pro is 2.8T parameters,
-    # glm-5.3 is 753B. Only bebop imports this file.
+    # glm-5.3 is 753B, deepseek-v4.1-flash is 763B. Only bebop imports this file.
     loadModels = [
       "qwen3.8:27b"
       "kimi-k3.1-pro:cloud"
       "glm-5.3:cloud"
+      "deepseek-v4.1-flash:cloud"
     ];
   };
   # Ollama serves 4096 tokens unless told otherwise, which is too small to be

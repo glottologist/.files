@@ -98,6 +98,7 @@ let
         # the daemon ignores the client bearer and has no key of its own.
         "ollama-cloud/kimi-k3.1-pro"
         "ollama-cloud/glm-5.3"
+        "ollama-cloud/deepseek-v4.1-flash"
       ];
     }
   );
@@ -1328,6 +1329,25 @@ in
                     input = 1.40;
                     output = 4.40;
                     cacheRead = 0.26;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "deepseek-v4.1-flash";
+                  name = "DeepSeek V4.1 Flash (Ollama Cloud)";
+                  reasoning = true;
+                  # Library tag: vision, tools, thinking, cloud. 763B MoE.
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  # Published 1M window. Prices are USD per million tokens at
+                  # Ollama's peak rate; off-peak is half of each.
+                  contextWindow = 1000000;
+                  cost = {
+                    input = 0.30;
+                    output = 1.20;
+                    cacheRead = 0.006;
                     cacheWrite = 0.0;
                   };
                 }
