@@ -66,6 +66,7 @@ BarWidget {
       model: root.workspaceIds()
 
       WidgetButton {
+        id: workspaceButton
         required property int modelData
 
         readonly property var workspace: root.workspaceById(modelData)
@@ -73,7 +74,9 @@ BarWidget {
         readonly property bool focused: Hyprland.focusedWorkspace !== null && Hyprland.focusedWorkspace.id === modelData
 
         bar: root.bar
-        text: focused ? "󱓻" : String(modelData)
+        text: String(modelData)
+        active: focused
+        labelVisible: !focused
         opacity: occupied || focused ? 1 : 0.5
         horizontalMargin: 6
         verticalPadding: 6
@@ -82,6 +85,17 @@ BarWidget {
         fixedWidth: root.vertical ? root.barSize : Style.space(modelData >= 10 ? 26 : 20)
         fixedHeight: root.barSize
         onPressed: function() { root.focusWorkspace(modelData) }
+
+        Text {
+          anchors.centerIn: parent
+          visible: workspaceButton.focused
+          text: workspaceButton.text
+          color: workspaceButton.activeColor
+          font.family: workspaceButton.fontFamily
+          font.pixelSize: workspaceButton.fontSize
+          font.bold: true
+          renderType: Text.NativeRendering
+        }
       }
     }
   }
