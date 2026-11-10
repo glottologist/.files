@@ -176,6 +176,12 @@ in {
             path = "/home/${username}/TRANSFER";
             devices = ["MARAUDER" "CALYPSO"];
           };
+          # Two-way with Corvus's /mnt/storage/BOOKS. Corvus keeps a 30-day
+          # trashcan of anything deleted or replaced from this side.
+          "BOOKS" = {
+            path = "/home/${username}/Documents/Books";
+            devices = ["CORVUS"];
+          };
         };
       };
     };

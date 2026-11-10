@@ -3,7 +3,15 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+let
+  openWebui = config.services.open-webui;
+  ollamaCloudModels = builtins.filter (lib.hasSuffix ":cloud") config.services.ollama.loadModels;
+  ollamaLocalModels = builtins.filter (
+    model: !lib.hasSuffix ":cloud" model
+  ) config.services.ollama.loadModels;
+in
+{
   services.ollama = {
     enable = true;
     package = pkgs.ollama-rocm;
@@ -42,13 +50,13 @@
   # -ngl to set; the 10B active parameters are what keep this tractable.
   systemd.services.llama-server = {
     description = "llama.cpp OpenAI-compatible server (MiniMax M2.7, CPU)";
-    after = ["network-online.target"];
-    wants = ["network-online.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       DynamicUser = true;
       StateDirectory = "llama-server";
-      Environment = ["LLAMA_CACHE=/var/lib/llama-server"];
+      Environment = [ "LLAMA_CACHE=/var/lib/llama-server" ];
       ExecStart = lib.concatStringsSep " " [
         "${pkgs.llama-cpp}/bin/llama-server"
         "-hf unsloth/MiniMax-M2.7-GGUF:UD-Q2_K_XL"
@@ -80,9 +88,9 @@
   # skipped rather than crash-looping on a missing model.
   systemd.services.colibri = {
     description = "Colibri OpenAI-compatible server (GLM-5.2)";
-    after = ["network-online.target"];
-    wants = ["network-online.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
     unitConfig.ConditionPathExists = "/var/lib/colibri/glm52_i4";
     serviceConfig = {
       DynamicUser = true;
@@ -102,31 +110,59 @@
     };
   };
 
-  #services.open-webui = {
-    #enable = true;
-    #port = 8888;
-    #host = "127.0.0.1";
-    #package = pkgs.open-webui; # pkgs must be from stable, for example nixos-24.11
-    #environment = {
-      #ANONYMIZED_TELEMETRY = "False";
-      #DO_NOT_TRACK = "True";
-      #SCARF_NO_ANALYTICS = "True";
-      #OLLAMA_API_BASE_URL = "http://127.0.0.1:11434/api";
-      #OLLAMA_BASE_URL = "http://127.0.0.1:11434";
-      ## Disabled with the vllm service below; re-enable the two together.
-      ## OPENAI_API_BASE_URLS = "http://127.0.0.1:8000/v1";
-      ## OPENAI_API_KEYS = "vllm-local";
-    #};
-  #};
+  services.open-webui = {
+    enable = true;
+    port = 8888;
+    host = "127.0.0.1";
+    environment = {
+      ANONYMIZED_TELEMETRY = "False";
+      DO_NOT_TRACK = "True";
+      SCARF_NO_ANALYTICS = "True";
+      HOME = openWebui.stateDir;
+      # Nix owns provider settings, including after an existing database is reused.
+      ENABLE_PERSISTENT_CONFIG = "False";
+      DEFAULT_MODELS = "qwen3.8:27b";
+      OLLAMA_BASE_URL = "http://127.0.0.1:11434";
+      OLLAMA_API_CONFIGS = builtins.toJSON {
+        "0".model_ids = ollamaLocalModels;
+      };
+      # As in Pi, cloud requests bypass the unauthenticated local daemon.
+      OPENAI_API_BASE_URLS = "https://ollama.com/v1";
+      OPENAI_API_CONFIGS = builtins.toJSON {
+        "0".model_ids = map (lib.removeSuffix ":cloud") ollamaCloudModels;
+      };
+    };
+  };
+  systemd.services.open-webui = {
+    after = [ "ollama.service" ];
+    wants = [ "ollama.service" ];
+    serviceConfig = {
+      LoadCredential = [
+        "ollama-api-key:/home/glottologist/development/glottologist/.files/secrets/ollama-api-key.txt"
+      ];
+      ExecStart = lib.mkForce (
+        pkgs.writeShellScript "open-webui-start" ''
+          set -eu
+          OPENAI_API_KEYS="$(${pkgs.coreutils}/bin/cat "$CREDENTIALS_DIRECTORY/ollama-api-key")"
+          if [ -z "$OPENAI_API_KEYS" ]; then
+            echo "Ollama Cloud API key is empty" >&2
+            exit 1
+          fi
+          export OPENAI_API_KEYS
+          exec ${lib.getExe openWebui.package} serve \
+            --host ${lib.escapeShellArg openWebui.host} \
+            --port ${toString openWebui.port}
+        ''
+      );
+    };
+  };
 
   # CPU build from nixpkgs (VLLM_TARGET_DEVICE=cpu); ROCm on Strix Point is
   # not yet supported and would need a torch-rocm overlay + gfx115x targets.
   #
   # Disabled 2026-06-25: nixpkgs 26.05 pairs vllm 0.16.0 with torch 2.11.0,
   # whose CPU kernels no longer expose at::cpu::L2_cache_size, so the build
-  # fails upstream. open-webui keeps an OpenAI-compatible backend through
-  # ollama meanwhile. Re-enable alongside the open-webui OPENAI_* env above
-  # once nixpkgs resynchronises vllm and torch.
+  # fails upstream. Re-enable once nixpkgs resynchronises vllm and torch.
   #
   # systemd.services.vllm = {
   #   description = "vLLM OpenAI-compatible server (CPU)";
