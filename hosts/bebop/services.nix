@@ -105,6 +105,9 @@ in {
           user = "${username}";
           password = "syncthing";
         };
+        # Tailnet members are dialled on their Headscale address first;
+        # dynamic discovery still finds LAN and public routes when the
+        # tailnet is down. Calypso and Circe are not on the tailnet.
         devices = {
           "CALYPSO" = {
             id = syncthingSecrets.CALYPSO_ID;
@@ -112,24 +115,27 @@ in {
           };
           "MARAUDER" = {
             id = syncthingSecrets.MARAUDER_ID;
-            addresses = ["tcp://${hosts.marauder}:22000" "dynamic"];
+            addresses = ["tcp://100.64.0.13:22000" "dynamic"];
           };
           "CORVUS" = {
             id = syncthingSecrets.CORVUS_ID;
-            addresses = ["tcp://${hosts.corvus}:22000" "dynamic"];
+            addresses = ["tcp://100.64.0.2:22000" "dynamic"];
           };
-          "RAPTOR" = {id = syncthingSecrets.RAPTOR_ID;};
+          "RAPTOR" = {
+            id = syncthingSecrets.RAPTOR_ID;
+            addresses = ["tcp://100.64.0.4:22000" "dynamic"];
+          };
           "CIRCE" = {
             id = syncthingSecrets.CIRCE_ID;
             addresses = ["tcp://${hosts.circe}:22000" "dynamic"];
           };
           "DEFIANT" = {
             id = syncthingSecrets.DEFIANT_ID;
-            addresses = ["tcp://${hosts.defiant}:22000" "dynamic"];
+            addresses = ["tcp://100.64.0.7:22000" "dynamic"];
           };
           "RELIANT" = {
             id = syncthingSecrets.RELIANT_ID;
-            addresses = ["tcp://${hosts.reliant}:22000" "dynamic"];
+            addresses = ["tcp://100.64.0.6:22000" "dynamic"];
           };
         };
         folders = {

@@ -93,6 +93,12 @@ in
   # every session, so changes wait for the next login. The unit cannot be
   # called tmux.service: with @continuum-boot off, continuum runs
   # `systemctl --user disable tmux.service` on every load, which unlinks it.
+  # ExecStart uses start-server, not new-session: tmux runs a client's
+  # command only after the config has loaded, so new-session ran after the
+  # restore and added an unnamed session named after its id (the count of
+  # restored sessions). The autosave kept it, so each login added one more.
+  # If the save holds no sessions the server exits, and terminals start a
+  # fresh one as before.
   systemd.user.services.tmux-server = {
     Unit = {
       Description = "tmux server with continuum restore";
@@ -106,7 +112,7 @@ in
         "TMUX_TMPDIR=%t"
         "PATH=/run/wrappers/bin:%h/.nix-profile/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin"
       ];
-      ExecStart = "${pkgs.tmux}/bin/tmux new-session -d";
+      ExecStart = "${pkgs.tmux}/bin/tmux start-server";
       ExecStop = [
         "${plugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh quiet"
         "${pkgs.tmux}/bin/tmux kill-server"

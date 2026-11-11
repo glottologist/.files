@@ -21,8 +21,12 @@ in
     overrideDevices = false;
     overrideFolders = false;
     settings = {
-      devices."BEBOP".id =
-        "G4HR6SW-7L25Q2H-DIPVVRM-MKX3WMK-IN6M3GQ-Q6GDAUP-67NFG5R-DNZCNAY";
+      # Dialled on Bebop's Headscale address first; dynamic discovery still
+      # finds its other routes when the tailnet is down.
+      devices."BEBOP" = {
+        id = "G4HR6SW-7L25Q2H-DIPVVRM-MKX3WMK-IN6M3GQ-Q6GDAUP-67NFG5R-DNZCNAY";
+        addresses = [ "tcp://100.64.0.1:22000" "dynamic" ];
+      };
       folders.${folder} = {
         path = "${syncRoot}/${folder}";
         devices = [ "BEBOP" ];
