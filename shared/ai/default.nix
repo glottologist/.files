@@ -68,6 +68,13 @@ let
     if config.home.username == "glottologist" && builtins.pathExists ollamaApiKeyFile
     then "!cat /home/glottologist/development/glottologist/.files/secrets/ollama-api-key.txt"
     else "$OLLAMA_API_KEY";
+  # Only this home exports OPENROUTER_API_KEY, and a shell keeps the value from
+  # its login, so a rotated key goes stale there. `!cat` reads the checkout file
+  # at request time instead, as ollamaCloudApiKey does.
+  openrouterApiKey =
+    if config.home.username == "glottologist"
+    then "!cat /home/glottologist/development/glottologist/.files/secrets/openrouter-api-key.txt"
+    else "$OPENROUTER_API_KEY";
   s = ../../secrets/ai/claude;
   f = ../../secrets/ai/forge;
   piSupport = import ../../secrets/ai/pi { inherit lib; };
@@ -99,6 +106,13 @@ let
         "ollama-cloud/kimi-k3.1-pro"
         "ollama-cloud/glm-5.3"
         "ollama-cloud/deepseek-v4.1-flash"
+      ] ++ lib.optionals (config.home.username == "glottologist") [
+        # A pattern that matches no model warns at every start, and only this
+        # home has an OpenRouter key.
+        "openrouter-picks/moonshotai/kimi-k3.1-pro"
+        "openrouter-picks/meta/muse-spark-open"
+        "openrouter-picks/meta/muse-wonder"
+        "openrouter-picks/z-ai/glm-5.3-flashx"
       ];
     }
   );
@@ -524,6 +538,7 @@ let
       "${dir}/commands/extract_context.md".text = builtins.readFile (f + "/commands/extract_context.md");
       "${dir}/commands/sort_books.md".text = builtins.readFile (f + "/commands/sort_books.md");
       "${dir}/commands/sort_comics.md".text = builtins.readFile (f + "/commands/sort_comics.md");
+      "${dir}/commands/sort_recipes.md".text = builtins.readFile (f + "/commands/sort_recipes.md");
       "${dir}/commands/multi-audit.md".text = builtins.readFile (f + "/commands/multi-audit.md");
       "${dir}/commands/multiplan.md".text = builtins.readFile (f + "/commands/multiplan.md");
       # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
@@ -767,6 +782,7 @@ let
       "${dir}/prompts/extract_context.md".text = piSupport.mkPrompt (f + "/commands/extract_context.md");
       "${dir}/prompts/sort_books.md".text = piSupport.mkPrompt (f + "/commands/sort_books.md");
       "${dir}/prompts/sort_comics.md".text = piSupport.mkPrompt (f + "/commands/sort_comics.md");
+      "${dir}/prompts/sort_recipes.md".text = piSupport.mkPrompt (f + "/commands/sort_recipes.md");
       "${dir}/prompts/multi-audit.md".text = piSupport.mkPrompt (f + "/commands/multi-audit.md");
       "${dir}/prompts/multiplan.md".text = piSupport.mkPrompt (f + "/commands/multiplan.md");
       # These agents are deliberately read-only; bash permits inspection, not fixes.
@@ -1296,6 +1312,85 @@ in
             # Point Pi at a variable that is never set so the catalog stays hidden.
             openrouter = {
               apiKey = "$PI_OPENROUTER_DISABLED";
+            };
+            # The OpenRouter models wanted, without the catalog: a `models`
+            # entry under `openrouter` would only add to it. Pi applies its
+            # OpenRouter handling (reasoning format, reported cost, session
+            # affinity) to any openrouter.ai baseUrl, not only to that id.
+            # Ids, windows, inputs and prices are from
+            # https://openrouter.ai/api/v1/models. Prices are USD per million
+            # tokens; OpenRouter lists no cache-write price for these models.
+            "openrouter-picks" = {
+              baseUrl = "https://openrouter.ai/api/v1";
+              api = "openai-completions";
+              apiKey = openrouterApiKey;
+              models = [
+                {
+                  id = "moonshotai/kimi-k3.1-pro";
+                  name = "Kimi K3.1 Pro (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 2.0;
+                    output = 10.0;
+                    cacheRead = 0.2;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "meta/muse-spark-open";
+                  name = "Muse Spark Open (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  # The serving provider's 1M, not the listed 1048576.
+                  contextWindow = 1000000;
+                  cost = {
+                    input = 1.25;
+                    output = 4.25;
+                    cacheRead = 0.15;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "meta/muse-wonder";
+                  name = "Muse Wonder (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 4.0;
+                    output = 20.0;
+                    cacheRead = 0.2;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "z-ai/glm-5.3-flashx";
+                  name = "GLM-5.3 FlashX (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 0.37;
+                    output = 1.25;
+                    cacheRead = 0.075;
+                    cacheWrite = 0.0;
+                  };
+                }
+              ];
             };
             "ollama-cloud" = {
               baseUrl = "https://ollama.com/v1";

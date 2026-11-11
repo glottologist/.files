@@ -24,6 +24,11 @@
   xdg.configFile."fish/functions/pad_mp4.fish".source = ./functions/pad_mp4.fish;
   xdg.configFile."fish/functions/pdf_unlock.fish".source = ./functions/pdf_unlock.fish;
   xdg.configFile."fish/functions/pdf2epub.fish".source = ./functions/pdf2epub.fish;
+  xdg.configFile."fish/functions/prepare-books.fish".text = ''
+    function prepare-books --description "Remove OceanOfPDF filename prefixes and create missing EPUBs with pdf2epub"
+        ${pkgs.python3.interpreter} ${./functions/prepare-books.py} $argv
+    end
+  '';
   xdg.configFile."fish/functions/pr_worktree.fish".source = ./functions/pr_worktree.fish;
   xdg.configFile."fish/functions/rgmatch.fish".source = ./functions/rgmatch.fish;
   xdg.configFile."fish/functions/sync_directories.fish".source = ./functions/sync_directories.fish;
