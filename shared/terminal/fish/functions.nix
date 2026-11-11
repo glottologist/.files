@@ -25,7 +25,7 @@
   xdg.configFile."fish/functions/pdf_unlock.fish".source = ./functions/pdf_unlock.fish;
   xdg.configFile."fish/functions/pdf2epub.fish".source = ./functions/pdf2epub.fish;
   xdg.configFile."fish/functions/prepare-books.fish".text = ''
-    function prepare-books --description "Remove OceanOfPDF filename prefixes and create missing EPUBs with pdf2epub"
+    function prepare-books --description "Remove given filename prefixes and create missing EPUBs with pdf2epub"
         ${pkgs.python3.interpreter} ${./functions/prepare-books.py} $argv
     end
   '';

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Remove OceanOfPDF filename prefixes and create missing EPUBs with pdf2epub."""
+"""Remove given filename prefixes and create missing EPUBs with pdf2epub."""
 
 import argparse
 import ctypes
@@ -22,7 +22,20 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 
-PREFIX = re.compile(r"^_?oceanofpdf(?:\.com)?(?:[_ -]+|$)", re.IGNORECASE)
+SEPARATOR = "[_ -]"
+
+
+def prefix_pattern(prefixes):
+    """Match any of the prefixes at the start of a name, ignoring case.
+
+    The separators around a prefix go with it, and a prefix must end at a
+    separator or at the end of the name, so `Foo` never strips `Food_`.
+    """
+    cores = sorted({text.strip("_ -") for text in prefixes}, key=len, reverse=True)
+    if not cores:
+        return None
+    alternatives = "|".join(re.escape(core) for core in cores)
+    return re.compile(rf"^{SEPARATOR}*(?:{alternatives})(?:{SEPARATOR}+|$)", re.IGNORECASE)
 
 
 class BatchError(Exception):
@@ -36,17 +49,17 @@ def files_in(directory):
     )
 
 
-def plan(directory):
+def plan(directory, prefix):
     files = files_in(directory)
     occupied = {p.name.casefold(): p.name for p in directory.iterdir()}
     targets = {}
     renames = []
     names = []
     for source in files:
-        name = PREFIX.sub("", source.name, count=1)
-        if name in ("", ".", ".."):
-            raise BatchError(f"Removing the prefix would leave an empty name: {source.name!r}")
+        name = prefix.sub("", source.name, count=1) if prefix else source.name
         if name != source.name:
+            if not name or name.startswith("."):
+                raise BatchError(f"Removing the prefix would leave an empty or hidden name: {source.name!r}")
             key = name.casefold()
             if key in targets or key in occupied:
                 other = targets.get(key, occupied.get(key))
@@ -217,18 +230,28 @@ def main():
     parser = argparse.ArgumentParser(
         prog="prepare-books",
         description=__doc__,
-        epilog="Processes regular files directly in the directory; keeps every PDF and existing EPUB. Requires Python 3.11+, Linux, fish, Calibre and your pdf2epub fish function.",
+        epilog="Processes regular files directly in the directory; keeps every PDF and existing EPUB. Requires Python 3.11+, Linux, fish, Calibre and your pdf2epub fish function. Example: prepare-books --prefix OceanofPDF.com ~/Documents/Books/ToAdd",
     )
     parser.add_argument("directory", nargs="?", default=".", type=Path)
+    parser.add_argument(
+        "-p",
+        "--prefix",
+        action="append",
+        default=[],
+        metavar="TEXT",
+        help="remove TEXT from the start of file names, ignoring case and any _, space or - around it; repeat for several prefixes; without it nothing is renamed",
+    )
     parser.add_argument("--dry-run", action="store_true", help="show renames and conversions without changing files")
     parser.add_argument("--timeout", type=int, metavar="SECONDS", help="maximum time for each conversion; default: no limit")
     arguments = parser.parse_args()
     if arguments.timeout is not None and arguments.timeout <= 0:
         parser.error("--timeout must be a positive number of seconds")
+    if any(not text.strip("_ -") for text in arguments.prefix):
+        parser.error("--prefix needs text other than _, space and -")
     directory = arguments.directory.resolve(strict=True)
     if not directory.is_dir():
         raise BatchError("The directory argument must name a directory")
-    renames, pending, skipped = plan(directory)
+    renames, pending, skipped = plan(directory, prefix_pattern(arguments.prefix))
     if arguments.dry_run:
         for source, destination in renames:
             print(f"[WOULD RENAME] {source.name!r} -> {destination.name!r}")
