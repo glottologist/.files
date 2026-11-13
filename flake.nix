@@ -138,6 +138,8 @@
             "python3.12-pypdf2-3.0.1"
             "pnpm-10.29.2"
             "ventoy-1.1.12"
+            "tmate-unstable-2022-08-07"
+            "electron-39.8.10"
           ];
         };
         overlays = [

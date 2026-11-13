@@ -13,9 +13,8 @@
 # The API keys are exported deliberately. Their content reaches the Nix store,
 # which is world-readable, and these are public-facing machines; the user was
 # shown that consequence and chose unattended agent authentication over the
-# reduction in exposure. Dropping the three sessionVariables below and the
-# .ouroboros/.env entry in shared/ai is the whole of the reversal, at the cost
-# of an interactive login per host.
+# reduction in exposure. Dropping the three sessionVariables below is the whole
+# of the reversal, at the cost of an interactive login per host.
 {
   pkgs,
   ...

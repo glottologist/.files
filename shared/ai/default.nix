@@ -50,9 +50,6 @@ let
       wrapProgram $out/bin/codex --add-flags --no-daemon
     '';
   });
-  anthropic_api_key = pkgs.lib.removeSuffix "\n" (
-    builtins.readFile ../../secrets/anthropic-api-key.txt
-  );
   # Absent until secrets/ollama-api-key.txt exists. The session variable is
   # for other tools. An empty value leaves the local Ollama provider working.
   ollamaApiKeyFile = ../../secrets/ollama-api-key.txt;
@@ -1465,7 +1462,6 @@ in
         ".codex/references/writing-style.md".text =
           builtins.readFile ../../secrets/ai/codex/references/writing-style.md;
         ".gemini/GEMINI.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
-        ".ouroboros/.env".text = "ANTHROPIC_API_KEY=${anthropic_api_key}\n";
         # CODERABBIT PLUGIN CACHE
         ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/.claude-plugin/plugin.json".text =
           builtins.readFile
