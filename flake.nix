@@ -6,6 +6,10 @@
   inputs = {
     nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix/release-26.05";
+    bootvine = {
+      url = "https://codeberg.org/wvhulle/bootvine/archive/61869df79775d07568d3cd4fff820a7890f57142.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:glottologist/nixpkgs/release-26.05";
     # Pinned revision packaging Linux 7.0.3 — see hosts/bebop/boot.nix.
     nixpkgs-bt-kernel.url = "github:glottologist/nixpkgs/bafb2e8dcc6f2b77a011a13162b478b1074fc575";
@@ -395,6 +399,7 @@
           };
           modules = [
             stylix.nixosModules.stylix
+            inputs.bootvine.nixosModules.default
             ./hosts/bebop/configuration.nix
           ];
         };

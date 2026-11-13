@@ -204,6 +204,26 @@
         "type": "github"
       }
     },
+    "bootvine": {
+      "inputs": {
+        "crane": "crane",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1794514597,
+        "narHash": "sha256-UAa1DPXj6zjwqN0TbXySsbkGarLXS8P6Zc/8DyYeArU=",
+        "rev": "61869df79775d07568d3cd4fff820a7890f57142",
+        "type": "tarball",
+        "url": "https://codeberg.org/api/v1/repos/wvhulle/bootvine/archive/61869df79775d07568d3cd4fff820a7890f57142.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://codeberg.org/wvhulle/bootvine/archive/61869df79775d07568d3cd4fff820a7890f57142.tar.gz"
+      }
+    },
     "brickborrow-watch": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -835,6 +855,21 @@
     },
     "crane": {
       "locked": {
+        "lastModified": 1790899423,
+        "narHash": "sha256-THGtz65UGJU+sonZidRboyCMk+9DclpMF7pwL4uDV4M=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "47b6b27ed9a3a9181415e4367d0c30ab2a0e0250",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
+    "crane_2": {
+      "locked": {
         "lastModified": 1772560058,
         "narHash": "sha256-NuVKdMBJldwUXgghYpzIWJdfeB7ccsu1CC7B+NfSoZ8=",
         "owner": "ipetkov",
@@ -1095,10 +1130,10 @@
     "ennio": {
       "inputs": {
         "advisory-db": "advisory-db",
-        "crane": "crane",
+        "crane": "crane_2",
         "flake-utils": "flake-utils_5",
         "nixpkgs": "nixpkgs_7",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay_2"
       },
       "locked": {
         "lastModified": 1792586154,
@@ -2839,7 +2874,7 @@
         "flake-utils": "flake-utils_9",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs_14",
-        "rust-overlay": "rust-overlay_2"
+        "rust-overlay": "rust-overlay_3"
       },
       "locked": {
         "lastModified": 1790686666,
@@ -4237,6 +4272,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "bootvine": "bootvine",
         "brickborrow-watch": "brickborrow-watch",
         "caelestia-dots": "caelestia-dots",
         "caelestia-shell": "caelestia-shell",
@@ -4286,6 +4322,27 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
+          "bootvine",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791707771,
+        "narHash": "sha256-w3m8HtAVCfGTHw+gcCTAy7jFHSdGbokm8NngbeFrkek=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "c1cfa7a2c809d364ac1a7e9b3ec418afa3f19793",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
           "ennio",
           "nixpkgs"
         ]
@@ -4304,7 +4361,7 @@
         "type": "github"
       }
     },
-    "rust-overlay_2": {
+    "rust-overlay_3": {
       "inputs": {
         "nixpkgs": [
           "nix-everywhere",

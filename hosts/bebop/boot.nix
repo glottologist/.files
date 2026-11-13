@@ -10,16 +10,15 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  services.bootvine.enable = true;
+
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    # plymouth = {
-    #   enable = true;
-    # };
     loader = {
       systemd-boot = {
 	  enable = lib.mkDefault true;
 	  # 96M ESP is shared with Windows (~30M), leaving ~66M for NixOS. One
-	  # generation (initrd 28M + kernel 13M ≈ 41M) fits; two (~69M) overflow
+	  # generation (initrd 30M + kernel 13M ≈ 43M) fits; two (~73M) overflow
 	  # the partition and the bootloader install fails on initrd copy.
 	  configurationLimit = 1;
 	  };
