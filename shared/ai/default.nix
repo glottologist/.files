@@ -1160,6 +1160,7 @@ in
     packages =
       (with pkgs; [
         llm
+        python3Packages.huggingface-hub # huggingface-cli
         gorilla-cli
         claude-code-nix.packages.${system}.default
         codexCli
