@@ -8,6 +8,7 @@
 {
   security = {
     rtkit.enable = true;
+    tpm2.enable = true;
     pam.services.omnixy-lock-password = { };
     polkit = {
       enable = true;
