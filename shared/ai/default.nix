@@ -183,6 +183,8 @@ let
       "${dir}/commands/multi-audit.md".text = builtins.readFile (s + "/commands/multi-audit.md");
       "${dir}/commands/multireview.md".text = builtins.readFile (s + "/commands/multireview.md");
       "${dir}/commands/multiplan.md".text = builtins.readFile (s + "/commands/multiplan.md");
+      "${dir}/commands/primer.md".text = builtins.readFile (s + "/commands/primer.md");
+      "${dir}/commands/multiprimer.md".text = builtins.readFile (s + "/commands/multiprimer.md");
       # SUB-AGENTS
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         s + "/agents/benchmark-specialist.md"
@@ -540,6 +542,8 @@ let
       "${dir}/commands/multi-audit.md".text = builtins.readFile (f + "/commands/multi-audit.md");
       "${dir}/commands/multireview.md".text = builtins.readFile (f + "/commands/multireview.md");
       "${dir}/commands/multiplan.md".text = builtins.readFile (f + "/commands/multiplan.md");
+      "${dir}/commands/primer.md".text = builtins.readFile (f + "/commands/primer.md");
+      "${dir}/commands/multiprimer.md".text = builtins.readFile (f + "/commands/multiprimer.md");
       # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         f + "/agents/benchmark-specialist.md"
@@ -785,6 +789,8 @@ let
       "${dir}/prompts/multi-audit.md".text = piSupport.mkPrompt (f + "/commands/multi-audit.md");
       "${dir}/prompts/multireview.md".text = piSupport.mkPrompt (f + "/commands/multireview.md");
       "${dir}/prompts/multiplan.md".text = piSupport.mkPrompt (f + "/commands/multiplan.md");
+      "${dir}/prompts/primer.md".text = piSupport.mkPrompt (f + "/commands/primer.md");
+      "${dir}/prompts/multiprimer.md".text = piSupport.mkPrompt (f + "/commands/multiprimer.md");
       # These agents are deliberately read-only; bash permits inspection, not fixes.
       "${dir}/agents/planner.md".text = piSupport.mkAgent {
         source = f + "/agents/planner.md";
