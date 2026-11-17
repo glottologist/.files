@@ -188,6 +188,11 @@ in {
             path = "/home/${username}/Documents/Books";
             devices = ["CORVUS"];
           };
+          "MUSIC" = {
+            id = "uyzdd-sd4rg";
+            path = "/home/${username}/Music";
+            devices = ["CORVUS"];
+          };
         };
       };
     };
