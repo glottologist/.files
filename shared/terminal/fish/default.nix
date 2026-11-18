@@ -457,6 +457,7 @@ in
       vpnh = "nordvpn --help";
       wat = "watchexec";
       wft = "wifi_toggle";
+      wifi-diagnose = "$HOME/development/glottologist/.files/secrets/agent-tools/tools/wifi-diagnose";
       wipe = "lethe wipe -s dod";
       wipedeep = "lethe wipe -s vsitr";
       wipehelp = "lethe wipe --help";
