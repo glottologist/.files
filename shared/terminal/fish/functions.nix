@@ -11,6 +11,8 @@
   xdg.configFile."fish/functions/cargo_clean_repos.fish".source = ./functions/cargo_clean_repos.fish;
   xdg.configFile."fish/functions/ccp.fish".source = ./functions/ccp.fish;
   xdg.configFile."fish/functions/ccw.fish".source = ./functions/ccw.fish;
+  xdg.configFile."fish/functions/cxp.fish".source = ./functions/cxp.fish;
+  xdg.configFile."fish/functions/cxw.fish".source = ./functions/cxw.fish;
   xdg.configFile."fish/functions/check_airplane_mode.fish".source = ./functions/check_airplane_mode.fish;
   xdg.configFile."fish/functions/dunst_pause.fish".source = ./functions/dunst_pause.fish;
   xdg.configFile."fish/functions/env2fish.fish".source = ./functions/env2fish.fish;

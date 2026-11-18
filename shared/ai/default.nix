@@ -1052,11 +1052,18 @@ let
 
   forgeFiles = mkForgeFiles ".forge";
   piFiles = mkPiFiles ".pi/agent";
-  codexFiles =
+  codexProfiles = [
+    ".codex"
+    ".codex-personal"
+    ".codex-work"
+  ];
+  mkCodexFiles =
+    dir:
     (import ../../secrets/ai/codex {
-      inherit lib mkSkillFiles;
+      inherit lib mkSkillFiles dir;
     })
-    // mkSharedSkills ".codex/skills";
+    // mkSharedSkills "${dir}/skills";
+  codexFiles = lib.foldl lib.recursiveUpdate { } (map mkCodexFiles codexProfiles);
   # Grok profiles mirror the Claude personal/work split: each GROK_HOME gets
   # the same skills and rules, the fish functions gkp/gkw select the profile.
   grokProfiles = [
@@ -1133,7 +1140,9 @@ in
           ]
         })
 
-        $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/.codex/skills" "''${codex_names[@]}" "''${shared_names[@]}"
+        for root in ${lib.escapeShellArgs codexProfiles}; do
+          $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/$root/skills" "''${codex_names[@]}" "''${shared_names[@]}"
+        done
         for root in ${lib.escapeShellArgs grokProfiles}; do
           $DRY_RUN_CMD ${pkgs.bash}/bin/bash "$migrate" "$home/$root/skills" "''${grok_names[@]}" "''${shared_names[@]}"
         done
@@ -1464,10 +1473,6 @@ in
         # A whole-directory link, so a new tool needs no entry here — only a
         # `git add` and a rebuild.
         "agent-tools".source = ../../secrets/agent-tools;
-        ".codex/AGENTS.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
-        # CODEX REFERENCES
-        ".codex/references/writing-style.md".text =
-          builtins.readFile ../../secrets/ai/codex/references/writing-style.md;
         ".gemini/GEMINI.md".text = builtins.readFile ../../secrets/ai/AGENTS.md;
         # CODERABBIT PLUGIN CACHE
         ".claude/plugins/cache/claude-plugins-official/coderabbit/1.0.0/.claude-plugin/plugin.json".text =
