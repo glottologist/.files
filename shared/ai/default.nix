@@ -57,17 +57,9 @@ let
     if builtins.pathExists ollamaApiKeyFile
     then lib.removeSuffix "\n" (builtins.readFile ollamaApiKeyFile)
     else "";
-  # Pi treats an unset $OLLAMA_API_KEY as "provider not logged in" and hides
-  # every model on it. `!cat` reads the checkout file when the request is sent.
-  # A Nix path string becomes a store copy under flake eval, so this is a
-  # literal. Other homes must not receive this path.
-  ollamaCloudApiKey =
-    if config.home.username == "glottologist" && builtins.pathExists ollamaApiKeyFile
-    then "!cat /home/glottologist/development/glottologist/.files/secrets/ollama-api-key.txt"
-    else "$OLLAMA_API_KEY";
   # Only this home exports OPENROUTER_API_KEY, and a shell keeps the value from
   # its login, so a rotated key goes stale there. `!cat` reads the checkout file
-  # at request time instead, as ollamaCloudApiKey does.
+  # at request time.
   openrouterApiKey =
     if config.home.username == "glottologist"
     then "!cat /home/glottologist/development/glottologist/.files/secrets/openrouter-api-key.txt"
@@ -97,19 +89,15 @@ let
         "anthropic/claude-opus-4-7:high"
         "llamacpp/minimax-m2.7:high"
         "ollama/qwen3.8:27b"
-      ] ++ lib.optionals (ollama_api_key != "") [
-        # https://ollama.com/v1 ids. No :cloud suffix. The local tags 401:
-        # the daemon ignores the client bearer and has no key of its own.
-        "ollama-cloud/kimi-k3.1-pro"
-        "ollama-cloud/glm-5.3"
-        "ollama-cloud/deepseek-v4.1-flash"
       ] ++ lib.optionals (config.home.username == "glottologist") [
         # A pattern that matches no model warns at every start, and only this
         # home has an OpenRouter key.
         "openrouter-picks/moonshotai/kimi-k3.1-pro"
         "openrouter-picks/meta/muse-spark-open"
         "openrouter-picks/meta/muse-wonder"
+        "openrouter-picks/z-ai/glm-5.3"
         "openrouter-picks/z-ai/glm-5.3-flashx"
+        "openrouter-picks/deepseek/deepseek-v4.1-flash"
         "openrouter-picks/deepseek/deepseek-v4.1-flash-1017"
         "openrouter-picks/google/gemini-4-neon"
       ];
@@ -128,7 +116,7 @@ let
   # Skills shared across all agents live under secrets/ai/shared/skills/<name>/.
   # Rust uses its existing coding-skills source so all reviewers share one policy.
   # Each directory is installed into every agent skills root (Claude, Codex, Grok,
-  # Forge, Pi) plus ~/.agents/skills and ~/.claude/skills.
+  # Forge, Pi, Antigravity) plus ~/.agents/skills and ~/.claude/skills.
   #
   # Install as a directory-level symlink (same as mkSkillFiles), not recursive
   # file-level links. Codex only advertises skills whose top-level entry under
@@ -1216,6 +1204,7 @@ in
       // codexFiles
       // grokFiles
       // agentsSkillsFiles
+      // mkSharedSkills ".gemini/antigravity-cli/skills"
       // {
         ".config/opencode/opencode.json".text = builtins.toJSON {
           "$schema" = "https://opencode.ai/config.json";
@@ -1305,9 +1294,6 @@ in
             # ollama parses its thinking server-side, hence `reasoning`.
             # contextWindow tracks OLLAMA_CONTEXT_LENGTH on the unit, not the
             # model's native 262144.
-            #
-            # Cloud models are the ollama-cloud provider below. The local daemon
-            # ignores the client bearer, so a :cloud tag from this provider 401s.
             ollama = {
               baseUrl = "http://127.0.0.1:11434/v1";
               api = "openai-completions";
@@ -1393,6 +1379,19 @@ in
                   };
                 }
                 {
+                  id = "z-ai/glm-5.3";
+                  name = "GLM-5.3 (OpenRouter)";
+                  reasoning = true;
+                  input = [ "text" ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 0.0699;
+                    output = 1.4;
+                    cacheRead = 0.0689;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
                   id = "z-ai/glm-5.3-flashx";
                   name = "GLM-5.3 FlashX (OpenRouter)";
                   reasoning = true;
@@ -1405,6 +1404,22 @@ in
                     input = 0.37;
                     output = 1.25;
                     cacheRead = 0.075;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "deepseek/deepseek-v4.1-flash";
+                  name = "DeepSeek V4.1 Flash (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 0.0507;
+                    output = 0.2028;
+                    cacheRead = 0.001014;
                     cacheWrite = 0.0;
                   };
                 }
@@ -1438,65 +1453,6 @@ in
                     output = 15.0;
                     cacheRead = 0.15;
                     cacheWrite = 0.0833333333333333;
-                  };
-                }
-              ];
-            };
-            "ollama-cloud" = {
-              baseUrl = "https://ollama.com/v1";
-              api = "openai-completions";
-              apiKey = ollamaCloudApiKey;
-              models = [
-                {
-                  id = "kimi-k3.1-pro";
-                  name = "Kimi K3.1 Pro (Ollama Cloud)";
-                  reasoning = true;
-                  input = [
-                    "text"
-                    "image"
-                  ];
-                  # Published 1M window. Prices are USD per million tokens.
-                  contextWindow = 1000000;
-                  cost = {
-                    input = 2.0;
-                    output = 10.0;
-                    cacheRead = 0.2;
-                    cacheWrite = 0.0;
-                  };
-                }
-                {
-                  id = "glm-5.3";
-                  name = "GLM-5.3 (Ollama Cloud)";
-                  reasoning = true;
-                  # Library tag is text-only: tools, thinking, cloud. No vision.
-                  input = [ "text" ];
-                  # Published 1M window. Prices are USD per million tokens.
-                  # Ollama lists input, cached read, and output; no cache-write price.
-                  contextWindow = 1000000;
-                  cost = {
-                    input = 1.40;
-                    output = 4.40;
-                    cacheRead = 0.26;
-                    cacheWrite = 0.0;
-                  };
-                }
-                {
-                  id = "deepseek-v4.1-flash";
-                  name = "DeepSeek V4.1 Flash (Ollama Cloud)";
-                  reasoning = true;
-                  # Library tag: vision, tools, thinking, cloud. 763B MoE.
-                  input = [
-                    "text"
-                    "image"
-                  ];
-                  # Published 1M window. Prices are USD per million tokens at
-                  # Ollama's peak rate; off-peak is half of each.
-                  contextWindow = 1000000;
-                  cost = {
-                    input = 0.30;
-                    output = 1.20;
-                    cacheRead = 0.006;
-                    cacheWrite = 0.0;
                   };
                 }
               ];
