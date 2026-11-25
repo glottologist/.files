@@ -110,6 +110,8 @@ let
         "openrouter-picks/meta/muse-spark-open"
         "openrouter-picks/meta/muse-wonder"
         "openrouter-picks/z-ai/glm-5.3-flashx"
+        "openrouter-picks/deepseek/deepseek-v4.1-flash-1017"
+        "openrouter-picks/google/gemini-4-neon"
       ];
     }
   );
@@ -1335,7 +1337,7 @@ in
             # affinity) to any openrouter.ai baseUrl, not only to that id.
             # Ids, windows, inputs and prices are from
             # https://openrouter.ai/api/v1/models. Prices are USD per million
-            # tokens; OpenRouter lists no cache-write price for these models.
+            # tokens.
             "openrouter-picks" = {
               baseUrl = "https://openrouter.ai/api/v1";
               api = "openai-completions";
@@ -1404,6 +1406,38 @@ in
                     output = 1.25;
                     cacheRead = 0.075;
                     cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "deepseek/deepseek-v4.1-flash-1017";
+                  name = "DeepSeek V4.1 Flash 1017 (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 0.15;
+                    output = 0.60;
+                    cacheRead = 0.003;
+                    cacheWrite = 0.0;
+                  };
+                }
+                {
+                  id = "google/gemini-4-neon";
+                  name = "Gemini 4 Neon (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 3.0;
+                    output = 15.0;
+                    cacheRead = 0.15;
+                    cacheWrite = 0.0833333333333333;
                   };
                 }
               ];
