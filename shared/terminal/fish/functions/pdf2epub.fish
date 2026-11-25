@@ -22,6 +22,9 @@ function pdf2epub --description "Convert PDF to EPUB without modifying the origi
                     echo "Default output is <same-dir>/<same-name>.epub."
                     echo "When the last argument is a directory and more than one argument"
                     echo "is given, it is the output directory."
+                    echo "Two-column pages are rebuilt in reading order (left column, then"
+                    echo "right; aligned rows such as IF/THEN read across) so Calibre does"
+                    echo "not join a line with the line beside it."
                     echo "Scanned PDFs, whose OCR text is invisible, are converted through"
                     echo "pdftohtml -hidden; the images are dropped and the text kept."
                     echo "PDF headers and footers are kept to avoid Calibre auto-detection crashes."
@@ -180,19 +183,47 @@ function __pdf2epub_convert_one --argument-names pdf epub force
     test -e $epub; and set existed 1
 
     set -l convert_status
+    set -l stem (string replace -r -i '\.pdf$' '' -- (path basename $pdf))
     if __pdf2epub_hidden_text $pdf
         echo "[INFO] Converting $pdf -> $epub (scanned: hidden OCR text, images dropped)"
-        set -l stem (string replace -r -i '\.pdf$' '' -- (path basename $pdf))
         set -l work (mktemp -d)
         pdftohtml -enc UTF-8 -noframes -nomerge -i -hidden $pdf $work/book.html >/dev/null 2>&1
         and ebook-convert $work/book.html $epub --enable-heuristics --epub-version 3 --title $stem
         set convert_status $status
         rm -rf $work
     else
-        echo "[INFO] Converting $pdf -> $epub"
-        # Calibre 9.13 header detection can index past the last page of short PDFs.
-        ebook-convert $pdf $epub --enable-heuristics --epub-version 3 --pdf-header-skip 0 --pdf-footer-skip 0
-        set convert_status $status
+        set -l work (mktemp -d)
+        set -l layout_py
+        for candidate in (path dirname -- (status filename))/pdf2epub_layout.py $__fish_config_dir/functions/pdf2epub_layout.py
+            if test -f $candidate
+                set layout_py $candidate
+                break
+            end
+        end
+        set -l layout_status 2
+        if test -n "$layout_py"; and command -q python3; and command -q pdftotext
+            python3 $layout_py $pdf $work/book.html
+            set layout_status $status
+        end
+        if test $layout_status -eq 0
+            echo "[INFO] Converting $pdf -> $epub (two-column reading order)"
+            set -l cover_args
+            if command -q pdftoppm
+                pdftoppm -f 1 -l 1 -jpeg -singlefile $pdf $work/cover >/dev/null 2>&1
+                and test -f $work/cover.jpg
+                and set cover_args --cover $work/cover.jpg
+            end
+            ebook-convert $work/book.html $epub --enable-heuristics --epub-version 3 --title $stem $cover_args
+            set convert_status $status
+        else if test $layout_status -eq 2
+            echo "[INFO] Converting $pdf -> $epub"
+            # Calibre 9.13 header detection can index past the last page of short PDFs.
+            ebook-convert $pdf $epub --enable-heuristics --epub-version 3 --pdf-header-skip 0 --pdf-footer-skip 0
+            set convert_status $status
+        else
+            set convert_status $layout_status
+        end
+        rm -rf $work
     end
 
     set -l after (stat -c '%Y %s %i' -- $pdf)
