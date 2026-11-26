@@ -176,6 +176,9 @@ let
       "${dir}/commands/primer.md".text = builtins.readFile (s + "/commands/primer.md");
       "${dir}/commands/multiprimer.md".text = builtins.readFile (s + "/commands/multiprimer.md");
       "${dir}/commands/advice.md".text = builtins.readFile (s + "/commands/advice.md");
+      "${dir}/commands/model-comparison.md".text = builtins.readFile (
+        s + "/commands/model-comparison.md"
+      );
       # SUB-AGENTS
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         s + "/agents/benchmark-specialist.md"
@@ -536,6 +539,9 @@ let
       "${dir}/commands/primer.md".text = builtins.readFile (f + "/commands/primer.md");
       "${dir}/commands/multiprimer.md".text = builtins.readFile (f + "/commands/multiprimer.md");
       "${dir}/commands/advice.md".text = builtins.readFile (f + "/commands/advice.md");
+      "${dir}/commands/model-comparison.md".text = builtins.readFile (
+        f + "/commands/model-comparison.md"
+      );
       # SUB-AGENTS (converted: id/title/description/tools list/reasoning/user_prompt)
       "${dir}/agents/benchmark-specialist.md".text = builtins.readFile (
         f + "/agents/benchmark-specialist.md"
@@ -784,6 +790,9 @@ let
       "${dir}/prompts/primer.md".text = piSupport.mkPrompt (f + "/commands/primer.md");
       "${dir}/prompts/multiprimer.md".text = piSupport.mkPrompt (f + "/commands/multiprimer.md");
       "${dir}/prompts/advice.md".text = piSupport.mkPrompt (f + "/commands/advice.md");
+      "${dir}/prompts/model-comparison.md".text = piSupport.mkPrompt (
+        f + "/commands/model-comparison.md"
+      );
       # These agents are deliberately read-only; bash permits inspection, not fixes.
       "${dir}/agents/planner.md".text = piSupport.mkAgent {
         source = f + "/agents/planner.md";
