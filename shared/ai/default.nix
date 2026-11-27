@@ -100,6 +100,7 @@ let
         "openrouter-picks/deepseek/deepseek-v4.1-flash"
         "openrouter-picks/deepseek/deepseek-v4.1-flash-1017"
         "openrouter-picks/google/gemini-4-neon"
+        "openrouter-picks/tencent/hy4-flash"
       ];
     }
   );
@@ -1465,6 +1466,22 @@ in
                     output = 15.0;
                     cacheRead = 0.15;
                     cacheWrite = 0.0833333333333333;
+                  };
+                }
+                {
+                  id = "tencent/hy4-flash";
+                  name = "Hy4 Flash (OpenRouter)";
+                  reasoning = true;
+                  input = [
+                    "text"
+                    "image"
+                  ];
+                  contextWindow = 1048576;
+                  cost = {
+                    input = 0.035;
+                    output = 0.1405;
+                    cacheRead = 0.0015;
+                    cacheWrite = 0.0;
                   };
                 }
               ];
